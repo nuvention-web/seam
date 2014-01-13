@@ -11,6 +11,8 @@ exports.home = function(req, res){
   res.render('home', { title: 'MeetingBuddy!' });
 };
 
+// administrator items
+
 exports.admin = function(db){
 	return function(req, res){
 		var collection = db.get('usercollection');
@@ -22,15 +24,14 @@ exports.admin = function(db){
 	};
 };
 
-exports.newuser = function(req, res){
-	res.render('newuser', {title: 'add new user'});
-};
+exports.login = function(req, res){
+	res.render('login', { title : 'login'});
+}
+
 
 exports.adduser = function(db){
 	return function(req, res){
 		var userName = req.body.username;
-		var userEmail = req.body.useremail;
-
 		var collection = db.get('usercollection');
 
 		collection.insert({

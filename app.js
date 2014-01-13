@@ -38,6 +38,7 @@ app.get('/', routes.index);
 app.get('/home', routes.home);
 app.get('/users', user.list);
 app.get('/admin', routes.admin(db));
+app.get('/login', routes.login);
 app.post('/adduser', routes.adduser(db));
 
 http.createServer(app).listen(app.get('port'), function(){

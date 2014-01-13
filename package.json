@@ -9,7 +9,7 @@
     "express": "3.4.7",
     "jade": "*",
     "mongodb": "*",
-    "monk": "*"
+    "mongoose": "*"
   },
   "readmeFilename": "README.md",
   "gitHead": "7ad1af6b88ca09aedbc265067776b2832d139c5a",
