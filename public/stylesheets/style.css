@@ -1,0 +1,552 @@
+/* Mobile Layout: 480px and below. */
+/* ========================================================
+   0A.BASIC_STYLES-MOBILE
+=========================================================== */
+html, body {
+	height: 100%;
+}
+
+html, hmtl a{
+	width:100%;
+	font-size: 100%; 
+	-webkit-text-size-adjust: 100%; 
+	-ms-text-size-adjust: 100%;
+}
+body{
+	background-color:transparent;
+	color:#7F8289;
+	font-weight:300;
+	font-family: 'Lato', sans-serif;
+	font-size:1em;
+	line-height:12px;
+	padding-top: 50px;
+	background: url(../images/bg.jpg) no-repeat center center fixed;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+}
+/* ========================================================
+   0B.TYPOGRAPHY-MOBILE
+=========================================================== */
+h1,h2,h3,h4,h5,h6,p,a{
+	font-family: 'Lato', sans-serif;
+	font-size:18px;
+	font-weight: 300; 
+	text-align:center;
+	vertical-align:middle;
+	/*color:#FFF;*/
+	color: #000;
+	text-decoration: none;
+}
+h1{
+	font-size:18px;
+}
+h2{
+	font-size:14px;
+}
+h3{
+	font-size:12px;
+}
+h4{
+	font-size:25px;
+}
+h5{
+	font-size:20px;
+}
+h6{
+	font-size:14px;
+}
+p{
+	font-size:18px;
+}
+a{
+	font-size:15px;	
+}
+a:hover{
+	color:#3FF;
+	text-decoration:none;
+}
+/* ========================================================
+   0C.STYLES-MOBILE
+=========================================================== */
+.text-white{
+	color:rgb(255,255,255);
+}
+.text-red{
+	color:rgb(204,51,51);
+}
+.text-bold{
+	font-weight: 700;
+}
+.spacing-top{
+	margin-top:10px;
+}
+.spacing-top-1{
+	margin-top:1%;
+}
+.spacing-top-3{
+	margin-top:3%;
+}
+.spacing-top-5{
+	margin-top:5%;
+}
+.form-control{
+	height:20px;
+	font-size:12px;
+}
+.btn-red{
+	background-color: rgb(204,51,51);
+	border-color:rgb(204,51,51);
+	color:rgb(255,255,255);
+	text-align: middle;
+	font-size: 8px;
+	line-height: 8px;
+
+}
+.btn-red:hover{
+	background-color:rgb(220,220,220);
+	border-color:rgb(220,220,220);
+	color:rgb(204,51,51);
+}
+/* =======================================================
+   1.NAVIGATION-MOBILE
+========================================================== */
+.navbar{
+	height:50px;
+	background-color: rgba(0,0,0,0.5);
+	color:#FFF;
+}
+.navbar .navbar-brand {
+    color: #FFF;
+}
+.navbar .nav > li > a {
+    color:  #FFF;
+}
+.navbar .nav > li > a:hover {
+   color:#FFF;
+}
+/* =======================================================
+   2.HOME_PAGE-MOBILE
+========================================================== */
+#home-page{
+	position: relative;
+	overflow: visible;
+	margin-top:0;
+	height: 150%;
+}
+#home-page .screenBg {
+	width:100%;
+	height:100%;
+	position: absolute;	
+	background: url(../images/bg.jpg) no-repeat center center fixed;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+
+}
+#home-page .tagLine {
+	position: absolute;
+	width: 80%;
+	height:30%;
+	margin:0 10%;
+	margin-top:40%;
+	z-index: 2;	
+	/*background-color:#000;*/
+}
+.btn-box{
+	width:25%;
+	height:15%;
+	margin:4% auto 0 auto;	
+	/*background-color:#3dF;*/
+}
+.btn-large-custom{
+	width:100%;
+	height:20px;
+	line-height: 2px;
+	vertical-align: middle;
+}
+.btn-square{
+	-webkit-border-radius: 0 !important;
+     -moz-border-radius: 0 !important;
+          border-radius: 0 !important;
+}
+
+/* =======================================================
+   2.ABOUT_PAGE-MOBILE
+========================================================== */
+#about-page{
+	position: relative;
+	overflow: hidden;
+	margin-top:0;
+	background-color: rgb(255,255,255);
+	padding-top:7%;
+	padding-bottom:1%;
+}
+/* Tablet Layout: 481px to 768px. Inherits styles from: Mobile Layout. */
+@media only screen and (min-width: 481px) {
+/* ========================================================
+   0A.BASIC_STYLES-TABLET
+=========================================================== */
+html, body {
+	height: 100%;
+}
+
+html, hmtl a{
+	width:100%;
+	font-size: 100%; 
+	-webkit-text-size-adjust: 100%; 
+	-ms-text-size-adjust: 100%;
+}
+body{
+	background-color:transparent;
+	color:#7F8289;
+	font-weight:300;
+	font-family: 'Lato', sans-serif;
+	font-size:1em;
+	line-height:20px;
+	padding-top: 50px;
+	background: url(../images/bg.jpg) no-repeat center center fixed;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+}
+/* ========================================================
+   0B.TYPOGRAPHY-TABLET
+=========================================================== */
+h1,h2,h3,h4,h5,h6,p,a{
+	font-family: 'Lato', sans-serif;
+	font-size:20px;
+	font-weight: 300; 
+	text-align:center;
+	vertical-align:middle;
+	/*color:#FFF;*/
+	color: #000;
+	text-decoration: none;
+}
+h1{
+	font-size:30px;
+}
+h2{
+	font-size:24px;
+}
+h3{
+	font-size:20px;
+}
+h4{
+	font-size:25px;
+}
+h5{
+	font-size:20px;
+}
+h6{
+	font-size:14px;
+}
+p{
+	font-size:18px;
+}
+a{
+	font-size:15px;	
+}
+a:hover{
+	color:#3FF;
+	text-decoration:none;
+}
+/* ========================================================
+   0C.STYLES-TABLET
+=========================================================== */
+.text-white{
+	color:rgb(255,255,255);
+}
+.text-red{
+	color:rgb(204,51,51);
+}
+.text-bold{
+	font-weight: 700;
+}
+.spacing-top{
+	margin-top:10px;
+}
+.spacing-top-1{
+	margin-top:1%;
+}
+.spacing-top-3{
+	margin-top:3%;
+}
+.spacing-top-5{
+	margin-top:5%;
+}
+.form-control{
+	height:40px;
+	font-size:24px;
+}
+.btn-red{
+	background-color: rgb(204,51,51);
+	border-color:rgb(204,51,51);
+	color:rgb(255,255,255);
+	font-size: 28px;
+}
+.btn-red:hover{
+	background-color:rgb(220,220,220);
+	border-color:rgb(220,220,220);
+	color:rgb(204,51,51);
+}
+/* =======================================================
+   1.NAVIGATION-TABLET
+========================================================== */
+.navbar{
+	height:50px;
+	background-color: rgba(0,0,0,0.1);
+	background-color:transparent;
+	color:#FFF;
+}
+.navbar .navbar-brand {
+    color: #FFF;
+}
+.navbar .nav > li > a {
+    color:  #FFF;
+}
+.navbar .nav > li > a:hover {
+   color:#FFF;
+}
+/* =======================================================
+   2.HOME_PAGE-TABLET
+========================================================== */
+#home-page{
+	position: relative;
+	overflow: hidden;
+	margin-top:0;
+	height: 120%;
+}
+#home-page .screenBg {
+	width:100%;
+	height:120%;
+	position: absolute;
+	background: url(../images/bg.jpg) no-repeat center center fixed;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+}
+#home-page .tagLine {
+	position: absolute;
+	width: 80%;
+	height:30%;
+	margin:0 10%;
+	margin-top:29%;
+	z-index: 2;	
+	/*background-color:#000;*/
+}
+.btn-box{
+	width:30%;
+	height:30%;
+	margin:4% auto 0 auto;	
+	/*background-color:#3dF;*/
+}
+.btn-large-custom{
+	width:100%;
+	height:60px;
+}
+.btn-square{
+	-webkit-border-radius: 0 !important;
+     -moz-border-radius: 0 !important;
+          border-radius: 0 !important;
+}
+
+/* =======================================================
+   2.ABOUT_PAGE-TABLET
+========================================================== */
+#about-page{
+	position: relative;
+	overflow: hidden;
+	margin-top:0;
+	background-color: rgb(255,255,255);
+	padding-top:7%;
+	padding-bottom:1%;
+}
+}
+/* Desktop Layout: 769px to a max of 1232px.  Inherits styles from: Mobile Layout and Tablet Layout. */
+
+@media only screen and (min-width: 769px) {
+/* ========================================================
+   0A.BASIC_STYLES-DESKTOP
+=========================================================== */
+html, body {
+	height: 100%;
+}
+
+html, hmtl a{
+	width:100%;
+	font-size: 100%; 
+	-webkit-text-size-adjust: 100%; 
+	-ms-text-size-adjust: 100%;
+}
+body{
+	background-color:transparent;
+	color:#7F8289;
+	font-weight:300;
+	font-family: 'Lato', sans-serif;
+	font-size:1em;
+	line-height:20px;
+	padding-top: 50px;
+	background: url(../images/bg.jpg) no-repeat center center fixed;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+}
+/* ========================================================
+   0B.TYPOGRAPHY-DESKTOP
+=========================================================== */
+h1,h2,h3,h4,h5,h6,p,a{
+	font-family: 'Lato', sans-serif;
+	font-size:20px;
+	font-weight: 300; 
+	text-align:center;
+	vertical-align:middle;
+	/*color:#FFF;*/
+	color: #000;
+	text-decoration: none;
+}
+h1{
+	font-size:30px;
+}
+h2{
+	font-size:24px;
+}
+h3{
+	font-size:20px;
+}
+h4{
+	font-size:25px;
+}
+h5{
+	font-size:20px;
+}
+h6{
+	font-size:14px;
+}
+p{
+	font-size:18px;
+}
+a{
+	font-size:15px;	
+}
+a:hover{
+	color:#3FF;
+	text-decoration:none;
+}
+/* ========================================================
+   0C.STYLES-DESKTOP
+=========================================================== */
+.text-white{
+	color:rgb(255,255,255);
+}
+.text-red{
+	color:rgb(204,51,51);
+}
+.text-bold{
+	font-weight: 700;
+}
+.spacing-top{
+	margin-top:10px;
+}
+.spacing-top-1{
+	margin-top:1%;
+}
+.spacing-top-3{
+	margin-top:3%;
+}
+.spacing-top-5{
+	margin-top:5%;
+}
+.form-control{
+	height:40px;
+	font-size:24px;
+}
+.btn-red{
+	background-color: rgb(204,51,51);
+	border-color:rgb(204,51,51);
+	color:rgb(255,255,255);
+	font-size: 24px;
+}
+.btn-red:hover{
+	background-color:rgb(220,220,220);
+	border-color:rgb(220,220,220);
+	color:rgb(204,51,51);
+}
+/* =======================================================
+   1.NAVIGATION-DESKTOP
+========================================================== */
+.navbar{
+	height:50px;
+	background-color:transparent;
+	color:#FFF;
+}
+.navbar .navbar-brand {
+    color: #FFF;
+}
+.navbar .nav > li > a {
+    color:  #FFF;
+}
+.navbar .nav > li > a:hover {
+   color:#FFF;
+}
+/* =======================================================
+   2.HOME_PAGE-DESKTOP
+========================================================== */
+#home-page{
+	position: relative;
+	overflow: hidden;
+	margin-top:0;
+	height: 100%;
+}
+#home-page .screenBg {
+	width:100%;
+	height:100%;
+	position: absolute;
+	background: url(../images/bg.jpg) no-repeat center center fixed;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+}
+#home-page .tagLine {
+	position: absolute;
+	width: 80%;
+	height:30%;
+	margin:0 10%;
+	margin-top:29%;
+	z-index: 2;	
+	/*background-color:#000;*/
+}
+.btn-box{
+	width:30%;
+	height:30%;
+	margin:4% auto 0 auto;	
+	/*background-color:#3dF;*/
+}
+.btn-large-custom{
+	margin-top:2%;
+	height:40px;
+}
+.btn-square{
+	-webkit-border-radius: 0 !important;
+     -moz-border-radius: 0 !important;
+          border-radius: 0 !important;
+}
+
+/* =======================================================
+   2.ABOUT_PAGE-DESKTOP
+========================================================== */
+#about-page{
+	position: relative;
+	overflow: hidden;
+	margin-top:0;
+	background-color: rgb(255,255,255);
+	padding-top:7%;
+	padding-bottom:1%;
+}
+}

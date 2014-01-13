@@ -1,0 +1,65 @@
+extends layout
+
+block content
+	div.navbar.transparent.navbar-inverse.navbar-fixed-top(role='navigation')
+		.container
+			.navbar-header
+				button(type='button', class='navbar-toggle', data-toggle='collapse', data-target='.navbar-collapse')
+					span.sr-only Toggle navigation
+					span.icon-bar
+					span.icon-bar
+					span.icon-bar
+				a(class='navbar-brand text-bold', href='#') MeetingBuddy
+			.navbar-collapse.collapse
+				.navbar-right
+					ul.nav.navbar-nav
+						li
+							a(class='text-bold', href='#home-page') HOME
+						li
+							a(class='text-bold', href='#about-page') ABOUT
+						li
+							a(class='text-bold', href='admin') ADMIN
+	div#home-page
+		.screenBg
+			.tagLine
+				h1.text-white The newest member in your meetings.
+				.btn-box
+					button(type='submit' class='btn btn-primary btn-lg btn-block btn-square btn-large-custom btn-red') LEARN MORE
+	div#about-page
+		.container
+			.row
+				.col-md-10.col-md-offset-1
+					h2 MeetingBuddy provides an easy-to-use tool that leverages technology to simplify the process of preparing for, running, and following up on meetings in order to 
+						span.text-red.text-bold increase 
+						| worker productivity.
+					br
+			.row
+				.col-md-10.col-md-offset-1
+					h2 Middle management spends 
+						span.text-red.text-bold 17 hours 
+						| in meetings weekly.
+						br
+						span.text-red.text-bold 44% 
+						| of those are unproductive.
+						br
+						| That's 
+						span.text-red.text-bold 2.3 months 
+						| wasted a year
+					br
+			.row
+				.col-md-10.col-md-offset-1
+					h2 
+						span.text-red.text-bold It's time to take back your time.
+					br
+			form.form-inline.form-center(role='form', name='addUser', method='post', action='/adduser')
+				.row
+					.col-md-10.col-md-offset-1.form-group
+						input#username(name='username', type="text", class="form-control btn-square", placeholder='NAME')
+				.row
+					.col-md-10.col-md-offset-1.spacing-top.form-group
+						input#useremail(name='useremail', type="text", class="form-control btn-square", placeholder='EMAIL')
+				.row.spacing-top-1
+					.btn-box
+						button(type='submit', class='btn btn-primary btn-lg btn-block btn-square btn-large-custom btn-red') I'M READY
+		footer.spacing-top-3
+			h3 &copy; MeetingBuddy 2014

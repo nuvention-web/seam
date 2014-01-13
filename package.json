@@ -1,0 +1,30 @@
+{
+  "name": "MeetingBuddy",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "start": "node app.js"
+  },
+  "dependencies": {
+    "express": "3.4.7",
+    "jade": "*",
+    "mongodb": "*",
+    "monk": "*"
+  },
+  "readmeFilename": "README.md",
+  "gitHead": "7ad1af6b88ca09aedbc265067776b2832d139c5a",
+  "description": "MeetingBuddy\r ============",
+  "main": "app.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jyu3138/MeetingBuddy.git"
+  },
+  "keywords": [
+    "MeetingBuddy"
+  ],
+  "author": "",
+  "license": "BSD",
+  "engines": {
+	"node": "0.10.5"
+	}
+}
