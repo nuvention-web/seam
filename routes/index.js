@@ -34,10 +34,16 @@ exports.confirm = function(req, res){
 					res.location('error');
 					res.redirect('error');	
 				}
-				console.log(password, isMatch); // -> nuventionWeb: true
-				req.session.isAdmin=true;
-				res.location('admin');
-				res.redirect('admin');
+				console.log(password + ": " + isMatch); // -> nuventionWeb: true
+				if(isMatch){
+					req.session.isAdmin=true;
+					res.location('admin');
+					res.redirect('admin');
+				}
+				else{
+					res.location('error');
+					res.redirect('error');	
+				}
 			});
 		}
 		res.location('error');
@@ -54,13 +60,9 @@ exports.admin = function(req, res){
 		});
 	}
 	else{
-		res.location('login');
-		res.redirect('login');
+		res.location('home');
+		res.redirect('home');
 	}
-};
-
-exports.login = function(req, res){
-	res.render('login', { title : 'login'});
 };
 
 exports.addadmin = function(req, res){
