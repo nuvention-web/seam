@@ -18,7 +18,35 @@ html(lang='en')
 
 			ga('create', 'UA-47017442-1', 'numidesigns.org');
 			ga('send', 'pageview');
-	body
+	body#home-pg
+		div.navbar.transparent.navbar-inverse.navbar-fixed-top(role='navigation')
+			.container
+				.navbar-header
+					button(type='button', class='navbar-toggle', data-toggle='collapse', data-target='.navbar-collapse')
+						span.sr-only Toggle navigation
+						span.icon-bar
+						span.icon-bar
+						span.icon-bar
+					a(class='navbar-brand text-bold', href='home') MeetingBuddy
+				.navbar-collapse.collapse
+					.navbar-right
+						ul.nav.navbar-nav
+							li
+								a(class='text-bold visible-login', href='home') HOME
+							li
+								a(class='text-bold visible-login', href='home#about-page') ABOUT
+							li
+								a(class='text-bold visible-login', href='home#team-page') TEAM
+							li
+								a#admin-btn(class='text-bold visible-login', href='javascript:void(0)') ADMIN
+					form.navbar-form.navbar-right.hidden-login(role='form' method='POST', action='confirm', style='display: none;')
+						.form-group
+							input(type='text', placeholder='Email', class='form-control-smaller', name='adminemail')
+						.form-group
+							input(type='text', placeholder='Password', class='form-control-smaller', name='adminpassword')
+						button.btn.btn-success.btn-red.btn-square(type='submit') Login
+						a.text-bold.hidden-login.text-white(id='admin-btn-2', href='javascript:void(0)') X
 		block content
 		script(src='https://code.jquery.com/jquery.js')
-		script(src='js/bootstrap.min.js')
+		script(src='javascripts/bootstrap.min.js')
+		script(src='javascripts/bootstrap-custom.js')

@@ -9,9 +9,20 @@ var user = require('./routes/user');
 var http = require('http');
 var path = require('path');
 
+var mongoUri = process.env.MONGOLAB_URI ||
+	process.env.MONGOHQ_URL ||
+  	'mongodb://localhost:27017/MeetingBuddy';
+
+console.log(mongoUri);
+
 var mongo = require('mongodb');
-var monk = require('monk');
-var db = monk('localhost:27017/MeetingBuddy');
+var mongoose = require('mongoose');
+mongoose.connect(mongoUri);
+mongoose.connection.on("open", function(){
+  console.log("Connected to database");
+});
+
+var db = mongoose.connection;
 
 var app = express();
 
@@ -37,9 +48,13 @@ if ('development' == app.get('env')) {
 app.get('/', routes.index);
 app.get('/home', routes.home);
 app.get('/users', user.list);
-app.get('/admin', routes.admin(db));
-app.get('/login', routes.login);
-app.post('/adduser', routes.adduser(db));
+app.get('/admin', routes.admin);
+app.get('/survey', routes.survey);
+app.get('/addadmin', routes.addadmin);
+app.get('/error', routes.error);
+app.post('/addsurvey', routes.addsurvey);
+app.post('/confirm', routes.confirm);
+app.post('/adduser', routes.adduser);
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));

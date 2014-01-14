@@ -1,24 +1,6 @@
 extends layout
 
 block content
-	div.navbar.transparent.navbar-inverse.navbar-fixed-top(role='navigation')
-		.container
-			.navbar-header
-				button(type='button', class='navbar-toggle', data-toggle='collapse', data-target='.navbar-collapse')
-					span.sr-only Toggle navigation
-					span.icon-bar
-					span.icon-bar
-					span.icon-bar
-				a(class='navbar-brand text-bold', href='home') MeetingBuddy
-			.navbar-collapse.collapse
-				.navbar-right
-					ul.nav.navbar-nav
-						li
-							a(class='text-bold', href='#home-page') HOME
-						li
-							a(class='text-bold', href='#about-page') ABOUT
-						li
-							a(class='text-bold', href='login') ADMIN
 	div#home-page
 		.screenBg
 			.tagLine
@@ -48,18 +30,93 @@ block content
 					br
 			.row
 				.col-md-10.col-md-offset-1
-					h2 
+					h2
 						span.text-red.text-bold It's time to take back your time.
 					br
-			form.form-inline.form-center(role='form', name='addUser', method='post', action='/adduser')
-				.row
-					.col-md-10.col-md-offset-1.form-group
-						input#username(name='username', type="text", class="form-control btn-square", placeholder='NAME')
+			form.form-inline.form-center(role='form', name='addUser', method='POST', action='/adduser')
 				.row
 					.col-md-10.col-md-offset-1.spacing-top.form-group
-						input#useremail(name='useremail', type="text", class="form-control btn-square", placeholder='EMAIL')
+						input#userEmail(name='userEmail', type="text", class="form-control btn-square", placeholder='EMAIL')
 				.row.spacing-top-1
 					.btn-box
 						button(type='submit', class='btn btn-primary btn-lg btn-block btn-square btn-large-custom btn-red') I'M READY
-		footer.spacing-top-3
-			h3 &copy; MeetingBuddy 2014
+		hr.spacing-top-5
+		div#team-page
+			.container
+				.row
+					.col-md-12
+						h1 Meet the team
+				.row
+					.col-md-4
+						img.img-responsive(src='images/joLee.jpg', alt='Josephine Lee')
+						h5.text-bold JOSEPHINE LEE
+						br
+						h5 Northwestern Senior
+							br
+							| Learning and Organizational Change.
+							br
+							| President of EPIC.
+							br
+							| Past Experiences.
+							br
+							| Future Aspirations.
+					.col-md-4
+						img.img-responsive(src='images/alex.jpg', alt='Josephine Lee')
+						h5.text-bold ALEXSANDRE POPELARD
+						br
+						h5 Kellogg School of Management
+							br
+							| MMM(MBA+MEM)
+							br
+							| Senior Engineer at Toyota.
+							br
+							| Past Experiences.
+							br
+							| Future Aspirations.
+					.col-md-4
+						img.img-responsive(src='images/joLee.jpg', alt='Josephine Lee')
+						h5.text-bold SUZEE HAN
+						br
+						h5 Northwestern Senior
+							br
+							| Learning and Organizational Change.
+							br
+							| President of EPIC.
+							br
+							| Past Experiences.
+							br
+							| Future Aspirations.			
+				.row.spacing-top-5
+					.col-md-4
+						img.img-responsive(src='images/joLee.jpg', alt='Josephine Lee')
+						h5.text-bold MICHEAL CHEN
+						br
+						h5 Northwestern Senior
+							br
+							| Learning and Organizational Change.
+							br
+							| President of EPIC.
+							br
+							| Past Experiences.
+							br
+							| Future Aspirations.	
+					.col-md-4
+						img.img-responsive(src='images/joLee.jpg', alt='Josephine Lee')
+						h5.text-bold TOMMY YU
+						br
+						h5 Northwestern Senior
+							br
+							| Learning and Organizational Change.
+							br
+							| President of EPIC.
+							br
+							| Past Experiences.
+							br
+							| Future Aspirations.	
+					.col-md-4
+						img.img-responsive(src='images/joLee.jpg', alt='Josephine Lee')
+						h5.text-bold ABE
+						br
+						h5 Our meeting buddy.
+				footer.spacing-top-3
+					h3 &copy; MeetingBuddy 2014
