@@ -13,7 +13,6 @@ html, hmtl a{
 	-ms-text-size-adjust: 100%;
 }
 body{
-	background-color:transparent;
 	color:#7F8289;
 	font-weight:300;
 	font-family: 'Lato', sans-serif;
@@ -64,7 +63,7 @@ a{
 	font-size:15px;	
 }
 a:hover{
-	color:#3FF;
+	color:rgb(204,51,51);
 	text-decoration:none;
 }
 /* ========================================================
@@ -94,6 +93,17 @@ a:hover{
 .form-control{
 	height:20px;
 	font-size:12px;
+}
+.form-control-smaller{
+	height:18px;
+	color:#000;
+	font-size:12px;
+	border-color:#000;
+	border-width: 1px;
+}
+.form-control-smaller:hover{
+
+	border-color:#000;
 }
 .btn-red{
 	background-color: rgb(204,51,51);
@@ -126,6 +136,22 @@ a:hover{
 .navbar .nav > li > a:hover {
    color:#FFF;
 }
+.navbar-collapse{
+	background-color: rgba(0,0,0,0.7);
+}
+.hidden-login{
+	z-index:99;
+	position: relative;
+	opacity: 1;
+	display:none;
+}
+.visible-login{
+	display: block;
+	z-index:5;
+	position: relative;
+	opacity: 1;
+	transition:all 0.8s ease-in-out;
+}
 /* =======================================================
    2.HOME_PAGE-MOBILE
 ========================================================== */
@@ -133,18 +159,13 @@ a:hover{
 	position: relative;
 	overflow: visible;
 	margin-top:0;
-	height: 150%;
+	height: 180%;
 }
 #home-page .screenBg {
 	width:100%;
-	height:100%;
+	height:180%;
 	position: absolute;	
-	background: url(../images/bg.jpg) no-repeat center center fixed;
-	-webkit-background-size: cover;
-	-moz-background-size: cover;
-	-o-background-size: cover;
-	background-size: cover;
-
+	background: transparent;
 }
 #home-page .tagLine {
 	position: absolute;
@@ -182,6 +203,17 @@ a:hover{
 	margin-top:0;
 	background-color: rgb(255,255,255);
 	padding-top:7%;
+}
+/* =======================================================
+   3.TEAM_PAGE-MOBILE
+========================================================== */
+#team-page{
+	position: relative;
+	overflow: hidden;
+	margin-top:0;
+
+	background-color: rgb(255,255,255);
+	padding-top:2%;
 	padding-bottom:1%;
 }
 /* Tablet Layout: 481px to 768px. Inherits styles from: Mobile Layout. */
@@ -251,7 +283,7 @@ a{
 	font-size:15px;	
 }
 a:hover{
-	color:#3FF;
+	color:rgb(204,51,51);
 	text-decoration:none;
 }
 /* ========================================================
@@ -279,14 +311,26 @@ a:hover{
 	margin-top:5%;
 }
 .form-control{
+	width:100%;
 	height:40px;
 	font-size:24px;
+}
+.form-control-smaller{
+	height:35px;
+	color:#000;
+	font-size:18px;
+	border-color:#000;
+	border-width: 1px;
+}
+.form-control-smaller:hover{
+
+	border-color:#000;
 }
 .btn-red{
 	background-color: rgb(204,51,51);
 	border-color:rgb(204,51,51);
 	color:rgb(255,255,255);
-	font-size: 28px;
+	font-size: 18px;
 }
 .btn-red:hover{
 	background-color:rgb(220,220,220);
@@ -298,8 +342,7 @@ a:hover{
 ========================================================== */
 .navbar{
 	height:50px;
-	background-color: rgba(0,0,0,0.1);
-	background-color:transparent;
+	background-color: rgba(0,0,0,0.5);
 	color:#FFF;
 }
 .navbar .navbar-brand {
@@ -310,6 +353,22 @@ a:hover{
 }
 .navbar .nav > li > a:hover {
    color:#FFF;
+}
+.navbar-collapse{
+	background-color: rgba(0,0,0,0.7);
+}
+.hidden-login{
+	z-index:99;
+	position: relative;
+	opacity: 1;
+	display:none;
+}
+.visible-login{
+	display: block;
+	z-index:5;
+	position: relative;
+	opacity: 1;
+	transition:all 0.8s ease-in-out;
 }
 /* =======================================================
    2.HOME_PAGE-TABLET
@@ -364,6 +423,15 @@ a:hover{
 	margin-top:0;
 	background-color: rgb(255,255,255);
 	padding-top:7%;
+}
+/* =======================================================
+   3.TEAM_PAGE-TABLET
+========================================================== */
+#team-page{
+	position: relative;
+	overflow: hidden;
+	margin-top:0;
+	background-color: rgb(255,255,255);
 	padding-bottom:1%;
 }
 }
@@ -435,8 +503,13 @@ a{
 	font-size:15px;	
 }
 a:hover{
-	color:#3FF;
+	color:rgb(204,51,51);
 	text-decoration:none;
+}
+hr{
+   background:rgb(230,230,230);
+   height:3px;
+   width:80%;
 }
 /* ========================================================
    0C.STYLES-DESKTOP
@@ -464,16 +537,38 @@ a:hover{
 }
 .form-control{
 	height:40px;
-	font-size:24px;
+	color:#000;
+	font-size:20px;
+	border-color:#000;
+	border-width: 1px;
+}
+.form-control:hover{
+
+	border-color:#000;
+}
+.form-control-smaller{
+	height:35px;
+	color:#000;
+	font-size:18px;
+	border-color:#000;
+	border-width: 1px;
+}
+.form-control-smaller:hover{
+
+	border-color:#000;
+}
+.btn-smaller{
+	font-size:20px;
 }
 .btn-red{
-	background-color: rgb(204,51,51);
+	background-color: rgb(204,51,51) !important;
 	border-color:rgb(204,51,51);
 	color:rgb(255,255,255);
 	font-size: 24px;
+	line-height: 20px;
 }
 .btn-red:hover{
-	background-color:rgb(220,220,220);
+	background-color:rgb(220,220,220) !important;
 	border-color:rgb(220,220,220);
 	color:rgb(204,51,51);
 }
@@ -493,6 +588,22 @@ a:hover{
 }
 .navbar .nav > li > a:hover {
    color:#FFF;
+}
+.navbar-collapse{
+	background-color: transparent;
+}
+.hidden-login{
+	z-index:99;
+	position: relative;
+	opacity: 1;
+	display:none;
+}
+.visible-login{
+	display: block;
+	z-index:5;
+	position: relative;
+	opacity: 1;
+	transition:all 0.8s ease-in-out;
 }
 /* =======================================================
    2.HOME_PAGE-DESKTOP
@@ -530,7 +641,7 @@ a:hover{
 }
 .btn-large-custom{
 	margin-top:2%;
-	height:40px;
+	height:50px;
 }
 .btn-square{
 	-webkit-border-radius: 0 !important;
@@ -547,6 +658,27 @@ a:hover{
 	margin-top:0;
 	background-color: rgb(255,255,255);
 	padding-top:7%;
+}
+/* =======================================================
+   3.TEAM_PAGE-DESKTOP
+========================================================== */
+#team-page{
+	position: relative;
+	overflow: hidden;
+	margin-top:0;
+	background-color: rgb(255,255,255);
 	padding-bottom:1%;
+}
+/* =======================================================
+   4.SURVEY_PAGE-DESKTOP
+========================================================== */
+#survey-page .screenBg {
+	width:100%;
+	position: absolute;
+	background: url(../images/bg.jpg) no-repeat center center fixed;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
 }
 }
