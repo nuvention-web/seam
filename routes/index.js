@@ -24,6 +24,10 @@ exports.meetingTask = function(req, res){
 	res.render('meetingTask', {title: 'meetingTask'});
 };
 
+exports.meetingTask2 = function(req, res){
+	res.render('meetingTask2', {title: 'meetingTask'});
+};
+
 // administrator items
 
 exports.newpage = function(req, res){
@@ -113,7 +117,7 @@ exports.adduser = function(req, res){
 	);
 };
 exports.addTask = function(req, res){
-	var usertaskName = req.body.taskName;
+	var userTaskName = req.body.taskName;
 	var userDate = req.body.taskDate;
 	var userPerson = req.body.taskPerson;
 
@@ -131,7 +135,7 @@ exports.addTask = function(req, res){
 		}
 		else{
 			console.log('Added new Task successfully');
-			Survey.find({}, function(e, docs){console.log(docs);});
+			Task.find({}, function(e, docs){console.log(docs);});
 			res.location('meetingTask2');
 			res.redirect('meetingTask2');
 		}
