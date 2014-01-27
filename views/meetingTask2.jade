@@ -38,29 +38,36 @@ block content
 								img(src='images/TommyYu.jpg' class='img-responsive img-border-15')
 								h5.text-white.margin-top-5 Tommy Yu
 					.col-md-8.bg-white-black-border.task
-						form.form-inline.form-center(role='form', method='POST', action='/addsurvey')
+						form.form-inline.form-center(role='form', method='POST', action='/addTask')
 							.row.spacing-top-3
 								.col-md-4.col-md-offset-2.spacing-top.form-group
-									input.form-control.btn-square.text-left(id='taskTitle', type='text', placeholder='TASK TITLE', name='taskTitle')
+									input.form-control.btn-square.text-left(id='taskName', type='text', placeholder='TASK TITLE', name='taskName')
 								.col-md-4.spacing-top.form-group
-									input.form-control.btn-square.text-left(id='email', type='text', placeholder='DUE DATE', name='lastName')
+									input.form-control.btn-square.text-left(id='taskDate', type='text', placeholder='DUE DATE', name='taskDate')
 							.row.spacing-top-3
 								.col-md-8.col-md-offset-2.spacing-top.form-group
-									textarea(class="form-control text-left" placeholder='PEOPLE' rows="10")
+									textarea(class="form-control text-left" placeholder='PEOPLE' id='taskPerson' name='taskPerson' rows="10")
 							.row.padding-bottom-5
 								.btn-box
 									button.btn.btn-primary.btn-lg.btn-block.btn-square.btn-large-custom.btn-red(type='submit') ASSIGN TASK
 				.row.padding-top-1
 					.col-md-12
 						h3.text-black ASSIGNED TASKS
+				each user, i in userlist
+					if(i%2==0)
+						.row.bg-white				
+							.col-md-12.col-md-offset-1						
+								h5.text-black.text-left #{user.meetingTask}
+					else
+						.row.bg-ltgray				
+							.col-md-12.col-md-offset-1						
+								h5.text-black.text-left #{user.meetingTask}
 				.row.bg-ltgray
 					.col-md-12.col-md-offset-1
 						h5.text-black.text-left Finish EPIC Website
 				.row.bg-white
 					.col-md-12.col-md-offset-1
 						h5.text-black.text-left Send out initial sponsorship packages
-				.row.bg-ltgray
-					.col-md-12.col-md-offset-1
-						h5.text-black.text-left Send out emails to potential speakers
+				
 			footer.spacing-top-3
 				h3.text-white &copy; MeetingBuddy 2014

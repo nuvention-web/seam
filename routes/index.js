@@ -20,14 +20,35 @@ exports.survey = function(req, res){
 	res.render('survey', {title: 'Survey'});
 };
 
+exports.personalDashboard = function(req, res){
+	Task.find({}, function(e, docs){
+			res.render('personalDashboard', {
+				'userlist': docs
+			});
+		});
+};
+
+exports.personalDashboard2 = function(req, res){
+	Task.find({}, function(e, docs){
+			res.render('personalDashboard2', {
+				'userlist': docs
+			});
+		});
+};
+
+
 exports.meetingTask = function(req, res){
 	res.render('meetingTask', {title: 'meetingTask'});
 };
 
-exports.meetingTask2 = function(req, res){
-	res.render('meetingTask2', {title: 'meetingTask'});
+exports.meetingTaskDone = function(req, res){
+	Task.find({}, function(e, docs){
+			res.render('meetingTask2', {
+				'userlist': docs
+			});
+		});
+	
 };
-
 // administrator items
 
 exports.newpage = function(req, res){
@@ -116,6 +137,7 @@ exports.adduser = function(req, res){
 		}
 	);
 };
+
 exports.addTask = function(req, res){
 	var userTaskName = req.body.taskName;
 	var userDate = req.body.taskDate;

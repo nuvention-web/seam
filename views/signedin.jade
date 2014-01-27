@@ -9,6 +9,7 @@ html(lang='en')
 		link(href='http://fonts.googleapis.com/css?family=Lato:300,400,700', rel='stylesheet', type='text/css')
 		link(rel='stylesheet', href='/stylesheets/bootstrap.min.css')
 		link(rel='stylesheet', href='/stylesheets/signedInStyle.css')
+		link(rel='stylesheet', href='/stylesheets/fonts.css')
 		title= title
 		script.
 			(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
@@ -27,14 +28,14 @@ html(lang='en')
 						span.icon-bar
 						span.icon-bar
 						span.icon-bar
-					a(class='navbar-brand text-bold', href='home') MeetingBuddy
+					a(class='navbar-brand text-bold', href='/personalDashboard') MeetingBuddy
 				.navbar-collapse.collapse
 					.navbar-right
 						ul.nav.navbar-nav
 							li
 								h4(style='margin-top:15px; margin-right:5px', class='text-red text-bold visible-login') MikeTYChen
 							li
-								a(class='text-bold visible-login', href='home') LOGOUT
+								a(class='text-bold visible-login', href='/home') LOGOUT
 		block content
 		script(src='https://code.jquery.com/jquery.js')
 		script(src='javascripts/bootstrap.min.js')
