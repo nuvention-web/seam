@@ -6,6 +6,7 @@ var mongoose = require('mongoose');
 var Admin = require('../models/admin-model');
 var Email = require('../models/email-model');
 var Survey = require('../models/survey-model');
+var Task = require('../models/task-model');
 
 exports.index = function(req, res){
 	res.render('home', {title: 'MeetingBuddy!'});
@@ -19,7 +20,15 @@ exports.survey = function(req, res){
 	res.render('survey', {title: 'Survey'});
 };
 
+exports.meetingTask = function(req, res){
+	res.render('meetingTask', {title: 'meetingTask'});
+};
+
 // administrator items
+
+exports.newpage = function(req, res){
+	res.render('survey', {title: 'Survey'});
+};
 
 exports.confirm = function(req, res){
 	var email = req.body.adminemail;
@@ -103,7 +112,31 @@ exports.adduser = function(req, res){
 		}
 	);
 };
+exports.addTask = function(req, res){
+	var usertaskName = req.body.taskName;
+	var userDate = req.body.taskDate;
+	var userPerson = req.body.taskPerson;
 
+	var newTask = new Task({
+		meetingTask: userTaskName,
+    	meetingDate: userDate,
+   		meetingPerson: userPerson
+	});
+
+	newTask.save(function(err, doc){
+		if(err){
+			console.log('Problem adding information to database')
+			res.location('error');
+			res.redirect('error');
+		}
+		else{
+			console.log('Added new Task successfully');
+			Survey.find({}, function(e, docs){console.log(docs);});
+			res.location('meetingTask2');
+			res.redirect('meetingTask2');
+		}
+	});
+};
 exports.addsurvey = function(req, res){
 	var firstName = req.body.firstName;
 	var lastName = req.body.lastName;

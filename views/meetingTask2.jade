@@ -1,0 +1,66 @@
+extends signedin
+
+block content
+	.meetingTask-page
+		.screenBg
+			.meeting-container
+				.row
+					.col-md-12
+						h2.text-red EPIC All Hands Meeting
+					.col-md-12
+						h3.text-black Jan. 28, 2014
+				.row
+					.col-md-4.bg-gray
+						h4.text-white MEETING ATTENDEES
+					.col-md-8.bg-white-black-border
+						h4.text-black TASK ASSIGNMENT
+				.row
+					.col-md-4.bg-gray.attendee
+						br
+						.row
+							.col-md-10.col-md-offset-2.attendeeMember
+								img(src='images/joLee.jpg' class='img-responsive img-border-15')
+								h5.text-white.margin-top-5 Josephine Lee
+						.row
+							.col-md-10.col-md-offset-2.attendeeMember
+								img(src='images/AlexPopelard.jpg' class='img-responsive img-border-15')
+								h5.text-white.margin-top-5 Alex Popelard
+						.row
+							.col-md-10.col-md-offset-2.attendeeMember
+								img(src='images/SuzeeHan.jpg' class='img-responsive img-border-15')
+								h5.text-white.margin-top-5 Suzee Han
+						.row
+							.col-md-10.col-md-offset-2.attendeeMember
+								img(src='images/michaelChen.jpg' class='img-responsive img-border-15')
+								h5.text-white.margin-top-5 Michael Chen
+						.row
+							.col-md-10.col-md-offset-2
+								img(src='images/TommyYu.jpg' class='img-responsive img-border-15')
+								h5.text-white.margin-top-5 Tommy Yu
+					.col-md-8.bg-white-black-border.task
+						form.form-inline.form-center(role='form', method='POST', action='/addsurvey')
+						.row.spacing-top-3
+							.col-md-4.col-md-offset-2.spacing-top.form-group
+								input.form-control.btn-square.text-left(id='taskTitle', type='text', placeholder='TASK TITLE', name='taskTitle')
+							.col-md-4.spacing-top.form-group
+								input.form-control.btn-square.text-left(id='email', type='text', placeholder='DUE DATE', name='lastName')
+						.row.spacing-top-3
+							.col-md-8.col-md-offset-2.spacing-top.form-group
+								textarea(class="form-control text-left" placeholder='PEOPLE' rows="10")
+						.row.padding-bottom-5
+							.btn-box
+								button.btn.btn-primary.btn-lg.btn-block.btn-square.btn-large-custom.btn-red(type='submit') ASSIGN TASK
+				.row.padding-top-1
+					.col-md-12
+						h3.text-black ASSIGNED TASKS
+				.row.bg-ltgray
+					.col-md-12.col-md-offset-1
+						h5.text-black.text-left Finish EPIC Website
+				.row.bg-white
+					.col-md-12.col-md-offset-1
+						h5.text-black.text-left Send out initial sponsorship packages
+				.row.bg-ltgray
+					.col-md-12.col-md-offset-1
+						h5.text-black.text-left Send out emails to potential speakers
+			footer.spacing-top-3
+				h3.text-white &copy; MeetingBuddy 2014

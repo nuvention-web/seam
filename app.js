@@ -52,11 +52,15 @@ app.get('/home', routes.home);
 app.get('/users', user.list);
 app.get('/admin', routes.admin);
 app.get('/survey', routes.survey);
+app.get('/meetingTask', routes.meetingTask);
+app.post('/addtask', routes.addtask);
 app.get('/addadmin', routes.addadmin);
 app.get('/error', routes.error);
+app.get('/newpage', routes.newpage);
 app.post('/addsurvey', routes.addsurvey);
 app.post('/confirm', routes.confirm);
 app.post('/adduser', routes.adduser);
+
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));
