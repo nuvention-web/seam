@@ -685,4 +685,12 @@ hr{
 	-o-background-size: cover;
 	background-size: cover;
 }
+/* =======================================================
+   5.MEETING_PAGE-DESKTOP
+========================================================== */
+.meetingTask-page .screenBg {
+	width:100%;
+	position: absolute;
+	background-color: #3df;
+}
 }

@@ -1,0 +1,38 @@
+extends signedin
+
+block content
+	.meetingTask-page
+		.screenBg
+			.meeting-container
+				.row
+					.col-md-11.col-md-offset-1
+						h2.text-left
+							span.text-black Josephine's 
+							span.text-red Dashboard
+				.row.bg-white
+					.col-md-12
+						h3.text-black MY TASKS
+				.row.bg-ltgray			
+					.col-md-10.col-md-offset-1			
+						h3.text-black.text-left Finish EPIC Site
+					.col-md-1
+						a.text-white.border-50.bg-red-hover.text-h2.text-center(href="/personalDashboard2", class="text-center lsf-icon" , style="margin-left:10px", title="check") 
+				.row.bg-white			
+					.col-md-10.col-md-offset-1			
+						h3.text-black.text-left Email Mike Marasco
+					.col-md-1
+						a.text-white.border-50.bg-red-hover.text-h2.text-center(href="/personalDashboard2", class="text-center lsf-icon" , style="margin-left:10px", title="check") 
+				each user, i in userlist
+					if(i%2==0)
+						.row.bg-ltgray			
+							.col-md-10.col-md-offset-1			
+								h3.text-black.text-left #{user.meetingTask}
+							.col-md-1
+								a.text-white.border-50.bg-red-hover.text-h2.text-center(href="/personalDashboard2", class="text-center lsf-icon" , style="margin-left:10px", title="check") 
+					else
+						.row.bg-white		
+							.col-md-10.col-md-offset-1						
+								h3.text-black.text-left #{user.meetingTask}
+							.col-md-1
+								a.text-white.border-50.bg-red-hover.text-h2.text-center(href="/personalDashboard2", class="text-center lsf-icon" , style="margin-left:10px", title="check") 
+				
