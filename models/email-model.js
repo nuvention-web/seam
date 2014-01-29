@@ -6,4 +6,4 @@ emailSchema = new Schema({
     dateInserted: { type: Date, default: Date.now }
 });
 
-module.exports = mongoose.model('User', emailSchema);
+module.exports = mongoose.model('Email', emailSchema);

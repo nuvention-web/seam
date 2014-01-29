@@ -38,12 +38,14 @@ html(lang='en')
 							li
 								a(class='text-bold visible-login', href='home#team-page') TEAM
 							li
-								a#admin-btn(class='text-bold visible-login', href='javascript:void(0)') ADMIN
-					form.navbar-form.navbar-right.hidden-login(role='form' method='POST', action='confirm', style='display: none;')
+								a(class='text-bold visible-login', href='signup') SIGN UP
+							li
+								a#admin-btn(class='text-bold visible-login', href='javascript:void(0)') SIGN IN
+					form.navbar-form.navbar-right.hidden-login(role='form' method='POST', action='login', style='display: none;')
 						.form-group
-							input(type='text', placeholder='Email', class='form-control-smaller', name='adminemail')
+							input(type='text', placeholder='EMAIL', class='form-control-smaller', name='email')
 						.form-group
-							input(type='password', placeholder='Password', class='form-control-smaller', name='adminpassword')
+							input(type='password', placeholder='PASSWORD', class='form-control-smaller', name='password')
 						button.btn.btn-success.btn-red.btn-square(type='submit') Login
 						a.text-bold.hidden-login.text-white(id='admin-btn-2', href='javascript:void(0)') X
 		block content
