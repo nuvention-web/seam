@@ -2,11 +2,12 @@ var mongoose = require('mongoose');
 var User = require('../models/user-model');
 
 exports.signup = function(req, res){
-	res.render('signup', { message: req.flash('signupMessage') });
+	res.render('signup', { message: req.flash('signupMessage'), user : req.user });
 };
 
 exports.logout = function(req, res){
-	res.render('home', {title : 'MeetingBuddy!'});
+	req.logout();
+	res.redirect('/');
 };
 
 // exports.login = function(req, res) {
@@ -21,5 +22,5 @@ exports.isLoggedIn = function(req, res, next) {
 
 	// if they aren't redirect them to the home page
 	res.location('home');
-	res.redirect('home');
+	res.redirect('home', {user : req.user});
 };

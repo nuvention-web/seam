@@ -4,6 +4,6 @@
  */
 // Error page
 exports.error = function(req, res){
-	res.render('error', {title: 'Error'});
+	res.render('error', {title: 'Error', user : req.user});
 };
 

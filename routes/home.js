@@ -7,11 +7,11 @@ var Email = require('../models/email-model');
 var Survey = require('../models/survey-model');
 
 exports.home = function(req, res){
-  res.render('home', { title: 'MeetingBuddy!' });
+	res.render('home', { title: 'MeetingBuddy!', user : req.user});
 };
 
 exports.survey = function(req, res){
-	res.render('survey', {title: 'Survey'});
+	res.render('survey', {title: 'Survey', user : req.user});
 };
 
 exports.addemail = function(req, res){
@@ -27,7 +27,7 @@ exports.addemail = function(req, res){
 				console.log('Added new email successfully');
 				Email.find({}, function(e, docs){console.log(docs);});
 				res.location('survey');
-				res.redirect('survey');
+				res.redirect('survey', {user : req.user});
 			}
 		}
 	);
@@ -62,7 +62,7 @@ exports.addsurvey = function(req, res){
 			console.log('Added new survey successfully');
 			Survey.find({}, function(e, docs){console.log(docs);});
 			res.location('home');
-			res.redirect('home');
+			res.redirect('home', {user : req.user});
 		}
 	});
 };
