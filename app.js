@@ -76,7 +76,7 @@ app.get('/meetingTask', user.isLoggedIn, task.meetingTask);
 app.get('/meetingTask2', user.isLoggedIn, task.meetingTaskDone);
 app.get('/personalDashboard', user.isLoggedIn, task.personalDashboard);
 app.get('/personalDashboard2', user.isLoggedIn, task.personalDashboard2);
-app.post('/addtask', user.isLoggedIn, task.addTask);
+app.post('/addTask', user.isLoggedIn, task.addTask);
 app.get('/profile', user.isLoggedIn, task.profile);
 
 //account

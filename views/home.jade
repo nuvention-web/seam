@@ -1,27 +1,27 @@
 extends layout
 
 block content
-	div#home-page
-		.screenBg
+	div#home-page.page.full-page
+		.bg-frontpg
 			.tagLine
-				h1.text-white The newest member in your meetings.
+				h2.text-white The newest member in your meetings.
 				.btn-box
-					a(class='btn btn-primary btn-lg btn-block btn-square btn-large-custom btn-red' href='home#about-page') LEARN MORE
-	div#about-page
+					a.btn.btn-primary.btn-lg.btn-block.img-30p.margin-center.border-square.margin-top-3p.bg-red-border(href='home#about-page') LEARN MORE
+	div#about-page.page.padding-top-7p.bg-white
 		.container
 			.row
 				.col-md-10.col-md-offset-1
-					h2 MeetingBuddy technology transforms the way you prep, run, and follow-up with your meetings. Focus on what's important.
+					h3 MeetingBuddy technology transforms the way you prep, run, and follow-up with your meetings. Focus on what's important.
 					br
 			.row
 				.col-md-10.col-md-offset-1
-					h2 MeetingBuddy provides an easy-to-use tool that leverages technology to simplify the process of preparing for, running, and following up on meetings in order to 
+					h3 MeetingBuddy provides an easy-to-use tool that leverages technology to simplify the process of preparing for, running, and following up on meetings in order to 
 						span.text-red.text-bold increase 
 						| worker productivity.
 					br
 			.row
 				.col-md-10.col-md-offset-1
-					h2 Middle management spends 
+					h3 Middle management spends 
 						span.text-red.text-bold 17 hours 
 						| in meetings weekly.
 						br
@@ -34,25 +34,26 @@ block content
 					br
 			.row
 				.col-md-10.col-md-offset-1
-					h2
+					h3
 						span.text-red.text-bold It's time to take back your time.
 					br
 			form.form-inline.form-center(role='form', name='addUser', method='POST', action='login')
-				.row
-					.col-md-10.col-md-offset-1.spacing-top.form-group
-						input#userEmail(name='userEmail', type="email", class="form-control btn-square", placeholder='EMAIL')
-				.row.spacing-top-1
-					.btn-box
-						button(type='submit', class='btn btn-primary btn-lg btn-block btn-square btn-large-custom btn-red') I'M READY
-		hr.spacing-top-5
-		div#team-page
+				.row.margin-top-3p
+					.col-md-6.col-md-offset-3
+						input#userEmail.form-control.border-square(name='userEmail', type='email', placeholder='EMAIL')
+				.row.margin-top-5p
+					.col-md-4.col-md-offset-4
+						button.btn.btn-primary.btn-lg.btn-block.margin-center.border-square.bg-red-border(type='submit') I'M READY
+
+		hr.margin-top-5p
+		div#team-page.page.bg-white.padding-bottom-1p
 			.container
 				.row
 					.col-md-12
 						h1 Meet the team
 				.row
 					.col-md-4
-						img.img-responsive.img-center(src='images/joLee.jpg', alt='Josephine Lee')
+						img.img-responsive.margin-center(src='images/joLee.jpg', alt='Josephine Lee')
 						h5.text-bold JOSEPHINE LEE
 						br
 						h5 Northwestern Senior
@@ -61,7 +62,7 @@ block content
 							br
 							| President of EPIC.
 					.col-md-4
-						img.img-responsive.img-center(src='images/AlexPopelard.jpg', alt='Alexandre Popelard')
+						img.img-responsive.margin-center(src='images/AlexPopelard.jpg', alt='Alexandre Popelard')
 						h5.text-bold ALEXANDRE POPELARD
 						br
 						h5 Kellogg School of Management
@@ -70,7 +71,7 @@ block content
 							br
 							| Senior Engineer at Toyota.
 					.col-md-4
-						img.img-responsive.img-center(src='images/SuzeeHan.jpg', alt='Suzee Han')
+						img.img-responsive.margin-center(src='images/SuzeeHan.jpg', alt='Suzee Han')
 						h5.text-bold SUZEE HAN
 						br
 						h5 Northwestern Junior
@@ -78,9 +79,9 @@ block content
 							| Biological Science
 							br
 							| Director of Project Pitch			
-				.row.spacing-top-5
+				.row.margin-top-5p
 					.col-md-4
-						img.img-responsive.img-center(src='images/MichaelChen.jpg', alt='Michael Chen')
+						img.img-responsive.margin-center(src='images/MichaelChen.jpg', alt='Michael Chen')
 						h5.text-bold MICHAEL CHEN
 						br
 						h5 Northwestern Junior
@@ -89,7 +90,7 @@ block content
 							br
 							| Software Developer at MD Andersen Cancer Center	
 					.col-md-4
-						img.img-responsive.img-center(src='images/TommyYu.jpg', alt='Tommy Yu')
+						img.img-responsive.margin-center(src='images/TommyYu.jpg', alt='Tommy Yu')
 						h5.text-bold TOMMY YU
 						br
 						h5 Northwestern Senior
@@ -98,9 +99,9 @@ block content
 							br
 							| Software Developer at Nokia
 					.col-md-4
-						img.img-responsive.img-center(src='images/blank.jpg', alt='Abe')
+						img.img-responsive.margin-center(src='images/blank.jpg', alt='Abe')
 						h5.text-bold ABE
 						br
 						h5 Our meeting buddy.
-				footer.spacing-top-3
+				footer.margin-top-5p
 					h3 &copy; MeetingBuddy 2014
