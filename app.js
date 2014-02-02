@@ -84,12 +84,12 @@ app.get('/signup', user.signup);
 app.get('/logout', user.logout);
 //app.post('/login', user.login);
 app.post('/signup', passport.authenticate('local-signup', {// process the signup form
-	successRedirect: '/profile', // redirect to the secure profile section
+	successRedirect: '/personalDashboard', // redirect to the secure profile section
 	failureRedirect: '/signup', // redirect back to the signup page if there is an error
 	failureFlash: true // allow flash messages
 }));
 app.post('/login', passport.authenticate('local-login', {
-	successRedirect: '/profile', // redirect to the secure profile section
+	successRedirect: '/personalDashboard', // redirect to the secure profile section
 	failureRedirect: '/home', // redirect back to the signup page if there is an error
 	failureFlash: true // allow flash messages
 }));

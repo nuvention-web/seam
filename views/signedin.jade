@@ -33,9 +33,13 @@ html(lang='en')
 					.navbar-right
 						ul.nav.navbar-nav
 							li
-								h6.text-red.text-bold.visible-login(style='margin-top: 15px; margin-right: 5px;') MikeTYChen
+								h6.text-red.text-bold.visible-login(style='margin-top: 15px; margin-right: 5px;') #{user.local.email}
 							li
-								a.text-bold.visible-login(href='home') LOGOUT
+								a.text-bold.visible-login(href='meetingTask') MEETINGS
+							li
+								a.text-bold.visible-login(href='personalDashboard') MY TASK
+							li
+								a.text-bold.visible-login(href='logout') LOGOUT
 		block content
 		script(src='https://code.jquery.com/jquery.js')
 		script(src='javascripts/bootstrap.min.js')
