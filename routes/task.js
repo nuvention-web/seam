@@ -2,8 +2,7 @@ var mongoose = require('mongoose');
 var Task = require('../models/task-model');
 
 exports.personalDashboard = function(req, res){
-	Task.find({'meetingPerson' : req.user.local.email}, function(e, docs){
-		console.log("OVER HERE:" + docs);
+	Task.find({'meetingPerson' : req.user.local.email, 'isComplete' : 0}, function(e, docs){
 		res.render('personalDashboard', {
 			'userlist': docs,
 			user : req.user
@@ -32,6 +31,18 @@ exports.meetingTaskDone = function(req, res){
 		});
 	
 };
+
+exports.finishTask = function(req, res){
+	var meetingId = req.body.meetingId;
+	// console.log(meetingId);
+	Task.findByIdAndUpdate(meetingId, {
+		'isComplete' : 1
+	}, function(e, result){
+		if(e) console.log(e);
+		else console.log("Successfully finished task");
+	});
+	res.redirect('back');
+}
 
 exports.addTask = function(req, res){
 	var userTaskName = req.body.taskName;

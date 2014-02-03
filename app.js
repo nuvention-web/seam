@@ -78,6 +78,7 @@ app.get('/personalDashboard', user.isLoggedIn, task.personalDashboard);
 app.get('/personalDashboard2', user.isLoggedIn, task.personalDashboard2);
 app.post('/addTask', user.isLoggedIn, task.addTask);
 app.get('/profile', user.isLoggedIn, task.profile);
+app.post('/finishTask', user.isLoggedIn, task.finishTask);
 
 //account
 app.get('/signup', user.signup);
