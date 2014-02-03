@@ -20,16 +20,21 @@ exports.personalDashboard2 = function(req, res){
 };
 
 exports.meetingTask = function(req, res){
-	res.render('meetingTask', {user : req.user});
+	Task.find({}, function(e, docs){
+		console.log(docs);
+		res.render('meetingTask', {
+			'taskList': docs,
+			user : req.user
+		});
+	});
 };
 
 exports.meetingTaskDone = function(req, res){
 	Task.find({}, function(e, docs){
-			res.render('meetingTask2', {
-				'userlist': docs
-			});
+		res.render('meetingTask2', {
+			'userlist': docs
 		});
-	
+	});
 };
 
 exports.finishTask = function(req, res){
@@ -40,6 +45,17 @@ exports.finishTask = function(req, res){
 	}, function(e, result){
 		if(e) console.log(e);
 		else console.log("Successfully finished task");
+	});
+	res.redirect('back');
+}
+
+exports.deleteTask = function(req, res){
+	var meetingId = req.body.meetingId;
+	// console.log(meetingId);
+	Task.findByIdAndRemove(meetingId, 
+		function(e, result){
+			if(e) console.log(e);
+			else console.log("Successfully deleted task");
 	});
 	res.redirect('back');
 }

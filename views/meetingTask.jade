@@ -56,14 +56,18 @@ block content
 			.row.padding-top-1
 				.col-md-12
 					h3.text-black ASSIGNED TASKS
-			.row.bg-ltgray
-				.col-md-12.col-md-offset-1
-					h5.text-black.text-left Finish EPIC Website
-			.row.bg-white
-				.col-md-12.col-md-offset-1
-					h5.text-black.text-left Send out initial sponsorship packages
-			.row.bg-ltgray
-				.col-md-12.col-md-offset-1
-					h5.text-black.text-left Send out emails to potential speakers
+			each user, i in taskList
+				.row.bg-ltgray
+					if user.isComplete === 0
+						.col-md-10.col-md-offset-1
+							h5.text-black.text-left #{user.meetingTask} --- #{user.meetingPerson}
+						.col-md-1.padding-top-1p Not Done
+					else
+						form.form-inline.form-center(role='form', method='POST', action='/deletetask')
+							input(type='hidden', name='meetingId', value='#{user._id}')
+							.col-md-10.col-md-offset-1
+								h5.text-black.text-left #{user.meetingTask} --- #{user.meetingPerson}
+							.col-md-1.padding-top-1p
+								button.text-white.border-50p.bg-red-hover.text-h2.text-center(type='submit', class="text-center lsf-icon" , style="margin-left:10px;", title="check") 
 			footer.spacing-top-3
 				h3.text-white &copy; MeetingBuddy 2014
