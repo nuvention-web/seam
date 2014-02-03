@@ -6,14 +6,13 @@ block content
 			.row
 				.col-md-12
 					h2.text-white Sign Up
-			form.form-inlie.form-center(role='form', method='POST', action='/signup')
+			form.form-inline.form-center(role='form', method='POST', action='/signup')
 				.row
-					.col-md-8.col-md-offset-2.spacing-top.form-group
-						input.form-control.btn-square(id='signup', type='text', name='email', placeholder= 'EMAIL')
+					.col-md-6.col-md-offset-3.padding-top-5p.form-group
+						input.form-control.border-square(id='signup', type='text', name='email', placeholder= 'EMAIL')
 				.row
-					.col-md-8.col-md-offset-2.spacing-top.form-group
-						input.form-control.btn-square(id='signup', type='password', name='password', placeholder= 'PASSWORD')
+					.col-md-6.col-md-offset-3.padding-top-5p.form-group
+						input.form-control.border-square(id='signup', type='password', name='password', placeholder= 'PASSWORD')
 				.row
-					.btn-box
-						button.btn.btn-primary.btn-lg.btn-block.btn-square.btn-large-custom.btn-red(type='submit') SIGN UP
-
+					.col-md-4.col-md-offset-4
+						button.btn.btn-primary.btn-lg.btn-block.margin-center.border-square.bg-red-border(type='submit') SIGN UP
