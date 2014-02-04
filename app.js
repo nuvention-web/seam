@@ -76,20 +76,22 @@ app.get('/meetingTask', user.isLoggedIn, task.meetingTask);
 app.get('/meetingTask2', user.isLoggedIn, task.meetingTaskDone);
 app.get('/personalDashboard', user.isLoggedIn, task.personalDashboard);
 app.get('/personalDashboard2', user.isLoggedIn, task.personalDashboard2);
-app.post('/addtask', user.isLoggedIn, task.addTask);
+app.post('/addTask', user.isLoggedIn, task.addTask);
 app.get('/profile', user.isLoggedIn, task.profile);
+app.post('/finishTask', user.isLoggedIn, task.finishTask);
+app.post('/deletetask', user.isLoggedIn, task.deleteTask);
 
 //account
 app.get('/signup', user.signup);
 app.get('/logout', user.logout);
 //app.post('/login', user.login);
 app.post('/signup', passport.authenticate('local-signup', {// process the signup form
-	successRedirect: '/profile', // redirect to the secure profile section
+	successRedirect: '/personalDashboard', // redirect to the secure profile section
 	failureRedirect: '/signup', // redirect back to the signup page if there is an error
 	failureFlash: true // allow flash messages
 }));
 app.post('/login', passport.authenticate('local-login', {
-	successRedirect: '/profile', // redirect to the secure profile section
+	successRedirect: '/personalDashboard', // redirect to the secure profile section
 	failureRedirect: '/home', // redirect back to the signup page if there is an error
 	failureFlash: true // allow flash messages
 }));

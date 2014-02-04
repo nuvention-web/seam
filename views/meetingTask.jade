@@ -1,66 +1,89 @@
 extends signedin
 
 block content
-	.meetingTask-page
-		.screenBg
-			.meeting-container
-				.row
-					.col-md-12
-						h2.text-red EPIC All Hands Meeting
-					.col-md-12
-						h3.text-black Jan. 28, 2014
-				.row
-					.col-md-4.bg-gray
-						h4.text-white MEETING ATTENDEES
-					.col-md-8.bg-white-black-border
-						h4.text-black TASK ASSIGNMENT
-				.row
-					.col-md-4.bg-gray.attendee
-						br
-						.row
-							.col-md-10.col-md-offset-2.attendeeMember
-								img(src='images/joLee.jpg' class='img-responsive img-border-15')
-								h5.text-white.margin-top-5 Josephine Lee
-						.row
-							.col-md-10.col-md-offset-2.attendeeMember
-								img(src='images/AlexPopelard.jpg' class='img-responsive img-border-15')
-								h5.text-white.margin-top-5 Alex Popelard
-						.row
-							.col-md-10.col-md-offset-2.attendeeMember
-								img(src='images/SuzeeHan.jpg' class='img-responsive img-border-15')
-								h5.text-white.margin-top-5 Suzee Han
-						.row
-							.col-md-10.col-md-offset-2.attendeeMember
-								img(src='images/MichaelChen.jpg' class='img-responsive img-border-15')
-								h5.text-white.margin-top-5 Michael Chen
-						.row
-							.col-md-10.col-md-offset-2
-								img(src='images/TommyYu.jpg' class='img-responsive img-border-15')
-								h5.text-white.margin-top-5 Tommy Yu
-					.col-md-8.bg-white-black-border.task
-						form.form-inline.form-center(role='form', method='POST', action='addTask')
-							.row.spacing-top-3
-								.col-md-4.col-md-offset-2.spacing-top.form-group
-									input.form-control.btn-square.text-left(id='taskName', type='text', placeholder='TASK TITLE', name='taskName')
-								.col-md-4.spacing-top.form-group
-									input.form-control.btn-square.text-left(id='taskDate', type='text', placeholder='DUE DATE', name='taskDate')
-							.row.spacing-top-3
-								.col-md-8.col-md-offset-2.spacing-top.form-group
-									textarea(class="form-control text-left" placeholder='PEOPLE' id='taskPerson' name='taskPerson' rows="10")
-							.row.padding-bottom-5
-								.btn-box
-									button.btn.btn-primary.btn-lg.btn-block.btn-square.btn-large-custom.btn-red(type='submit') ASSIGN TASK
-				.row.padding-top-1
-					.col-md-12
-						h3.text-black ASSIGNED TASKS
-				.row.bg-ltgray
-					.col-md-12.col-md-offset-1
-						h5.text-black.text-left Finish EPIC Website
-				.row.bg-white
-					.col-md-12.col-md-offset-1
-						h5.text-black.text-left Send out initial sponsorship packages
-				.row.bg-ltgray
-					.col-md-12.col-md-offset-1
-						h5.text-black.text-left Send out emails to potential speakers
+	.page.margin-center
+		.container-85p.bg-white.margin-center
+			.row
+				.col-md-12
+					h2.text-black EPIC All Hands Meeting
+				.col-md-12
+					h3.text-black
+						span.text-red Objectives: 
+						span.text-red Speak to all directors and update executive board
+				.col-md-12
+					h4.text-black Jan. 28, 2014
+			.row
+				.col-md-4.bg-gray
+					h4.text-white MEETING ATTENDEES
+				.col-md-8.bg-white-black-border
+					h4.text-black TASK ASSIGNMENT
+			.row
+				.col-md-4.bg-gray.container-500x.overflow-scroll-y
+					br
+					.row
+						.col-md-10.col-md-offset-2.padding-bottom-10p.attendeeMember
+							img.img-responsive.img-15p.border-50p(src='images/joLee.jpg', value='leejosephinem@gmail.com')
+							h5.text-white.margin-top-n12p(value='leejosephinem@gmail.com') Josephine Lee
+					.row
+						.col-md-10.col-md-offset-2.padding-bottom-10p.attendeeMember
+							img.img-responsive.img-15p.border-50p(src='images/AlexPopelard.jpg', value='alexpopelard@northwestern.edu')
+							h5.text-white.margin-top-n12p(value='alexpopelard@northwestern.edu') Alex Popelard
+					.row
+						.col-md-10.col-md-offset-2.padding-bottom-10p.attendeeMember
+							img.img-responsive.img-15p.border-50p(src='images/SuzeeHan.jpg', value='suzeehan2015@u.northwestern.edu')
+							h5.text-white.margin-top-n12p(value='suzeehan2015@u.northwestern.edu') Suzee Han
+					.row
+						.col-md-10.col-md-offset-2.padding-bottom-10p.attendeeMember
+							img.img-responsive.img-15p.border-50p(src='images/MichaelChen.jpg', value='michaelchen2015@u.northwestern.edu')
+							h5.text-white.margin-top-n12p(value='michaelchen2015@u.northwestern.edu') Michael Chen
+					.row
+						.col-md-10.col-md-offset-2.padding-bottom-10p.attendeeMember
+							img.img-responsive.img-15p.border-50p(src='images/TommyYu.jpg', value='jiayu2014@u.northwestern.edu')
+							h5.text-white.margin-top-n12p(value='tyu3138@gmail.com') Tommy Yu
+				.col-md-8.bg-white-black-border.task.container-500x.overflow-hidden
+					form.form-inline.form-center(role='form', method='POST', action='addTask')
+						.row.margin-top-3p
+							.col-md-4.col-md-offset-2.form-group
+								input#taskName.form-control.border-square.text-left(type='text', placeholder='TASK TITLE', name='taskName')
+							.col-md-4.form-group
+								input#taskDate.form-control.border-square.text-left(type='text', placeholder='DUE DATE', name='taskDate')
+						.row.margin-top-3p
+							.col-md-8.col-md-offset-2.spacing-top.form-group
+									textarea#taskPerson.form-control.border-square.text-left(placeholder='PEOPLE', name='taskPerson', rows='10')
+						.row.margin-top-5p.padding-bottom-3p
+							.col-md-4.col-md-offset-4
+								button.btn.btn-primary.btn-lg.btn-block.border-square.margin-center.bg-red-border(type='submit') ASSIGN TASK
+			.row.padding-top-1
+				.col-md-12
+					h3.text-black ASSIGNED TASKS
+			each user, i in taskList
+				if user.isComplete === 0
+					if(i%2==0)
+						.row.bg-ltgray
+							.col-md-10.col-md-offset-1
+								h5.text-black.text-left #{user.meetingTask} --- #{user.meetingPerson}
+							.col-md-1.padding-top-1p Not Done
+					else
+						.row.bg-white
+							.col-md-10.col-md-offset-1
+								h5.text-black.text-left #{user.meetingTask} --- #{user.meetingPerson}
+							.col-md-1.padding-top-1p Not Done
+				else
+					if(i%2==0)
+						.row.bg-ltgray
+							form.form-inline.form-center(role='form', method='POST', action='/deletetask')
+								input(type='hidden', name='meetingId', value='#{user._id}')
+								.col-md-10.col-md-offset-1
+									h5.text-black.text-left #{user.meetingTask} --- #{user.meetingPerson}
+								.col-md-1.padding-top-1p
+									button.text-white.border-50p.bg-red-hover.text-h2.text-center(type='submit', class="text-center lsf-icon" , style="margin-left:10px;", title="check") 
+					else
+						.row.bg-white
+							form.form-inline.form-center(role='form', method='POST', action='/deletetask')
+								input(type='hidden', name='meetingId', value='#{user._id}')
+								.col-md-10.col-md-offset-1
+									h5.text-black.text-left #{user.meetingTask} --- #{user.meetingPerson}
+								.col-md-1.padding-top-1p
+									button.text-white.border-50p.bg-red-border.text-h4.text-center(type='submit', class="text-center lsf-icon" , style="margin-left:10px;", title="check") 
 			footer.spacing-top-3
 				h3.text-white &copy; MeetingBuddy 2014

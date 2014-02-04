@@ -1,4 +1,4 @@
-    $(document).ready(function(){       
+ $(document).ready(function(){       
             var scroll = 0;            
             $(document).scroll(function() { 
                 var changePos=$("#home-page").height();
@@ -15,6 +15,18 @@
                 }
             });
 
+            $('.attendeeMember img').click(function() {
+                var value = $(this).attr('value');
+                var input = $('#taskPerson');
+                input.val(input.val() + value + ', ');
+                return false;
+            });
+             $('.attendeeMember h5').click(function() {
+                var value = $(this).attr('value');
+                var input = $('#taskPerson');
+                input.val(input.val() + value + ', ');
+                return false;
+            });
              $('#admin-btn').click(function(){
               $('.visible-login').fadeOut(300);
               $('.hidden-login').delay(300).fadeIn(700);              
