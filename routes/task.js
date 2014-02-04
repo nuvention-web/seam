@@ -2,7 +2,7 @@ var mongoose = require('mongoose');
 var Task = require('../models/task-model');
 
 exports.personalDashboard = function(req, res){
-	Task.find({'meetingPerson' : req.user.local.email, 'isComplete' : 0}, function(e, docs){
+	Task.find({'meetingPerson' : req.user.local.email}, function(e, docs){
 		res.render('personalDashboard', {
 			'userlist': docs,
 			user : req.user
