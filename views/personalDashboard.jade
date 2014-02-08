@@ -17,7 +17,7 @@ block content
 						form.form-inline.form-center(role='form', method='POST', action='/finishtask')
 							input(type='hidden', name='meetingId', value='#{user._id}')
 							.col-md-10.col-md-offset-1
-								h3.text-black.text-left #{user.meetingTask} --- Due:#{user.meetingDate}
+								h3.text-black.text-left #{user.meetingTask}
 							if(user.isComplete == 0)
 								.col-md-1.padding-top-1p
 									button.text-white.border-50p.bg-red-border.text-h4.text-center(type='submit', class="text-center lsf-icon" , style="margin-left:10px;", title="check")
@@ -28,10 +28,7 @@ block content
 						form.form-inline.form-center(role='form', method='POST', action='/finishtask')
 							input(type='hidden', name='meetingId', value='#{user._id}')
 							.col-md-10.col-md-offset-1
-								h3.text-black.text-left #{user.meetingTask} --- Due:#{user.meetingDate}
-							if(user.isComplete == 0)
-								.col-md-1.padding-top-1p
-									button.text-white.border-50p.bg-red-border.text-h4.text-center(type='submit', class="text-center lsf-icon" , style="margin-left:10px;", title="check")
-							else
-								.col-md-1.padding-top-1p Waiting on Approval
+								h3.text-black.text-left #{user.meetingTask}
+							.col-md-1.padding-top-1p
+								button.text-white.border-50p.bg-red-border.text-h4.text-center(type='submit', class="text-center lsf-icon" , style="margin-left:10px;", title="check") 
 				

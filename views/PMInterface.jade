@@ -1,0 +1,106 @@
+extends signedin
+
+block content
+	.container-75p.margin-top-5p.margin-left-15p.margin-top-100x
+		.row.bg-gray
+			.col-md-12
+				h2.text-center.text-vertical-center
+					span.text-white Project: EPIC
+		.row.bg-grayblue.padding-top-2p.padding-bottom-2p
+			.col-md-10
+				.progress.border-square
+					.progress-bar.progress-bar-success(style='width: 35%;')
+					.progress-bar.progress-bar-warning(style='width: 20%;')
+					.progress-bar.progress-bar-danger(style='width: 10%;')
+			.col-md-2
+				h3.margin-top-1p 2:00:11
+		.row.margin-top-3p
+			.col-md-6
+				div
+					.row.bg-gray
+						.col-md-12
+							h2.text-center.text-vertical-center.text-white Future Meetings
+					each meeting, i in meetingList
+						if(meeting.isComplete == 0)
+							.row.bg-grayblue.margin-top-2x
+								.col-md-10
+									h3.text-left
+										a.text-left.text-upper.text-vertical-center.text-h3.text-black-nohover(href="#") #{meeting.meetingTitle}
+								.col-md-2.margin-top-3p.text-right
+									a.lsf-icon.text-black.text-big(href='meetingInterface' title="playmedia")
+					.row.bg-grayblue.margin-top-2x
+						.col-md-12
+							h3.text-left
+								a#meetingAgenda-btn.text-left.text-upper.text-vertical-center.text-h3.text-red-hover new meeting...
+			.col-md-6
+				div.margin-left-5p
+					.row.bg-gray
+						.col-md-12
+							h2.text-center.text-vertical-center.text-white Past Meetings
+					each meeting, i in meetingList
+						if(meeting.isComplete == 1)
+							.row.bg-grayblue.margin-top-2x
+								.col-md-10
+									h3.text-left
+										a.text-left.text-upper.text-vertical-center.text-h3.text-black-nohover(href="#") #{meeting.meetingTitle}
+								.col-md-2.margin-top-3p.text-right
+									a.lsf-icon.text-black.text-big(href='meetingInterface' title="playmedia")
+					.row.bg-grayblue.margin-top-2x
+						.col-md-12
+							h3.text-left
+								a.text-left.text-upper.text-vertical-center.text-h3.text-red-hover(href="meetingInterface") Load More...
+	#meetingAgenda.hidden-login.container-75p.margin-top-3p.margin-left-15p.padding-bottom-5p
+		.row.margin-top-3p
+			.col-md-10.col-md-offset-1
+				div.margin-left-5p
+					.row.bg-gray
+						.col-md-12
+							h2.text-center.text-vertical-center.text-white.text-upper agenda builder
+		.row
+			.col-md-10.col-md-offset-1
+				div.margin-left-5p
+					.row.bg-grayblue.padding-top-2p.padding-bottom-2p
+						.col-md-12.text-center
+							button.btn.btn-primary.btn-lg.border-square.bg-gray-nohover.border-ltgray.text-white-nohover(type='submit') SAVED AGENDAS
+							button#newAgenda-btn.btn.btn-primary.btn-lg.margin-right.border-square.bg-gray-nohover.border-gray.margin-left-5p NEW AGENDA
+	#newAgenda.hidden-login.container-75p.margin-top-3p.margin-left-15p.padding-bottom-5p
+		.row.margin-top-3p
+			.col-md-10.col-md-offset-1
+				div.margin-left-5p
+					.row.bg-gray
+						.col-md-12
+							h2.text-center.text-vertical-center.text-white.text-upper new agenda
+		.row
+			.col-md-10.col-md-offset-1
+				div.margin-left-5p
+					form.form-inline.form-center(role='form', method='POST', action='/addmeeting')
+						.row.bg-grayblue.padding-top-2p
+							.col-md-12.text-center
+								input.form-control.border-square.border-none.text-left.text-h3.text-white.bg-grayblue.border-grayblue.text-italic(id='addMeeting', type='text', name='meetingTitle', placeholder= 'INSERT MEETING TITLE')
+						.row.bg-grayblue.padding-top-2p
+							.col-md-12.text-center
+								input.form-control.border-square.border-none.text-left.text-h3.text-white.bg-grayblue.border-grayblue.text-italic(id='addMeeting', type='text', name='objective', placeholder= 'MEETING OBJECTIVE')
+						.row.bg-grayblue.padding-top-2p
+							.col-md-1
+								h6.text-center.margin-left-2p.text-capital 1.
+							.col-md-7
+								input.form-control.border-square.border-none.text-left.text-h4.text-black.bg-grayblue.border-grayblue.text-italic(id='addMeeting', type='text', name='agendaTopic', placeholder= 'INSERT AGENDA ITEM')
+							.col-md-4.text-right
+								input.form-control.border-square.border-none.text-left.text-h4.text-black.bg-grayblue.border-grayblue.text-italic(id='addMeeting', type='text', name='duration', placeholder= 'TIME(HH:MM:SS)')
+						.row.bg-grayblue.padding-top-2p
+							.col-md-1
+								h6.text-center.margin-left-2p.text-capital 2.
+							.col-md-7
+								input.form-control.border-square.border-none.text-left.text-h4.text-black.bg-grayblue.border-grayblue.text-italic(id='addMeeting', type='text', name='agendaTopic', placeholder= 'INSERT AGENDA ITEM')
+							.col-md-4.text-right
+								input.form-control.border-square.border-none.text-left.text-h4.text-black.bg-grayblue.border-grayblue.text-italic(id='addMeeting', type='text', name='duration', placeholder= 'TIME(HH:MM:SS)')
+						.row.bg-grayblue.padding-top-2p
+							.col-md-1
+								h6.text-center.margin-left-2p.text-capital 3.
+							.col-md-7
+								input.form-control.border-square.border-none.text-left.text-h4.text-black.bg-grayblue.border-grayblue.text-italic(id='addMeeting', type='text', name='agendaTopic', placeholder= 'INSERT AGENDA ITEM')
+							.col-md-4.text-right
+								input.form-control.border-square.border-none.text-left.text-h4.text-black.bg-grayblue.border-grayblue.text-italic(id='addMeeting', type='text', name='duration', placeholder= 'TIME(HH:MM:SS)')
+						.row.bg-grayblue.padding-bottom-2p.padding-top-1p
+							.col-md-12.text-center
+								button.text-h3.text-white.margin-left-2p.text-capital(type="submit") ADD MEETING

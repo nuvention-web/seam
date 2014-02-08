@@ -19,6 +19,29 @@
                   $('.hidden-login').fadeOut(300);
                   $('.visible-login').delay(300).fadeIn(700);
               });
+
+              $('#meetingAgenda-btn').click(function(){
+                if($('#meetingAgenda').css('display')=='none')
+                {
+                  $('#meetingAgenda.hidden-login').delay(300).fadeIn(700);
+                }
+                else{
+                  $('#meetingAgenda.hidden-login').delay(300).fadeOut(700);  
+                }
+                            
+              });
+              $('#newAgenda-btn').click(function(){
+                if($('#newAgenda').css('display')=='none')
+                {
+                  $('#meetingAgenda.hidden-login').delay(300).fadeOut(100);
+                  $('#newAgenda.hidden-login').delay(300).fadeIn(700);
+                }
+                else{
+                  $('#newAgenda.hidden-login').delay(300).fadeOut(700);  
+                }
+                            
+              });
+
     });
     $('a[href*=#]:not([href=#])').click(function() {
     if (location.pathname.replace(/^\//,'') == this.pathname.replace(/^\//,'') 

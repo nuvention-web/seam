@@ -66,7 +66,7 @@ exports.addTask = function(req, res){
 	var userPerson = req.body.taskPerson;
 	var allUsers = userPerson.split(', ');
 
-	for(i=0; i< allUsers.length; i++)
+	for(var i=0; i< allUsers.length; i++)
 	{
 		if(allUsers[i] != "")
 		{

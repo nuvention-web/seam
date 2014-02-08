@@ -6,6 +6,7 @@ var home = require('./routes/home');
 var user = require('./routes/user');
 var admin = require('./routes/admin');
 var task = require('./routes/task');
+var interfaces = require('./routes/interfaces');
 var index = require('./routes/index');
 var http = require('http');
 var path = require('path');
@@ -70,6 +71,13 @@ app.post('/addemail', home.addemail);
 app.get('/admin', admin.admin);
 app.get('/addadmin', admin.addadmin);
 app.post('/confirm', admin.confirm);
+
+//Interface
+app.get('/PMInterface', user.isLoggedIn, interfaces.PMInterface);
+app.get('/welcomeInterface', user.isLoggedIn, interfaces.welcomeInterface);
+app.get('/meetingInterface', user.isLoggedIn, interfaces.meetingInterface);
+app.get('/taskInterface', user.isLoggedIn, interfaces.taskInterface);
+app.post('/addmeeting', user.isLoggedIn, interfaces.addMeeting);
 
 //product stuff
 app.get('/meetingTask', user.isLoggedIn, task.meetingTask);

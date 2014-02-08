@@ -1,7 +1,9 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
-taskSchema = new Schema({
+var taskSchema = new Schema({
+	UserId: { type: String, required : true},
+	MeetingId: {type: Number},
     meetingTask: { type: String },
     meetingDate: { type: String },
     meetingPerson: { type: String },
