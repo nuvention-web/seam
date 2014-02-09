@@ -21,7 +21,7 @@ block content
 			.col-md-12
 				h3.text-center.text-white AGENDA
 		each agenda, i in meeting.agenda
-			.row.bg-grayblue.padding-top-2p
+			.row.bg-grayblue.padding-top-2p.margin-top-2x
 				.col-md-12
 					h4.text-left.text-bold.text-capital #{i+1}. #{agenda.topic}
 					each notes, i in agenda.notes
@@ -34,7 +34,37 @@ block content
 						input.margin-left-2p.form-control.border-square.border-none.text-left(id='signup', type='text', name='notes', placeholder= 'Start Typing...')
 					.col-md-3.text-center
 						button.btn.btn-primary.btn-lg.margin-right.border-square.bg-ltgray-nohover.border-ltgray.padding-bottom-2p.text-black-nohover(type='submit') NOTE
-						button.btn.btn-primary.btn-lg.margin-left-1p.margin-right.border-square.bg-gray-nohover.border-gray.padding-bottom-2p(type='submit') TASK		
+						a#meetingMembers-btn.btn.btn-primary.btn-lg.margin-left-1p.margin-right.border-square.bg-gray-nohover.border-gray.padding-bottom-2p TASK	
+			#meetingMembers.hidden-login.bg-grayblue
+				.row.bg-grayblue
+					.col-md-8.col-md-offset-2.bg-gray.text-center
+						h3.text-center.text-white ADD PEOPLE
+				.row.bg-grayblue
+					.col-md-8.col-md-offset-2.bg-white.text-center
+						#memberList.margin-top-1p(style="width:100%; height:105px; float:left; display:inline-block; overflow-y:hidden; overflow-x:scroll; white-space:nowrap;")
+							div.disp-inline-block.img-width-80x.img-height-80x
+								img.img-responsive.cursor-pointer.img-gray#1(src="images/joLee.jpg", value='leejosephinem@gmail.com')
+							div.disp-inline-block.img-width-80x.img-height-80x.margin-left-2p
+								img.img-responsive.cursor-pointer.img-gray#2(src="images/AlexPopelard.jpg" , value='alexpopelard@northwestern.edu')
+							div.disp-inline-block.img-width-80x.img-height-80x.margin-left-2p
+								img.img-responsive.cursor-pointer.img-gray(src="images/SuzeeHan.jpg", value='suzeehan2015@u.northwestern.edu')
+							div.disp-inline-block.img-width-80x.img-height-80x.margin-left-2p
+								img.img-responsive.cursor-pointer.img-gray(src="images/MichaelChen.jpg", value="michaelchen2015@u.northwestern.edu")
+							div.disp-inline-block.img-width-80x.img-height-80x.margin-left-2p
+								img.img-responsive.cursor-pointer.img-gray(src="images/TommyYu.jpg", value='tyu3138@gmail.com')
+							div.disp-inline-block.img-width-80x.img-height-80x.margin-left-2p
+								img.img-responsive.cursor-pointer.img-gray(src="images/AlexPopelard.jpg" , value='alexpopelard@northwestern.edu')
+							div.disp-inline-block.img-width-80x.img-height-80x.margin-left-2p
+								img.img-responsive.cursor-pointer.img-gray(src="images/SuzeeHan.jpg", value='suzeehan2015@u.northwestern.edu')
+							div.disp-inline-block.img-width-80x.img-height-80x.margin-left-2p
+								img.img-responsive.cursor-pointer.img-gray(src="images/MichaelChen.jpg", value="michaelchen2015@u.northwestern.edu")
+							div.disp-inline-block.img-width-80x.img-height-80x.margin-left-2p
+								img.img-responsive.cursor-pointer.img-gray(src="images/TommyYu.jpg", value='tyu3138@gmail.com')
+							div.disp-inline-block.img-width-80x.img-height-80x.margin-left-2p
+								img.img-responsive.cursor-pointer.img-gray(src="images/joLee.jpg", value='leejosephinem@gmail.com')
+				.row.bg-grayblue.padding-bottom-1p
+					.col-md-8.col-md-offset-2.text-center.bg-white.padding-top-2p.padding-bottom-1p
+						button.btn.btn-primary.btn-lg.margin-right.border-square.bg-gray-nohover.border-ltgray.text-white-nohover(type='submit') ASSIGN
 		.row.bg-gray.margin-top-3p.margin-top-2x
 			.col-md-12
 				h3.text-center.text-white.text-upper ASSIGNED TASKS

@@ -41,6 +41,38 @@
                 }
                             
               });
+              $('#meetingMembers-btn').click(function(){
+                if($('#meetingMembers').css('display')=='none')
+                { 
+                  $('#meetingMembers.hidden-login').delay(300).fadeIn(300);
+                }
+                else{
+                  
+                  $('#meetingMembers.hidden-login').delay(300).fadeOut(700);  
+                }
+                            
+              });
+
+              $('#memberList img').click(function() {
+                var value = $(this).attr('value');
+                if($(this).css('border-radius')=='0px'){
+                  
+                  $(this).css('border-radius','1px');
+                  $(this).css("border","1px solid rgb(204,51,51)");
+                  $(this).css("filter","none");
+                  $(this).css("-webkit-filter","grayscale(0)");
+                }
+                else{
+                  $(this).css('border-radius','0px');
+                  $(this).css("border","none");
+                  $(this).css("filter","url(filters.svg#grayscale)");
+                  $(this).css("filter","gray");
+                  $(this).css("-webkit-filter","grayscale(1);");
+                }
+                var input = $('#taskPerson');
+                input.val(input.val() + value + ', ');
+                return false;
+            });
 
     });
     $('a[href*=#]:not([href=#])').click(function() {
@@ -56,4 +88,10 @@
             return false;
         }
     }
+    
 });
+
+function chooseVisibility(tabId){
+      alert(tabId);
+  
+};
