@@ -7,13 +7,13 @@ block content
 				h3.text-center.text-vertical-center
 					span.text-white #{meeting.meetingTitle}
 		.row.bg-grayblue.padding-top-2p
-			.col-md-10
+			.col-md-10.margin-top-1p
 				.progress.border-square
 					.progress-bar.progress-bar-success(style='width: 35%;')
 					.progress-bar.progress-bar-warning(style='width: 20%;')
 					.progress-bar.progress-bar-danger(style='width: 10%;')
 			.col-md-2
-				h4.margin-top-1p 2:00:11
+				button.btn.btn-primary.btn-lg.margin-right.border-square.bg-gray-nohover.border-ltgray.text-white-nohover(type='submit') FINISH
 		.row.bg-grayblue.padding-bottom-1p
 			.col-md-12
 				h3.text-center.text-capital Objective: #{meeting.objective}
@@ -24,7 +24,7 @@ block content
 			.row.bg-grayblue.padding-top-2p.margin-top-2x
 				.col-md-12
 					h4.text-left.text-bold.text-capital #{i+1}. #{agenda.topic}
-					each notes, i in agenda.notes
+					each notes, x in agenda.notes
 						h5.text-left.margin-left-2p.text-capital #{notes.notes}
 			.row.bg-grayblue.padding-bottom-2p#agenda1
 				form.form-inline.form-center(role='form', method='POST', action='/addnotes')
@@ -34,8 +34,8 @@ block content
 						input.margin-left-2p.form-control.border-square.border-none.text-left(id='signup', type='text', name='notes', placeholder= 'Start Typing...')
 					.col-md-3.text-center
 						button.btn.btn-primary.btn-lg.margin-right.border-square.bg-ltgray-nohover.border-ltgray.padding-bottom-2p.text-black-nohover(type='submit') NOTE
-						a#meetingMembers-btn.btn.btn-primary.btn-lg.margin-left-1p.margin-right.border-square.bg-gray-nohover.border-gray.padding-bottom-2p TASK	
-			#meetingMembers.hidden-login.bg-grayblue
+						a.btn.btn-primary.btn-lg.margin-left-1p.margin-right.border-square.bg-gray-nohover.border-gray.padding-bottom-2p(id='meetingMember'+i, onClick="chooseVisibility(id)") TASK	
+			.hidden-login.bg-grayblue(id='meetingMember'+i+'-div')
 				.row.bg-grayblue
 					.col-md-8.col-md-offset-2.bg-gray.text-center
 						h3.text-center.text-white ADD PEOPLE
