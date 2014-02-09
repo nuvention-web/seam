@@ -53,6 +53,7 @@
                 }
                             
               });
+              $('.bar').animate({ width: "100%" },2000);
 
               $('#memberList img').click(function() {
                 var value = $(this).attr('value');
@@ -73,7 +74,6 @@
                   $(this).css("-webkit-filter","grayscale(1);");
                 }
             });
-
     });
     $('a[href*=#]:not([href=#])').click(function() {
     if (location.pathname.replace(/^\//,'') == this.pathname.replace(/^\//,'') 
