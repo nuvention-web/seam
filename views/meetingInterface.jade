@@ -24,6 +24,8 @@ block content
 			.row.bg-grayblue.padding-top-2p
 				.col-md-12
 					h4.text-left.text-bold.text-capital #{i+1}. #{agenda.topic}
+					each notes, i in agenda.notes
+						h5.text-left.margin-left-2p.text-capital #{notes.notes}
 			.row.bg-grayblue.padding-bottom-2p#agenda1
 				form.form-inline.form-center(role='form', method='POST', action='/addnotes')
 					input(type='hidden', name='noteOrder', value='#{i}')
