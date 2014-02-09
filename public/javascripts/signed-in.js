@@ -19,7 +19,6 @@
                   $('.hidden-login').fadeOut(300);
                   $('.visible-login').delay(300).fadeIn(700);
               });
-
               $('#meetingAgenda-btn').click(function(){
                 if($('#meetingAgenda').css('display')=='none')
                 {

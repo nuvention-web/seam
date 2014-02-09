@@ -8,10 +8,8 @@ block content
 					span.text-white #{meeting.meetingTitle}
 		.row.bg-grayblue.padding-top-2p
 			.col-md-10.margin-top-1p
-				.progress.border-square
-					.progress-bar.progress-bar-success(style='width: 35%;')
-					.progress-bar.progress-bar-warning(style='width: 20%;')
-					.progress-bar.progress-bar-danger(style='width: 10%;')
+				.progress.border-square.progress-striped.active
+					.bar(style="width:0%; background-color:rgb(87,134,180) !important;")
 			.col-md-2
 				button.btn.btn-primary.btn-lg.margin-right.border-square.bg-gray-nohover.border-ltgray.text-white-nohover(type='submit') FINISH
 		.row.bg-grayblue.padding-bottom-1p

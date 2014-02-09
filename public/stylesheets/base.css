@@ -380,7 +380,12 @@ button{
     filter: url("data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\'><filter id=\'grayscale\'><feColorMatrix type=\'matrix\' values=\'1 0 0 0 0, 0 1 0 0 0, 0 0 1 0 0, 0 0 0 1 0\'/></filter></svg>#grayscale");
     -webkit-filter: grayscale(0%);
 }
-
+.bar {
+  -webkit-transition: width 30.0s ease !important;
+     -moz-transition: width 30.0s ease !important;
+       -o-transition: width 30.0s ease !important;
+          transition: width 30.0s ease !important;
+}
 /* ========================================================
    1D.BORDER-DESKTOP
 =========================================================== */
