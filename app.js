@@ -75,9 +75,11 @@ app.post('/confirm', admin.confirm);
 //Interface
 app.get('/PMInterface', user.isLoggedIn, interfaces.PMInterface);
 app.get('/welcomeInterface', user.isLoggedIn, interfaces.welcomeInterface);
+app.post('/meetingInterface', user.isLoggedIn, interfaces.meetingInterface);
 app.get('/meetingInterface', user.isLoggedIn, interfaces.meetingInterface);
 app.get('/taskInterface', user.isLoggedIn, interfaces.taskInterface);
 app.post('/addmeeting', user.isLoggedIn, interfaces.addMeeting);
+app.post('/addnotes', user.isLoggedIn, interfaces.addNotes);
 
 //product stuff
 app.get('/meetingTask', user.isLoggedIn, task.meetingTask);

@@ -23,11 +23,13 @@ block content
 					each meeting, i in meetingList
 						if(meeting.isComplete == 0)
 							.row.bg-grayblue.margin-top-2x
-								.col-md-10
-									h3.text-left
-										a.text-left.text-upper.text-vertical-center.text-h3.text-black-nohover(href="#") #{meeting.meetingTitle}
-								.col-md-2.margin-top-3p.text-right
-									a.lsf-icon.text-black.text-big(href='meetingInterface' title="playmedia")
+								form(role='form', method='POST', action='/meetingInterface', id='future'+i)
+									input(type='hidden', name='meetingId', value='#{meeting._id}')
+									.col-md-10
+										h3.text-left
+											a.text-left.text-upper.text-vertical-center.text-h3.text-black-nohover(href="javascript:{}" onclick="document.getElementById('future#{i}').submit();") #{meeting.meetingTitle}
+									.col-md-2.margin-top-3p.text-right
+										a.lsf-icon.text-black.text-big(href="javascript:{}" onclick="document.getElementById('future#{i}').submit();" title="playmedia")
 					.row.bg-grayblue.margin-top-2x
 						.col-md-12
 							h3.text-left
@@ -73,7 +75,7 @@ block content
 		.row
 			.col-md-10.col-md-offset-1
 				div.margin-left-5p
-					form.form-inline.form-center(role='form', method='POST', action='/addmeeting')
+					form.form-inline.form-center(role='form', method='POST', action='/addmeeting' id='addmeeting')
 						.row.bg-grayblue.padding-top-2p
 							.col-md-12.text-center
 								input.form-control.border-square.border-none.text-left.text-h3.text-white.bg-grayblue.border-grayblue.text-italic(id='addMeeting', type='text', name='meetingTitle', placeholder= 'INSERT MEETING TITLE')
@@ -103,4 +105,4 @@ block content
 								input.form-control.border-square.border-none.text-left.text-h4.text-black.bg-grayblue.border-grayblue.text-italic(id='addMeeting', type='text', name='duration', placeholder= 'TIME(HH:MM:SS)')
 						.row.bg-grayblue.padding-bottom-2p.padding-top-1p
 							.col-md-12.text-center
-								button.text-h3.text-white.margin-left-2p.text-capital(type="submit") ADD MEETING
+								a.text-h3.text-white.margin-left-2p.text-capital(href="javascript:{}" onclick="document.getElementById('addmeeting').submit();") ADD MEETING

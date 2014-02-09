@@ -1,9 +1,13 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
+var noteSchema = new Schema({
+	notes: { type: String }
+});
+
 var topicSchema = new Schema({
 	topic: { type: String },
-	notes: { type: String },
+	notes: [noteSchema],
 	duration: { type: String }
 });
 

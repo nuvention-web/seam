@@ -5,44 +5,34 @@ block content
 		.row.bg-gray
 			.col-md-12
 				h3.text-center.text-vertical-center
-					span.text-white EPIC: ALL HANDS MEETING
+					span.text-white #{meeting.meetingTitle}
 		.row.bg-grayblue.padding-top-2p
 			.col-md-10
 				.progress.border-square
 					.progress-bar.progress-bar-success(style='width: 35%;')
 					.progress-bar.progress-bar-warning(style='width: 20%;')
-					.progress-bar.progress-bar-danger(style='width: 10%;')				
+					.progress-bar.progress-bar-danger(style='width: 10%;')
 			.col-md-2
 				h4.margin-top-1p 2:00:11
 		.row.bg-grayblue.padding-bottom-1p
 			.col-md-12
-				h3.text-center.text-capital Objective: Get team updates and plan for social media launch
+				h3.text-center.text-capital Objective: #{meeting.objective}
 		.row.bg-gray.margin-top-3p
 			.col-md-12
 				h3.text-center.text-white AGENDA
-		.row.bg-grayblue.padding-top-2p
-			.col-md-12
-				h4.text-left.text-bold.text-capital 1. Team issues
-				h5.text-left.margin-left-2p.text-capital [00:02] Project Pitch prepared great update
-				h5.text-left.margin-left-2p.text-capital [00:04] group members came in late
-				h5.text-left.margin-left-2p.text-capital [00:02] audrey fell asleep
-		.row.bg-grayblue.padding-bottom-2p#agenda1
-			form.form-inline.form-center(role='form', method='POST', action='/signup')
-				.col-md-9.col-sm-9.form-group
-					input.margin-left-2p.form-control.border-square.border-none.text-left(id='signup', type='text', name='email', placeholder= 'Start Typing...')
-				.col-md-3.text-center
-					button.btn.btn-primary.btn-lg.margin-right.border-square.bg-ltgray-nohover.border-ltgray.padding-bottom-2p.text-black-nohover(type='submit') NOTE
-					button.btn.btn-primary.btn-lg.margin-left-1p.margin-right.border-square.bg-gray-nohover.border-gray.padding-bottom-2p(type='submit') TASK		
-		.row.bg-grayblue.padding-top-2p.margin-top-2x
-			.col-md-12
-				h4.text-left.text-bold.text-capital 2. presentation from audrey about surveys
-		.row.bg-grayblue.padding-bottom-2p#agenda1
-			form.form-inline.form-center(role='form', method='POST', action='/signup')
-				.col-md-9.col-sm-9.form-group
-					input.margin-left-2p.form-control.border-square.border-none.text-left(id='signup', type='text', name='email', placeholder= 'Start Typing...')
-				.col-md-3.text-center
-					button.btn.btn-primary.btn-lg.margin-right.border-square.bg-ltgray-nohover.border-ltgray.padding-bottom-2p.text-black-nohover(type='submit') NOTE
-					button.btn.btn-primary.btn-lg.margin-left-1p.margin-right.border-square.bg-gray-nohover.border-gray.padding-bottom-2p(type='submit') TASK
+		each agenda, i in meeting.agenda
+			.row.bg-grayblue.padding-top-2p
+				.col-md-12
+					h4.text-left.text-bold.text-capital #{i+1}. #{agenda.topic}
+			.row.bg-grayblue.padding-bottom-2p#agenda1
+				form.form-inline.form-center(role='form', method='POST', action='/addnotes')
+					input(type='hidden', name='noteOrder', value='#{i}')
+					input(type='hidden', name='meetingId', value='#{meeting._id}')
+					.col-md-9.col-sm-9.form-group
+						input.margin-left-2p.form-control.border-square.border-none.text-left(id='signup', type='text', name='notes', placeholder= 'Start Typing...')
+					.col-md-3.text-center
+						button.btn.btn-primary.btn-lg.margin-right.border-square.bg-ltgray-nohover.border-ltgray.padding-bottom-2p.text-black-nohover(type='submit') NOTE
+						button.btn.btn-primary.btn-lg.margin-left-1p.margin-right.border-square.bg-gray-nohover.border-gray.padding-bottom-2p(type='submit') TASK		
 		.row.bg-gray.margin-top-3p.margin-top-2x
 			.col-md-12
 				h3.text-center.text-white.text-upper ASSIGNED TASKS
