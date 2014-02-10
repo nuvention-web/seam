@@ -24,7 +24,7 @@ block content
 					h4.text-left.text-bold.text-capital #{i+1}. #{agenda.topic}
 					each notes, x in agenda.notes
 						h5.text-left.margin-left-2p.text-capital #{notes.notes}
-			form.form-inline.form-center(role='form', method='POST', name='TNForm#{i}', action='WHATTT')
+			form.form-inline.form-center(role='form', method='POST', name='TNForm#{i}', action='/addnote')
 				.row.bg-grayblue.padding-bottom-2p#agenda1
 					input(type='hidden', name='noteOrder', value='#{i}')
 					input(type='hidden', name='meetingId', value='#{meeting._id}')
