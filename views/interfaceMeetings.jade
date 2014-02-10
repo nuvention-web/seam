@@ -1,0 +1,96 @@
+extends sidebarNavbar
+
+block content
+	.bg-white(style="margin-left:14%; top:0px; position:absolute; width:86%; float:right")
+		.container-95p.margin-center
+			.row.margin-top-3p
+				.col-md-8.col-sm-8.col-xs-8
+					h3.text-black.text-bold.text-upper.text-left epic all hands meeting
+					h5.text-black.text-capital.text-left Objective: Get Team Updates
+				.col-md-4.col-sm-4.col-xs-4
+					h3.text-black.text-upper.text-right february 10, 2014
+					h5.text-black.text-upper.text-right 3:00-5:00 pm
+			.row.margin-top-1p
+				.col-md-8
+					.progress.border-square.margin-top-5x.height-24x
+						.progress-bar.progress-bar-success(style='width: 35%;')
+							span.sr-only 35% Complete (success)
+						.progress-bar.progress-bar-warning(style='width: 20%;')
+							span.sr-only 20% Complete (warning)
+						.progress-bar.progress-bar-danger(style='width: 10%;')
+							span.sr-only 10% Complete (danger)
+				.col-md-2
+					h5.text-black.text-left.float-right.margin-top-5x.text-upper 00:47 left
+				.col-md-2
+					a(href="/interfaceWelcome")
+						button.border-red.btn.btn-primary.btn-block.border-square.bg-red-hover.text-white-nohover(type='button', onClick="document.getElementById('addmeeting').submit();") END MEETING
+			.row.margin-top-3p
+				.col-md-6.col-md-offset-3
+					h4.text-black.text-upper.text-center agenda items
+			.row.margin-top-1p
+				.col-md-10
+					h4.text-black.text-upper.text-left.text-capital 1. Announcement from the president
+				.col-md-2
+					h4.text-red.text-upper.text-center 00:05
+			form.form-inline.form-center(role='form', method='POST', name='TNForm#{i}', action='/addnote')
+				.row.bg-grayblue.padding-bottom-1p.margin-top-1p#agenda1
+					.col-md-8.col-md-offset-2.col-sm-9.form-group
+						input.text-h5.height-30x.margin-left-2p.form-control.border-square.border-none.text-left.bg-ltgray(id='notes', type='text', name='notes', placeholder= 'Start Typing...')
+				.row
+					.col-md-4.col-md-offset-4.text-center
+						button.btn.btn-primary.margin-right.border-square.bg-gray-nohover.border-gray.text-white-nohover(type='button', onClick="addNote(#{i})") ADD NOTE
+						a.btn.btn-primary.margin-left-5p.margin-right.border-square.bg-gray-nohover.border-gray.text-white-nohover(id='meetingMember'+i, onClick="chooseVisibility(id)") ADD TASK	
+			.row.margin-top-1p
+				.col-md-10
+					h4.text-black.text-upper.text-left.text-capital 2. Team updates
+				.col-md-2
+					h4.text-red.text-upper.text-center 00:10
+			form.form-inline.form-center(role='form', method='POST', name='TNForm#{i}', action='/addnote')
+				.row.bg-grayblue.padding-bottom-1p.margin-top-1p#agenda1
+					.col-md-8.col-md-offset-2.col-sm-9.form-group
+						input.text-h5.height-30x.margin-left-2p.form-control.border-square.border-none.text-left.bg-ltgray(id='notes', type='text', name='notes', placeholder= 'Start Typing...')
+				.row
+					.col-md-4.col-md-offset-4.text-center
+						button.btn.btn-primary.margin-right.border-square.bg-gray-nohover.border-gray.text-white-nohover(type='button', onClick="addNote(#{i})") ADD NOTE
+						a.btn.btn-primary.margin-left-5p.margin-right.border-square.bg-gray-nohover.border-gray.text-white-nohover(id='meetingMember'+i, onClick="chooseVisibility(id)") ADD TASK	
+			.row.margin-top-1p
+				.col-md-10
+					h4.text-black.text-upper.text-left.text-capital 3. Presentation from branding committee
+				.col-md-2
+					h4.text-red.text-upper.text-center 00:33
+			form.form-inline.form-center(role='form', method='POST', name='TNForm#{i}', action='/addnote')
+				.row.bg-grayblue.padding-bottom-1p.margin-top-1p#agenda1
+					.col-md-8.col-md-offset-2.col-sm-9.form-group
+						input.text-h5.height-30x.margin-left-2p.form-control.border-square.border-none.text-left.bg-ltgray(id='notes', type='text', name='notes', placeholder= 'Start Typing...')
+				.row
+					.col-md-4.col-md-offset-4.text-center
+						button.btn.btn-primary.margin-right.border-square.bg-gray-nohover.border-gray.text-white-nohover(type='button', onClick="addNote(#{i})") ADD NOTE
+						a.btn.btn-primary.margin-left-5p.margin-right.border-square.bg-gray-nohover.border-gray.text-white-nohover(id='meetingMember'+i, onClick="chooseVisibility(id)") ADD TASK
+		.container-95p.bg-ltgray.margin-center.margin-top-3p(style="width:100%; padding:0 0; padding-bottom:2%; overflow-x:hidden")
+			.row.margin-top-2x
+				.col-md-12
+					h3.text-center.text-red.text-bold ASSIGNED TASKS
+			.row.margin-left-1p.bg-ltgray.margin-top-1p.margin-top-2x
+				.col-md-9
+					h3.text-left.text-black.text-capital email megan everett to book ford design studio for project pitch
+				.col-md-3.text-center.margin-top-1p
+					a.text-h4.text-black.margin-left-5p(href="#") EDIT
+					a.text-h4.text-black.margin-left-2p(href="#") REVIEW
+			.row.margin-left-1p.bg-ltgray
+				.col-md-9
+					h3.text-left.text-black.text-capital contact kellogg alum to moderate panel
+				.col-md-3.text-center.margin-top-1p
+					a.text-h4.text-black.margin-left-5p(href="#") EDIT
+					a.text-h4.text-black.margin-left-2p(href="#") REVIEW
+			.row.margin-left-1p.bg-ltgray
+				.col-md-9
+					h3.text-left.text-black.text-capital meet with president of isbe to coordinate joint social event
+				.col-md-3.text-center.margin-top-1p
+					a.text-h4.text-black.margin-left-5p(href="#") EDIT
+					a.text-h4.text-black.margin-left-2p(href="#") REVIEW
+			.row.margin-left-1p.bg-ltgray
+				.col-md-9
+					h3.text-left.text-black.text-capital call stanford bases for advise on publicity
+				.col-md-3.text-center.margin-top-1p
+					a.text-h4.text-black.margin-left-5p(href="#") EDIT
+					a.text-h4.text-black.margin-left-2p(href="#") REVIEW

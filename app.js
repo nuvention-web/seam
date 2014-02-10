@@ -73,11 +73,17 @@ app.get('/addadmin', admin.addadmin);
 app.post('/confirm', admin.confirm);
 
 //Interface
-app.get('/PMInterface', user.isLoggedIn, interfaces.PMInterface);
-app.get('/welcomeInterface', user.isLoggedIn, interfaces.welcomeInterface);
-app.post('/meetingInterface', user.isLoggedIn, interfaces.meetingInterface);
-app.get('/meetingInterface', user.isLoggedIn, interfaces.meetingInterface);
-app.get('/taskInterface', user.isLoggedIn, interfaces.taskInterface);
+
+app.get('/interfaceAddMeeting', user.isLoggedIn, interfaces.interfaceAddMeeting);
+app.get('/interfaceMeetings', user.isLoggedIn, interfaces.interfaceMeetings);
+app.get('/interfaceNewMeeting', user.isLoggedIn, interfaces.interfaceNewMeeting);
+app.get('/interfaceProjects', user.isLoggedIn, interfaces.interfaceProjects);
+app.get('/interfaceStartMeeting', user.isLoggedIn, interfaces.interfaceStartMeeting);
+app.get('/interfaceTasks', user.isLoggedIn, interfaces.interfaceTasks);
+app.get('/interfaceWelcome', user.isLoggedIn, interfaces.interfaceWelcome);
+app.get('/sidebarMeetings', user.isLoggedIn, interfaces.sidebarMeetings);
+app.get('/sidebarNavbar', user.isLoggedIn, interfaces.sidebarNavbar);
+app.get('/sidebarTasks', user.isLoggedIn, interfaces.sidebarTasks);
 app.post('/addmeeting', user.isLoggedIn, interfaces.addMeeting);
 app.post('/addnote', user.isLoggedIn, interfaces.addNote);
 app.post('/addTask', user.isLoggedIn, interfaces.addTask);
@@ -96,12 +102,12 @@ app.get('/signup', user.signup);
 app.get('/logout', user.logout);
 //app.post('/login', user.login);
 app.post('/signup', passport.authenticate('local-signup', {// process the signup form
-	successRedirect: '/PMInterface', // redirect to the secure profile section
+	successRedirect: '/interfaceProjects', // redirect to the secure profile section
 	failureRedirect: '/signup', // redirect back to the signup page if there is an error
 	failureFlash: true // allow flash messages
 }));
 app.post('/login', passport.authenticate('local-login', {
-	successRedirect: '/PMInterface', // redirect to the secure profile section
+	successRedirect: '/interfaceProjects', // redirect to the secure profile section
 	failureRedirect: '/home', // redirect back to the signup page if there is an error
 	failureFlash: true // allow flash messages
 }));

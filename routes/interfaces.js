@@ -11,10 +11,37 @@ exports.PMInterface = function(req, res){
 		});
 	})
 };
-exports.welcomeInterface = function(req, res){
-	res.render('welcomeInterface', { title: 'SEAM', user : req.user});
-};
 
+exports.interfaceAddMeeting = function(req, res){
+	res.render('interfaceAddMeeting', { title: 'SEAM', user : req.user});
+};
+exports.interfaceMeetings = function(req, res){
+	res.render('interfaceMeetings', { title: 'SEAM', user : req.user});
+};
+exports.interfaceNewMeeting = function(req, res){
+	res.render('interfaceNewMeeting', { title: 'SEAM', user : req.user});
+};
+exports.interfaceProjects = function(req, res){
+	res.render('interfaceProjects', { title: 'SEAM', user : req.user});
+};
+exports.interfaceStartMeeting = function(req, res){
+	res.render('interfaceStartMeeting', { title: 'SEAM', user : req.user});
+};
+exports.interfaceTasks = function(req, res){
+	res.render('interfaceTasks', { title: 'SEAM', user : req.user});
+};
+exports.interfaceWelcome = function(req, res){
+	res.render('interfaceWelcome', { title: 'SEAM', user : req.user});
+};
+exports.sidebarMeetings = function(req, res){
+	res.render('sidebarMeetings', { title: 'SEAM', user : req.user});
+};
+exports.sidebarNavbar = function(req, res){
+	res.render('sidebarNavbar', { title: 'SEAM', user : req.user});
+};
+exports.sidebarTasks = function(req, res){
+	res.render('sidebarTasks', { title: 'SEAM', user : req.user});
+};
 exports.meetingInterface = function(req, res){
 	var meetingId = req.body.meetingId;
 	if(meetingId == undefined){

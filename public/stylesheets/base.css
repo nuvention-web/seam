@@ -37,22 +37,28 @@ h1,h2,h3,h4,h5,h6,p,a,input, textarea{
 
 }
 h1{
-	font-size:55px;
+	font-size:42px;
+	line-height: 44px;
 }
 h2{
-	font-size:34px;
+	font-size:32px;
+	line-height: 32px;
 }
 h3{
 	font-size:22px;
+	line-height: 24px;
 }
 h4{
 	font-size:20px;
+	line-height: 24px;
 }
 h5{
-	font-size:18px;
+	font-size:16px;
+	line-height: 18px;
 }
 h6{
-	font-size:16px;
+	font-size:14px;
+	line-height: 16px;
 }
 p{
 	font-size:14px;
@@ -65,11 +71,35 @@ a:hover{
 	text-decoration:none;
 }
 hr{
-   height:3px;
+	margin: 12px auto;
+   height:2px;
    width:80%;
 }
 button{
+	border:none !important;
+}
+input{
 	border:none;
+	background-color: transparent;
+}
+.red-input input::-webkit-input-placeholder {
+	color:rgb(204,51,51) !important;
+	text-transform: uppercase;
+}
+.red-input input::-moz-placeholder {
+	color:rgb(204,51,51) !important;
+	text-transform: uppercase;
+}
+.red-input input:-moz-placeholder {   /* Older versions of Firefox */
+	color:rgb(204,51,51) !important;	text-transform: uppercase;
+}
+.red-input input:-ms-input-placeholder { 
+	color:rgb(204,51,51) !important;
+	text-transform: uppercase;
+}
+textarea:focus, input:focus{
+    outline: 0;
+    border:none;
 }
 .form-control{
 	margin:0 auto;
@@ -101,6 +131,12 @@ button{
 =========================================================== */
 .text-white{
 	color:rgb(255,255,255) !important;
+}
+.text-white-redhover{
+	color:rgb(255,255,255) !important;
+}
+.text-white-redhover:hover{
+	color:rgb(204,51,51) !important;
 }
 .text-red{
 	color:rgb(204,51,51) !important;
@@ -134,7 +170,7 @@ button{
 	text-align: right;
 }
 .text-center{
-	text-align: middle;
+	text-align: middle !important;
 }
 .text-vertical-center{
 	vertical-align: center;
@@ -156,6 +192,9 @@ button{
 }
 .text-h4{
 	font-size:20px;
+}
+.text-h5{
+	font-size:16px;
 }
 .text-big{
 	font-size: 36px;
@@ -185,13 +224,16 @@ button{
 	-o-background-size: cover;
 	background-size: cover;
 }
+.bg-black{
+	background-color: #000;
+}
 .bg-white{
 	background-color: #FFF;
 }
 .bg-transparent{
 	background-color: transparent;
 }
-.bg-grayblue{
+.bg-gray-blue{
 	background-color:rgb(212,219,226);
 }
 .bg-green{
@@ -204,33 +246,33 @@ button{
 	background-color: rgb(204,51,51);
 }
 .bg-red-hover:hover{
-	background-color: rgb(230,230,230);
+	background-color: rgb(37,37,37);
 }
 .bg-red-border{
 	background-color: rgb(204,51,51) !important;
 	border-color:rgb(204,51,51) !important;
 }
 .bg-red-border:hover{
-	background-color:rgb(220,220,220) !important;
-	border-color:rgb(220,220,220) !important;
+	background-color:rgb(37,37,37) !important;
+	border-color:rgb(37,37,37) !important;
 }
 .bg-gray{
-	background-color: #232323;
+	background-color: rgb(37,37,37);
 }
 .bg-gray-nohover{
-	background-color: #232323;
+	background-color: rgb(37,37,37);
 }
 .bg-gray-nohover:hover{
-	background-color: #232323;
+	background-color: rgb(37,37,37);
 }
 .bg-ltgray{
-	background-color: rgb(230,230,230);
+	background-color: rgb(225,225,225);
 }
 .bg-ltgray-nohover{
-	background-color: rgb(230,230,230);
+	background-color: rgb(225,225,225);
 }
 .bg-ltgray-nohover:hover{
-	background-color: rgb(230,230,230);
+	background-color: rgb(225,225,225);
 }
 .bg-white-black-border{
 	background-color: rgb(250,250,250);
@@ -243,8 +285,20 @@ button{
 .position-abs{
 	position: absolute;
 }
+.position-fixed{
+	position: fixed;
+}
 .disp-inline-block{
 	display: inline-block;
+}
+.disp-inline{
+	display: inline;
+}
+.top-0x{
+	top:0px;
+}
+.bottom-0x{
+	bottom: 0px;
 }
 .float-left{
 	float: left;
@@ -288,6 +342,18 @@ button{
 }
 .margin-top-5p{
 	margin-top:5%;
+}
+.margin-top-10p{
+	margin-top:10%;
+}
+.margin-top-15p{
+	margin-top:15%;
+}
+.margin-top-20p{
+	margin-top: 20%;
+}
+.margin-left-15x{
+	margin-left: 15px;
 }
 .margin-left-1p{
 	margin-left: 1%;
@@ -343,8 +409,72 @@ button{
 .padding-bottom-10p{
 	padding-bottom: 10%;
 }
+
+/* =======================================================
+   1E.PAGES-DESKTOP
+========================================================== */
+.page{
+	position: relative;
+	overflow: hidden;
+	margin-top:0;
+}
+.page-navbar{
+
+}
+.page-sidebar{
+
+}
+.page-interface{
+
+}
+.full-page{
+	height: 100%;
+}
+.container-500x{
+	height: 500px;
+}
+.container-75p{
+	width:77%;
+}
+.container-85p{
+	width:85%;
+}
+.container-90p{
+	width:90%;
+}
+.container-95p{
+	width:95%;
+}
+.container-99p{
+	width:100%;
+}
+.container-100p{
+	width:100%;
+}
+.width-150x{
+	width:150px;
+}
+.width-250x{
+	width:300px;
+}
+.width-100p{
+	width: 100%;
+}
+
 .height-20x{
-	height:5%;
+	height:20px;
+}
+.height-24x{
+	height: 24px;
+}
+.height-30x{
+	height: 30px;
+}
+.height-80x{
+	height: 60px;
+}
+.height-100p{
+	height:100%;
 }
 /* ========================================================
    1C.IMAGES-DESKTOP
@@ -392,7 +522,7 @@ button{
 .border-50p{
 	border-radius: 50%;
 }
-.border-red{
+.border-shadow-red{
 	box-shadow: 0 0 8px  rgba(204,51,51, .8);
 	-webkit-box-shadow: 0 0 8px  rgba(204,51,51, .8);
 	-moz-box-shadow: 0 0 8px  rgba(204,51,51, .8);
@@ -406,88 +536,60 @@ button{
 	border-color:#000;
 	border-width: 1px;
 }
-.border-grayblue{
+.border-red{
+	background-color:rgb(204,51,51) !important;
+	border-width: 1px;
+}
+.border-gray-blue{
 	background-color:rgb(212,219,226)!important;
 	border-width: 1px;
 }
-.border-grayblue:hover{
+.border-gray-blue:hover{
 	background-color:rgb(212,219,226)!important;
 	border-width: 1px;
 }
 .border-gray{
-	border-color:#232323 !important;
+	border-color:rgb(37,37,37) !important;
 	border-width: 1px;
 }
 .border-gray:hover{
-	border-color:#232323 !important;
+	border-color:rgb(37,37,37)  !important;
 	border-width: 1px;
 }
 .border-ltgray{
-	border-color:rgb(230,230,230) !important;
+	border-color:rgb(225,225,225) !important;
 	border-width: 1px;
 }
 .border-ltgray:hover{
-	border-color:rgb(230,230,230) !important;
+	border-color:rgb(225,225,225)!important;
 	border-width: 1px;
 }
 .border-none{
 	border:none;
-}
-
-/* =======================================================
-   1E.PAGES-DESKTOP
-========================================================== */
-.page{
-	position: relative;
-	overflow: hidden;
-	margin-top:0;
-}
-.full-page{
-	height: 100%;
-}
-.container-500x{
-	height: 500px;
-}
-.container-75p{
-	width:77%;
-}
-.container-85p{
-	width:85%;
-}
-.container-90p{
-	width:90%;
-}
-.container-95p{
-	width:95%;
-}
-.container-100p{
-	width:100%;
-}
-.side-container{
-	position: fixed;
-	top:5%;
-	height: auto;
-	float:left;
-	width:125px;
 }
 /* =======================================================
    2.NAVIGATION-DESKTOP
 ========================================================== */
 .navbar .nav > li > a {
     color:  #FFF;
-    background-color: transparent;
+    background-color: none;
 }
 .navbar .nav > li > a:hover {
    color:rgb(204,51,51);
-    background-color: transparent;
+}
+.nav > li {
+	 background-color: none !important;
 }
 .nav > li > a{
-	color:#000;
-	background-color: rgb(212,219,226);
+	color:rgb(204,51,51);
 }
 .nav > li > a:hover{
-	color:#FFF;
-	background-color: rgb(212,219,226);
+	color:rgb(204,51,51);
+	background-color:rgb(37,37,37)!important;
+}
+.nav > li > a:focus{
+	color:rgb(204,51,51);
+	 background-color:rgb(37,37,37)!important;
 }
 /* =======================================================
    3.FRONT_PAGE-DESKTOP

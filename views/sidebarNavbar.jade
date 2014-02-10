@@ -20,29 +20,25 @@ html(lang='en')
 			ga('create', 'UA-47126611-1', 'meetingbuddy.herokuapp.com');
 			ga('send', 'pageview');
 	body#home-pg
-		.navbar.bg-transparent.navbar-static-top(style="padding-top:0px; margin-top:0px", role='navigation')
-			.container-95p.margin-center
-				.navbar-header
-					button.navbar-toggle(type='button', data-toggle='offcanvas', data-target='.sidebar-nav')
-						span.icon-bar
-						span.icon-bar
-						span.icon-bar
-					a(href='welcomeInterface')
-						img.navbar-brand.img-30p.img-responsive(src="images/seamlogo.png")
-		.side-container(style="margin-top:200px;")
+		.bg-gray.height-100p.position-fixed.float-left.top-0x(style="width:14%;")
 			.row.row-offcanvas.row-offcanvas-left
 				#sidebar.col-xs-6.col-sm-3.sidebar-offcanvas(role='navigation' style="min-width:100%")
-					ul.nav
-						li.active.bg-grayblue.margin-top-2x.padding-top-20x.padding-bottom-20x
-							a.lsf-icon.text-black.text-big(href='PMInterface' title="memo")
-						li.bg-grayblue.margin-top-2x.padding-top-20x.padding-bottom-20x
-							a.lsf-icon.text-black.text-big(href='taskInterface' title="group")
-						li.active.bg-grayblue.margin-top-2x.padding-top-20x.padding-bottom-20x
-							a.lsf-icon.text-black.text-big(href='taskInterface' title="checkbox")
-						li.bg-grayblue.margin-top-2x.padding-top-20x.padding-bottom-20x
-							a.lsf-icon.text-black.text-big(href='taskInterface' title="gear")
-						li.bg-grayblue.margin-top-2x.padding-top-20x.padding-bottom-20x
-							a.lsf-icon.text-black.text-big(href='home' title="power")
+					h3.text-white.text-upper.text-bold Project:
+					h4
+						a.text-h4.text-bold.text-upper.text-red(href="/interfaceProjects") EPIC
+					ul.nav.pos-fixed.top-20p.sidebar-width(style="position:fixed; width:14%; margin:0 auto; top:20%;")
+						li(style="margin-top:15px")
+							a.text-h5.text-white-redhover(href="sidebarMeetings") MEETINGS
+						li(style="margin-top:15px")
+							a.text-h5.text-white-redhover(href="sidebarTasks") TASKS
+						li(style="margin-top:15px")
+							a.text-h5.text-white-redhover(href="#") TEAMS
+						li(style="margin-top:15px")
+							a.text-h5.text-white-redhover(href="#") SETTINGS
+						li(style="margin-top:15px")
+							a.text-h5.text-white-redhover(href="/home") LOGOUT
+				a(href="/interfaceProjects")
+					img.navbar-brand.img-responsive.position-fixed.bottom-0x.margin-left-15x.height-80x(style="width:14%; height:10%;",src="images/seamlogo.png")
 		block content
 		script(src='https://code.jquery.com/jquery.js')
 		script(src='javascripts/bootstrap.min.js')
