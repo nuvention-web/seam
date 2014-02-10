@@ -61,24 +61,10 @@ block content
 		.row.bg-gray.margin-top-3p.margin-top-2x
 			.col-md-12
 				h3.text-center.text-white.text-upper ASSIGNED TASKS
-		.row.bg-grayblue.padding-top-2p
-			.col-md-10
-				h5.text-left.text-capital Order pizza for social media launch next week
-			.col-md-2.text-right
-				a.lsf-icon.text-black.text-big(href='taskInterface' title="edit")
-		.row.bg-grayblue.padding-top-2p.margin-top-2x
-			.col-md-10
-				h5.text-left.text-capital Email ISBE Presidents for connection
-			.col-md-2.text-right
-				a.lsf-icon.text-black.text-big(href='taskInterface' title="edit")
-		.row.bg-grayblue.padding-top-2p.margin-top-2x
-			.col-md-10
-				h5.text-left.text-capital tell team members to present OKR for next week
-			.col-md-2.text-right
-				a.lsf-icon.text-black.text-big(href='taskInterface' title="edit")
-		.row.bg-grayblue.padding-top-2p.margin-top-2x
-			.col-md-10
-				h5.text-left.text-capital Reimbursements for the team
-			.col-md-2.text-right
-				a.lsf-icon.text-black.text-big(href='taskInterface' title="edit")
+		each task, i in taskList
+			.row.bg-grayblue.padding-top-2p
+				.col-md-10
+					h5.text-left.text-capital #{task.meetingTask}
+				.col-md-2.text-right
+					a.lsf-icon.text-black.text-big(href='taskInterface' title="edit")
 		.padding-top-3p

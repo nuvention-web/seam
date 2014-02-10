@@ -26,11 +26,15 @@ exports.meetingInterface = function(req, res){
 	console.log(meetingId);
 	Meeting.findOne({'_id': meetingId}, function(e, doc){
 		console.log(doc);
-		res.render('meetingInterface', { 
-			title: 'SEAM', 
-			meeting: doc,
-			user : req.user
-		});
+		Task.find({'MeetingId': meetingId}, function(e, task){
+			console.log(task);
+			res.render('meetingInterface', { 
+				title: 'SEAM',
+				taskList: task,
+				meeting: doc,
+				user : req.user
+			});
+		})
 	})
 };
 
