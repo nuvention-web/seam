@@ -3,7 +3,7 @@ var Schema = mongoose.Schema;
 
 var taskSchema = new Schema({
 	UserId: { type: String, required : true},
-	MeetingId: {type: Number},
+	MeetingId: {type: String},
     meetingTask: { type: String },
     meetingDate: { type: String },
     meetingPerson: { type: String },

@@ -79,14 +79,14 @@ app.post('/meetingInterface', user.isLoggedIn, interfaces.meetingInterface);
 app.get('/meetingInterface', user.isLoggedIn, interfaces.meetingInterface);
 app.get('/taskInterface', user.isLoggedIn, interfaces.taskInterface);
 app.post('/addmeeting', user.isLoggedIn, interfaces.addMeeting);
-app.post('/addnotes', user.isLoggedIn, interfaces.addNotes);
+app.post('/addnote', user.isLoggedIn, interfaces.addNote);
+app.post('/addTask', user.isLoggedIn, interfaces.addTask);
 
 //product stuff
 app.get('/meetingTask', user.isLoggedIn, task.meetingTask);
 app.get('/meetingTask2', user.isLoggedIn, task.meetingTaskDone);
 app.get('/personalDashboard', user.isLoggedIn, task.personalDashboard);
 app.get('/personalDashboard2', user.isLoggedIn, task.personalDashboard2);
-app.post('/addTask', user.isLoggedIn, task.addTask);
 app.get('/profile', user.isLoggedIn, task.profile);
 app.post('/finishTask', user.isLoggedIn, task.finishTask);
 app.post('/deletetask', user.isLoggedIn, task.deleteTask);
@@ -96,12 +96,12 @@ app.get('/signup', user.signup);
 app.get('/logout', user.logout);
 //app.post('/login', user.login);
 app.post('/signup', passport.authenticate('local-signup', {// process the signup form
-	successRedirect: '/personalDashboard', // redirect to the secure profile section
+	successRedirect: '/PMInterface', // redirect to the secure profile section
 	failureRedirect: '/signup', // redirect back to the signup page if there is an error
 	failureFlash: true // allow flash messages
 }));
 app.post('/login', passport.authenticate('local-login', {
-	successRedirect: '/personalDashboard', // redirect to the secure profile section
+	successRedirect: '/PMInterface', // redirect to the secure profile section
 	failureRedirect: '/home', // redirect back to the signup page if there is an error
 	failureFlash: true // allow flash messages
 }));

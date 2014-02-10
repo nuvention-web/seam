@@ -59,22 +59,20 @@
                 var value = $(this).attr('value');
                 var inputName = 'assigned' + $(this).attr('name')
                 if($(this).css('border-radius')=='0px'){
-                  console.log(value);
                   $(this).css('border-radius','1px');
                   $(this).css("border","1px solid rgb(204,51,51)");
                   $(this).css("filter",'url("data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\'><filter id=\'grayscale\'><feColorMatrix type=\'matrix\' values=\'1 0 0 0 0, 0 1 0 0 0, 0 0 1 0 0, 0 0 0 1 0\'/></filter></svg>#grayscale")');
                   $(this).css("-webkit-filter","grayscale(0%)");
-                  $('[name="' + inputName + '"]').val(value);
+                  $('[id="' + inputName + '"]').val(value);
                 }
                 else{
                   
                   $(this).css('border-radius','0px');
                   $(this).css("border","none");
-
                   $(this).css("filter","url(filters.svg#grayscale)");
                   $(this).css("filter","gray");
                   $(this).css("-webkit-filter","grayscale(1);");
-                  $('[name="' + inputName + '"]').val('');
+                  $('[id="' + inputName + '"]').val('');
                 }
             });
     });
@@ -107,14 +105,18 @@ function chooseVisibility(tabId){
 
 };
 
-function addNotes(){
-  document.TNForm.action = '/addnotes';
-  document.TNForm.submit();
+function addNote(number){
+  console.log('in addnotes')
+  var form = 'TNForm' + number;
+  document.getElementsByName(form)[0].action = location.protocol + "//" + location.host + '/addnote';
+  document.getElementsByName(form)[0].submit();
   return true;
-}
+};
 
-function addTask(){
-  document.TNForm.action = '/addtask';
-  document.TNForm.submit();
+function addTask(number){
+  console.log('in addTask')
+  var form = 'TNForm' + number;
+  document.getElementsByName(form)[0].action = location.protocol + "//" + location.host + '/addTask';
+  document.getElementsByName(form)[0].submit();
   return true;
-}
+};

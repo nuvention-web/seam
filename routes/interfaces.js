@@ -1,5 +1,6 @@
 var mongoose = require('mongoose');
 var Meeting = require('../models/meeting-model');
+var Task = require('../models/task-model');
 
 exports.PMInterface = function(req, res){
 	Meeting.find({'UserId' : req.user.local.email}, function(e, docs){
@@ -37,7 +38,39 @@ exports.taskInterface = function(req, res){
 	res.render('taskInterface', { title: 'SEAM', user : req.user});
 };
 
-exports.addNotes = function(req, res){
+exports.addTask = function(req, res){
+	var meetingTask = req.body.notes;
+	var meetingPerson = req.body.assigned;
+	var meetingId = req.session.meetingId;
+	var userId = req.session.userId;
+
+	for(var i=0; i<meetingPerson.length; i++){
+		if(meetingPerson[i] != ""){
+			var newTask = new Task({
+				UserId: userId,
+				MeetingId: meetingId,
+				meetingTask: meetingTask,
+				meetingPerson: meetingPerson[i]
+			});
+
+			newTask.save(function(err, doc){
+				if(err){
+					console.log('Problem adding task to database')
+					console.log(err);
+					res.location('error');
+					res.redirect('error', {user : req.user});
+				}
+				else{
+					console.log('Added new task successfully');
+					Task.find({}, function(e, docs){console.log(docs);});
+				}
+			});
+		}
+	}
+	res.redirect('back');
+}
+
+exports.addNote = function(req, res){
 	var noteOrder = req.body.noteOrder;
 	var meetingId = req.body.meetingId;
 	var notes = req.body.notes;
@@ -46,6 +79,7 @@ exports.addNotes = function(req, res){
 		doc.save(function(err, doc){
 			if(err){
 				console.log('Problem adding notes to database')
+				console.log(err);
 				res.location('error');
 				res.redirect('error', {user : req.user});
 			}
@@ -83,6 +117,7 @@ exports.addMeeting = function(req, res){
 	newMeeting.save(function(err, doc){
 		if(err){
 			console.log('Problem adding information to database')
+			console.log(err);
 			res.location('error');
 			res.redirect('error', {user : req.user});
 		}
