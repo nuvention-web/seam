@@ -16,6 +16,12 @@ exports.welcomeInterface = function(req, res){
 
 exports.meetingInterface = function(req, res){
 	var meetingId = req.body.meetingId;
+	if(meetingId == undefined){
+		meetingId = req.session.meetingId;
+	}
+	else{
+		req.session.meetingId = meetingId;
+	}
 	console.log(meetingId);
 	Meeting.findOne({'_id': meetingId}, function(e, doc){
 		console.log(doc);
@@ -48,11 +54,7 @@ exports.addNotes = function(req, res){
 				Meeting.find({}, function(e, docs){console.log(docs);});
 			}
 		});	
-		res.render('meetingInterface', {
-			title: 'SEAM', 
-			meeting: doc,
-			user : req.user
-		});
+		res.redirect('back');
 	})
 };
 
@@ -85,7 +87,7 @@ exports.addMeeting = function(req, res){
 			res.redirect('error', {user : req.user});
 		}
 		else{
-			console.log('Added new meeeting successfully');
+			console.log('Added new meeting successfully');
 			Meeting.find({}, function(e, docs){console.log(docs);});
 		}
 	});
