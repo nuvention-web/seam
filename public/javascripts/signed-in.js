@@ -104,6 +104,11 @@ function chooseVisibility(tabId){
                 }
 
 };
+function addTimer(time){
+  $("#progressTimer").progressBar({
+     timeLimit: time*60
+  });
+}
 
 function addNote(number){
   console.log('in addnotes')

@@ -102,13 +102,14 @@ exports.addMeeting = function(req, res){
 	var objective = req.body.objective;
 	var agenda = req.body.agendaTopic;
 	var duration = req.body.duration;
-
+	var meetingTime = req.body.meetingTime;
 	console.log(userId + meetingTitle + objective + agenda + duration);
  
 	var newMeeting = new Meeting({
 		UserId: userId,
 		meetingTitle: meetingTitle,
-		objective: objective
+		objective: objective,
+		meetingTime:meetingTime
 	});
 
 	for(var i=0; i<agenda.length; i++){
