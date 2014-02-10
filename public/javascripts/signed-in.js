@@ -57,12 +57,14 @@
 
               $('#memberList img').click(function() {
                 var value = $(this).attr('value');
+                var inputName = 'assigned' + $(this).attr('name')
                 if($(this).css('border-radius')=='0px'){
-                  
+                  console.log(value);
                   $(this).css('border-radius','1px');
                   $(this).css("border","1px solid rgb(204,51,51)");
                   $(this).css("filter",'url("data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\'><filter id=\'grayscale\'><feColorMatrix type=\'matrix\' values=\'1 0 0 0 0, 0 1 0 0 0, 0 0 1 0 0, 0 0 0 1 0\'/></filter></svg>#grayscale")');
                   $(this).css("-webkit-filter","grayscale(0%)");
+                  $('[name="' + inputName + '"]').val(value);
                 }
                 else{
                   
@@ -72,6 +74,7 @@
                   $(this).css("filter","url(filters.svg#grayscale)");
                   $(this).css("filter","gray");
                   $(this).css("-webkit-filter","grayscale(1);");
+                  $('[name="' + inputName + '"]').val('');
                 }
             });
     });
@@ -103,3 +106,15 @@ function chooseVisibility(tabId){
                 }
 
 };
+
+function addNotes(){
+  document.TNForm.action = '/addnotes';
+  document.TNForm.submit();
+  return true;
+}
+
+function addTask(){
+  document.TNForm.action = '/addtask';
+  document.TNForm.submit();
+  return true;
+}
