@@ -13,35 +13,161 @@ exports.PMInterface = function(req, res){
 };
 
 exports.interfaceAddMeeting = function(req, res){
-	res.render('interfaceAddMeeting', { title: 'SEAM', user : req.user});
+	Meeting.find({'UserId' : req.user.local.email}, function(e, docs){
+		res.render('interfaceAddMeeting', { 
+			title: 'SEAM', 
+			meetingList: docs,
+			user : req.user
+		});
+	})
 };
+
 exports.interfaceMeetings = function(req, res){
-	res.render('interfaceMeetings', { title: 'SEAM', user : req.user});
+	var meetingId = req.body.meetingId;
+	if(meetingId == undefined){
+		meetingId = req.session.meetingId;
+	}
+	else{
+		req.session.meetingId = meetingId;
+	}
+	console.log(meetingId);
+	Meeting.findOne({'_id': meetingId}, function(e, doc){
+		console.log(doc);
+		Task.find({'MeetingId': meetingId}, function(e, task){
+			console.log(task);
+			res.render('interfaceMeetings', { 
+				title: 'SEAM',
+				taskList: task,
+				meeting: doc,
+				user : req.user,
+				past : 0
+			});
+		})
+	})
 };
+
+exports.interfacePastMeetings = function(req, res){
+	var meetingId = req.body.meetingId;
+	if(meetingId == undefined){
+		meetingId = req.session.meetingId;
+	}
+	else{
+		req.session.meetingId = meetingId;
+	}
+	console.log(meetingId);
+	Meeting.findOne({'_id': meetingId}, function(e, doc){
+		console.log(doc);
+		Task.find({'MeetingId': meetingId}, function(e, task){
+			console.log(task);
+			res.render('interfaceMeetings', { 
+				title: 'SEAM',
+				taskList: task,
+				meeting: doc,
+				user : req.user,
+				past : 1
+			});
+		})
+	})
+};
+
 exports.interfaceNewMeeting = function(req, res){
-	res.render('interfaceNewMeeting', { title: 'SEAM', user : req.user});
+	Meeting.find({'UserId' : req.user.local.email}, function(e, docs){
+		res.render('interfaceNewMeeting', { 
+			title: 'SEAM', 
+			meetingList: docs,
+			user : req.user
+		});
+	})
 };
+
 exports.interfaceProjects = function(req, res){
 	res.render('interfaceProjects', { title: 'SEAM', user : req.user});
 };
+
 exports.interfaceStartMeeting = function(req, res){
-	res.render('interfaceStartMeeting', { title: 'SEAM', user : req.user});
+	var meetingId = req.body.meetingId;
+	if(meetingId == undefined){
+		meetingId = req.session.meetingId;
+	}
+	else{
+		req.session.meetingId = meetingId;
+	}
+	console.log(meetingId);
+	Meeting.find({'UserId' : req.user.local.email}, function(e, docs){
+		Meeting.findOne({'_id': meetingId}, function(e, doc){
+			console.log(doc);
+			res.render('interfaceStartMeeting', { 
+				title: 'SEAM',
+				meeting: doc,
+				meetingList: docs,
+				user : req.user,
+				past : 0
+			});
+		})
+	})
 };
+
+exports.interfaceViewPastMeeting = function(req, res){
+	var meetingId = req.body.meetingId;
+	if(meetingId == undefined){
+		meetingId = req.session.meetingId;
+	}
+	else{
+		req.session.meetingId = meetingId;
+	}
+	console.log(meetingId);
+	Meeting.find({'UserId' : req.user.local.email}, function(e, docs){
+		Meeting.findOne({'_id': meetingId}, function(e, doc){
+			console.log(doc);
+			res.render('interfaceStartMeeting', { 
+				title: 'SEAM',
+				meeting: doc,
+				meetingList: docs,
+				user : req.user,
+				past : 1
+			});
+		})
+	})
+};
+
+exports.finishMeeting = function(req, res){
+	var meetingId = req.session.meetingId;
+	// console.log(meetingId);
+	Meeting.findByIdAndUpdate(meetingId, {
+		'isComplete' : 1
+	}, function(e, result){
+		if(e) console.log(e);
+		else console.log("Successfully finished meeting");
+	});
+	res.redirect('interfaceWelcome');
+}
+
 exports.interfaceTasks = function(req, res){
 	res.render('interfaceTasks', { title: 'SEAM', user : req.user});
 };
+
 exports.interfaceWelcome = function(req, res){
 	res.render('interfaceWelcome', { title: 'SEAM', user : req.user});
 };
+
 exports.sidebarMeetings = function(req, res){
-	res.render('sidebarMeetings', { title: 'SEAM', user : req.user});
+	Meeting.find({'UserId' : req.user.local.email}, function(e, docs){
+		res.render('sidebarMeetings', { 
+			title: 'SEAM', 
+			meetingList: docs,
+			user : req.user
+		});
+	})
 };
+
 exports.sidebarNavbar = function(req, res){
 	res.render('sidebarNavbar', { title: 'SEAM', user : req.user});
 };
+
 exports.sidebarTasks = function(req, res){
 	res.render('sidebarTasks', { title: 'SEAM', user : req.user});
 };
+
 exports.meetingInterface = function(req, res){
 	var meetingId = req.body.meetingId;
 	if(meetingId == undefined){
@@ -136,7 +262,7 @@ exports.addMeeting = function(req, res){
 		UserId: userId,
 		meetingTitle: meetingTitle,
 		objective: objective,
-		meetingTime:meetingTime
+		meetingTime: meetingTime
 	});
 
 	for(var i=0; i<agenda.length; i++){

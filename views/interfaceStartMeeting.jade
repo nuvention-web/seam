@@ -3,52 +3,37 @@ extends sidebarMeetings
 block interfaces
 	.bg-white(style="margin-left:40%; top:0px; position:absolute; width:60%; float:right")
 		.container-85p.margin-center
-			form.form-inline.form-center(role='form', method='POST', action='/addmeeting' id='SHOULD BE REPLACED WITH for each...')
-				.row.padding-top-2p
-					.col-md-12
-						h3.text-red.text-bold EPIC ALL HANDS MEETING						
-				.row.margin-top-3p
-					.col-md-4.col-md-offset-2
-						h4.text-black.text-right DATE:
-					.col-md-4
-						h4.text-black.text-left 2/11/2014
-				.row
-					.col-md-4.col-md-offset-2
-						h4.text-black.text-right LENGTH:
-					.col-md-4
-						h4.text-black.text-left 1:00
-				.row.margin-top-3p
-					.col-md-8.col-md-offset-2
-						h4.text-black.text-center.text-bold OJBECTIVES:
-				.row
-					.col-md-8.col-md-offset-2
-						h4.text-black.text-center.text-capital get team updates from project pitch and NUVC
-				.row.margin-top-5p
-					.col-md-6.col-md-offset-3
-						h4.text-black.text-upper.text-center.text-bold agenda items
+			.row.padding-top-2p
+				.col-md-12
+					h3.text-red.text-bold #{meeting.meetingTitle}						
+			.row
+				.col-md-4.col-md-offset-2
+					h4.text-black.text-right LENGTH:
+				.col-md-4
+					h4.text-black.text-left #{meeting.meetingTime}
+			.row.margin-top-3p
+				.col-md-8.col-md-offset-2
+					h4.text-black.text-center.text-bold OJBECTIVES:
+			.row
+				.col-md-8.col-md-offset-2
+					h4.text-black.text-center.text-capital #{meeting.objective}
+			.row.margin-top-5p
+				.col-md-6.col-md-offset-3
+					h4.text-black.text-upper.text-center.text-bold agenda items
+			each agenda, i in meeting.agenda
 				.row.padding-top-2p
 					.col-md-1.col-sm-1.col-xs-1
-						h4.text-center.margin-left-2p.text-capital 1.
+						h4.text-center.margin-left-2p.text-capital #{i+1}.
 					.col-md-7.col-sm-7.col-xs-7
-						h4.text-left.text-capital Presentation from the President
+						h4.text-left.text-capital #{agenda.topic}
 					.col-md-4.col-sm-4.col-xs-4.text-right.red-input
-						h4.text-right.text-red.text-capital 00:30
-				.row.padding-top-2p
-					.col-md-1.col-sm-1.col-xs-1
-						h4.text-center.margin-left-2p.text-capital 2.
-					.col-md-7.col-sm-7.col-xs-7
-						h4.text-left.text-capital Team Updates
-					.col-md-4.col-sm-4.col-xs-4.text-right.red-input
-						h4.text-right.text-red.text-capital 00:30
-				.row.padding-top-2p
-					.col-md-1.col-sm-1.col-xs-1
-						h4.text-center.margin-left-2p.text-capital 3.
-					.col-md-7.col-sm-7.col-xs-7
-						h4.text-left.text-capital Presentation from marketing
-					.col-md-4.col-sm-4.col-xs-4.text-right.red-input
-						h4.text-right.text-red.text-capital 00:30
-				.row.margin-top-10p
-					.col-md-4.col-md-offset-4.text-center
+						h4.text-right.text-red.text-capital #{agenda.duration}
+			.row.margin-top-10p
+				.col-md-4.col-md-offset-4.text-center
+					if(past == 0)
 						a(href="/interfaceMeetings")
 							button.border-red.btn.btn-primary.btn-lg.btn-block.border-square.bg-red-hover.text-white-nohover.margin-left-1p(type='button') BEGIN MEETING
+					else
+						a(href="/interfacePastMeetings")
+							button.border-red.btn.btn-primary.btn-lg.btn-block.border-square.bg-red-hover.text-white-nohover.margin-left-1p(type='button') VIEW MEETING
 						

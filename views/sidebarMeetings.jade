@@ -5,52 +5,33 @@ block content
 		.row.margin-top-10p
 			.col-md-12
 				h5.text-black.text-upper.text-bold upcoming meetings
+		each meeting, i in meetingList
+			if(meeting.isComplete == 0)
+				form(role='form', method='POST', action='/interfaceStartMeeting', id='future'+i)
+					input(type='hidden', name='meetingId', value='#{meeting._id}')
+					.row.margin-top-5p
+						.col-md-10.col-md-offset-1
+							h5
+								a.text-black.text-h5.text-upper(type='button', href="javascript:{}" onclick="document.getElementById('future#{i}').submit();") #{meeting.meetingTitle}
 		.row.margin-top-5p
 			.col-md-10.col-md-offset-1
 				h5
-					a.text-black.text-h5.text-upper(href="interfaceStartMeeting") epic all hands meeting
-		.row.margin-top-5p
-			.col-md-10.col-md-offset-1
-				h5
-					a.text-black.text-h5.text-upper(href="interfaceStartMeeting") farley center advisory board meeting
-		.row.margin-top-5p
-			.col-md-10.col-md-offset-1
-				h5
-					a.text-black.text-h5.text-upper(href="interfaceStartMeeting") meeting with dean ottino
-		.row.margin-top-5p
-			.col-md-10.col-md-offset-1
-				h5
-					a.text-black.text-h5.text-upper(href="interfaceStartMeeting") project pitch debrief
-		.row.margin-top-5p
-			.col-md-10.col-md-offset-1
-				h5
-					a.text-black.text-h5.text-upper(href="interfaceStartMeeting") all business meeting
-		.row.margin-top-5p
-			.col-md-10.col-md-offset-1
-				h5
-					a.text-red.text-h5.text-upper.text-center.text-bold(href="/interfaceNewMeeting") add new meeting
+					a.text-red.text-h5.text-upper.text-center.text-bold(type='button', href="/interfaceAddMeeting") add new meeting
 		hr.width-100p.bg-black
 		.row.margin-top-10p
 			.col-md-12
 				h5.text-black.text-upper.text-bold upcoming meetings
-		.row.margin-top-5p
-			.col-md-10.col-md-offset-1
-				h5.text-black.text-upper farley center advisory board meeting
-		.row.margin-top-5p
-			.col-md-10.col-md-offset-1
-				h5.text-black.text-upper epic all hands meeting
-		.row.margin-top-5p
-			.col-md-10.col-md-offset-1
-				h5.text-black.text-upper meeting with dean ottino
-		.row.margin-top-5p
-			.col-md-10.col-md-offset-1
-				h5.text-black.text-upper project pitch debrief
-		.row.margin-top-5p
-			.col-md-10.col-md-offset-1
-				h5.text-black.text-upper all business meeting
+		each meeting, i in meetingList
+			if(meeting.isComplete == 1)
+				form(role='form', method='POST', action='/interfaceViewPastMeeting', id='past'+i)
+					input(type='hidden', name='meetingId', value='#{meeting._id}')
+					.row.margin-top-5p
+						.col-md-10.col-md-offset-1
+							h5
+								a.text-black.text-h5.text-upper(type='button', href="javascript:{}" onclick="document.getElementById('past#{i}').submit();") #{meeting.meetingTitle}
 		.row.margin-top-5p
 			.col-md-10.col-md-offset-1
 				h5.text-red.text-upper
-					a.text-red.text-h5.text-upper.text-center(href="/interfaceNewMeeting") load meetings
+					a.text-red.text-h5.text-upper.text-center(type='button', href="#") load meetings
 		.padding-bottom-10p
 	block interfaces

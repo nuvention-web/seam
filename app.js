@@ -78,7 +78,7 @@ app.get('/interfaceAddMeeting', user.isLoggedIn, interfaces.interfaceAddMeeting)
 app.get('/interfaceMeetings', user.isLoggedIn, interfaces.interfaceMeetings);
 app.get('/interfaceNewMeeting', user.isLoggedIn, interfaces.interfaceNewMeeting);
 app.get('/interfaceProjects', user.isLoggedIn, interfaces.interfaceProjects);
-app.get('/interfaceStartMeeting', user.isLoggedIn, interfaces.interfaceStartMeeting);
+app.post('/interfaceStartMeeting', user.isLoggedIn, interfaces.interfaceStartMeeting);
 app.get('/interfaceTasks', user.isLoggedIn, interfaces.interfaceTasks);
 app.get('/interfaceWelcome', user.isLoggedIn, interfaces.interfaceWelcome);
 app.get('/sidebarMeetings', user.isLoggedIn, interfaces.sidebarMeetings);
@@ -87,6 +87,9 @@ app.get('/sidebarTasks', user.isLoggedIn, interfaces.sidebarTasks);
 app.post('/addmeeting', user.isLoggedIn, interfaces.addMeeting);
 app.post('/addnote', user.isLoggedIn, interfaces.addNote);
 app.post('/addTask', user.isLoggedIn, interfaces.addTask);
+app.get('/finishMeeting', user.isLoggedIn, interfaces.finishMeeting);
+app.get('/interfacePastMeetings', user.isLoggedIn, interfaces.interfacePastMeetings);
+app.post('/interfaceViewPastMeeting', user.isLoggedIn, interfaces.interfaceViewPastMeeting);
 
 //product stuff
 app.get('/meetingTask', user.isLoggedIn, task.meetingTask);
@@ -102,12 +105,12 @@ app.get('/signup', user.signup);
 app.get('/logout', user.logout);
 //app.post('/login', user.login);
 app.post('/signup', passport.authenticate('local-signup', {// process the signup form
-	successRedirect: '/interfaceProjects', // redirect to the secure profile section
+	successRedirect: '/interfaceWelcome', // redirect to the secure profile section
 	failureRedirect: '/signup', // redirect back to the signup page if there is an error
 	failureFlash: true // allow flash messages
 }));
 app.post('/login', passport.authenticate('local-login', {
-	successRedirect: '/interfaceProjects', // redirect to the secure profile section
+	successRedirect: '/interfaceWelcome', // redirect to the secure profile section
 	failureRedirect: '/home', // redirect back to the signup page if there is an error
 	failureFlash: true // allow flash messages
 }));
