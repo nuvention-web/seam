@@ -49,7 +49,10 @@ block content
 						input(type='hidden', name='meetingId', value='#{meeting._id}')
 						.row.bg-grayblue.padding-bottom-1p.margin-top-1p#agenda1
 							.col-md-8.col-md-offset-2.col-sm-9.form-group
-								input.text-h5.height-30x.margin-left-2p.form-control.border-square.border-none.text-left.bg-ltgray(id='notes', type='text', name='notes', placeholder= 'Start Typing...')
+								if(i==0)
+									input.text-h5.height-30x.margin-left-2p.form-control.border-square.border-none.text-left.bg-ltgray(id='notes', type='text', name='notes', placeholder= 'Start Typing...', tabindex='#{i+1}', autofocus='autofocus')
+								else
+									input.text-h5.height-30x.margin-left-2p.form-control.border-square.border-none.text-left.bg-ltgray(id='notes', type='text', name='notes', placeholder= 'Start Typing...', tabindex='#{i+1}')
 						.row
 							.col-md-4.col-md-offset-4.text-center
 								button.btn.btn-primary.margin-right.border-square.bg-gray-nohover.border-gray.text-white-nohover(type='button', onClick="addNote(#{i})") ADD NOTE
