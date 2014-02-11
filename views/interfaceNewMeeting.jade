@@ -1,7 +1,7 @@
 extends sidebarMeetings
 
 block interfaces
-	.bg-white(style="margin-left:40%; top:0px; position:absolute; width:60%; float:right")
+	.bg-white(style="margin-left:35%; top:0px; position:absolute; width:65%; float:right")
 		.container-85p.margin-center
 			form.form-inline.form-center(role='form', method='POST', action='/addmeeting' id='addmeeting')
 				.row.padding-top-2p
@@ -9,7 +9,7 @@ block interfaces
 						input.form-control.border-square.border-none.text-center.text-h3.text-red.bg-grayblue(id="addMeeting" type='text', name='meetingTitle', placeholder= 'MEETING TITLE')
 				.row.margin-top-3p
 					.col-md-8.col-md-offset-2
-						input.form-control.border-square.border-none.text-center.text-h4.text-black.bg-grayblue.border-grayblue(id='addMeeting', type='text', name='meetingTime', placeholder= 'TIME(MINUTES)')
+						input.form-control.border-square.border-none.text-center.text-h5.text-black.bg-grayblue.border-grayblue(id='addMeeting', type='text', name='meetingTime', placeholder= 'TIME(MINUTES)')
 				.row.margin-top-10p
 					.col-md-6.col-md-offset-3
 						h4.text-black.text-upper.text-center.text-bold meeting objectives
@@ -23,23 +23,23 @@ block interfaces
 					.col-md-1.col-sm-1.col-xs-1
 						h6.text-center.margin-left-2p.text-capital 1.
 					.col-md-7.col-sm-7.col-xs-7
-						input.form-control.border-square.border-none.text-left.text-h4.text-black.bg-grayblue.border-grayblue(id='addMeeting', type='text', name='agendaTopic', placeholder= 'INSERT AGENDA ITEM')
+						input.form-control.border-square.border-none.text-left.text-h5.text-black.bg-grayblue.border-grayblue(id='addMeeting', type='text', name='agendaTopic', placeholder= 'INSERT AGENDA ITEM')
 					.col-md-4.col-sm-4.col-xs-4.text-right.red-input
-						input.form-control.border-square.border-none.text-left.text-h4.text-red.bg-grayblue.border-grayblue(id='addMeeting', type='text', name='duration', placeholder= 'TIME(HH:MM)')
+						input.form-control.border-square.border-none.text-left.text-h5.text-red.bg-grayblue.border-grayblue(id='addMeeting', type='text', name='duration', placeholder= 'TIME(HH:MM)')
 				.row.padding-top-2p
 					.col-md-1.col-sm-1.col-xs-1
 						h6.text-center.margin-left-2p.text-capital 2.
 					.col-md-7.col-sm-7.col-xs-7
-						input.form-control.border-square.border-none.text-left.text-h4.text-black.bg-grayblue.border-grayblue(id='addMeeting', type='text', name='agendaTopic', placeholder= 'INSERT AGENDA ITEM')
+						input.form-control.border-square.border-none.text-left.text-h5.text-black.bg-grayblue.border-grayblue(id='addMeeting', type='text', name='agendaTopic', placeholder= 'INSERT AGENDA ITEM')
 					.col-md-4.col-sm-4.col-xs-4.text-right.red-input
-						input.form-control.border-square.border-none.text-left.text-h4.text-red.bg-grayblue.border-grayblue(id='addMeeting', type='text', name='duration', placeholder= 'TIME(HH:MM)')
+						input.form-control.border-square.border-none.text-left.text-h5.text-red.bg-grayblue.border-grayblue(id='addMeeting', type='text', name='duration', placeholder= 'TIME(HH:MM)')
 				.row.padding-top-2p
 					.col-md-1.col-sm-1.col-xs-1
 						h6.text-center.margin-left-2p.text-capital 3.
 					.col-md-7.col-sm-7.col-xs-7
-						input.form-control.border-square.border-none.text-left.text-h4.text-black.bg-grayblue.border-grayblue(id='addMeeting', type='text', name='agendaTopic', placeholder= 'INSERT AGENDA ITEM')
+						input.form-control.border-square.border-none.text-left.text-h5.text-black.bg-grayblue.border-grayblue(id='addMeeting', type='text', name='agendaTopic', placeholder= 'INSERT AGENDA ITEM')
 					.col-md-4.col-sm-4.col-xs-4.text-right.red-input
-						input.form-control.border-square.border-none.text-left.text-h4.text-red.bg-grayblue.border-grayblue(id='addMeeting', type='text', name='duration', placeholder= 'TIME(HH:MM)')
+						input.form-control.border-square.border-none.text-left.text-h5.text-red.bg-grayblue.border-grayblue(id='addMeeting', type='text', name='duration', placeholder= 'TIME(HH:MM)')
 				.row.padding-top-5p
 					.col-md-6.col-md-offset-3.text-center
 						button.border-red.btn.btn-primary.btn-lg.btn-block.border-square.bg-red-hover.text-white-nohover(type='button', onClick="document.getElementById('addmeeting').submit();") FINISH AGENDA
