@@ -1,0 +1,47 @@
+doctype html
+html(lang='en')
+	head
+		meta(charset='utf-8')
+		meta(http-equiv='X-UA-Compatible', content='IE=edge')
+		meta(name='viewport', content='width=device-width, initial-scale=1.0')
+		meta(name='description', content='')
+		meta(name='author', content='')
+		link(href='http://fonts.googleapis.com/css?family=Lato:300,400,700', rel='stylesheet', type='text/css')
+		link(rel='stylesheet', href='/stylesheets/bootstrap.min.css')
+		link(rel='stylesheet', href='/stylesheets/base.css')
+		link(rel='stylesheet', href='/stylesheets/fonts.css')
+		title= title
+		script.
+			(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+			(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+			m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+			})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+			ga('create', 'UA-47126611-1', 'meetingbuddy.herokuapp.com');
+			ga('send', 'pageview');
+	body#home-pg
+		.bg-gray.height-100p.position-fixed.float-left.top-0x(style="width:14%;")
+			.row.row-offcanvas.row-offcanvas-left
+				#sidebar.col-xs-6.col-sm-3.sidebar-offcanvas(role='navigation' style="min-width:100%")
+					h3.text-white.text-upper.text-bold Project:
+					h4
+						a.text-h4.text-bold.text-upper.text-red(href="/interfaceProjects") EPIC
+					ul.nav.pos-fixed.top-20p.sidebar-width(style="position:fixed; width:14%; margin:0 auto; top:20%;")
+						li(style="margin-top:15px")
+							a.text-h5.text-white-redhover(href="sidebarMeetings") MEETINGS
+						li(style="margin-top:15px")
+							a.text-h5.text-white-redhover(href="#") TASKS
+						li(style="margin-top:15px")
+							a.text-h5.text-white-redhover(href="#") TEAMS
+						li(style="margin-top:15px")
+							a.text-h5.text-white-redhover(href="#") SETTINGS
+						li(style="margin-top:15px")
+							a.text-h5.text-white-redhover(href="/logout") LOGOUT
+				a(href="/interfaceProjects")
+					img.navbar-brand.img-responsive.position-fixed.bottom-0x.margin-left-15x.height-80x(style="width:14%; height:10%;",src="images/seamlogo.png")
+		block content
+		script(src='https://code.jquery.com/jquery.js')
+		script(src='javascripts/bootstrap.min.js')
+		script(src='javascripts/signed-in.js')
+		script(src='javascripts/hidden-div.js')
+		script(src='javascripts/progressBar.js')
