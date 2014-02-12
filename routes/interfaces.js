@@ -2,9 +2,9 @@ var mongoose = require('mongoose');
 var Meeting = require('../models/meeting-model');
 var Task = require('../models/task-model');
 
-exports.PMInterface = function(req, res){
+exports.makeMeeting = function(req, res){
 	Meeting.find({'UserId' : req.user.local.email}, function(e, docs){
-		res.render('PMInterface', { 
+		res.render('makeMeeting', { 
 			title: 'SEAM', 
 			meetingList: docs,
 			user : req.user
@@ -12,17 +12,7 @@ exports.PMInterface = function(req, res){
 	})
 };
 
-exports.interfaceAddMeeting = function(req, res){
-	Meeting.find({'UserId' : req.user.local.email}, function(e, docs){
-		res.render('interfaceAddMeeting', { 
-			title: 'SEAM', 
-			meetingList: docs,
-			user : req.user
-		});
-	})
-};
-
-exports.interfaceMeetings = function(req, res){
+exports.meeting = function(req, res){
 	var meetingId = req.body.meetingId;
 	if(meetingId == undefined){
 		meetingId = req.session.meetingId;
@@ -35,7 +25,7 @@ exports.interfaceMeetings = function(req, res){
 		console.log(doc);
 		Task.find({'MeetingId': meetingId}, function(e, task){
 			console.log(task);
-			res.render('interfaceMeetings', { 
+			res.render('meeting', { 
 				title: 'SEAM',
 				taskList: task,
 				meeting: doc,
@@ -46,7 +36,7 @@ exports.interfaceMeetings = function(req, res){
 	})
 };
 
-exports.interfacePastMeetings = function(req, res){
+exports.pastMeeting = function(req, res){
 	var meetingId = req.body.meetingId;
 	if(meetingId == undefined){
 		meetingId = req.session.meetingId;
@@ -59,7 +49,7 @@ exports.interfacePastMeetings = function(req, res){
 		console.log(doc);
 		Task.find({'MeetingId': meetingId}, function(e, task){
 			console.log(task);
-			res.render('interfaceMeetings', { 
+			res.render('meeting', { 
 				title: 'SEAM',
 				taskList: task,
 				meeting: doc,
@@ -70,9 +60,9 @@ exports.interfacePastMeetings = function(req, res){
 	})
 };
 
-exports.interfaceNewMeeting = function(req, res){
+exports.newMeeting = function(req, res){
 	Meeting.find({'UserId' : req.user.local.email}, function(e, docs){
-		res.render('interfaceNewMeeting', { 
+		res.render('newMeeting', { 
 			title: 'SEAM', 
 			meetingList: docs,
 			user : req.user
@@ -80,11 +70,11 @@ exports.interfaceNewMeeting = function(req, res){
 	})
 };
 
-exports.interfaceProjects = function(req, res){
-	res.render('interfaceProjects', { title: 'SEAM', user : req.user});
+exports.projects = function(req, res){
+	res.render('projects', { title: 'SEAM', user : req.user});
 };
 
-exports.interfaceStartMeeting = function(req, res){
+exports.startMeeting = function(req, res){
 	var meetingId = req.body.meetingId;
 	if(meetingId == undefined){
 		meetingId = req.session.meetingId;
@@ -96,7 +86,7 @@ exports.interfaceStartMeeting = function(req, res){
 	Meeting.find({'UserId' : req.user.local.email}, function(e, docs){
 		Meeting.findOne({'_id': meetingId}, function(e, doc){
 			console.log(doc);
-			res.render('interfaceStartMeeting', { 
+			res.render('startMeeting', { 
 				title: 'SEAM',
 				meeting: doc,
 				meetingList: docs,
@@ -107,7 +97,7 @@ exports.interfaceStartMeeting = function(req, res){
 	})
 };
 
-exports.interfaceViewPastMeeting = function(req, res){
+exports.viewPastMeeting = function(req, res){
 	var meetingId = req.body.meetingId;
 	if(meetingId == undefined){
 		meetingId = req.session.meetingId;
@@ -119,7 +109,7 @@ exports.interfaceViewPastMeeting = function(req, res){
 	Meeting.find({'UserId' : req.user.local.email}, function(e, docs){
 		Meeting.findOne({'_id': meetingId}, function(e, doc){
 			console.log(doc);
-			res.render('interfaceStartMeeting', { 
+			res.render('startMeeting', { 
 				title: 'SEAM',
 				meeting: doc,
 				meetingList: docs,
@@ -139,15 +129,15 @@ exports.finishMeeting = function(req, res){
 		if(e) console.log(e);
 		else console.log("Successfully finished meeting");
 	});
-	res.redirect('interfaceWelcome');
+	res.redirect('welcome');
 }
 
-exports.interfaceTasks = function(req, res){
-	res.render('interfaceTasks', { title: 'SEAM', user : req.user});
+exports.tasks = function(req, res){
+	res.render('tasks', { title: 'SEAM', user : req.user});
 };
 
-exports.interfaceWelcome = function(req, res){
-	res.render('interfaceWelcome', { title: 'SEAM', user : req.user});
+exports.welcome = function(req, res){
+	res.render('welcome', { title: 'SEAM', user : req.user});
 };
 
 exports.sidebarMeetings = function(req, res){
@@ -166,33 +156,6 @@ exports.sidebarNavbar = function(req, res){
 
 exports.sidebarTasks = function(req, res){
 	res.render('sidebarTasks', { title: 'SEAM', user : req.user});
-};
-
-exports.meetingInterface = function(req, res){
-	var meetingId = req.body.meetingId;
-	if(meetingId == undefined){
-		meetingId = req.session.meetingId;
-	}
-	else{
-		req.session.meetingId = meetingId;
-	}
-	console.log(meetingId);
-	Meeting.findOne({'_id': meetingId}, function(e, doc){
-		console.log(doc);
-		Task.find({'MeetingId': meetingId}, function(e, task){
-			console.log(task);
-			res.render('meetingInterface', { 
-				title: 'SEAM',
-				taskList: task,
-				meeting: doc,
-				user : req.user
-			});
-		})
-	})
-};
-
-exports.taskInterface = function(req, res){
-	res.render('taskInterface', { title: 'SEAM', user : req.user});
 };
 
 exports.addTask = function(req, res){

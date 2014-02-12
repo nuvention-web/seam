@@ -42,7 +42,7 @@ block content
 							each notes, x in agenda.notes
 								h5.text-left.margin-right-2p.text-capital #{notes.notes}
 					.col-md-2
-						h4.text-red.text-upper.text-center 00:05
+						h4.text-red.text-upper.text-center #{agenda.duration}
 				if(past == 0)
 					form.form-inline.form-center(role='form', method='POST', name='TNForm#{i}', action='/addnote')
 						input(type='hidden', name='noteOrder', value='#{i}')
@@ -89,7 +89,7 @@ block content
 			each task, i in taskList
 				.row.margin-left-1p.bg-ltgray
 					.col-md-9
-						h3.text-left.text-black.text-capital #{task.meetingTask}
+						h3.text-left.text-black.text-capital #{task.meetingTask} --- #{task.meetingPerson}
 					.col-md-3.text-center.margin-top-1p
 						a.text-h4.text-black.margin-left-5p(href="#") EDIT
 						a.text-h4.text-black.margin-left-2p(href="#") REVIEW

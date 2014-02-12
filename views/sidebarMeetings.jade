@@ -7,7 +7,7 @@ block content
 				h5.text-black.text-upper.text-bold upcoming meetings
 		each meeting, i in meetingList
 			if(meeting.isComplete == 0)
-				form(role='form', method='POST', action='/interfaceStartMeeting', id='future'+i)
+				form(role='form', method='POST', action='/startMeeting', id='future'+i)
 					input(type='hidden', name='meetingId', value='#{meeting._id}')
 					.row.margin-top-5p
 						.col-md-10.col-md-offset-1
@@ -16,14 +16,14 @@ block content
 		.row.margin-top-5p
 			.col-md-10.col-md-offset-1
 				h5
-					a.text-red.text-h5.text-upper.text-center.text-bold(type='button', href="/interfaceAddMeeting") add new meeting
+					a.text-red.text-h5.text-upper.text-center.text-bold(type='button', href="/makeMeeting") add new meeting
 		hr.width-100p.bg-black
 		.row.margin-top-10p
 			.col-md-12
 				h5.text-black.text-upper.text-bold upcoming meetings
 		each meeting, i in meetingList
 			if(meeting.isComplete == 1)
-				form(role='form', method='POST', action='/interfaceViewPastMeeting', id='past'+i)
+				form(role='form', method='POST', action='/viewPastMeeting', id='past'+i)
 					input(type='hidden', name='meetingId', value='#{meeting._id}')
 					.row.margin-top-5p
 						.col-md-10.col-md-offset-1

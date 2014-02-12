@@ -4,7 +4,6 @@
  */
 var home = require('./routes/home');
 var user = require('./routes/user');
-var admin = require('./routes/admin');
 var task = require('./routes/task');
 var interfaces = require('./routes/interfaces');
 var index = require('./routes/index');
@@ -67,20 +66,15 @@ app.get('/survey', home.survey);
 app.post('/addsurvey', home.addsurvey);
 app.post('/addemail', home.addemail);
 
-//admin page
-app.get('/admin', admin.admin);
-app.get('/addadmin', admin.addadmin);
-app.post('/confirm', admin.confirm);
-
 //Interface
 
-app.get('/interfaceAddMeeting', user.isLoggedIn, interfaces.interfaceAddMeeting);
-app.get('/interfaceMeetings', user.isLoggedIn, interfaces.interfaceMeetings);
-app.get('/interfaceNewMeeting', user.isLoggedIn, interfaces.interfaceNewMeeting);
-app.get('/interfaceProjects', user.isLoggedIn, interfaces.interfaceProjects);
-app.post('/interfaceStartMeeting', user.isLoggedIn, interfaces.interfaceStartMeeting);
-app.get('/interfaceTasks', user.isLoggedIn, interfaces.interfaceTasks);
-app.get('/interfaceWelcome', user.isLoggedIn, interfaces.interfaceWelcome);
+app.get('/makeMeeting', user.isLoggedIn, interfaces.makeMeeting);
+app.get('/meeting', user.isLoggedIn, interfaces.meeting);
+app.get('/newMeeting', user.isLoggedIn, interfaces.newMeeting);
+app.get('/projects', user.isLoggedIn, interfaces.projects);
+app.post('/startMeeting', user.isLoggedIn, interfaces.startMeeting);
+app.get('/tasks', user.isLoggedIn, interfaces.tasks);
+app.get('/welcome', user.isLoggedIn, interfaces.welcome);
 app.get('/sidebarMeetings', user.isLoggedIn, interfaces.sidebarMeetings);
 app.get('/sidebarNavbar', user.isLoggedIn, interfaces.sidebarNavbar);
 app.get('/sidebarTasks', user.isLoggedIn, interfaces.sidebarTasks);
@@ -88,29 +82,23 @@ app.post('/addmeeting', user.isLoggedIn, interfaces.addMeeting);
 app.post('/addnote', user.isLoggedIn, interfaces.addNote);
 app.post('/addTask', user.isLoggedIn, interfaces.addTask);
 app.get('/finishMeeting', user.isLoggedIn, interfaces.finishMeeting);
-app.get('/interfacePastMeetings', user.isLoggedIn, interfaces.interfacePastMeetings);
-app.post('/interfaceViewPastMeeting', user.isLoggedIn, interfaces.interfaceViewPastMeeting);
+app.get('/pastMeeting', user.isLoggedIn, interfaces.pastMeeting);
+app.post('/viewPastMeeting', user.isLoggedIn, interfaces.viewPastMeeting);
 
 //product stuff
-app.get('/meetingTask', user.isLoggedIn, task.meetingTask);
-app.get('/meetingTask2', user.isLoggedIn, task.meetingTaskDone);
-app.get('/personalDashboard', user.isLoggedIn, task.personalDashboard);
-app.get('/personalDashboard2', user.isLoggedIn, task.personalDashboard2);
-app.get('/profile', user.isLoggedIn, task.profile);
 app.post('/finishTask', user.isLoggedIn, task.finishTask);
 app.post('/deletetask', user.isLoggedIn, task.deleteTask);
 
 //account
 app.get('/signup', user.signup);
 app.get('/logout', user.logout);
-//app.post('/login', user.login);
 app.post('/signup', passport.authenticate('local-signup', {// process the signup form
-	successRedirect: '/interfaceWelcome', // redirect to the secure profile section
+	successRedirect: '/welcome', // redirect to the secure profile section
 	failureRedirect: '/signup', // redirect back to the signup page if there is an error
 	failureFlash: true // allow flash messages
 }));
 app.post('/login', passport.authenticate('local-login', {
-	successRedirect: '/interfaceWelcome', // redirect to the secure profile section
+	successRedirect: '/welcome', // redirect to the secure profile section
 	failureRedirect: '/home', // redirect back to the signup page if there is an error
 	failureFlash: true // allow flash messages
 }));
