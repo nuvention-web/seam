@@ -30,19 +30,27 @@ html(lang='en')
 					a.text-white.navbar-brand.text-bold(href='home') SEAM
 				.navbar-collapse.collapse
 					.navbar-right
-						ul.nav.navbar-nav
-							li
-								a(class='text-bold visible-login', href='home#home-page') HOME
-							li
-								a(class='text-bold visible-login', href='home#about-page') ABOUT
-							li
-								a(class='text-bold visible-login', href='home#team-page') TEAM
+						ul.nav.navbar-nav							
 							if typeof user === 'undefined'
+								li
+									a(class='text-bold visible-login', href='home#home-page') HOME
+								li
+									a(class='text-bold visible-login', href='home#about-page') ABOUT
+								li
+									a(class='text-bold visible-login', href='home#team-page') TEAM
 								li
 									a(class='text-bold visible-login', href='signup') SIGN UP
 								li
 									a#admin-btn.text-bold.visible-login(href='javascript:void(0)') SIGN IN
 							else
+								li
+									a(class='text-bold visible-login', href='/sidebarNavbar') HOME
+								li
+									a(class='text-bold visible-login', href='/sidebarMeetings') MEETINGS
+								li
+									a(class='text-bold visible-login', href='#') TASKS
+								li
+									a(class='text-bold visible-login', href='#') SETTINGS
 								li
 									a(class='text-bold visible-login', href='logout') LOG OUT	
 					form.navbar-form.navbar-right.hidden-login(role='form' method='POST', action='login', style='display: none;')
