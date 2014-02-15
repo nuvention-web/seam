@@ -37,25 +37,25 @@ block content
 					h4.text-black.text-upper.text-center agenda items
 			each agenda, i in meeting.agenda
 				.row.margin-top-1p
-					.col-md-10
+					.col-md-10#notesList
 						h4.text-black.text-upper.text-left.text-capital #{i+1}. #{agenda.topic}
-							each notes, x in agenda.notes
-								h5.text-left.margin-right-2p.text-capital #{notes.notes}
+						each notes, x in agenda.notes
+							h5.text-left.margin-right-2p.text-capital #{notes.notes}
 					.col-md-2
 						h4.text-red.text-upper.text-center #{agenda.duration}
 				if(past == 0)
-					form.form-inline.form-center(role='form', method='POST', name='TNForm#{i}', action='/addnote')
+					form.form-inline.form-center(role='form', method='POST', name='TNForm', action='/addnote', value='#{i}', id='TNForm#{i}')
 						input(type='hidden', name='noteOrder', value='#{i}')
 						input(type='hidden', name='meetingId', value='#{meeting._id}')
 						.row.bg-grayblue.padding-bottom-1p.margin-top-1p#agenda1
 							.col-md-8.col-md-offset-2.col-sm-9.form-group
 								if(i==0)
-									input.text-h5.height-30x.margin-left-2p.form-control.border-square.border-none.text-left.bg-ltgray(id='notes', type='text', name='notes', placeholder= 'Start Typing...', tabindex='#{i+1}', autofocus='autofocus')
+									input.text-h5.height-30x.margin-left-2p.form-control.border-square.border-none.text-left.bg-ltgray(id='notes#{i}', type='text', name='notes', placeholder= 'Start Typing...', tabindex='#{i+1}', autofocus='autofocus', autocomplete='off')
 								else
-									input.text-h5.height-30x.margin-left-2p.form-control.border-square.border-none.text-left.bg-ltgray(id='notes', type='text', name='notes', placeholder= 'Start Typing...', tabindex='#{i+1}')
+									input.text-h5.height-30x.margin-left-2p.form-control.border-square.border-none.text-left.bg-ltgray(id='notes#{i}', type='text', name='notes', placeholder= 'Start Typing...', tabindex='#{i+1}', autocomplete='off')
 						.row
 							.col-md-4.col-md-offset-4.text-center
-								button.btn.btn-primary.margin-right.border-square.bg-gray-nohover.border-gray.text-white-nohover(type='button', onClick="addNote(#{i})") ADD NOTE
+								button.btn.btn-primary.margin-right.border-square.bg-gray-nohover.border-gray.text-white-nohover(id='noteSubmit' type='submit', value='#{i}') ADD NOTE
 								a.btn.btn-primary.margin-left-5p.margin-right.border-square.bg-gray-nohover.border-gray.text-white-nohover(id='meetingMember'+i, onClick="chooseVisibility(id)") ADD TASK	
 						.hidden-login.bg-grayblue.margin-top-3p(id='meetingMember'+i+'-div')
 							.row.bg-grayblue
@@ -81,8 +81,8 @@ block content
 										input(type='hidden', id='assigned4', value='', name='assigned')
 							.row.bg-grayblue.padding-bottom-1p
 								.col-md-8.col-md-offset-2.text-center.bg-white.padding-top-2p.padding-bottom-1p
-									button.btn.btn-primary.btn-lg.margin-right.border-square.bg-gray-nohover.border-ltgray.text-white-nohover(type='button', onClick='addTask(#{i})') ASSIGN
-		.container-95p.bg-ltgray.margin-center.margin-top-3p(style="width:100%; padding:0 0; padding-bottom:2%; overflow-x:hidden")
+									button.btn.btn-primary.btn-lg.margin-right.border-square.bg-gray-nohover.border-ltgray.text-white-nohover(type='submit') ASSIGN
+		.container-95p.bg-ltgray.margin-center.margin-top-3p#tasksList(style="width:100%; padding:0 0; padding-bottom:2%; overflow-x:hidden")
 			.row.margin-top-2x
 				.col-md-12
 					h3.text-center.text-red.text-bold ASSIGNED TASKS

@@ -194,6 +194,8 @@ exports.addNote = function(req, res){
 	var noteOrder = req.body.noteOrder;
 	var meetingId = req.body.meetingId;
 	var notes = req.body.notes;
+	console.log(req.body);
+	console.log(noteOrder + " " + meetingId + " " + notes);
 	Meeting.findOne({'_id': meetingId}, function(e, doc){
 		doc.agenda[noteOrder].notes.push({notes: notes});
 		doc.save(function(err, doc){
