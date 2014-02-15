@@ -1,3 +1,11 @@
+var timeOut;
+function addAgendaItemKeypress(){
+         if (timeOut) clearTimeout(timeOut);
+        timeOut = setTimeout(function() {
+            addAgendaItem();
+        }, 700);
+};
+
 function addAgendaItem(){
         var agendaBox = $('#agendaBox');
         var i = $('#agendaBox div').size();
