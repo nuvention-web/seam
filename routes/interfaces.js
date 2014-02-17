@@ -231,10 +231,12 @@ exports.addMeeting = function(req, res){
 	});
 
 	for(var i=0; i<agenda.length; i++){
-		newMeeting.agenda.push({
-			topic: agenda[i],
-			duration: duration[i]
-		});
+		if(agenda[i] != ''){
+			newMeeting.agenda.push({
+				topic: agenda[i],
+				duration: duration[i]
+			});
+		}
 	}
 
 	newMeeting.save(function(err, doc){
