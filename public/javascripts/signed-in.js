@@ -68,12 +68,13 @@
                   if(formData[i].value != ""){
                     taskMembers.push(formData[i].value);
                     flag = 1;
-                    action = '/addtask'
+                    action = '/addtask';
+                    var newVal = i - 3;
+                    var inputName = '#assigned' + newVal;
+                    console.log($(inputName));
+                    $(inputName).val('');
                   }
                  };
-
-                 // console.log(notes);
-                 // console.log(notesList);
 
                  var url = location.protocol + "//" + location.host + action;
                     $.ajax({
@@ -90,49 +91,13 @@
                               for(var i=0; i < taskMembers.length; i++){
                                 document.getElementById('tasksList').innerHTML += '<div class="row margin-left-1p bg-ltgray"><div class="col-md-9"><h3 class="text-left text-black text-capital">'+ notes + ' --- ' + taskMembers[i] + '</h3></div><div class="col-md-3 text-center margin-top-1p"><a href="#" class="text-h4 text-black margin-left-5p">EDIT</a><a href="#" class="text-h4 text-black margin-left-2p">REVIEW</a></div></div>';
                                 $('#notes' + value)[0].value = '';
+                                chooseVisibility('meetingMember' + value);
                               }
                              }                  
                            }
                          });
                  return false; 
                });
-
-              // $(document).on('click', '#noteSubmit', function() {
-                 // var value = $(this).attr('value');
-                 // var url = location.protocol + "//" + location.host + '/addnote';
-                 //                   alert("it worked ON BUTTON");
-                 // conso le.log(url);
-                 //    $.ajax({
-                 //           type: "POST",
-                 //           url: url,
-                 //           data: $("#TNForm" + value).serialize(), // serializes the form's elements.
-                 //           success: function(data)
-                 //           {
-                 //               alert(data); // show response from the php script.
-                 //           }
-                 //         });
-                 // return false; 
-              // });
-
-              // $('input[name=notes]').on('keypress', function(e) {
-              //   if (e.which == 13) {
-              //     e.preventDefault();
-              //     var value = $(this).attr('tabindex');
-              //     var url = location.protocol + "//" + location.host + '/addnote';
-              //     value = value -1;
-              //     console.log(url);
-              //       $.ajax({
-              //              type: "POST",
-              //              url: url,
-              //              data: $("#TNForm" + value).serialize(), // serializes the form's elements.
-              //              success: function(data)
-              //              {
-              //                  alert(data); // show response from the php script.
-              //              }
-              //            });
-              //     return false; 
-              //   }
-              // });
 
               $('#memberList img').click(function() {
                 var value = $(this).attr('value');
