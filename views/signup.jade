@@ -8,6 +8,16 @@ block content
 					h2.text-white Sign Up
 			form.form-inline.form-center(role='form', method='POST', action='/signup')
 				.row
+					.col-md-3.col-md-offset-3.spacing-top.form-group
+						input.form-control.border-square(id='signup', type='text', placeholder='FIRST NAME', name='firstName')
+					.col-md-3.spacing-top.form-group
+						input.form-control.border-square(id='signup', type='text', placeholder='LAST NAME', name='lastName')
+				.row
+					.col-md-3.col-md-offset-3.spacing-top.padding-top-1p.form-group
+						select.form-control.border-square(id='signup', name='accountType')
+							option(value='Manager') I am a project manager
+							option(value='Member') I am a project member
+				.row
 					.col-md-6.col-md-offset-3.padding-top-1p.form-group
 						input.form-control.border-square(id='signup', type='text', name='email', placeholder= 'EMAIL')
 				.row

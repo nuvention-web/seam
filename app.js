@@ -9,6 +9,8 @@ var interfaces = require('./routes/interfaces');
 var index = require('./routes/index');
 var http = require('http');
 var path = require('path');
+//include the nodemailer module
+var nodemailer = require('nodemailer');
 
 var flash = require('connect-flash');
 var express = require('express');
@@ -34,6 +36,9 @@ var db = mongoose.connection;
 
 // server setup
 var app = express();
+
+
+
 
 // all environments
 app.configure(function(){
@@ -65,7 +70,6 @@ app.get('/home', home.home);
 app.get('/survey', home.survey);
 app.post('/addsurvey', home.addsurvey);
 app.post('/addemail', home.addemail);
-
 //Interface
 
 app.get('/makeMeeting', user.isLoggedIn, interfaces.makeMeeting);
@@ -84,6 +88,9 @@ app.post('/addTask', user.isLoggedIn, interfaces.addTask);
 app.get('/finishMeeting', user.isLoggedIn, interfaces.finishMeeting);
 app.get('/pastMeeting', user.isLoggedIn, interfaces.pastMeeting);
 app.post('/viewPastMeeting', user.isLoggedIn, interfaces.viewPastMeeting);
+
+
+
 
 //product stuff
 app.post('/finishTask', user.isLoggedIn, task.finishTask);

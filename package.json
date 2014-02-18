@@ -16,7 +16,9 @@
     "passport-twitter": "~1.0.2",  
     "passport-google-oauth": "~0.1.5",
     "connect-flash": "~0.1.1", 
-    "bcrypt-nodejs": "*"
+    "bcrypt-nodejs": "*",
+    "email-templates": "0.0.5",
+    "nodemailer": "0.3.x"
   },
   "readmeFilename": "README.md",
   "gitHead": "7ad1af6b88ca09aedbc265067776b2832d139c5a",
