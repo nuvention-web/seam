@@ -1,4 +1,5 @@
- $(document).ready(function(){       
+ $(document).ready(function(){ 
+
             var scroll = 0;            
             $(document).scroll(function() { 
                 var changePos=$("#home-page").height();
