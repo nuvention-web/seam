@@ -1,6 +1,7 @@
 var mongoose = require('mongoose');
 var Meeting = require('../models/meeting-model');
 var Task = require('../models/task-model');
+var nodemailer = require('nodemailer');
 
 exports.makeMeeting = function(req, res){
 	Meeting.find({'UserId' : req.user.local.email}, function(e, docs){
@@ -215,14 +216,19 @@ exports.addNote = function(req, res){
 };
 
 exports.addMeeting = function(req, res){
+	var mailBody, smtpConfig;
 	var userId = req.user.local.email;
 	var meetingTitle = req.body.meetingTitle;
 	var objective = req.body.objective;
 	var agenda = req.body.agendaTopic;
 	var duration = req.body.duration;
 	var meetingTime = req.body.meetingTime;
+	var meetingDate = req.body.meetingDate;  
+	var meetingMembers = req.body.meetingMembers;
+	var emailAgenda='';
+
+	console.log("HE::P");
 	console.log(userId + meetingTitle + objective + agenda + duration);
- 
 	var newMeeting = new Meeting({
 		UserId: userId,
 		meetingTitle: meetingTitle,
@@ -231,13 +237,22 @@ exports.addMeeting = function(req, res){
 	});
 
 	for(var i=0; i<agenda.length; i++){
+<<<<<<< HEAD
 		if(agenda[i] != ''){
 			newMeeting.agenda.push({
 				topic: agenda[i],
 				duration: duration[i]
 			});
 		}
-	}
+=======
+		var number= i+1;
+		emailAgenda+=number+':  '+ agenda[i]+'<br/>';
+		newMeeting.agenda.push({
+			topic: agenda[i],
+			duration: duration[i]
+		});
+>>>>>>> email-setup
+	};
 
 	newMeeting.save(function(err, doc){
 		if(err){
@@ -249,6 +264,49 @@ exports.addMeeting = function(req, res){
 		else{
 			console.log('Added new meeting successfully');
 			Meeting.find({}, function(e, docs){console.log(docs);});
+		}
+	});
+
+	//email function
+	smtpConfig = nodemailer.createTransport('SMTP', {
+		service: 'Gmail',
+		auth: {
+			user: "seammeetings@gmail.com",
+			pass: "123456789a!"
+		}
+	});
+	//construct the email sending module
+	mailBody = {
+		forceEmbeddedImages: true,
+		from: "SEAM Meetings <seammeetings@gmail.com>",
+		to: meetingMembers,
+		subject: '[ '+meetingDate+' ] '+ meetingTitle + ' Meeting Agenda',
+		text: 'Date: '+ meetingDate +'\n\n'+ 'Objectives: '+objective+'\n\n'+ 'Agenda: \n\n'+ emailAgenda,
+
+		// HTML body
+    	html:"<p style='text-align:center'><img src='cid:logo@seam'/></p>"+
+         "<p style='text-align:center; text-transform:capitalize'> Date: "+meetingDate+"<br/></p>" +
+         "<p style='text-align:center; text-transform:capitalize'> Duration: "+meetingTime+" Minutes <br/></p>" +
+         "<p style='text-align:center; text-transform:capitalize'> Objectives: "+objective+"<br/></p>" +
+         "<p style='text-align:center; text-transform:capitalize'> Agenda: <br/>"+emailAgenda+"<br/></p>",
+	    attachments:[
+	        // Logo img
+	        {
+	            filePath: './public/images/seamlogo-red125.png',
+	            cid: 'logo@seam' // should be as unique as possible
+	        },
+
+	    ]
+	};
+	//send Email
+	smtpConfig.sendMail(mailBody, function (error, response) {
+		//Email not sent
+		if (error) {
+			res.end("Email send Failed");
+		}
+		//email send sucessfully
+		else {
+			res.end("Email send sucessfully");
 		}
 	});
 
