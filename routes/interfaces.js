@@ -360,11 +360,13 @@ exports.addMeeting = function(req, res){
 		text: 'Date: '+ meetingDate +'\n\n'+ 'Objectives: '+objective+'\n\n'+ 'Agenda: \n\n'+ emailAgenda,
 
 		// HTML body
-    	html:"<p style='text-align:center'><img src='cid:logo@seam'/></p>"+
-         "<p style='text-align:center; text-transform:capitalize'> Date: "+meetingDate+"<br/></p>" +
-         "<p style='text-align:center; text-transform:capitalize'> Duration: "+meetingTime+" Minutes <br/></p>" +
-         "<p style='text-align:center; text-transform:capitalize'> Objectives: "+objective+"<br/></p>" +
-         "<p style='text-align:center; text-transform:capitalize'> Agenda: <br/>"+emailAgenda+"<br/></p>",
+    	html:"<body>"+
+    	"<p style='text-align:center'><img src='cid:logo@seam'/></p>"+
+        "<p style='text-align:left; text-transform:capitalize'> Date: "+meetingDate+"<br/></p>" +
+        "<p style='text-align:left; text-transform:capitalize'> Duration: "+meetingTime+" Minutes <br/></p>" +
+        "<p style='text-align:left; text-transform:capitalize'> Objectives: "+objective+"<br/></p>" +
+        "<p style='text-align:left; text-transform:capitalize'> Agenda: <br/>"+emailAgenda+"<br/></p>"+
+        "</body>",
 	    attachments:[
 	        // Logo img
 	        {
