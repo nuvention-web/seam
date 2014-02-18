@@ -1,4 +1,18 @@
- $(document).ready(function(){       
+ $(document).ready(function(){ 
+
+$( document.body ).on( 'click', '.dropdown-menu li', function( event ) {
+ 
+   var $target = $( event.currentTarget );
+ 
+   $target.closest( '.btn-group' )
+      .find( '[data-bind="label"]' ).text( $target.text() )
+         .end()
+      .children( '.dropdown-toggle' ).dropdown( 'toggle' );
+ 
+   return false;
+ 
+});
+
             var scroll = 0;            
             $(document).scroll(function() { 
                 var changePos=$("#home-page").height();
