@@ -237,21 +237,14 @@ exports.addMeeting = function(req, res){
 	});
 
 	for(var i=0; i<agenda.length; i++){
-<<<<<<< HEAD
 		if(agenda[i] != ''){
+			var number= i+1;
+			emailAgenda+=number+':  '+ agenda[i]+'<br/>';
 			newMeeting.agenda.push({
-				topic: agenda[i],
-				duration: duration[i]
-			});
-		}
-=======
-		var number= i+1;
-		emailAgenda+=number+':  '+ agenda[i]+'<br/>';
-		newMeeting.agenda.push({
 			topic: agenda[i],
 			duration: duration[i]
-		});
->>>>>>> email-setup
+			});
+		}
 	};
 
 	newMeeting.save(function(err, doc){
