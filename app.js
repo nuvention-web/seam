@@ -81,6 +81,7 @@ app.get('/sidebarTasks', user.isLoggedIn, interfaces.sidebarTasks);
 app.post('/addmeeting', user.isLoggedIn, interfaces.addMeeting);
 app.post('/addnote', user.isLoggedIn, interfaces.addNote);
 app.post('/addTask', user.isLoggedIn, interfaces.addTask);
+app.post('/addproject', user.isLoggedIn, interfaces.addProject)
 app.get('/finishMeeting', user.isLoggedIn, interfaces.finishMeeting);
 app.get('/pastMeeting', user.isLoggedIn, interfaces.pastMeeting);
 app.post('/viewPastMeeting', user.isLoggedIn, interfaces.viewPastMeeting);

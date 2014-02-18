@@ -163,10 +163,6 @@ function addTimer(time){
   });
 }
 
-function increaseBtnOnclick() {
-    document.getElementById("htop").value = Number(document.getElementById("htop").value) + 1;
-}
-
 function addNote(number){
   var form = 'TNForm';
   document.getElementsByName(form)[number].action = location.protocol + "//" + location.host + '/addnote';

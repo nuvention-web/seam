@@ -1,6 +1,7 @@
 var mongoose = require('mongoose');
 var Meeting = require('../models/meeting-model');
 var Task = require('../models/task-model');
+var Project = require('../models/project-model');
 
 exports.makeMeeting = function(req, res){
 	Meeting.find({'UserId' : req.user.local.email}, function(e, docs){
@@ -76,6 +77,10 @@ exports.projects = function(req, res){
 		user : req.user,
 		name : req.session.name
 	});
+};
+
+exports.addProject = function(req, res){
+
 };
 
 exports.startMeeting = function(req, res){
