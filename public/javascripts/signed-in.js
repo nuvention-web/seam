@@ -149,10 +149,22 @@ function chooseVisibility(tabId){
 
 };
 
+function toggleView(id) {
+   var e = document.getElementById(id);
+   if(e.style.display == 'inline')
+      e.style.display = 'none';
+   else
+      e.style.display = 'inline';
+}
+
 function addTimer(time){
   $("#progressTimer").progressBar({
      timeLimit: time*60
   });
+}
+
+function increaseBtnOnclick() {
+    document.getElementById("htop").value = Number(document.getElementById("htop").value) + 1;
 }
 
 function addNote(number){

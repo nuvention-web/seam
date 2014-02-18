@@ -71,7 +71,11 @@ exports.newMeeting = function(req, res){
 };
 
 exports.projects = function(req, res){
-	res.render('projects', { title: 'SEAM', user : req.user});
+	res.render('projects', { 
+		title: 'SEAM', 
+		user : req.user,
+		name : req.session.name
+	});
 };
 
 exports.startMeeting = function(req, res){

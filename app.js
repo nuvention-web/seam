@@ -93,12 +93,12 @@ app.post('/deletetask', user.isLoggedIn, task.deleteTask);
 app.get('/signup', user.signup);
 app.get('/logout', user.logout);
 app.post('/signup', passport.authenticate('local-signup', {// process the signup form
-	successRedirect: '/welcome', // redirect to the secure profile section
+	successRedirect: '/projects', // redirect to the secure profile section
 	failureRedirect: '/signup', // redirect back to the signup page if there is an error
 	failureFlash: true // allow flash messages
 }));
 app.post('/login', passport.authenticate('local-login', {
-	successRedirect: '/welcome', // redirect to the secure profile section
+	successRedirect: '/projects', // redirect to the secure profile section
 	failureRedirect: '/home', // redirect back to the signup page if there is an error
 	failureFlash: true // allow flash messages
 }));
