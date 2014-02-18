@@ -75,6 +75,7 @@ app.get('/projects', user.isLoggedIn, interfaces.projects);
 app.post('/startMeeting', user.isLoggedIn, interfaces.startMeeting);
 app.get('/tasks', user.isLoggedIn, interfaces.tasks);
 app.get('/welcome', user.isLoggedIn, interfaces.welcome);
+app.post('/welcome', user.isLoggedIn, interfaces.setWelcome);
 app.get('/sidebarMeetings', user.isLoggedIn, interfaces.sidebarMeetings);
 app.get('/sidebarNavbar', user.isLoggedIn, interfaces.sidebarNavbar);
 app.get('/sidebarTasks', user.isLoggedIn, interfaces.sidebarTasks);

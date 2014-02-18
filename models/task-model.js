@@ -2,6 +2,7 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var taskSchema = new Schema({
+	ProjectId: { type: String, required : true},
 	UserId: { type: String, required : true},
 	MeetingId: {type: String},
     meetingTask: { type: String },

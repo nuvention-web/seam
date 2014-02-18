@@ -2,12 +2,13 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var memberSchema = new Schema({
-	name: { type: String },
-	email: { type: String },
+	memberName: { type: String },
+	memberEmail: { type: String },
 });
 
 var projectSchema = new Schema({
-    name: { type: String, required: true, index: { unique: true } },
+	UserId : { type: String, required: true},
+    projectName: { type: String, required: true},
     groupMembers: [memberSchema]
 });
 
