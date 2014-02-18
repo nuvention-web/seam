@@ -301,7 +301,6 @@ exports.addMeeting = function(req, res){
 	var meetingMembers = req.body.meetingMembers;
 	var emailAgenda='';
 
-	console.log("HE::P");
 	console.log(userId + meetingTitle + objective + agenda + duration);
 	var newMeeting = new Meeting({
 		ProjectId: projectId,
@@ -311,17 +310,26 @@ exports.addMeeting = function(req, res){
 		meetingTime: meetingTime
 	});
 
-	for(var i=0; i<agenda.length; i++){
-		if(agenda[i] != ''){
-			var number= i+1;
-			emailAgenda+=number+':  '+ agenda[i]+'<br/>';
-			newMeeting.agenda.push({
-			topic: agenda[i],
-			duration: duration[i]
-			});
-		}
-	};
-
+	if(typeof agenda == 'string'){
+		emailAgenda+='1:  '+ agenda+'<br/>';
+		newMeeting.agenda.push({
+			topic: agenda,
+			duration: duration
+		});
+	}
+	else{
+		for(var i=0; i<agenda.length; i++){
+			if(agenda[i] != ''){
+				var number= i+1;
+				emailAgenda+=number+':  '+ agenda[i]+'<br/>';
+				newMeeting.agenda.push({
+				topic: agenda[i],
+				duration: duration[i]
+				});
+			}
+		};
+	}
+	
 	newMeeting.save(function(err, doc){
 		if(err){
 			console.log('Problem adding information to database')
