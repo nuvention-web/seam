@@ -1,8 +1,9 @@
-extends sidebarMeetings
+extends ../dashboard/sidebarMeetings
+
 block interfaces
     .bg-white(style="margin-left:35%; top:0px; position:absolute; width:65%; float:right")
         .container-85p.margin-center
-            form.form-inline.form-center(role='form', method='POST', action='/addmeeting' id='addmeeting')
+            form.form-inline.form-center(role='form', method='POST', action='/dashboard/meetings/makeMeeting/add' id='addmeeting')
                 .row.padding-top-2p
                     .col-md-10.col-md-offset-1.text-center.red-input
                         input.form-control.border-square.border-none.text-center.text-h3.text-red.bg-grayblue(id="addMeeting" type='text', name='meetingTitle', placeholder= 'MEETING TITLE')

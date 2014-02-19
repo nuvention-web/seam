@@ -1,0 +1,36 @@
+extends layout
+
+block content
+	.survey-page
+		.screenBg
+			.container
+				.row.margin-top-5p
+					.col-md-12
+						h2.text-white.text-bold SEAM
+				.row
+					.col-md-12
+						h4.text-white Thank you for your interest in SEAM. Who are you? We'd like to know. If you're interested, we'd like to get some more information about you.
+						br
+				form.form-inline.form-center(role='form', method='POST', action='addSurvey')
+					.row
+						.col-md-4.col-md-offset-2.form-group
+							input.form-control.border-square(id='email', type='text', placeholder='FIRST NAME', name='firstName')
+						.col-md-4.form-group
+							input.form-control.border-square(id='email', type='text', placeholder='LAST NAME', name='lastName')
+					.row.margin-top-1p
+						.col-md-8.col-md-offset-2.form-group
+							input.form-control.border-square(id='email', type='text', placeholder='INDUSTRY', name='industry')
+					.row.margin-top-1p
+						.col-md-8.col-md-offset-2.form-group
+							input.form-control.border-square(id='email', type='text', placeholder='FUNCTION', name='func')
+					.row.margin-top-1p
+						.col-md-8.col-md-offset-2.form-group
+							input.form-control.border-square(id='email', type='text', placeholder='MEETING FREQUENCY', name='meetingFrequency')
+					.row.margin-top-1p
+						.col-md-8.col-md-offset-2.form-group
+							input.form-control.border-square(id='email', type='text', placeholder='LEVEL OF FRUSTRATION WITH MEETINGS', name='frustration')
+					.row.margin-top-3p
+						.col-md-6.col-md-offset-3
+							button.btn.btn-primary.btn-lg.btn-block.margin-center.border-square.bg-red-border(type='submit') GET TO KNOW ME
+			footer.margin-top-3p
+				h5.text-white &copy; Powered by SEAM 2014.

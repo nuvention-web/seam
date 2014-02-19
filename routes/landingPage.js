@@ -1,20 +1,17 @@
 
-/*
- * GET home page.
- */
 var mongoose = require('mongoose');
 var Email = require('../models/email-model');
 var Survey = require('../models/survey-model');
 
 exports.home = function(req, res){
-	res.render('home', { title: 'MeetingBuddy!', user : req.user});
+	res.render('landingPage/home', { title: 'MeetingBuddy!', user : req.user});
 };
 
 exports.survey = function(req, res){
-	res.render('survey', {title: 'Survey', user : req.user});
+	res.render('landingPage/survey', {title: 'Survey', user : req.user});
 };
 
-exports.addemail = function(req, res){
+exports.addEmail = function(req, res){
 	var userEmail = req.body.userEmail;
 	var newEmail = new Email({email: userEmail});
 	newEmail.save(function (err, doc){
@@ -26,14 +23,13 @@ exports.addemail = function(req, res){
 			else{
 				console.log('Added new email successfully');
 				Email.find({}, function(e, docs){console.log(docs);});
-				res.location('survey');
-				res.redirect('survey', {user : req.user});
+				res.redirect('survey');
 			}
 		}
 	);
 };
 
-exports.addsurvey = function(req, res){
+exports.addSurvey = function(req, res){
 	var firstName = req.body.firstName;
 	var lastName = req.body.lastName;
 	var industry = req.body.industry;

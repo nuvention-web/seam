@@ -1,4 +1,4 @@
-extends sidebarMeetings
+extends ../dashboard/sidebarMeetings
 
 block interfaces
 	.bg-white(style="margin-left:35%; top:0px; position:absolute; width:65%; float:right")
@@ -11,5 +11,5 @@ block interfaces
 					button.border-red.btn.btn-primary.btn-lg.btn-block.border-square.bg-red-hover.text-white-nohover(type='button', onClick="addNote(#{i})") LOAD AGENDA
 			.row.margin-top-10p
 				.col-md-6.col-md-offset-3
-					a(href='/newMeeting')
+					a(href='/dashboard/meetings/makeMeeting/new')
 						button.border-red.btn.btn-primary.btn-lg.btn-block.border-square.bg-red-hover.text-white-nohover(type='button') NEW AGENDA

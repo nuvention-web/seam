@@ -61,14 +61,14 @@
                  var taskMembers= new Array();
                  var formData = $("#TNForm" + value).serializeArray();
                  var notes = formData[2].value;
-                 var action = '/addnote';
+                 var action = '/dashboard/meetings/start/addNote';
                  var flag = 0; //0 if notes 1 if task
                  
                  for(var i = 3; i < formData.length; i++){
                   if(formData[i].value != ""){
                     taskMembers.push(formData[i].value);
                     flag = 1;
-                    action = '/addtask';
+                    action = '/dashboard/meetings/start/addTask';
                     var newVal = i - 3;
                     var inputName = '#assigned' + newVal;
                     console.log($(inputName));
