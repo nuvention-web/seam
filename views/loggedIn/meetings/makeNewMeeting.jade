@@ -5,41 +5,41 @@ block interfaces
         .container-85p.margin-center
             form.form-inline.form-center(role='form', method='POST', action='/dashboard/meetings/makeMeeting/add' id='addmeeting')
                 .row.padding-top-2p
-                    .col-md-10.col-md-offset-1.text-center.red-input
+                    .col-md-8.col-md-offset-2.text-center.red-input
                         input.form-control.border-square.border-none.text-center.text-h3.text-red.bg-grayblue(id="addMeeting" type='text', name='meetingTitle', placeholder= 'MEETING TITLE')
                 .row.margin-top-5p
-                    .col-md-6.col-md-offset-3
-                        h4.text-black.text-center.text-bold MEETING OBJECTIVES
+                    .col-md-8.col-md-offset-2
+                        h4.text-black.text-left.text-bold MEETING OBJECTIVES
                 .row.bg-grayblue.padding-top-2p
-                    .col-md-8.col-md-offset-2.text-center
-                        input.form-control.border-square.border-none.text-left.text-h3.text-black.bg-grayblue.border-grayblue(id='addMeeting', type='text', name='objective', placeholder= 'INSERT MEETING OBJECTIVE')
+                    .col-md-8.col-md-offset-2
+                        input.form-control.border-square.border-none.text-left.text-h5.text-black.bg-grayblue.border-grayblue(id='addMeeting', type='text', name='objective', placeholder= 'INSERT MEETING OBJECTIVE')
                 .row.margin-top-5p
-                    .col-md-6.col-md-offset-3
-                        h4.text-black.text-center.text-bold MEETING DATE &amp; DURATION
+                    .col-md-8.col-md-offset-2
+                        h4.text-black.text-left.text-bold MEETING DATE &amp; DURATION
                 .row.margin-top-3p
                     .col-md-8.col-md-offset-2
-                        input.form-control.border-square.border-none.text-center.text-h5.text-black.bg-grayblue.border-grayblue(id='addMeeting', type='text', name='meetingDate', placeholder= 'DATE(MM/DD/YYYY)')
+                        input.form-control.border-square.border-none.text-left.text-h5.text-black.bg-grayblue.border-grayblue(id='addMeeting', type='text', name='meetingDate', placeholder= 'DATE(MM/DD/YYYY)')
                 .row.margin-top-3p
                     .col-md-8.col-md-offset-2
-                        input.form-control.border-square.border-none.text-center.text-h5.text-black.bg-grayblue.border-grayblue(id='addMeeting', type='text', name='meetingTime', placeholder= 'TIME(MINUTES)')
+                        input.form-control.border-square.border-none.text-left.text-h5.text-black.bg-grayblue.border-grayblue(id='addMeeting', type='text', name='meetingTime', placeholder= 'TIME(MINUTES)')
                 .row.margin-top-5p
-                    .col-md-6.col-md-offset-3
-                        h4.text-black.text-center.text-bold MEETING MEMBERS
+                    .col-md-8.col-md-offset-2
+                        h4.text-black.text-left.text-bold MEETING MEMBERS
                 .row.margin-top-3p
                     .col-md-8.col-md-offset-2
-                        input.form-control.border-square.border-none.text-center.text-h5.text-black.bg-grayblue.border-grayblue(id='addMeeting', type='text', name='meetingMembers', placeholder= 'MEMBERS(EMAIL,EMAIL,...)')
+                        input.form-control.border-square.border-none.text-left.text-h5.text-black.bg-grayblue.border-grayblue(id='addMeeting', type='text', name='meetingMembers', placeholder= 'MEMBERS(EMAIL,EMAIL,...)')
                 
                 .row.margin-top-5p
-                    .col-md-6.col-md-offset-3
-                        h4.text-black.text-upper.text-center.text-bold agenda items
+                    .col-md-8.col-md-offset-2
+                        h4.text-black.text-upper.text-left.text-bold agenda items
                 #agendaBox
                     .row.padding-top-2p
-                        .col-md-7.col-sm-7.col-xs-7
+                        .col-md-6.col-sm-6.col-xs-6.col-md-offset-2
                             input.form-control.border-square.border-none.text-left.text-h5.text-black.bg-grayblue.border-grayblue(id='addMeetingItem', type='text', name='agendaTopic', placeholder= 'INSERT AGENDA ITEM' , onkeypress="addAgendaItemKeypress()")
-                        .col-md-4.col-sm-4.col-xs-4.text-right.red-input
+                        .col-md-2.col-sm-2.col-xs-2.text-right.red-input
                             input.form-control.border-square.border-none.text-left.text-h5.text-red.bg-grayblue.border-grayblue(id='addTime', type='text', name='duration', placeholder= 'TIME(HH:MM)')
                 .row.padding-top-2p
-                    .col-md-12
+                    .col-md-8.col-md-offset-2
                         a#addAgendaItem.text-h5.margin-left-10x(href="#" onclick="addAgendaItem()") Add Agenda Item
                 .row.padding-top-5p
                     .col-md-6.col-md-offset-3.text-center
