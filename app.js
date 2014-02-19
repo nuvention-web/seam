@@ -8,7 +8,6 @@ var dashboard = require('./routes/dashboard');
 var meetings = require('./routes/meetings');
 var user = require('./routes/user');
 var task = require('./routes/task');
-var interfaces = require('./routes/interfaces');
 var index = require('./routes/index');
 var http = require('http');
 var path = require('path');
