@@ -1,5 +1,5 @@
  $(document).ready(function(){
-
+  
             $('.attendeeMember img').click(function() {
                 var value = $(this).attr('value');
                 var input = $('#taskPerson');

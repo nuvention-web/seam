@@ -1,9 +1,15 @@
 var timeOut;
-function addAgendaItemKeypress(){
-         if (timeOut) clearTimeout(timeOut);
-        timeOut = setTimeout(function() {
-            addAgendaItem();
-        }, 700);
+function addAgendaItemKeypress(e){
+
+		if (!e) e = window.event; // needed for cross browser compatibility
+		if(e.which == 13 || e.keyCode == 13)
+		{
+		
+			addAgendaItem();
+			return true;
+		}
+		else
+			return false;
 };
 
 function addAgendaItem(){
