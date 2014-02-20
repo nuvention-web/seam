@@ -12,6 +12,7 @@ var topicSchema = new Schema({
 });
 
 var meetingSchema = new Schema({
+	ProjectId: { type: String, required : true},
 	UserId: { type: String, required : true},
 	meetingTitle: { type: String },
 	objective: { type: String },

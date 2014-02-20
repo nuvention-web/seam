@@ -3,10 +3,16 @@ extends layout
 block content
 	.screenBg
 		.container
-			.row
+			.row.margin-top-5p
 				.col-md-12
 					h2.text-white Sign Up
 			form.form-inline.form-center(role='form', method='POST', action='/signup')
+				.row
+					.col-md-3.col-md-offset-3.spacing-top.form-group
+						input.form-control.border-square(id='signup', type='text', placeholder='FIRST NAME', name='firstName')
+					.col-md-3.spacing-top.form-group
+						input.form-control.border-square(id='signup', type='text', placeholder='LAST NAME', name='lastName')
+				
 				.row
 					.col-md-6.col-md-offset-3.padding-top-1p.form-group
 						input.form-control.border-square(id='signup', type='text', name='email', placeholder= 'EMAIL')
@@ -14,5 +20,13 @@ block content
 					.col-md-6.col-md-offset-3.padding-top-1p.form-group
 						input.form-control.border-square(id='signup', type='password', name='password', placeholder= 'PASSWORD')
 				.row
+					.col-md-6.col-md-offset-3.spacing-top.padding-top-1p.form-group
+						select.form-control.border-square(id='signup', style="width:100%;", name='accountType')
+							option(style="text-align:center", value='Manager')
+								h5 I AM A PROJECT MANAGER
+							option(value='Member') 
+								h5 I AM A PROJECT MEMBER
+				.row
 					.col-md-4.col-md-offset-4.padding-top-1p
 						button.btn.btn-primary.btn-lg.btn-block.margin-center.border-square.bg-red-border(type='submit') SIGN UP
+				

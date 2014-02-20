@@ -9,6 +9,8 @@ var interfaces = require('./routes/interfaces');
 var index = require('./routes/index');
 var http = require('http');
 var path = require('path');
+//include the nodemailer module
+var nodemailer = require('nodemailer');
 
 var flash = require('connect-flash');
 var express = require('express');
@@ -34,6 +36,9 @@ var db = mongoose.connection;
 
 // server setup
 var app = express();
+
+
+
 
 // all environments
 app.configure(function(){
@@ -65,7 +70,6 @@ app.get('/home', home.home);
 app.get('/survey', home.survey);
 app.post('/addsurvey', home.addsurvey);
 app.post('/addemail', home.addemail);
-
 //Interface
 
 app.get('/makeMeeting', user.isLoggedIn, interfaces.makeMeeting);
@@ -75,15 +79,20 @@ app.get('/projects', user.isLoggedIn, interfaces.projects);
 app.post('/startMeeting', user.isLoggedIn, interfaces.startMeeting);
 app.get('/tasks', user.isLoggedIn, interfaces.tasks);
 app.get('/welcome', user.isLoggedIn, interfaces.welcome);
+app.post('/welcome', user.isLoggedIn, interfaces.setWelcome);
 app.get('/sidebarMeetings', user.isLoggedIn, interfaces.sidebarMeetings);
 app.get('/sidebarNavbar', user.isLoggedIn, interfaces.sidebarNavbar);
 app.get('/sidebarTasks', user.isLoggedIn, interfaces.sidebarTasks);
 app.post('/addmeeting', user.isLoggedIn, interfaces.addMeeting);
 app.post('/addnote', user.isLoggedIn, interfaces.addNote);
 app.post('/addTask', user.isLoggedIn, interfaces.addTask);
+app.post('/addproject', user.isLoggedIn, interfaces.addProject)
 app.get('/finishMeeting', user.isLoggedIn, interfaces.finishMeeting);
 app.get('/pastMeeting', user.isLoggedIn, interfaces.pastMeeting);
 app.post('/viewPastMeeting', user.isLoggedIn, interfaces.viewPastMeeting);
+
+
+
 
 //product stuff
 app.post('/finishTask', user.isLoggedIn, task.finishTask);
@@ -93,12 +102,12 @@ app.post('/deletetask', user.isLoggedIn, task.deleteTask);
 app.get('/signup', user.signup);
 app.get('/logout', user.logout);
 app.post('/signup', passport.authenticate('local-signup', {// process the signup form
-	successRedirect: '/welcome', // redirect to the secure profile section
+	successRedirect: '/projects', // redirect to the secure profile section
 	failureRedirect: '/signup', // redirect back to the signup page if there is an error
 	failureFlash: true // allow flash messages
 }));
 app.post('/login', passport.authenticate('local-login', {
-	successRedirect: '/welcome', // redirect to the secure profile section
+	successRedirect: '/projects', // redirect to the secure profile section
 	failureRedirect: '/home', // redirect back to the signup page if there is an error
 	failureFlash: true // allow flash messages
 }));
