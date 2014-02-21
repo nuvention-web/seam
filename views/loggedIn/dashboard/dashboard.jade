@@ -11,6 +11,8 @@ html(lang='en')
 		link(rel='stylesheet', href='/stylesheets/base.css')
 		link(rel='stylesheet', href='/stylesheets/fonts.css')
 		title= title
+		script(src='https://code.jquery.com/jquery.js')
+		script(src='../../../javascripts/bootstrap.min.js')
 		script.
 			(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
 			(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
@@ -39,8 +41,3 @@ html(lang='en')
 				a(href="/home")
 					img.navbar-brand.img-responsive.position-fixed.bottom-0x.margin-left-15x.height-80x(style="width:14%; height:10%;", src="../../../images/seamlogo.png")
 		block content 
-		script(src='https://code.jquery.com/jquery.js')
-		script(src='../../../javascripts/bootstrap.min.js')
-		script(src='../../../javascripts/meetings-assignTasks.js')
-		script(src='../../../javascripts/meetings-update.js')
-		script(src='../../../javascripts/meetings-progressBar.js')
