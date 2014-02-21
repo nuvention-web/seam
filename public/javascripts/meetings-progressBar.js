@@ -1,3 +1,5 @@
+//FUNCTIONS FOR PROGRESS BAR DURING MEETING
+
 (function ($) {
     $.fn.progressBar = function (settings) {
 
@@ -50,3 +52,10 @@
         completeStyle: 'progress-bar-success'  //bootstrap progress bar style at completion of timer
     };
 }(jQuery));
+
+//FUNCTION: ADD TIMER TO MEETING
+function addTimer(time){
+    $("#progressTimer").progressBar({
+         timeLimit: time*60
+    });
+}

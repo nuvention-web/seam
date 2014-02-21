@@ -70,6 +70,7 @@ a{
 a:hover{
 	color:rgb(204,51,51);
 	text-decoration:none;
+	transition:all 0.5s ease-in-out;
 }
 hr{
 	margin: 12px auto;
@@ -82,6 +83,8 @@ button{
 input{
 	border:none;
 	background-color: transparent;
+	outline: none;
+  	box-shadow:none !important;
 }
 .red-input input::-webkit-input-placeholder {
 	color:rgb(204,51,51) !important;
