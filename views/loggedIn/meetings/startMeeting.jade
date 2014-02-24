@@ -10,15 +10,12 @@ block content
 			.row.margin-top-1p
 			if(past == 0)
 				.col-md-8
-					.progress.border-square.margin-top-5x.height-24x
-						.progress-bar.progress-bar-success(style='width: 35%;')
-							span.sr-only 35% Complete (success)
-						.progress-bar.progress-bar-warning(style='width: 20%;')
-							span.sr-only 20% Complete (warning)
-						.progress-bar.progress-bar-danger(style='width: 10%;')
-							span.sr-only 10% Complete (danger)
-				.col-md-2
-					h5.text-black.text-left.float-right.margin-top-5x.text-upper 00:47 left
+					input(type="hidden" id="progressValues" value='#{meeting.timerInfo}')
+					#progressBar(value='5')
+				.col-md-1
+					h5.text-black.text-right.float-right.margin-top-5x.text-upper#countdownTimer
+				.col-md-1
+					h5.text-black.text-left.float-right.margin-top-5x.text-upper LEFT
 				.col-md-2
 					a(href="/dashboard/meetings/end")
 						button.border-red.btn.btn-primary.btn-block.border-square.bg-red-hover.text-white-nohover(type='button') END MEETING
@@ -42,7 +39,7 @@ block content
 						each notes, x in agenda.notes
 							h5.text-left.margin-right-2p.text-capital #{notes.notes}
 					.col-md-2
-						h4.text-red.text-upper.text-center #{agenda.duration}
+						h4.text-red.text-upper.text-center #{agenda.duration} Minutes
 				if(past == 0)
 					form.form-inline.form-center(role='form', method='POST', name='TNForm', action='/dashboard/meetings/start/addNote', value='#{i}', id='TNForm#{i}')
 						input(type='hidden', name='noteOrder', value='#{i}')
@@ -93,3 +90,8 @@ block content
 					.col-md-3.text-center.margin-top-1p
 						a.text-h4.text-black.margin-left-5p(href="#") EDIT
 						a.text-h4.text-black.margin-left-2p(href="#") REVIEW
+	script(src='../../../javascripts/meetings-assignTasks.js')
+	script(src='../../../javascripts/meetings-update.js')
+	script(src='../../../javascripts/meetings-progressBar.js')
+	script(type="text/javascript" src="../../../javascripts/jquery.plugin.js")
+	script(type="text/javascript" src="../../../javascripts/jquery.countdown.js")

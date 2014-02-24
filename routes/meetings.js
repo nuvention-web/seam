@@ -281,8 +281,9 @@ exports.addMeeting = function(req, res){
 	var meetingDate = req.body.meetingDate;  
 	var meetingMembers = req.body.meetingMembers;
 	var emailAgenda='';
-
+	var timerInfo= meetingTime+','+duration;
 	console.log(userId + meetingTitle + objective + agenda + duration);
+	console.log('hi: ', timerInfo);
 	var newMeeting = new Meeting({
 		ProjectId: projectId,
 		UserId: userId,
@@ -290,7 +291,8 @@ exports.addMeeting = function(req, res){
 		objective: objective,
 		meetingDate: meetingDate,
 		meetingMembers: meetingMembers,
-		meetingTime: meetingTime
+		meetingTime: meetingTime,
+		timerInfo:timerInfo
 	});
 
 	if(typeof agenda == 'string'){
