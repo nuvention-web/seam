@@ -31,13 +31,13 @@ block interfaces
                 
                 .row.margin-top-5p
                     .col-md-8.col-md-offset-2
-                        h4.text-black.text-upper.text-left.text-bold agenda items
+                        h4.text-black.text-left.text-bold AGENDA ITEMS
                 #agendaBox
                     .row.padding-top-2p
                         .col-md-6.col-sm-6.col-xs-6.col-md-offset-2
                             input.form-control.border-square.border-none.text-left.text-h5.text-black.bg-grayblue.border-grayblue(id='addMeetingItem', type='text', name='agendaTopic', placeholder= 'INSERT AGENDA ITEM' , onkeypress="addAgendaItemKeypress()")
                         .col-md-2.col-sm-2.col-xs-2.text-right.red-input
-                            input.form-control.border-square.border-none.text-left.text-h5.text-red.bg-grayblue.border-grayblue(id='addTime', type='text', name='duration', placeholder= 'TIME(HH:MM)')
+                            input.form-control.border-square.border-none.text-left.text-h5.text-red.bg-grayblue.border-grayblue(id='addTime', type='text', name='duration', placeholder= 'TIME(MM)')
                 .row.padding-top-2p
                     .col-md-8.col-md-offset-2
                         a#addAgendaItem.text-h5.margin-left-10x(href="#" onclick="addAgendaItem()") Add Agenda Item

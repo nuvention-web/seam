@@ -20,6 +20,7 @@ var meetingSchema = new Schema({
 	meetingDate:{type:String},
 	meetingMembers:{type:String},
 	agenda: [topicSchema],
+	timerInfo: {type:String},
     isComplete: { type: Number, default: 0} // 0 is no, 1 is yes
 })
 
