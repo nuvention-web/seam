@@ -1,4 +1,4 @@
-extends sidebarNavbar
+extends ../dashboard/dashboard
 
 block content
 	.bg-white(style="margin-left:14%; top:0px; position:absolute; width:86%; float:right")
@@ -20,7 +20,7 @@ block content
 				.col-md-2
 					h5.text-black.text-left.float-right.margin-top-5x.text-upper 00:47 left
 				.col-md-2
-					a(href="/finishMeeting")
+					a(href="/dashboard/meetings/end")
 						button.border-red.btn.btn-primary.btn-block.border-square.bg-red-hover.text-white-nohover(type='button') END MEETING
 			else
 				.col-md-8
@@ -30,7 +30,7 @@ block content
 				.col-md-2
 					h5.text-black.text-left.float-right.margin-top-5x.text-upper Done
 				.col-md-2
-					a(href="/sidebarMeetings")
+					a(href="/dashboard/meetings")
 						button.border-red.btn.btn-primary.btn-block.border-square.bg-red-hover.text-white-nohover(type='button') GO BACK
 			.row.margin-top-3p
 				.col-md-6.col-md-offset-3
@@ -44,7 +44,7 @@ block content
 					.col-md-2
 						h4.text-red.text-upper.text-center #{agenda.duration}
 				if(past == 0)
-					form.form-inline.form-center(role='form', method='POST', name='TNForm', action='/addnote', value='#{i}', id='TNForm#{i}')
+					form.form-inline.form-center(role='form', method='POST', name='TNForm', action='/dashboard/meetings/start/addNote', value='#{i}', id='TNForm#{i}')
 						input(type='hidden', name='noteOrder', value='#{i}')
 						input(type='hidden', name='meetingId', value='#{meeting._id}')
 						.row.bg-grayblue.padding-bottom-1p.margin-top-1p#agenda1
@@ -65,19 +65,19 @@ block content
 								.col-md-8.col-md-offset-2.bg-white.text-center
 									#memberList.margin-top-1p(style="width:100%; height:105px; float:left; display:inline-block; overflow-y:hidden; overflow-x:scroll; white-space:nowrap;")
 										div.disp-inline-block.img-width-80x.img-height-80x
-											img.img-responsive.cursor-pointer.img-gray#1(src="images/joLee.jpg", name='0', value='leejosephinem@gmail.com')
+											img.img-responsive.cursor-pointer.img-gray#1(src="../../images/joLee.jpg", name='0', value='leejosephinem@gmail.com')
 										input(type='hidden', id='assigned0', value='', name='assigned')
 										div.disp-inline-block.img-width-80x.img-height-80x.margin-left-2p
-											img.img-responsive.cursor-pointer.img-gray#2(src="images/AlexPopelard.jpg" , value='alexpopelard@kellogg.northwestern.edu',name='1')
+											img.img-responsive.cursor-pointer.img-gray#2(src="../../images/AlexPopelard.jpg" , value='alexpopelard@kellogg.northwestern.edu',name='1')
 										input(type='hidden', id='assigned1', value='', name='assigned')
 										div.disp-inline-block.img-width-80x.img-height-80x.margin-left-2p
-											img.img-responsive.cursor-pointer.img-gray(src="images/SuzeeHan.jpg", value='suzeehan2015@u.northwestern.edu', name='2')
+											img.img-responsive.cursor-pointer.img-gray(src="../../images/SuzeeHan.jpg", value='suzeehan2015@u.northwestern.edu', name='2')
 										input(type='hidden', id='assigned2', value='', name='assigned')
 										div.disp-inline-block.img-width-80x.img-height-80x.margin-left-2p
-											img.img-responsive.cursor-pointer.img-gray(src="images/MichaelChen.jpg", value="michaelchen2015@u.northwestern.edu", name='3')
+											img.img-responsive.cursor-pointer.img-gray(src="../../images/MichaelChen.jpg", value="michaelchen2015@u.northwestern.edu", name='3')
 										input(type='hidden', id='assigned3', value='', name='assigned')
 										div.disp-inline-block.img-width-80x.img-height-80x.margin-left-2p
-											img.img-responsive.cursor-pointer.img-gray(src="images/TommyYu.jpg", value='tyu3138@gmail.com', name='4')
+											img.img-responsive.cursor-pointer.img-gray(src="../../images/TommyYu.jpg", value='tyu3138@gmail.com', name='4')
 										input(type='hidden', id='assigned4', value='', name='assigned')
 							.row.bg-grayblue.padding-bottom-1p
 								.col-md-8.col-md-offset-2.text-center.bg-white.padding-top-2p.padding-bottom-1p
@@ -93,3 +93,6 @@ block content
 					.col-md-3.text-center.margin-top-1p
 						a.text-h4.text-black.margin-left-5p(href="#") EDIT
 						a.text-h4.text-black.margin-left-2p(href="#") REVIEW
+	script(src='../../../javascripts/meetings-assignTasks.js')
+	script(src='../../../javascripts/meetings-update.js')
+	script(src='../../../javascripts/meetings-progressBar.js')

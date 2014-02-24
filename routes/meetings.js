@@ -6,7 +6,7 @@ var nodemailer = require('nodemailer');
 
 exports.makeMeeting = function(req, res){
 	Meeting.find({'ProjectId': req.session.projectId, 'UserId' : req.user.local.email}, function(e, docs){
-		res.render('makeMeeting', { 
+		res.render('loggedIn/meetings/makeMeeting', { 
 			title: 'SEAM',
 			projectName: req.session.projectName,
 			meetingList: docs,
@@ -15,7 +15,42 @@ exports.makeMeeting = function(req, res){
 	})
 };
 
-exports.meeting = function(req, res){
+exports.makeNewMeeting = function(req, res){
+	Meeting.find({'ProjectId': req.session.projectId, 'UserId' : req.user.local.email}, function(e, docs){
+		res.render('loggedIn/meetings/makeNewMeeting', { 
+			title: 'SEAM', 
+			meetingList: docs,
+			projectName: req.session.projectName,
+			user : req.user
+		});
+	})
+};
+
+exports.viewMeeting = function(req, res){
+	var meetingId = req.body.meetingId;
+	if(meetingId == undefined){
+		meetingId = req.session.meetingId;
+	}
+	else{
+		req.session.meetingId = meetingId;
+	}
+	console.log(meetingId);
+	Meeting.find({'ProjectId': req.session.projectId, 'UserId' : req.user.local.email}, function(e, docs){
+		Meeting.findOne({'ProjectId': req.session.projectId, '_id': meetingId}, function(e, doc){
+			console.log(doc);
+			res.render('loggedIn/meetings/viewMeeting', { 
+				title: 'SEAM',
+				meeting: doc,
+				projectName: req.session.projectName,
+				meetingList: docs,
+				user : req.user,
+				past : 0
+			});
+		})
+	})
+};
+
+exports.startMeeting = function(req, res){
 	var meetingId = req.body.meetingId;
 	if(meetingId == undefined){
 		meetingId = req.session.meetingId;
@@ -28,7 +63,7 @@ exports.meeting = function(req, res){
 		console.log(doc);
 		Task.find({'ProjectId': req.session.projectId, 'MeetingId': meetingId}, function(e, task){
 			console.log(task);
-			res.render('meeting', { 
+			res.render('loggedIn/meetings/startMeeting', { 
 				title: 'SEAM',
 				projectName: req.session.projectName,
 				taskList: task,
@@ -39,6 +74,117 @@ exports.meeting = function(req, res){
 		})
 	})
 };
+
+exports.endMeeting = function(req, res){
+	var meetingId = req.session.meetingId;
+	var meetingInfo;
+	var mailBody, smtpConfig;
+	var emailAgenda='';
+	var agenda,meetingTitle,meetingDate,objective;
+	// console.log(meetingId);
+	Meeting.findByIdAndUpdate(meetingId, {
+		'isComplete' : 1
+
+	}, function(e, result){
+		if(e) console.log(e);
+		else console.log("Successfully finished meeting");
+	});
+	Meeting.find({'ProjectId': meetingId, 'UserId' : req.user.local.email}, function(e, docs){
+		Meeting.findOne({'_id': meetingId}, function(e, doc){
+			meetingInfo=doc;
+			agenda=doc.agenda;
+			if(typeof agenda == 'string'){
+				emailAgenda+="<p style='text-align:left; text-transform:capitalize'> 1: "+agenda.topic+"<br/></p>";
+			}
+			else{
+				for(var i=0; i<agenda.length; i++){
+					console.log(agenda);
+					console.log(agenda.length);
+					if(agenda[i] != ''){
+						var number= i+1;
+						var notes= agenda[i].notes;
+						emailAgenda+=number+':  '+ agenda[i].topic+'<br/>';
+						for(var z=0; z<notes.length;z++){
+							emailAgenda+="<p style='margin-left:5em; text-transform:capitalize'> " +String.fromCharCode(97 + z)+". "+notes[z].notes+"<br/></p>";
+						}
+					}
+				};
+			}
+
+//email function
+	smtpConfig = nodemailer.createTransport('SMTP', {
+		service: 'Gmail',
+		auth: {
+			user: "seammeetings@gmail.com",
+			pass: "123456789a!"
+		}
+	});
+	//construct the email sending module
+	mailBody = {
+		forceEmbeddedImages: true,
+		from: "SEAM Meetings <seammeetings@gmail.com>",
+		to: meetingInfo.meetingMembers,
+		subject: '[ '+meetingInfo.meetingDate+' ] '+meetingInfo.meetingTitle+ ' Minutes',
+		text: 'Objectives: '+objective+'\n\n'+ 'Agenda: \n\n'+ emailAgenda,
+
+		// HTML body
+    	html:"<body>"+
+    	"<p style='text-align:center'><img src='cid:logo@seam'/></p>"+
+        "<p style='text-align:left; text-transform:capitalize'> Date: "+meetingInfo.meetingDate+"<br/></p>" +
+        "<p style='text-align:left; text-transform:capitalize'> Duration: "+meetingInfo.meetingTime+" Minutes <br/></p>" +
+        "<p style='text-align:left; text-transform:capitalize'> Objectives: "+meetingInfo.objective+"<br/></p>" +
+        "<p style='text-align:left; text-transform:capitalize'> Agenda: <br/></p>"+
+        emailAgenda+
+        "</body>",
+	    attachments:[
+	        // Logo img
+	        {
+	            filePath: './public/images/seamlogo-red125.png',
+	            cid: 'logo@seam' // should be as unique as possible
+	        },
+
+	    ]
+	};
+	//send Email
+	smtpConfig.sendMail(mailBody, function (error, response) {
+		//Email not sent
+		if (error) {
+			res.end("Email send Failed");
+		}
+		//email send sucessfully
+		else {
+			res.end("Email send sucessfully");
+		}
+	});
+		});
+	});
+	res.redirect('dashboard/meetings');
+}
+
+exports.viewPast = function(req, res){
+	var meetingId = req.body.meetingId;
+	if(meetingId == undefined){
+		meetingId = req.session.meetingId;
+	}
+	else{
+		req.session.meetingId = meetingId;
+	}
+	console.log(meetingId);
+	Meeting.find({'ProjectId': req.session.projectId, 'UserId' : req.user.local.email}, function(e, docs){
+		Meeting.findOne({'_id': meetingId}, function(e, doc){
+			console.log(doc);
+			res.render('loggedIn/meetings/viewMeeting', { 
+				title: 'SEAM',
+				projectName: req.session.projectName,
+				meeting: doc,
+				meetingList: docs,
+				user : req.user,
+				past : 1
+			});
+		})
+	})
+};
+
 
 exports.pastMeeting = function(req, res){
 	var meetingId = req.body.meetingId;
@@ -53,7 +199,7 @@ exports.pastMeeting = function(req, res){
 		console.log(doc);
 		Task.find({'ProjectId': req.session.projectId, 'MeetingId': meetingId}, function(e, task){
 			console.log(task);
-			res.render('meeting', { 
+			res.render('loggedIn/meetings/startMeeting', { 
 				title: 'SEAM',
 				taskList: task,
 				meeting: doc,
@@ -65,145 +211,28 @@ exports.pastMeeting = function(req, res){
 	})
 };
 
-exports.newMeeting = function(req, res){
-	Meeting.find({'ProjectId': req.session.projectId, 'UserId' : req.user.local.email}, function(e, docs){
-		res.render('newMeeting', { 
-			title: 'SEAM', 
-			meetingList: docs,
-			projectName: req.session.projectName,
-			user : req.user
-		});
-	})
-};
-
-exports.projects = function(req, res){
-	Project.find({'UserId' : req.user.local.email}, function(e, docs){
-		res.render('projects', { 
-			title: 'SEAM', 
-			projectList: docs,
-			user : req.user,
-			name : req.session.name
-		});
-	})
-};
-
-exports.startMeeting = function(req, res){
+exports.addNote = function(req, res){
+	var noteOrder = req.body.noteOrder;
 	var meetingId = req.body.meetingId;
-	if(meetingId == undefined){
-		meetingId = req.session.meetingId;
-	}
-	else{
-		req.session.meetingId = meetingId;
-	}
-	console.log(meetingId);
-	Meeting.find({'ProjectId': req.session.projectId, 'UserId' : req.user.local.email}, function(e, docs){
-		Meeting.findOne({'ProjectId': req.session.projectId, '_id': meetingId}, function(e, doc){
-			console.log(doc);
-			res.render('startMeeting', { 
-				title: 'SEAM',
-				meeting: doc,
-				projectName: req.session.projectName,
-				meetingList: docs,
-				user : req.user,
-				past : 0
-			});
-		})
+	var notes = req.body.notes;
+	console.log(req.body);
+	console.log(noteOrder + " " + meetingId + " " + notes);
+	Meeting.findOne({'ProjectId': req.session.projectId, '_id': meetingId}, function(e, doc){
+		doc.agenda[noteOrder].notes.push({notes: notes});
+		doc.save(function(err, doc){
+			if(err){
+				console.log('Problem adding notes to database')
+				console.log(err);
+				res.location('error');
+				res.redirect('error', {user : req.user});
+			}
+			else{
+				console.log('Added notes successfully');
+				Meeting.find({}, function(e, docs){console.log(docs);});
+			}
+		});	
+		res.redirect('back');
 	})
-};
-
-exports.viewPastMeeting = function(req, res){
-	var meetingId = req.body.meetingId;
-	if(meetingId == undefined){
-		meetingId = req.session.meetingId;
-	}
-	else{
-		req.session.meetingId = meetingId;
-	}
-	console.log(meetingId);
-	Meeting.find({'ProjectId': req.session.projectId, 'UserId' : req.user.local.email}, function(e, docs){
-		Meeting.findOne({'_id': meetingId}, function(e, doc){
-			console.log(doc);
-			res.render('startMeeting', { 
-				title: 'SEAM',
-				projectName: req.session.projectName,
-				meeting: doc,
-				meetingList: docs,
-				user : req.user,
-				past : 1
-			});
-		})
-	})
-};
-
-exports.finishMeeting = function(req, res){
-	var meetingId = req.session.meetingId;
-	// console.log(meetingId);
-	Meeting.findByIdAndUpdate(meetingId, {
-		'isComplete' : 1
-	}, function(e, result){
-		if(e) console.log(e);
-		else console.log("Successfully finished meeting");
-	});
-	res.redirect('welcome');
-}
-
-exports.tasks = function(req, res){
-	res.render('tasks', { title: 'SEAM', user : req.user});
-};
-
-exports.setWelcome = function(req, res){
-	var projectId = req.body.projectId;
-	var projectName = req.body.projectName;
-	if(projectId == undefined){
-		projectId = req.session.projectId;
-		projectName = req.session.projectName;
-	}
-	else{
-		req.session.projectId = projectId;
-		req.session.projectName = projectName;
-	}
-	console.log(projectId);
-	Project.findOne({'_id': projectId}, function(e, doc){
-		console.log(doc);
-		res.render('welcome', { 
-			title: 'SEAM',
-			projectName: req.session.projectName,
-			project: doc,
-			user : req.user,
-		});
-	})
-}
-
-exports.welcome = function(req, res){
-	res.render('welcome', { 
-		title: 'SEAM',
-		projectName: req.session.projectName,
-		user : req.user});
-};
-
-exports.sidebarMeetings = function(req, res){
-	Meeting.find({'ProjectId': req.session.projectId, 'UserId' : req.user.local.email}, function(e, docs){
-		res.render('sidebarMeetings', { 
-			title: 'SEAM', 
-			projectName: req.session.projectName,
-			meetingList: docs,
-			user : req.user
-		});
-	})
-};
-
-exports.sidebarNavbar = function(req, res){
-	res.render('sidebarNavbar', { 
-		title: 'SEAM',
-		projectName: req.session.projectName,
-		user : req.user});
-};
-
-exports.sidebarTasks = function(req, res){
-	res.render('sidebarTasks', { 
-		title: 'SEAM',
-		projectName: req.session.projectName, 
-		user : req.user});
 };
 
 exports.addTask = function(req, res){
@@ -238,54 +267,6 @@ exports.addTask = function(req, res){
 		}
 	}
 	res.redirect('back');
-}
-
-exports.addNote = function(req, res){
-	var noteOrder = req.body.noteOrder;
-	var meetingId = req.body.meetingId;
-	var notes = req.body.notes;
-	console.log(req.body);
-	console.log(noteOrder + " " + meetingId + " " + notes);
-	Meeting.findOne({'ProjectId': req.session.projectId, '_id': meetingId}, function(e, doc){
-		doc.agenda[noteOrder].notes.push({notes: notes});
-		doc.save(function(err, doc){
-			if(err){
-				console.log('Problem adding notes to database')
-				console.log(err);
-				res.location('error');
-				res.redirect('error', {user : req.user});
-			}
-			else{
-				console.log('Added notes successfully');
-				Meeting.find({}, function(e, docs){console.log(docs);});
-			}
-		});	
-		res.redirect('back');
-	})
-};
-
-exports.addProject = function(req, res){
-	var projectName = req.body.projectName;
-	var userId = req.user.local.email;
-	var newProject = new Project({
-		UserId : userId,
-		projectName : projectName
-	});
-
-	newProject.save(function(err, doc){
-		if(err){
-			console.log('Problem adding project to database')
-			console.log(err);
-			res.location('error');
-			res.redirect('error', {user : req.user});
-		}
-		else{
-			console.log('Added new project successfully');
-			Project.find({}, function(e, docs){console.log(docs);});
-		}
-	});
-
-	res.redirect('back');
 };
 
 exports.addMeeting = function(req, res){
@@ -307,6 +288,8 @@ exports.addMeeting = function(req, res){
 		UserId: userId,
 		meetingTitle: meetingTitle,
 		objective: objective,
+		meetingDate: meetingDate,
+		meetingMembers: meetingMembers,
 		meetingTime: meetingTime
 	});
 

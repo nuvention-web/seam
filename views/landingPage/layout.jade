@@ -1,0 +1,65 @@
+doctype html
+html(lang='en')
+	head
+		meta(charset='utf-8')
+		meta(http-equiv='X-UA-Compatible', content='IE=edge')
+		meta(name='viewport', content='width=device-width, initial-scale=1.0')
+		meta(name='description', content='')
+		meta(name='author', content='')
+		link(href='http://fonts.googleapis.com/css?family=Lato:300,400,700', rel='stylesheet', type='text/css')
+		link(rel='stylesheet', href='../../stylesheets/bootstrap.min.css')
+		link(rel='stylesheet', href='../../stylesheets/base.css')
+		title SEAM
+		script.
+			(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+			(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+			m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+			})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+			ga('create', 'UA-48300427-1', 'seam.herokuapp.com');
+			ga('send', 'pageview');
+	body#home-pg.bg-frontpg
+		div.navbar.bg-transparent.navbar-inverse.navbar-fixed-top(role='navigation')
+			.container
+				.navbar-header
+					button(type='button', class='navbar-toggle', data-toggle='collapse', data-target='.navbar-collapse')
+						span.sr-only Toggle navigation
+						span.icon-bar
+						span.icon-bar
+						span.icon-bar
+					a.text-white.navbar-brand.text-bold(href='home') SEAM
+				.navbar-collapse.collapse
+					.navbar-right
+						ul.nav.navbar-nav
+							if typeof user === 'undefined'
+								li
+									a(class='text-bold visible-login', href='home#home-page') HOME
+								li
+									a(class='text-bold visible-login', href='home#about-page') ABOUT
+								li
+									a(class='text-bold visible-login', href='home#team-page') TEAM
+								li
+									a(class='text-bold visible-login', href='signUp') SIGN UP
+								li
+									a#admin-btn.text-bold.visible-login(href='javascript:void(0)') SIGN IN
+							else
+								li
+									a(class='text-bold visible-login', href='/dashboard') DASHBOARD
+								li
+									a(class='text-bold visible-login', href='/dashboard/meetings') MEETINGS
+								li
+									a(class='text-bold visible-login', href='#') TASKS
+								li
+									a(class='text-bold visible-login', href='#') SETTINGS
+								li
+									a(class='text-bold visible-login', href='logout') LOG OUT
+					form.navbar-form.navbar-right.hidden-login(role='form' method='POST', action='login', style='display: none;')
+						.form-group.margin-right-5x
+							input.border-black.text-small.form-control.border-square.form-control-smaller(type='text', placeholder='EMAIL', name='email')
+						.form-group.margin-right-5x
+							input.border-black.text-small.form-control.border-square.form-control-smaller(type='password', placeholder='PASSWORD' , name='password')
+						button.btn.btn-success.bg-red-border.border-square.text-small.margin-right-5x(type='submit') LOGIN
+						a#admin-btn-2.text-bold.hidden-login.text-white(href='javascript:void(0)') X
+		block content
+		script(src='https://code.jquery.com/jquery.js')
+		script(src='../../javascripts/bootstrap.min.js')
+		script(src='../../javascripts/landingPage.js')
