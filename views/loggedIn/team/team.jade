@@ -1,0 +1,35 @@
+extends ../dashboard/sidebarMeetings
+
+block content
+	div
+		.container
+			.row
+				.col-md-11.col-md-offset-1
+					h1 MY TEAM
+			.row
+				form.form-inline.form-center(role='form', method='POST', action='/addMember')
+					div#addNewMember(style="display: none")
+						.row.margin-top-1p
+							.col-md-3.col-md-offset-5
+								input.form-control.border-square(type='text', name='memberName', value='', id='memberName', placeholder='NAME')
+							.col-md-3.col-md.offset-9
+								button.btn.btn-primary.margin-center.border-square.bg-red-border(type='submit') ADD
+						.row.margin-top-1p
+							.col-md-3.col-md-offset-5
+								input.form-control.border-square(type='text', name='memberEmail', value='', id='memberEmail', placeholder='EMAIL')
+					.row.margin-top-1p
+						.col-md-3.col-md-offset-5
+							button.btn.btn-primary.btn-block.margin-center.border-square.bg-red-border#addMemberBt(type='button' onclick='toggleView("addNewMember", "addMemberBt")', style="display: inline") NEW MEMBER
+				br
+			.row
+				each member, i in memberList
+					if( i+1%4 == 0)
+						.row.margin-top-5p
+							.col-md-2.col-md-offset-1
+								img.img-responsive.margin-center(src='../images/member.jpg', alt='#{member.memberName}')
+								h5.text-bold #{member.memberName}
+					else
+							.col-md-2.col-md-offset-1
+								img.img-responsive.margin-center(src='../images/member.jpg', alt='#{member.memberName}')
+								h5.text-bold #{member.memberName}
+	script(src='../../../javascripts/team.js')
