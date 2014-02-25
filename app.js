@@ -9,6 +9,7 @@ var meetings = require('./routes/meetings');
 var user = require('./routes/user');
 var task = require('./routes/task');
 var index = require('./routes/index');
+var team = require('./routes/team');
 var http = require('http');
 var path = require('path');
 //include the nodemailer module
@@ -97,6 +98,9 @@ app.post('/dashboard/meetings/start/addNote', user.isLoggedIn, meetings.addNote)
 app.post('/dashboard/meetings/start/addTask', user.isLoggedIn, meetings.addTask);
 app.get('/dashboard/meetings/end', user.isLoggedIn, meetings.endMeeting);
 
+// team member stuff
+app.get('/dashboard/team', user.isLoggedIn, team.team);
+app.post('/addMember', user.isLoggedIn, team.addMember);
 
 //app.post('/dashboard/meetings/startMeeting', user.isLoggedIn, meetings.startMeeting);
 //app.get('/tasks', user.isLoggedIn, interfaces.tasks);

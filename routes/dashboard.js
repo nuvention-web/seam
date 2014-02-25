@@ -49,4 +49,3 @@ exports.tasks = function(req, res){
 		projectName: req.session.projectName, 
 		user : req.user});
 };
-
