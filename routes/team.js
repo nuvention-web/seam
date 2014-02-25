@@ -5,6 +5,14 @@ var Project = require('../models/project-model');
 exports.team = function(req, res){
 	Project.findOne({'_id': req.session.projectId}, function(e, doc){
 		console.log(doc);
+		// groupMembers = new Array();
+		// for(var i =0; i < doc.groupMembers.length; i++){
+		// 	var fullName = doc.groupMembers[i].memberName;
+		// 	var splitName = fullName.split(' ');
+		// 	var firstName = splitName[0];
+		// 	console.log(fullName + " " + firstName);
+		// 	groupMembers[i] = doc.groupMembers[i];
+		// }
 		res.render('loggedIn/team/team', { 
 			memberList: doc.groupMembers,
 			title: 'SEAM',

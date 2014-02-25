@@ -1,6 +1,10 @@
 //FUNCTIONS FOR ADDING AGENDA ITEMS
 
 //FUNCTION:AUTOMATICALLY ADD AGENDA FIELD IF CLICKED
+ $(document).ready(function() {
+   	$('.multiselect').multiselect();
+ });
+
 function addAgendaItemKeypress(e){
 	if (!e) e = window.event; // needed for cross browser compatibility
 	if(e.which == 13 || e.keyCode == 13)

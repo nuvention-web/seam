@@ -17,11 +17,14 @@ exports.makeMeeting = function(req, res){
 
 exports.makeNewMeeting = function(req, res){
 	Meeting.find({'ProjectId': req.session.projectId, 'UserId' : req.user.local.email}, function(e, docs){
-		res.render('loggedIn/meetings/makeNewMeeting', { 
-			title: 'SEAM', 
-			meetingList: docs,
-			projectName: req.session.projectName,
-			user : req.user
+		Project.findOne({'_id': req.session.projectId}, function(e, proj){
+			res.render('loggedIn/meetings/makeNewMeeting', {
+				memberList: proj.groupMembers,
+				title: 'SEAM', 
+				meetingList: docs,
+				projectName: req.session.projectName,
+				user : req.user
+			});
 		});
 	})
 };
@@ -283,7 +286,7 @@ exports.addMeeting = function(req, res){
 	var emailAgenda='';
 	var timerInfo= meetingTime+','+duration;
 	console.log(userId + meetingTitle + objective + agenda + duration);
-	console.log('hi: ', timerInfo);
+	
 	var newMeeting = new Meeting({
 		ProjectId: projectId,
 		UserId: userId,
