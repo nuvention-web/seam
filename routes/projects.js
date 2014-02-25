@@ -1,16 +1,33 @@
 var mongoose = require('mongoose');
 var Meeting = require('../models/meeting-model');
 var Task = require('../models/task-model');
+var User = require('../models/user-model');
 var Project = require('../models/project-model');
 
 exports.welcome = function(req, res){
 	Project.find({'UserId' : req.user.local.email}, function(e, docs){
-		res.render('loggedIn/projects/projects', { 
-			title: 'SEAM', 
-			projectList: docs,
-			user : req.user,
-			name : req.session.name
-		});
+		if(req.session.name == undefined){
+			console.log('Made it inside if the because sign up');
+			User.findOne({'local.email' : req.user.local.email}, function(e, user){
+				req.session.userId = user.local.email;
+		        req.session.name = user.local.name;
+		        req.session.accountType = user.local.accountType;
+				res.render('loggedIn/projects/projects', { 
+					title: 'SEAM', 
+					projectList: docs,
+					user : req.user,
+					name : req.session.name
+				});
+			});
+		}
+		else{
+			res.render('loggedIn/projects/projects', { 
+				title: 'SEAM', 
+				projectList: docs,
+				user : req.user,
+				name : req.session.name
+			});
+		}
 	})
 };
 
