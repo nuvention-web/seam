@@ -196,7 +196,7 @@ textarea:focus, input:focus{
 	text-align: right;
 }
 .text-center{
-	text-align: middle !important;
+	text-align: center !important;
 }
 .text-vertical-center{
 	vertical-align: center;
@@ -548,16 +548,19 @@ textarea:focus, input:focus{
 .height-auto{
 	height: auto;
 }
+.max-height-120x{
+	max-height: 120px;
+}
 .max-height-150x{
 	max-height: 150px;
 }
-.height-100p{
-	height:100%;
+.height-20x{
+	height: 20px;
 }
-.height-100x{
-	height: 50px;
+.height-50x{
+	height:50px;
 }
-.width-100x{
+.width-50x{
 	width: 50px;
 }
 /* ========================================================
@@ -755,6 +758,14 @@ border-radius:50%;
 margin:0 auto;
 background-color: #000;
 }
+.progress-vertical-circle-bigger {
+position: relative;
+width: 40px;
+min-height:40px;
+border-radius:50%;
+margin:0 auto;
+background-color: #000;
+}
 .progress-vertical-line {
 position: relative;
 width: 2px;
@@ -763,6 +774,16 @@ height: auto;
 margin:0px auto;
 border-radius: 0;
 background-color: #000;
+}
+.progress-vertical-line-shorter{
+	position: relative;
+width: 2px;
+min-height:150px;
+height: auto;
+margin:0px auto;
+border-radius: 0;
+background-color: #000;
+}
 }
 /* =======================================================
    3.HIDDEN_DIV-DESKTOP
