@@ -54,6 +54,18 @@ exports.viewMeeting = function(req, res){
 };
 
 exports.startMeeting = function(req, res){
+
+	/*STATIC VERSION--REMOVE ONCE YOU UPDATE EVERYTHING*/
+	Meeting.find({'ProjectId': req.session.projectId, 'UserId' : req.user.local.email}, function(e, docs){
+		res.render('loggedIn/meetings/startMeeting', { 
+			title: 'SEAM',
+			projectName: req.session.projectName,
+			meetingList: docs,
+			user : req.user
+		});
+	})
+
+	/*UNSTATIC VERSION
 	var meetingId = req.body.meetingId;
 	if(meetingId == undefined){
 		meetingId = req.session.meetingId;
@@ -76,6 +88,7 @@ exports.startMeeting = function(req, res){
 			});
 		})
 	})
+*/
 };
 
 exports.endMeeting = function(req, res){

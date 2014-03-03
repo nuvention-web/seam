@@ -32,26 +32,26 @@ html(lang='en')
 						ul.nav.navbar-nav
 							if typeof user === 'undefined'
 								li
-									a(class='text-bold visible-login', href='home#home-page') HOME
+									a.text-h5(class='text-bold visible-login', href='home#home-page') HOME
 								li
-									a(class='text-bold visible-login', href='home#about-page') ABOUT
+									a.text-h5(class='text-bold visible-login', href='home#about-page') ABOUT
 								li
-									a(class='text-bold visible-login', href='home#team-page') TEAM
+									a.text-h5(class='text-bold visible-login', href='home#team-page') TEAM
 								li
-									a(class='text-bold visible-login', href='signUp') SIGN UP
+									a.text-h5(class='text-bold visible-login', href='signUp') SIGN UP
 								li
-									a#admin-btn.text-bold.visible-login(href='javascript:void(0)') SIGN IN
+									a#admin-btn.text-bold.visible-login.text-h5(href='javascript:void(0)') SIGN IN
 							else
 								li
-									a(class='text-bold visible-login', href='/dashboard') DASHBOARD
+									a.text-h5(class='text-bold visible-login', href='/dashboard') DASHBOARD
 								li
-									a(class='text-bold visible-login', href='/dashboard/meetings') MEETINGS
+									a.text-h5(class='text-bold visible-login', href='/dashboard/meetings') MEETINGS
 								li
-									a(class='text-bold visible-login', href='#') TASKS
+									a.text-h5(class='text-bold visible-login', href='#') TASKS
 								li
-									a(class='text-bold visible-login', href='#') SETTINGS
+									a.text-h5(class='text-bold visible-login', href='#') SETTINGS
 								li
-									a(class='text-bold visible-login', href='logout') LOG OUT
+									a.text-h5(class='text-bold visible-login', href='logout') LOG OUT
 					form.navbar-form.navbar-right.hidden-login(role='form' method='POST', action='login', style='display: none;')
 						.form-group.margin-right-5x
 							input.border-black.text-small.form-control.border-square.form-control-smaller(type='text', placeholder='EMAIL', name='email')

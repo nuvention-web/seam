@@ -1,6 +1,88 @@
 extends dashboard
 
 block content
-	.bg-white(style="margin-left:14%; top:0px; position:absolute; width:86%; float:right")
-		.container-95p.margin-center(style="margin-top:15%")
-			img.img-responsive.margin-center(src="../../../images/seamlogo-red.png")
+	.row
+		.col-md-12.bg-white.border-gray.border-shadow-1x(style='height:150px;')
+			.row
+				.col-md-12.margin-top-1p.margin-left-1p
+					h4.text-left.text-normal.text-gray YOUR WEEK AHEAD
+	.row.margin-top-2p
+		.col-md-5
+			.row.bg-white.border-gray.border-shadow-1x.margin-right-1p(style='height:175px;')
+				.col-md-12.margin-top-1p.margin-left-1p.padding-bottom-2p
+					h4.text-left.text-normal.text-gray MOST UPCOMING MEETING
+					h2.text-left.text-normal Weekly Team Update
+					h4.text-left.text-normal.text-gray 3/3/2014 2:00-3:00 PM					
+					button.text-right.margin-right-3p.border-square.bg-white.border-orange.border-orange.text-orange.padding-left-1p.padding-right-1p EDIT AGENDA
+					button.text-right.border-square.bg-white.border-orange.border-orange.text-orange.padding-left-1p.padding-right-1p ADD ATTENDEES
+			.row.bg-white.border-gray.border-shadow-1x.margin-right-1p(style='height:175px;')
+				.col-md-12.margin-top-1p.margin-left-1p
+					h4.text-left.text-normal.text-gray PREVIOUS MEETING
+					h2.text-left.text-normal Spring Quarter Brainstorm
+					h4.text-left.text-normal.text-gray 3/1/2014 2:00-3:00 PM					
+					button.text-right.margin-right-3p.border-square.bg-white.border-orange.border-orange.text-orange.padding-left-1p.padding-right-1p VIEW MINUTES
+					button.text-right.border-square.bg-white.border-orange.border-orange.text-orange.padding-left-1p.padding-right-1p VIEW TASKS
+		.col-md-7
+			.row.bg-white.border-gray.border-shadow-1x.margin-left-1p.overflow-scroll-y.padding-bottom-2p(style='height:350px;')
+				.col-md-12.margin-top-1p
+					h4.text-left.text-normal.text-gray.margin-left-1p ALL UPCOMING MEETINGS
+					.container-95p.margin-center.margin-top-3p
+						.row.border-gray
+							.col-md-3.border-gray-right
+								h4.text-black.text-left.text-bold 3/4/2014
+								h4.text-black.text-left 2:00-3:00pm
+							.col-md-7
+								h4.text-black.text-left Weekly Team Updates
+							.col-md-2
+								button.margin-top-20p.border-square.bg-white.border-orange.border-orange.text-orange.padding-left-1p.padding-right-1p VIEW
+						.row.border-gray
+							.col-md-3.border-gray-right
+								h4.text-black.text-left.text-bold 3/5/2014
+								h4.text-black.text-left 8:00-10:00pm
+							.col-md-7
+								h4.text-black.text-left Project Brainstorm
+							.col-md-2
+								button.margin-top-20p.border-square.bg-white.border-orange.border-orange.text-orange.padding-left-1p.padding-right-1p VIEW
+						.row.border-gray
+							.col-md-3.border-gray-right
+								h4.text-black.text-left.text-bold 3/6/2014
+								h4.text-black.text-left 4:00-6:00pm
+							.col-md-7
+								h4.text-black.text-left Prize Money Decision
+							.col-md-2
+								button.margin-top-20p.border-square.bg-white.border-orange.border-orange.text-orange.padding-left-1p.padding-right-1p VIEW
+						.row.border-gray
+							.col-md-3.border-gray-right
+								h4.text-black.text-left.text-bold 3/11/2014
+								h4.text-black.text-left 5:00-8:00pm
+							.col-md-7
+								h4.text-black.text-left Social Event Planning
+							.col-md-2
+								button.margin-top-20p.border-square.bg-white.border-orange.border-orange.text-orange.padding-left-1p.padding-right-1p VIEW
+						.row.border-gray
+							.col-md-3.border-gray-right
+								h4.text-black.text-left.text-bold 3/12/2014
+								h4.text-black.text-left 4:00-6:00pm
+							.col-md-7
+								h4.text-black.text-left Business Conference
+							.col-md-2
+								button.margin-top-20p.border-square.bg-white.border-orange.border-orange.text-orange.padding-left-1p.padding-right-1p VIEW
+	.row.margin-top-2p
+		.col-md-12.bg-white.border-gray.border-shadow-1x(style='height:150px;')
+			.row
+				.col-md-4
+					h2.text-biggest.text-orange 76
+				.col-md-4
+					h2.text-biggest.text-blue-gray 150
+				.col-md-4
+					h2.text-biggest.text-lt-blue 95%
+			.row
+				.col-md-4
+					h3.text-black AGENDA ITEMS
+					h3.text-black.text-height-4x COMPLETED
+				.col-md-4
+					h3.text-black MINUTES
+					h3.text-black.text-height-4x SAVED
+				.col-md-4
+					h3.text-black MEETINGS FINISHED
+					h3.text-black.text-height-4x ON TIME
