@@ -1,4 +1,4 @@
-doctype html
+doctype
 html(lang='en')
 	head
 		meta(charset='utf-8')
@@ -10,10 +10,7 @@ html(lang='en')
 		link(rel='stylesheet', href='/stylesheets/bootstrap.min.css')
 		link(rel='stylesheet', href='/stylesheets/base.css')
 		link(rel='stylesheet', href='/stylesheets/fonts.css')
-		link(rel='stlyesheet', href='/stylesheets/bootstrap-multiselect.css')
-		script(src='https://code.jquery.com/jquery.js')
-		script(src='../../../javascripts/bootstrap.min.js')
-		script(src='../../../javascripts/bootstrap-multiselect.js')
+		link(rel="stylesheet" href="/stylesheets/font-awesome.min.css")
 		title= title
 		script.
 			(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
@@ -22,24 +19,43 @@ html(lang='en')
 			})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 			ga('create', 'UA-48300427-1', 'seam.herokuapp.com');
 			ga('send', 'pageview');
-	body#home-pg
-		.bg-gray.height-100p.position-fixed.float-left.top-0x(style="width:14%;")
-			.row.row-offcanvas.row-offcanvas-left
-				#sidebar.col-xs-6.col-sm-3.sidebar-offcanvas(role='navigation' style="min-width:100%")
-					h3.text-white.text-upper.text-bold Project:
-					h3
-						a.text-h4.text-bold.text-upper.text-red-hover(href="/welcome") #{projectName}
-					ul.nav.pos-fixed.top-20p.sidebar-width(style="position:fixed; width:14%; margin:0 auto; top:20%;")
-						li(style="margin-top:15px")
-							a.text-h5.text-white-redhover#signedIn(href="/dashboard/meetings") MEETINGS
-						li(style="margin-top:15px")
-							a.text-h5.text-white-redhover#signedIn(href="/dashboard/tasks") TASKS
-						li(style="margin-top:15px")
-							a.text-h5.text-white-redhover#signedIn(href="/dashboard/team") TEAMS
-						li(style="margin-top:15px")
-							a.text-h5.text-white-redhover#signedIn(href="/dashboard/settings") SETTINGS
-						li(style="margin-top:15px")
-							a.text-h5.text-white-redhover(href="/logout") LOGOUT
-				a(href="/home")
-					img.navbar-brand.img-responsive.position-fixed.bottom-0x.margin-left-15x.height-80x(style="width:14%; height:10%;", src="../../../images/seamlogo.png")
-		block content 
+	body.bg-gray
+		#wrapper
+			nav.navbar.navbar-inverse.navbar-fixed-top.bg-blue-gray(role='navigation')
+				.navbar-header
+					button.navbar-toggle(type='button', data-toggle='collapse', data-target='.navbar-ex1-collapse')
+						span.sr-only Toggle navigation
+						span.icon-bar
+						span.icon-bar
+					a.navbar-brand(href='index.html') SEAM Meetings
+				.collapse.navbar-collapse.navbar-ex1-collapse
+					ul.nav.navbar-nav.side-nav.bg-blue-gray.text-left.padding-top-5p
+						li.text-left.text-h5
+							a.text-left(href='index.html')
+								i.fa.fa-home.margin-left-15x.text-h5
+								i.text-no-transform.margin-left-15x.text-h5 HOME
+						li
+							a.text-left(href='index.html')
+								i.fa.fa-pencil.margin-left-15x.text-h5
+								i.text-no-transform.margin-left-15x.text-h5 CREATE
+						li
+							a.text-left(href='index.html')
+								i.fa.fa-clock-o.margin-left-15x.text-h5
+								i.text-no-transform.margin-left-15x.text-h5 MINUTES
+						li
+							a.text-left(href='index.html')
+								i.fa.fa-check-square.margin-left-15x.text-h5
+								i.text-no-transform.margin-left-15x.text-h5 TASKS
+					ul.nav.navbar-nav.navbar-right.navbar-user
+						li.text-left.text-h5.margin-right-15x
+							h5.text-left.text-orange(style="margin-top:17px" href='index.html') SUZEE HAN
+						li.text-left.text-h5
+							a.text-left.text-gray.text-h5(href='index.html') HELP
+						li.text-left.text-h5
+							a.text-left.text-gray.text-h5(href='index.html') SETTINGS
+						li.text-left.text-h5.margin-right-15x
+							a.text-left.text-gray.text-h5(href='index.html') LOGOUT
+			#page-wrapper.bg-gray.margin-top-1p
+				block content
+		script(src='js/jquery-1.10.2.js')
+		script(src='js/bootstrap.js')
