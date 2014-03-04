@@ -309,6 +309,7 @@ exports.addMeeting = function(req, res){
 	var agenda = req.body.agendaTopic;
 	// var duration = req.body.duration;
 	var meetingTime = req.body.meetingTime;
+	var meetingStartTime = req.body.meetingStartTime;
 	var meetingDate = req.body.meetingDate;  
 	var attendeeNames = req.body.attendeeName;
 	var attendeeEmails = req.body.attendeeEmail;
@@ -326,6 +327,7 @@ exports.addMeeting = function(req, res){
 		objective: objective,
 		location: location,
 		meetingDate: meetingDate,
+		meetingStartTime:meetingStartTime,
 		meetingTime: meetingTime,
 		// timerInfo: timerInfo
 	});
@@ -427,5 +429,5 @@ exports.addMeeting = function(req, res){
 	// 	}
 	// });
 
-	res.redirect('back');
+	res.redirect('/dashboard');
 };
