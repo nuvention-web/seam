@@ -220,6 +220,8 @@ exports.viewPast = function(req, res){
 
 
 exports.pastMeeting = function(req, res){
+	res.render('loggedIn/meetings/pastMeeting', {title: 'Survey', user : req.user});
+	/*
 	var meetingId = req.body.meetingId;
 	if(meetingId == undefined){
 		meetingId = req.session.meetingId;
@@ -232,7 +234,7 @@ exports.pastMeeting = function(req, res){
 		console.log(doc);
 		Task.find({'ProjectId': req.session.projectId, 'MeetingId': meetingId}, function(e, task){
 			console.log(task);
-			res.render('loggedIn/meetings/startMeeting', { 
+			res.render('loggedIn/meetings/pastMeeting', { 
 				title: 'SEAM',
 				taskList: task,
 				meeting: doc,
@@ -241,7 +243,7 @@ exports.pastMeeting = function(req, res){
 				past : 1
 			});
 		})
-	})
+	})*/
 };
 
 exports.addNote = function(req, res){
