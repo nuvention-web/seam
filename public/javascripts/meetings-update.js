@@ -59,31 +59,4 @@ function addTask(number){
 	return true;
 };
 
-function addAttendee(){
-	var attendeeName = document.getElementById('nameHolder').value;
-	var attendeeEmail = document.getElementById('emailHolder').value;
-	var string = '<div class="row"><input type="hidden" name="attendeeName" value="' + attendeeName + '"><input type="hidden" name="attendeeEmail" value="' + attendeeEmail + '"><div class="col-md-4 margin-top-5p"><img src="../../../images/member.png" class="width-50x height-50x border-50p float-right"></div><div class="col-md-8"><h4 class="text-black text-left margin-top-5p">' + attendeeName +'</h4></div></div>';
 
-	document.getElementById('attendeeList').innerHTML += string;
-	document.getElementById('nameHolder').value = '';
-	document.getElementById('emailHolder').value = '';
-	document.getElementById('addNewAttendee').style.display = 'none';
-	document.getElementById('nameHolder').focus();
-
-};
-
-function deleteAttendee(){
-
-};
-
-function showAttendeeForm(){
-	var e = document.getElementById('addNewAttendee');
-	var textField = document.getElementById('attendeeName');
-	if(e.style.display == 'inline'){
-			e.style.display = 'none';
-	}
-	else{
-			e.style.display = 'inline';
-			textField.focus();
-	}
-};

@@ -11,6 +11,8 @@ html(lang='en')
 		link(rel='stylesheet', href='/stylesheets/base.css')
 		link(rel='stylesheet', href='/stylesheets/fonts.css')
 		link(rel="stylesheet" href="/stylesheets/font-awesome.min.css")
+		script(src='https://code.jquery.com/jquery.js')
+		script(src='../../../javascripts/bootstrap.min.js')
 		title= title
 		script.
 			(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
@@ -48,14 +50,12 @@ html(lang='en')
 								i.text-no-transform.margin-left-15x.text-h5 TASKS
 					ul.nav.navbar-nav.navbar-right.navbar-user
 						li.text-left.text-h5.margin-right-15x
-							h5.text-left.text-orange(style="margin-top:17px" href='#') #{name}
+							h5.text-left.text-orange.text-upper(style="margin-top:17px" href='#') #{name}
 						li.text-left.text-h5
-							a.text-left.text-gray.text-h5(href='#') HELP
+							a.text-left.text-gray.text-h5(href='/help') HELP
 						li.text-left.text-h5
-							a.text-left.text-gray.text-h5(href='#') SETTINGS
+							a.text-left.text-gray.text-h5(href='/settings') SETTINGS
 						li.text-left.text-h5.margin-right-15x
-							a.text-left.text-gray.text-h5(href='#') LOGOUT
+							a.text-left.text-gray.text-h5(href='/logout') LOGOUT
 			#page-wrapper.bg-gray.margin-top-1p
 				block content
-		script(src='js/jquery-1.10.2.js')
-		script(src='js/bootstrap.js')

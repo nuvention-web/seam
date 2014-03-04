@@ -30,7 +30,6 @@ h1,h2,h3,h4,h5,h6,p,a,input, textarea, span{
 	font-size:12px;
 	font-weight: 300; 
 	text-align:center;
-	vertical-align:middle;
 	/*color:#FFF;*/
 	color: #000;
 	text-decoration: none;
@@ -216,6 +215,7 @@ textarea:focus, input:focus{
 }
 .text-h3{
 	font-size:20px;
+	line-height: 22px;
 }
 .text-h4{
 	font-size:16px;
@@ -258,7 +258,7 @@ textarea:focus, input:focus{
 	background-color: #FFF;
 }
 .bg-transparent{
-	background-color: transparent !important;
+	background-color: transparent;
 }
 .bg-blue-gray{
 	background-color:rgb(51,54,63);
