@@ -80,7 +80,7 @@ app.post('/addProject', user.isLoggedIn, projects.addProject);
 
 //Dashboard
 app.get('/dashboard', user.isLoggedIn, dashboard.dashboard);
-app.post('/dashboard', user.isLoggedIn, dashboard.setWelcome);
+// app.post('/dashboard', user.isLoggedIn, dashboard.setWelcome);
 app.get('/dashboard/meetings', user.isLoggedIn, dashboard.meetings);
 app.get('/dashboard/tasks', user.isLoggedIn, dashboard.tasks);
 
