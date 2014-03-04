@@ -45,6 +45,7 @@ exports.viewMeeting = function(req, res){
 			res.render('loggedIn/meetings/viewMeeting', { 
 				title: 'SEAM',
 				meeting: doc,
+				name: req.session.name,
 				projectName: req.session.projectName,
 				meetingList: docs,
 				user : req.user,
@@ -71,6 +72,7 @@ exports.postMeeting = function(req, res){
 			console.log(task);
 			res.render('loggedIn/meetings/startMeeting', { 
 				title: 'SEAM',
+				name: req.session.name,
 				taskList: task,
 				meeting: doc,
 				user : req.user,
