@@ -48,15 +48,27 @@ block content
 									input(type='hidden', name='noteOrder', value='#{i}')
 									div.container-95p.margin-top-2p
 										if(i == 0)
-											input.text-h5.height-30x.margin-left-2p.form-control.border-square.border-orange.text-left.bg-white.margin-0.margin-right-1p(id='notes#{i}', type='text', name='notes', placeholder= 'Start Typing...', tabindex='#{i+1}', autofocus='autofocus', autocomplete='off')
+											.row
+												input.text-h5.height-30x.margin-left-2p.form-control.border-square.border-orange.text-left.bg-white.margin-0.margin-right-1p(id='notes#{i}', type='text', name='notes', placeholder= 'Start Typing...', tabindex='#{i+1}', autofocus='autofocus', autocomplete='off')
+											.row(style="display: none", id='taskPerson#{i}')
+												.col-md-10
+													input.text-h5.height-30x.margin-left-2p.form-control.border-square.border-orange.text-left.bg-white.margin-0.margin-right-1p(id='taskPerson', type='text', name='taskPerson', placeholder='Add People', autocomplete='off')
+												col-md-2
+													button.text-left.border-square.bg-white.border-orange.border-orange.text-orange(id='taskSubmit' type='button', value='#{i}') ADD TASK
 										else
-											input.text-h5.height-30x.margin-left-2p.form-control.border-square.border-orange.text-left.bg-white.margin-0.margin-right-1p(id='notes#{i}', type='text', name='notes', placeholder= 'Start Typing...', tabindex='#{i+1}', autocomplete='off')
+											.row
+												input.text-h5.height-30x.margin-left-2p.form-control.border-square.border-orange.text-left.bg-white.margin-0.margin-right-1p(id='notes#{i}', type='text', name='notes', placeholder= 'Start Typing...', tabindex='#{i+1}', autocomplete='off')
+											.row(style="display: none", id='taskPerson#{i}')
+												.col-md-10
+													input.text-h5.height-30x.margin-left-2p.form-control.border-square.border-orange.text-left.bg-white.margin-0.margin-right-1p(id='taskPerson', type='text', name='taskPerson', placeholder='Add People', autocomplete='off')
+												.col-md-2
+													button.text-left.border-square.bg-white.border-orange.border-orange.text-orange(id='taskSubmit' type='button', value='#{i}') ADD TASK
 									div.container-95p.margin-top-1p.margin-center
 										.row
 											.col-md-4.col-md-offset-2
 												button.float-right.text-right.border-square.bg-white.border-orange.border-orange.text-orange(id='noteSubmit' type='submit', value='#{i}') ADD NOTES
 											.col-md-4
-												button.text-left.border-square.bg-white.border-orange.border-orange.text-orange(type='button', onClick='') ADD TASKS
+												button.text-left.border-square.bg-white.border-orange.border-orange.text-orange(type='button', onClick='showTaskForm("taskPerson#{i}")') ASSIGN TASK
 					.row
 						.col-md-1.margin-top-1p.padding-bottom-2p.margin-0.padding-0
 							div.height-100p.width-100p
@@ -71,11 +83,10 @@ block content
 					.container-95p.margin-center.margin-top-3p
 						each attendee, i in meeting.attendees
 							.row.margin-top-10p
-								.col-md-4
-									img.width-50x.height-50x.border-50p.float-right(src="../../../images/member.png")
-								.col-md-8
-									h4.text-black.text-left.margin-top-1p #{attendee.attendeeName}
-									h4.text-left.margin-top-5p.text-orange.text-normal PRESENT
+								.col-md-12.attendeeMember
+									img.width-50x.height-50x.border-50p.float-left(src="../../../images/member.png", value='#{attendee.attendeeName}')
+									h4.text-black.text-left.margin-top-1p(value='#{attendee.attendeeName}') #{attendee.attendeeName}
+									h5.text-left.margin-top-5p.text-orange.text-normal PRESENT
 	script(src='../../../javascripts/meetings-assignTasks.js')
 	script(src='../../../javascripts/meetings-update.js')
 	script(src='../../../javascripts/meetings-progressBar.js')
