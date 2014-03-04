@@ -2,11 +2,14 @@
 /**
  * Module dependencies.
  */
-var home = require('./routes/home');
+var landingPage = require('./routes/landingPage');
+var projects = require('./routes/projects');
+var dashboard = require('./routes/dashboard');
+var meetings = require('./routes/meetings');
 var user = require('./routes/user');
 var task = require('./routes/task');
-var interfaces = require('./routes/interfaces');
 var index = require('./routes/index');
+var team = require('./routes/team');
 var http = require('http');
 var path = require('path');
 //include the nodemailer module
@@ -64,32 +67,54 @@ if ('development' == app.get('env')) {
   app.use(express.errorHandler());
 }
 
-//main page
-app.get('/', home.home);
-app.get('/home', home.home);
-app.get('/survey', home.survey);
-app.post('/addsurvey', home.addsurvey);
-app.post('/addemail', home.addemail);
-//Interface
+//Landing Page
+app.get('/', landingPage.home);
+app.get('/home', landingPage.home);
+app.get('/survey', landingPage.survey);
+app.post('/addSurvey', landingPage.addSurvey);
+app.post('/addEmail', landingPage.addEmail);
 
-app.get('/makeMeeting', user.isLoggedIn, interfaces.makeMeeting);
-app.get('/meeting', user.isLoggedIn, interfaces.meeting);
-app.get('/newMeeting', user.isLoggedIn, interfaces.newMeeting);
-app.get('/projects', user.isLoggedIn, interfaces.projects);
-app.post('/startMeeting', user.isLoggedIn, interfaces.startMeeting);
-app.get('/tasks', user.isLoggedIn, interfaces.tasks);
-app.get('/welcome', user.isLoggedIn, interfaces.welcome);
-app.post('/welcome', user.isLoggedIn, interfaces.setWelcome);
-app.get('/sidebarMeetings', user.isLoggedIn, interfaces.sidebarMeetings);
-app.get('/sidebarNavbar', user.isLoggedIn, interfaces.sidebarNavbar);
-app.get('/sidebarTasks', user.isLoggedIn, interfaces.sidebarTasks);
-app.post('/addmeeting', user.isLoggedIn, interfaces.addMeeting);
-app.post('/addnote', user.isLoggedIn, interfaces.addNote);
-app.post('/addTask', user.isLoggedIn, interfaces.addTask);
-app.post('/addproject', user.isLoggedIn, interfaces.addProject)
-app.get('/finishMeeting', user.isLoggedIn, interfaces.finishMeeting);
-app.get('/pastMeeting', user.isLoggedIn, interfaces.pastMeeting);
-app.post('/viewPastMeeting', user.isLoggedIn, interfaces.viewPastMeeting);
+//Welcome-Projects
+app.get('/welcome', user.isLoggedIn, projects.welcome);
+app.post('/addProject', user.isLoggedIn, projects.addProject);
+
+//Dashboard
+app.get('/dashboard', user.isLoggedIn, dashboard.welcome);
+app.post('/dashboard', user.isLoggedIn, dashboard.setWelcome);
+app.get('/dashboard/meetings', user.isLoggedIn, dashboard.meetings);
+app.get('/dashboard/tasks', user.isLoggedIn, dashboard.tasks);
+
+//Dashboard-Meetings
+app.get('/dashboard/meetings/makeMeeting', user.isLoggedIn, meetings.makeMeeting);
+app.get('/dashboard/meetings/makeMeeting/new', user.isLoggedIn, meetings.makeNewMeeting);
+app.post('/dashboard/meetings/makeMeeting/add', user.isLoggedIn, meetings.addMeeting);
+
+app.post('/dashboard/meetings/view', user.isLoggedIn, meetings.viewMeeting);
+app.post('/dashboard/meetings/view/past', user.isLoggedIn, meetings.viewPast);
+app.get('/dashboard/meetings/view/pastMeeting', user.isLoggedIn, meetings.pastMeeting);
+
+app.get('/dashboard/meetings/start', user.isLoggedIn, meetings.startMeeting);
+app.post('/dashboard/meetings/start/addNote', user.isLoggedIn, meetings.addNote);
+app.post('/dashboard/meetings/start/addTask', user.isLoggedIn, meetings.addTask);
+app.get('/dashboard/meetings/end', user.isLoggedIn, meetings.endMeeting);
+
+// team member stuff
+app.get('/dashboard/team', user.isLoggedIn, team.team);
+app.post('/addMember', user.isLoggedIn, team.addMember);
+
+//app.post('/dashboard/meetings/startMeeting', user.isLoggedIn, meetings.startMeeting);
+//app.get('/tasks', user.isLoggedIn, interfaces.tasks);
+
+//app.get('/sidebarMeetings', user.isLoggedIn, interfaces.sidebarMeetings);
+//app.get('/sidebarNavbar', user.isLoggedIn, interfaces.sidebarNavbar);
+//app.get('/sidebarTasks', user.isLoggedIn, interfaces.sidebarTasks);
+//app.post('/addmeeting', user.isLoggedIn, interfaces.addMeeting);
+//app.post('/addnote', user.isLoggedIn, interfaces.addNote);
+//app.post('/addTask', user.isLoggedIn, interfaces.addTask);
+//app.post('/addproject', user.isLoggedIn, interfaces.addProject);
+//app.get('/finishMeeting', user.isLoggedIn, interfaces.finishMeeting);
+//app.get('/pastMeeting', user.isLoggedIn, interfaces.pastMeeting);
+//app.post('/viewPastMeeting', user.isLoggedIn, interfaces.viewPastMeeting);
 
 
 
@@ -102,12 +127,12 @@ app.post('/deletetask', user.isLoggedIn, task.deleteTask);
 app.get('/signup', user.signup);
 app.get('/logout', user.logout);
 app.post('/signup', passport.authenticate('local-signup', {// process the signup form
-	successRedirect: '/projects', // redirect to the secure profile section
+	successRedirect: '/welcome', // redirect to the secure profile section
 	failureRedirect: '/signup', // redirect back to the signup page if there is an error
 	failureFlash: true // allow flash messages
 }));
 app.post('/login', passport.authenticate('local-login', {
-	successRedirect: '/projects', // redirect to the secure profile section
+	successRedirect: '/welcome', // redirect to the secure profile section
 	failureRedirect: '/home', // redirect back to the signup page if there is an error
 	failureFlash: true // allow flash messages
 }));

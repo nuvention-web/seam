@@ -5,7 +5,6 @@
 =========================================================== */
 html, body {
 	height: 100%;
-	background-color: #FFF;
 }
 
 html, hmtl a{
@@ -21,55 +20,58 @@ body{
 	font-family: 'Lato', sans-serif;
 	font-size:1em;
 	line-height:20px;
-
+	margin-top: 50px;
 }
 /* ========================================================
    0B.TYPOGRAPHY-DESKTOP
 =========================================================== */
-h1,h2,h3,h4,h5,h6,p,a,input, textarea{
+h1,h2,h3,h4,h5,h6,p,a,input, textarea, span{
 	font-family: 'Lato', sans-serif;
-	font-size:14px;
+	font-size:12px;
 	font-weight: 300; 
 	text-align:center;
 	vertical-align:middle;
 	/*color:#FFF;*/
 	color: #000;
 	text-decoration: none;
-
 }
 h1{
-	font-size:42px;
-	line-height: 44px;
+	font-size:26px;
+	line-height: 28px;
 }
 h2{
-	font-size:32px;
-	line-height: 32px;
+	font-size:24px;
+	line-height: 26px;
 }
 h3{
-	font-size:22px;
-	line-height: 24px;
+	font-size:20px;
+	line-height: 22px;
 }
 h4{
-	font-size:20px;
-	line-height: 24px;
-}
-h5{
 	font-size:16px;
 	line-height: 18px;
 }
-h6{
+h5{
 	font-size:14px;
 	line-height: 16px;
 }
+h6{
+	font-size:12px;
+	line-height: 14px;
+}
 p{
-	font-size:14px;
+	font-size:12px;
+}
+i{
+	font-size:20px;
 }
 a{
-	font-size:14px;
+	font-size:12px;
 }
 a:hover{
 	color:rgb(204,51,51);
 	text-decoration:none;
+	transition:all 0.5s ease-in-out;
 }
 hr{
 	margin: 12px auto;
@@ -82,6 +84,8 @@ button{
 input{
 	border:none;
 	background-color: transparent;
+	outline: none;
+  	box-shadow:none !important;
 }
 .red-input input::-webkit-input-placeholder {
 	color:rgb(204,51,51) !important;
@@ -133,6 +137,9 @@ textarea:focus, input:focus{
 .text-white{
 	color:rgb(255,255,255) !important;
 }
+.text-height-4x{
+	line-height: 4px;
+}
 .text-white-redhover{
 	color:rgb(255,255,255) !important;
 }
@@ -149,8 +156,20 @@ textarea:focus, input:focus{
 	cursor: pointer;
 	color:#FFF;
 }
-.text-grayblue{
-	color:rgb(212,219,226);
+.text-orange{
+	color:rgb(251,175,93);
+}
+.text-light-blue{
+	color: rgb(147,210,253);
+}
+.text-dark-blue{
+	color:rgb(51,54,63);
+}
+.text-blue-gray{
+	color:rgb(51,54,63);
+}
+.text-gray{
+	color:rgb(200,200,200);
 }
 .text-black{
 	color:rgb(0,0,0) ;
@@ -160,6 +179,12 @@ textarea:focus, input:focus{
 }
 .text-black-nohover{
 	color:rgb(0,0,0) !important;
+}
+.text-no-transform{
+	font-style: normal;
+}
+.text-normal{
+	font-weight: 400;
 }
 .text-bold{
 	font-weight: 700;
@@ -171,7 +196,7 @@ textarea:focus, input:focus{
 	text-align: right;
 }
 .text-center{
-	text-align: middle !important;
+	text-align: center !important;
 }
 .text-vertical-center{
 	vertical-align: center;
@@ -186,16 +211,16 @@ textarea:focus, input:focus{
 	font-style: italic;
 }
 .text-h2{
-	font-size:34px;
+	font-size:24px;
 }
 .text-h3{
-	font-size:22px;
-}
-.text-h4{
 	font-size:20px;
 }
-.text-h5{
+.text-h4{
 	font-size:16px;
+}
+.text-h5{
+	font-size:14px;
 }
 .text-big{
 	font-size: 36px;
@@ -204,7 +229,7 @@ textarea:focus, input:focus{
 	font-size: 40px;
 }
 .text-biggest{
-	font-size: 50px;
+	font-size: 55px;
 }
 .text-small{
 	font-size: 14px;
@@ -232,13 +257,25 @@ textarea:focus, input:focus{
 	background-color: #FFF;
 }
 .bg-transparent{
-	background-color: transparent;
+	background-color: transparent !important;
 }
-.bg-gray-blue{
-	background-color:rgb(212,219,226);
+.bg-blue-gray{
+	background-color:rgb(51,54,63);
 }
 .bg-green{
-	background-color: #73FF56;
+	background-color: rgb(0,85,0);
+}
+.bg-1{
+	background-color: rgb(0,85,0);
+}
+.bg-2{
+	background-color: rgb(255,150,0);
+}
+.bg-3{
+	background-color: rgb(255,255,0);
+}
+.bg-4{
+	background-color: rgb(204,51,51);
 }
 .bg-red{
 	background-color: rgb(204,51,51);
@@ -257,8 +294,11 @@ textarea:focus, input:focus{
 	background-color:rgb(37,37,37) !important;
 	border-color:rgb(37,37,37) !important;
 }
+.bg-drk-gray{
+	background-color: rgb(51,54,63);
+}
 .bg-gray{
-	background-color: rgb(37,37,37);
+	background-color: rgb(244,244,244);
 }
 .bg-gray-nohover{
 	background-color: rgb(37,37,37);
@@ -304,8 +344,17 @@ textarea:focus, input:focus{
 .float-left{
 	float: left;
 }
+.float-right{
+	float: right;
+}
 .overflow-scroll-y{
 	overflow-y: scroll;
+}
+.overflow-scroll-y-auto{
+	overflow-y: auto;
+}
+.overflow-x-hidden{
+	overflow-x: hidden;
 }
 .overflow-hidden{
 	overflow: hidden;
@@ -313,6 +362,12 @@ textarea:focus, input:focus{
 /* ========================================================
    1B.SPACING-DESKTOP
 =========================================================== */
+.margin-0{
+	margin:0 !important;
+}
+.padding-0{
+	padding:0 !important;
+}
 .margin-top-n12p{
 	margin-top: -12%;
 }
@@ -338,6 +393,9 @@ textarea:focus, input:focus{
 .margin-top-1p{
 	margin-top:1%;
 }
+.margin-top-2p{
+	margin-top:2%;
+}
 .margin-top-3p{
 	margin-top:3%;
 }
@@ -353,8 +411,17 @@ textarea:focus, input:focus{
 .margin-top-20p{
 	margin-top: 20%;
 }
+.margin-left-5x{
+	margin-left: 5px;
+}
+.margin-left-10x{
+	margin-left: 10px;
+}
 .margin-left-15x{
 	margin-left: 15px;
+}
+.margin-left-25x{
+	margin-left: 45px;
 }
 .margin-left-1p{
 	margin-left: 1%;
@@ -368,14 +435,32 @@ textarea:focus, input:focus{
 .margin-left-15p{
 	margin-left: 15.5%;
 }
-.margin-right-5x{
-	margin-right: 5px;
+.margin-right-15x{
+	margin-right:15px;
+}
+.margin-right-1p{
+	margin-right:1%;
+}
+.margin-right-3p{
+	margin-right:3%;
 }
 .margin-bottom-0x{	
 	margin-bottom:0px;
 }
 .margin-bottom-3p{
 	margin-bottom: 3%;
+}
+.padding-15p{
+	padding:6% 10%;
+}
+.padding-left-0p{
+	padding-left: 0%;
+}
+.padding-left-1p{
+	padding-left: 1%;
+}
+.padding-left-25x{
+	padding-left: 25px;
 }
 .padding-top-20x{
 	padding-top: 20px;
@@ -404,13 +489,15 @@ textarea:focus, input:focus{
 .padding-bottom-2p{
 	padding-bottom: 2.5%;
 }
-.padding-bottom-5p{
-	padding-bottom: 5%;
+.padding-bottom-3p{
+	padding-bottom: 3%;
 }
 .padding-bottom-10p{
 	padding-bottom: 10%;
 }
-
+.padding-right-1p{
+	padding-right:2%;
+}
 /* =======================================================
    1E.PAGES-DESKTOP
 ========================================================== */
@@ -418,15 +505,6 @@ textarea:focus, input:focus{
 	position: relative;
 	overflow: hidden;
 	margin-top:0;
-}
-.page-navbar{
-
-}
-.page-sidebar{
-
-}
-.page-interface{
-
 }
 .full-page{
 	height: 100%;
@@ -452,29 +530,38 @@ textarea:focus, input:focus{
 .container-100p{
 	width:100%;
 }
+.width-100x{
+	width:100px;
+}
 .width-150x{
 	width:150px;
 }
 .width-250x{
 	width:300px;
 }
+.width-95p{
+	width: 95%;
+}
 .width-100p{
 	width: 100%;
 }
+.height-auto{
+	height: auto;
+}
+.max-height-120x{
+	max-height: 120px;
+}
+.max-height-150x{
+	max-height: 150px;
+}
 .height-20x{
-	height:20px;
+	height: 20px;
 }
-.height-24x{
-	height: 24px;
+.height-50x{
+	height:50px;
 }
-.height-30x{
-	height: 30px;
-}
-.height-80x{
-	height: 60px;
-}
-.height-100p{
-	height:100%;
+.width-50x{
+	width: 50px;
 }
 /* ========================================================
    1C.IMAGES-DESKTOP
@@ -548,13 +635,17 @@ textarea:focus, input:focus{
 	background-color:rgb(212,219,226)!important;
 	border-width: 1px;
 }
-.border-gray{
-	border-color:rgb(37,37,37) !important;
-	border-width: 1px;
+.border-orange{
+	border:2px solid rgb(251,175,93) !important;
 }
-.border-gray:hover{
-	border-color:rgb(37,37,37)  !important;
-	border-width: 1px;
+.border-gray{
+	border:1px solid rgb(244,244,244) !important;
+}
+.border-gray-left{
+	border-left:1px solid rgb(244,244,244);
+}
+.border-gray-right{
+	border-right:1px solid rgb(244,244,244);
 }
 .border-ltgray{
 	border-color:rgb(225,225,225) !important;
@@ -567,29 +658,82 @@ textarea:focus, input:focus{
 .border-none{
 	border:none;
 }
+.border-shadow-1x{
+	box-shadow: 1px 1px 1px 1px rgb(230,230,230);
+}
+/* =======================================================
+   2.WRAPPER-DESKTOP
+========================================================== */
+#wrapper {
+	padding-left: 225px;
+  }
+#page-wrapper {
+	padding: 3% 3% 0% 3%;
+}
+.side-nav {
+	margin-left: -225px;
+	left: 225px;
+	width: 225px;
+	position: fixed;
+	top: 50px;
+	height: 100%;
+	border-radius: 0;
+	border: none;
+	overflow-y: auto;
+}
+.side-nav >li{
+	border-left:5px solid transparent;
+}
+.side-nav > li:hover{
+	border-left:5px solid rgb(251,175,93);
+}
+.side-nav>li>a {
+	width: 225px;
+}
+.navbar-collapse {
+    padding-left: 15px !important;
+    padding-right: 15px !important;
+}
+
 /* =======================================================
    2.NAVIGATION-DESKTOP
 ========================================================== */
+.nav{
+	z-index: 99;
+}
+.navbar{
+	z-index: 89;
+}
 .navbar .nav > li > a {
     color:  #FFF;
     background-color: none;
 }
 .navbar .nav > li > a:hover {
-   color:rgb(204,51,51);
+   color:  #FFF;
 }
-.nav > li {
-	 background-color: none !important;
-}
+
 .nav > li > a{
-	color:rgb(204,51,51);
+	color:  #FFF;
 }
-#sidebar .nav > li > a:hover{
+#sidebar .nav > li {
+	background-color: none;
+	border-left:5px solid rgb(51,54,63);
+}
+#sidebar .nav > li:hover{
 	color:rgb(204,51,51);
-	background-color:rgb(37,37,37)!important;
+	border-left:5px solid rgb(251,175,93);
 }
 #sidebar .nav > li > a:focus{
-	color:rgb(204,51,51);
-	background-color:rgb(37,37,37)!important;
+	color:  #FFF;
+	background-color: inherit !important;
+}
+#sidebar .nav > li > a:hover{
+	color:  #FFF !important;
+	background-color: inherit !important;
+}
+#sidebar .nav > li > a:focus{
+	color:  #FFF;
+	background-color: inherit !important;
 }
 /* =======================================================
    3.FRONT_PAGE-DESKTOP
@@ -598,6 +742,48 @@ textarea:focus, input:focus{
 	width: 80%;
 	margin:0 10%;
 	margin-top:29%;
+}
+/* =======================================================
+   3.PROGRESS_BAR-DESKTOP
+========================================================== */
+.timer-box{
+  width: 100%;
+  height: auto;
+}
+.progress-vertical-circle {
+position: relative;
+width: 25px;
+min-height:25px;
+border-radius:50%;
+margin:0 auto;
+background-color: #000;
+}
+.progress-vertical-circle-bigger {
+position: relative;
+width: 40px;
+min-height:40px;
+border-radius:50%;
+margin:0 auto;
+background-color: #000;
+}
+.progress-vertical-line {
+position: relative;
+width: 2px;
+min-height:255px;
+height: auto;
+margin:0px auto;
+border-radius: 0;
+background-color: #000;
+}
+.progress-vertical-line-shorter{
+	position: relative;
+width: 2px;
+min-height:150px;
+height: auto;
+margin:0px auto;
+border-radius: 0;
+background-color: #000;
+}
 }
 /* =======================================================
    3.HIDDEN_DIV-DESKTOP

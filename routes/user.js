@@ -2,7 +2,7 @@ var mongoose = require('mongoose');
 var User = require('../models/user-model');
 
 exports.signup = function(req, res){
-	res.render('signup', { message: req.flash('signupMessage'), user : req.user });
+	res.render('landingPage/signup', { message: req.flash('signupMessage'), user : req.user });
 };
 
 exports.logout = function(req, res){

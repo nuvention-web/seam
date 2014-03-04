@@ -1,16 +1,11 @@
-extends layout
+extends landingPage/layout
 
 block content
-	.error-page
-		.screenBg
-			br
-			br
-			.row
-				col-md-12
-					h1.text-white.text-bold ERROR
-			br
-			br
-			br
-			.row
-				.btn-box
-					a.btn.btn-primary.btn-lg.btn-block.btn-square.btn-large-custom.btn-red(href='home') HOME
+	.container
+		.row.margin-top-5p
+			.col-md-8.col-md-offset-2
+				h1.text-white ERROR
+		.row.margin-top-5p
+			.col-md-4.col-md-offset-4
+				form(action="/")
+					button.btn.btn-primary.btn-lg.btn-block.margin-center.border-square.bg-red-border(type='submit') HOME
