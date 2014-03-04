@@ -202,6 +202,7 @@ exports.viewPast = function(req, res){
 	else{
 		req.session.meetingId = meetingId;
 	}
+	
 	console.log(meetingId);
 	Meeting.find({'ProjectId': req.session.projectId, 'UserId' : req.user.local.email}, function(e, docs){
 		Meeting.findOne({'_id': meetingId}, function(e, doc){
