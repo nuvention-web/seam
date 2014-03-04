@@ -23,13 +23,18 @@ var Project = require('../models/project-model');
 // };
 
 exports.dashboard = function(req, res){
-	Meeting.find({'UserId' : req.user.local.email}, function(e, docs){
-		res.render('loggedIn/dashboard/welcome', { 
-			title: 'SEAM', 
-			meetingList: docs,
-			name: req.session.name,
-			user : req.user
-		});
+	Meeting.find({'UserId' : req.user.local.email, 'isComplete' : 0}, function(e, meetingList){
+		Meeting.find({'UserId' : req.user.local.email, 'isComplete' : 1}, function(e, finMeetingList){
+			res.render('loggedIn/dashboard/welcome', { 
+				title: 'SEAM', 
+				upcomingMeeting: meetingList[0],
+				previousMeeting: finMeetingList[0],
+				meetingList: meetingList,
+				pastMeetingList: finMeetingList,
+				name: req.session.name,
+				user : req.user
+			});
+		})
 	})
 };
 

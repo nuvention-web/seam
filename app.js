@@ -81,7 +81,7 @@ app.post('/addProject', user.isLoggedIn, projects.addProject);
 //Dashboard
 app.get('/dashboard', user.isLoggedIn, dashboard.dashboard);
 // app.post('/dashboard', user.isLoggedIn, dashboard.setWelcome);
-app.get('/dashboard/meetings', user.isLoggedIn, dashboard.meetings);
+// app.get('/dashboard/meetings', user.isLoggedIn, dashboard.meetings);
 app.get('/dashboard/tasks', user.isLoggedIn, dashboard.tasks);
 
 //Dashboard-Meetings
@@ -93,7 +93,7 @@ app.post('/dashboard/meetings/view', user.isLoggedIn, meetings.viewMeeting);
 app.post('/dashboard/meetings/view/past', user.isLoggedIn, meetings.viewPast);
 app.get('/dashboard/meetings/view/pastMeeting', user.isLoggedIn, meetings.pastMeeting);
 
-app.get('/dashboard/meetings/start', user.isLoggedIn, meetings.startMeeting);
+app.post('/dashboard/meetings/start', user.isLoggedIn, meetings.startMeeting);
 app.post('/dashboard/meetings/start/addNote', user.isLoggedIn, meetings.addNote);
 app.post('/dashboard/meetings/start/addTask', user.isLoggedIn, meetings.addTask);
 app.get('/dashboard/meetings/end', user.isLoggedIn, meetings.endMeeting);
