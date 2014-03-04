@@ -7,8 +7,6 @@ block content
 				.row
 					.col-md-10.col-sm-10.col-xs-10.margin-top-1p
 						input.text-h3.height-30x.form-control.border-square.border-none.text-left.bg-transparent(id='makeMeeting', type='text', name='meetingTitle', placeholder= 'MEETING TITLE', autofocus='autofocus', autocomplete='off')
-					.col-md-2.col-sm-2.col-xs-2.margin-top-1p.text-left.margin-top-2p
-						button.border-square.bg-white.border-orange.border-orange.text-orange(type='submit') ADD MEETING
 				.row
 					.col-md-10.col-sm-10.col-xs-10.margin-top-1p
 						input.text-h4.height-30x.text-orange.form-control.border-square.border-none.text-left.bg-transparent(id='makeMeeting', type='text', name='objective', placeholder= 'OBJECTIVE', autocomplete='off')					
@@ -71,19 +69,22 @@ block content
 								.col-md-8
 									input.form-control.border-square.text-left.border-none(type='text', name='nameHolder', value='', id='nameHolder', placeholder= 'NAME', tabindex='1')
 								.col-md-4
-									button.border-square.bg-white.border-orange.border-orange.text-orange(type='button' onclick='addAttendee()', tabindex='3') ADD
+									button.border-square.bg-white.border-orange.border-orange.text-orange.padding-btn(type='button' onclick='addAttendee()', tabindex='3') ADD
 								.col-md-12
 									input.form-control.border-square.text-left.border-none(type='text', name='emailHolder', value='', id='emailHolder', placeholder= 'EMAIL', tabindex='2')
 							.row.margin-top-5p
-								.col-md-12.text-center
-									button.border-square.bg-white.border-orange.border-orange.text-orange(type='button' onclick='showAttendeeForm()') NEW ATTENDEE
+								.col-md-8.col-md-offset-2.text-center
+									button.border-square.bg-white.border-orange.border-orange.text-orange.padding-btn(type='button' onclick='showAttendeeForm()') NEW ATTENDEE
 							.row.margin-top-10p
 								.col-md-12
 									h4.text-left.text-normal.text-dark-blue RESOURCES
 							.row.margin-top-5p
-								.col-md-12.text-center
-									button.border-square.bg-white.border-orange.border-orange.text-orange ADD ATTENDEE
-							.row.margin-top-10p
-								.col-md-12.text-center
-									button.border-square.bg-white.border-orange.border-orange.text-orange ADD TASK
+								.col-md-10.col-md-offset-1.text-center
+									button.border-square.bg-white.border-orange.border-orange.text-orange.padding-btn ADD ATTACHMENT
+							.row.margin-top-5p
+								.col-md-8.col-md-offset-2.text-center
+									button.border-square.bg-white.border-orange.border-orange.text-orange.padding-btn  ADD TASK
+				.row.margin-left-1p
+					.col-md-12.col-sm-12.col-xs-12.margin-top-1p.text-left.margin-top-2p.text-center.margin-top-10p
+						button.border-square.bg-white.border-orange.border-orange.text-orange.text-h3.padding-btn(type='submit') SAVE MEETING
 	script(src='../../../javascripts/meetings-addAgenda.js')

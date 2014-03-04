@@ -8,27 +8,27 @@ block content
 					h4.text-left.text-normal.text-gray YOUR WEEK AHEAD
 	.row.margin-top-2p
 		.col-md-4
-			.row.bg-white.border-gray.border-shadow-1x.margin-right-1p(style='height:175px;')
+			.row.bg-white.border-gray.border-shadow-1x.margin-right-1p(style='height:185px;')
 				.col-md-12.margin-top-1p.margin-left-1p
 					h4.text-left.text-normal.text-gray MOST UPCOMING MEETING
 				if(upcomingMeeting != undefined)
-					.col-md-12.margin-left-1p.padding-bottom-2p
+					.col-md-12.margin-left-1p
 						form(role='form', method='POST', action='/dashboard/meetings/start', id='upcomingMeeting')
 							h2.text-left.text-normal #{upcomingMeeting.meetingTitle}
 							h4.text-left.text-normal.text-gray #{upcomingMeeting.meetingDate}
 							input(type='hidden', name='meetingId', value='#{upcomingMeeting._id}')
-							button.text-right.margin-right-3p.border-square.bg-white.border-orange.border-orange.text-orange.padding-left-3p.padding-right-3p(type='button', href="javascript:{}") EDIT AGENDA
-							button.text-right.border-square.bg-white.border-orange.border-orange.text-orange.padding-left-3p.padding-right-3p(type='button', href="javascript:{}" onclick="document.getElementById('upcomingMeeting').submit();") START
-			.row.bg-white.border-gray.border-shadow-1x.margin-right-1p(style='height:175px;')
+							button.padding-btn-small.text-right.margin-right-3p.border-square.bg-white.border-orange.border-orange.text-orange(type='button', href="javascript:{}") EDIT AGENDA
+							button.padding-btn-small.text-right.margin-right-3p.border-square.bg-white.border-orange.border-orange.text-orange(type='button', href="javascript:{}" onclick="document.getElementById('upcomingMeeting').submit();") START
+			.row.bg-white.border-gray.border-shadow-1x.margin-right-1p.margin-bottom-3p(style='height:185px;')
 				.col-md-12.margin-top-1p.margin-left-1p
 					h4.text-left.text-normal.text-gray PREVIOUS MEETING
-						if(previousMeeting != undefined)
-							h2.text-left.text-normal #{previousMeeting.meetingTitle}
-							h4.text-left.text-normal.text-gray #{previousMeeting.meetingDate}
-							button.text-right.margin-right-3p.border-square.bg-white.border-orange.border-orange.text-orange.padding-left-1p.padding-right-1p VIEW MINUTES
-							button.text-right.border-square.bg-white.border-orange.border-orange.text-orange.padding-left-1p.padding-right-1p VIEW TASKS
+					if(previousMeeting != undefined)
+						h2.text-left.text-normal #{previousMeeting.meetingTitle}
+						h4.text-left.text-normal.text-gray #{previousMeeting.meetingDate}
+						button.padding-btn-small.text-right.margin-right-3p.border-square.bg-white.border-orange.border-orange.text-orange VIEW MINUTES
+						button.padding-btn-small.text-right.border-square.bg-white.border-orange.border-orange.text-orange VIEW TASKS
 		.col-md-8
-			.row.bg-white.border-gray.border-shadow-1x.margin-left-1p.overflow-scroll-y.padding-bottom-2p(style='height:350px;')
+			.row.bg-white.border-gray.border-shadow-1x.margin-left-1p.overflow-scroll-y.padding-bottom-2p(style='height:370px;')
 				.col-md-12.margin-top-1p
 					h4.text-left.text-normal.text-gray.margin-left-1p ALL UPCOMING MEETINGS
 					.container-95p.margin-center.margin-top-3p
@@ -42,10 +42,10 @@ block content
 									.col-md-5
 										h4.text-black.text-left #{meeting.meetingTitle}
 										h4.text-orange.text-left #{meeting.objective}
-									.col-md-2.text-right
-										button.margin-top-20p.border-square.bg-white.border-orange.border-orange.text-orange.padding-left-3p.padding-right-3p(type='button', href="javascript:{}")  EDIT
-									.col-md-2.text-left
-										button.margin-top-20p.border-square.bg-white.border-orange.border-orange.text-orange.padding-left-3p.padding-right-3p(type='button', href="javascript:{}" onclick="document.getElementById('future#{i}').submit();") START
+									.col-md-2.text-right.margin-top-2p
+										button.padding-btn.border-square.bg-white.border-orange.border-orange.text-orange(type='button', href="javascript:{}")  EDIT
+									.col-md-2.text-left.margin-top-2p
+										button.padding-btn.border-square.bg-white.border-orange.border-orange.text-orange(type='button', href="javascript:{}" onclick="document.getElementById('future#{i}').submit();") START
 	.row.margin-top-2p
 		.col-md-12.bg-white.border-gray.border-shadow-1x(style='height:150px;')
 			.row

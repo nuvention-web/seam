@@ -451,6 +451,9 @@ textarea:focus, input:focus{
 .margin-bottom-3p{
 	margin-bottom: 3%;
 }
+.padding-5p{
+	padding:5%;
+}
 .padding-15p{
 	padding:6% 10%;
 }
@@ -462,6 +465,9 @@ textarea:focus, input:focus{
 }
 .padding-left-25x{
 	padding-left: 25px;
+}
+.padding-left-3p{
+	padding-left: 15%;
 }
 .padding-top-20x{
 	padding-top: 20px;
@@ -497,7 +503,16 @@ textarea:focus, input:focus{
 	padding-bottom: 10%;
 }
 .padding-right-1p{
-	padding-right:2%;
+	padding-right:1%;
+}
+.padding-right-3p{
+	padding-right:3%;
+}
+.padding-btn{
+	padding:3% 15%;
+}
+.padding-btn-small{
+	padding:1% 8%;
 }
 /* =======================================================
    1E.PAGES-DESKTOP
