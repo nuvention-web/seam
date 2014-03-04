@@ -7,12 +7,13 @@ block content
 				.col-md-12.margin-top-1p.margin-left-1p
 					h4.text-left.text-normal.text-gray ALL PREVIOUS MEETINGS
 			.container-95p.margin-center.margin-top-1p
-				.row.border-gray
-					.col-md-3.border-gray-right
-						h4.text-black.text-left.text-bold asdf{meeting.meetingDate}
-						h4.text-black.text-left asdf{meeting.meetingTime} Minutes
-					.col-md-5
-						h4.text-black.text-left asdf{meeting.meetingTitle}
-						h4.text-orange.text-left asdf{meeting.objective}
-					.col-md-offset-2.col-md-2.text-right.margin-top-1p
-						button.text-right.padding-btn.border-square.bg-white.border-orange.border-orange.text-orange(type='button', href="javascript:{}" onclick="document.getElementById('future#{i}').submit();") VIEW
+				each meeting, i in meetingList
+					.row.border-gray
+						.col-md-3.border-gray-right
+							h4.text-black.text-left.text-bold #{meeting.meetingDate}
+							h4.text-black.text-left #{meeting.meetingTime} Minutes
+						.col-md-5
+							h4.text-black.text-left #{meeting.meetingTitle}
+							h4.text-orange.text-left #{meeting.objective}
+						.col-md-offset-2.col-md-2.text-right.margin-top-1p
+							button.text-right.padding-btn.border-square.bg-white.border-orange.border-orange.text-orange(type='button', href="javascript:{}" onclick="document.getElementById('future#{i}').submit();") VIEW

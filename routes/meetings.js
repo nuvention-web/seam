@@ -220,7 +220,14 @@ exports.viewPast = function(req, res){
 
 
 exports.pastMeeting = function(req, res){
-	res.render('loggedIn/meetings/pastMeeting', {title: 'Survey', user : req.user});
+	Meeting.find({'UserId' : req.user.local.email, 'isComplete' : 1}, function(e, meetingList){
+		res.render('loggedIn/meetings/pastMeeting', { 
+			title: 'SEAM', 
+			meetingList: meetingList,
+			name: req.session.name,
+			user : req.user
+		});
+	})
 	/*
 	var meetingId = req.body.meetingId;
 	if(meetingId == undefined){
