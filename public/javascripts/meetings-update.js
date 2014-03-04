@@ -1,24 +1,39 @@
 //FUNCTIONS FOR ASYNC UPDATE OF MEETINGS
 $(document).ready(function(){
+
+	$('.attendeeMember img').click(function() {
+        var value = $(this).attr('value');
+        var input = $('#taskPerson');
+        input.val(input.val() + value + ', ');
+        return false;
+    });
+
+     $('.attendeeMember h4').click(function() {
+        var value = $(this).attr('value');
+        var input = $('#taskPerson');
+        input.val(input.val() + value + ', ');
+        return false;
+    });
 	//FUNCTION: ASYNC UPDATE OF NOTES
 	$('form[name="TNForm"]').submit(function(event){
 		var value = $(this).attr('value');
 		var taskMembers= new Array();
 		var formData = $("#TNForm" + value).serializeArray();
+		console.log(formData);
 		var notes = formData[1].value;
 		var action = '/dashboard/meetings/start/addNote';
 		var flag = 0; //0 if notes 1 if task
-		for(var i = 3; i < formData.length; i++){
-			if(formData[i].value != ""){
-				taskMembers.push(formData[i].value);
-				flag = 1;
-				action = '/dashboard/meetings/start/addTask';
-				var newVal = i - 3;
-				var inputName = '#assigned' + newVal;
-				console.log($(inputName));
-				$(inputName).val('');
-			}
-		 };
+		// for(var i = 3; i < formData.length; i++){
+		// 	if(formData[i].value != ""){
+		// 		taskMembers.push(formData[i].value);
+		// 		flag = 1;
+		// 		action = '/dashboard/meetings/start/addTask';
+		// 		var newVal = i - 3;
+		// 		var inputName = '#assigned' + newVal;
+		// 		console.log($(inputName));
+		// 		$(inputName).val('');
+		// 	}
+		//  };
 		var url = location.protocol + "//" + location.host + action;
 		$.ajax({
 			type: "POST",
@@ -61,3 +76,12 @@ function addTask(number){
 };
 
 
+function showTaskForm(id){
+	var e = document.getElementById(id);
+	if(e.style.display == 'inline'){
+			e.style.display = 'none';
+	}
+	else{
+			e.style.display = 'inline';
+	}
+};
