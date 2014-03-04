@@ -785,7 +785,7 @@ background-color: #000;
 .progress-vertical-line {
 position: relative;
 width: 2px;
-min-height:255px;
+min-height:280px;
 height: auto;
 margin:0px auto;
 border-radius: 0;
