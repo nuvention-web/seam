@@ -22,6 +22,7 @@ var meetingSchema = new Schema({
 	location: { type: String },
 	objective: { type: String },
 	meetingTime: { type: String },
+	meetingStartTime:{type:String},
 	meetingDate: { type:String },
 	attendees: [attendeeSchema],
 	agenda: [topicSchema],
