@@ -2,10 +2,10 @@ var mongoose = require('mongoose');
 var Meeting = require('../models/meeting-model');
 var Project = require('../models/project-model');
 
-exports.welcome = function(req, res){
+exports.dashboard = function(req, res){
 	res.render('loggedIn/dashboard/welcome', { 
 		title: 'SEAM',
-		projectName: req.session.projectName,
+		name: req.session.name,
 		user : req.user});
 };
 

@@ -1,120 +1,109 @@
 extends ../dashboard/dashboard
 
 block content
-	.row
-		.col-md-12.bg-white.border-gray.border-shadow-1x(style='min-height:150px; height:auto')
-			.row
-				.col-md-10.col-sm-10.col-xs-10.margin-top-1p
-					input.text-h3.height-30x.form-control.border-square.border-none.text-left.bg-transparent(id='notes#{i}', type='text', name='notes', placeholder= 'MEETING TITLE', tabindex='#{i+1}', autofocus='autofocus', autocomplete='off')
-				.col-md-2.col-sm-2.col-xs-2.margin-top-1p
-					input.text-h4.height-30x.text-black.form-control.border-square.border-none.text-left.bg-transparent(id='notes#{i}', type='text', name='notes', placeholder= 'DATE', tabindex='#{i+1}', autofocus='autofocus', autocomplete='off')
-			.row
-				.col-md-10.col-sm-10.col-xs-10.margin-top-1p
-					input.text-h4.height-30x.text-orange.form-control.border-square.border-none.text-left.bg-transparent(id='notes#{i}', type='text', name='notes', placeholder= 'OBJECTIVE', tabindex='#{i+1}', autofocus='autofocus', autocomplete='off')
-				.col-md-2.col-sm-2.col-xs-2.margin-top-1p
-					input.text-h4.height-30x.text-black.form-control.border-square.border-none.text-left.bg-transparent(id='notes#{i}', type='text', name='notes', placeholder= 'TIME', tabindex='#{i+1}', autofocus='autofocus', autocomplete='off')
-	.row.margin-top-2p.margin-bottom-3p
-		.col-md-9
-			.row.bg-white.border-gray.border-shadow-1x.margin-right-1p.margin-left.height-auto.padding-bottom-3p
-				.container-95p.margin-center
-					.row
-						.col-md-12.margin-top-1p.padding-bottom-2p.margin-left-1p
-							h3.text-left.text-normal.text-black MEETING AGENDA
-					.row
-						.col-md-1.margin-top-1p.padding-bottom-2p.margin-0.padding-0
-							div.height-100p.width-100p
-								.progress.progress-striped.progress-vertical-circle-bigger.progress-striped.active.progress-success.margin-top-n1x.margin-bottom-0p
-									.bar(style="width:40px")
-						.col-md-10.margin-0.padding-0
-								input.text-h3.height-30x.form-control.border-square.border-none.text-left.bg-transparent(id='notes#{i}', type='text', name='notes', placeholder= 'ADD AGENDA ITEM', tabindex='#{i+1}', autofocus='autofocus', autocomplete='off')
-					.row
-						.col-md-1.margin-top-1p.padding-bottom-2p.margin-0.padding-0
-							div.height-100p.width-100p
-								.progress.progress-striped.progress-vertical-line-shorter.progress-striped.active.progress-success.margin-top-n1x.margin-bottom-0p
-									.bar(style="width:40px")
-						.col-md-11.margin-0.padding-0
-							div.width-95p.margin-top-1p.overflow-scroll-y-auto.max-height-120x
-								input.text-h4.height-30x.form-control.border-square.border-none.text-left.bg-transparent(id='notes#{i}', type='text', name='notes', placeholder= 'INSERT NOTES HERE', tabindex='#{i+1}', autofocus='autofocus', autocomplete='off')
-					.row
-						.col-md-1.margin-top-1p.padding-bottom-2p.margin-0.padding-0
-							div.height-100p.width-100p
-								.progress.progress-striped.progress-vertical-circle-bigger.progress-striped.active.progress-success.margin-top-n1x.margin-bottom-0p
-									.bar(style="width:40px")
-						.col-md-10.margin-0.padding-0
-								input.text-h3.height-30x.form-control.border-square.border-none.text-left.bg-transparent(id='notes#{i}', type='text', name='notes', placeholder= 'ADD AGENDA ITEM', tabindex='#{i+1}', autofocus='autofocus', autocomplete='off')
-					.row
-						.col-md-1.margin-top-1p.padding-bottom-2p.margin-0.padding-0
-							div.height-100p.width-100p
-								.progress.progress-striped.progress-vertical-line-shorter.progress-striped.active.progress-success.margin-top-n1x.margin-bottom-0p
-									.bar(style="width:40px")
-						.col-md-11.margin-0.padding-0
-							div.width-95p.margin-top-1p.overflow-scroll-y-auto.max-height-120x
-								input.text-h4.height-30x.form-control.border-square.border-none.text-left.bg-transparent(id='notes#{i}', type='text', name='notes', placeholder= 'INSERT NOTES HERE', tabindex='#{i+1}', autofocus='autofocus', autocomplete='off')
-					.row
-						.col-md-1.margin-top-1p.padding-bottom-2p.margin-0.padding-0
-							div.height-100p.width-100p
-								.progress.progress-striped.progress-vertical-circle-bigger.progress-striped.active.progress-success.margin-top-n1x.margin-bottom-0p
-									.bar(style="width:40px")
-						.col-md-10.margin-0.padding-0
-								input.text-h3.height-30x.form-control.border-square.border-none.text-left.bg-transparent(id='notes#{i}', type='text', name='notes', placeholder= 'ADD AGENDA ITEM', tabindex='#{i+1}', autofocus='autofocus', autocomplete='off')
-					.row
-						.col-md-1.margin-top-1p.padding-bottom-2p.margin-0.padding-0
-							div.height-100p.width-100p
-								.progress.progress-striped.progress-vertical-line-shorter.progress-striped.active.progress-success.margin-top-n1x.margin-bottom-0p
-									.bar(style="width:40px")
-						.col-md-11.margin-0.padding-0
-							div.width-95p.margin-top-1p.overflow-scroll-y-auto.max-height-120x
-								input.text-h4.height-30x.form-control.border-square.border-none.text-left.bg-transparent(id='notes#{i}', type='text', name='notes', placeholder= 'INSERT NOTES HERE', tabindex='#{i+1}', autofocus='autofocus', autocomplete='off')
-					.row
-						.col-md-1.margin-top-1p.padding-bottom-2p.margin-0.padding-0
-							div.height-100p.width-100p
-								.progress.progress-striped.progress-vertical-circle-bigger.progress-striped.active.progress-success.margin-top-n1x.margin-bottom-0p
-									.bar(style="width:40px")
-						.col-md-11.margin-0.padding-0
-							div.width-95p.margin-top-1p.margin-left-1p
-								h3.text-black.text-left.text-capital.margin-0.text-normal ADD MORE
-		.col-md-3
-			.row.height-auto.bg-white.border-gray.border-shadow-1x.margin-left-1p.overflow-scroll-y-auto.overflow-x-hidden.padding-bottom-10p
-				.col-md-12.margin-top-1p
-					h3.text-left.text-normal.text-gray.margin-left-1p ATTENDEES
-					.container-95p.margin-center.margin-top-3p
+	form(role='form', method='POST', action='/dashboard/meetings/makeMeeting/add', id='addMeeting')
+		.row
+			.col-md-12.bg-white.border-gray.border-shadow-1x(style='min-height:150px; height:auto')
+				.row
+					.col-md-10.col-sm-10.col-xs-10.margin-top-1p
+						input.text-h3.height-30x.form-control.border-square.border-none.text-left.bg-transparent(id='makeMeeting', type='text', name='meetingTitle', placeholder= 'MEETING TITLE', autofocus='autofocus', autocomplete='off')
+					.col-md-2.col-sm-2.col-xs-2.margin-top-1p
+						input.text-h4.height-30x.text-black.form-control.border-square.border-none.text-left.bg-transparent(id='makeMeeting', type='text', name='meetingDate', placeholder= 'DATE', autocomplete='off')
+				.row
+					.col-md-10.col-sm-10.col-xs-10.margin-top-1p
+						input.text-h4.height-30x.text-orange.form-control.border-square.border-none.text-left.bg-transparent(id='makeMeeting', type='text', name='objective', placeholder= 'OBJECTIVE', autocomplete='off')
+					.col-md-2.col-sm-2.col-xs-2.margin-top-1p
+						input.text-h4.height-30x.text-black.form-control.border-square.border-none.text-left.bg-transparent(id='makeMeeting', type='text', name='meetingTime', placeholder= 'TIME', autocomplete='off')
+				.row
+					.col-md-10.col-sm-10.col-xs-10.margin-top-1p
+						input.text-h4.height-30x.text-orange.form-control.border-square.border-none.text-left.bg-transparent(id='makeMeeting', type='text', name='location', placeholder= 'LOCATION', autocomplete='off')
+					.col-md-2.col-sm-2.col-xs-2.margin-top-1p.text-left
+						button.border-square.bg-white.border-orange.border-orange.text-orange(type='submit') ADD MEETING
+		.row.margin-top-2p.margin-bottom-3p
+			.col-md-9
+				.row.bg-white.border-gray.border-shadow-1x.margin-right-1p.margin-left.height-auto.padding-bottom-3p
+					.container-95p.margin-center
 						.row
-							.col-md-4
-								img.width-50x.height-50x.border-50p.float-right(src="../../../images/JoLee.jpg")
-							.col-md-8
-								h4.text-black.text-left.margin-top-5p Josephine Lee
-						.row.margin-top-5p
-							.col-md-4
-								img.width-50x.height-50x.border-50p.float-right(src="../../../images/AlexPopelard.jpg")
-							.col-md-8
-								h4.text-black.text-left.margin-top-5p Alex Popelard
-						.row.margin-top-5p
-							.col-md-4
-								img.width-50x.height-50x.border-50p.float-right(src="../../../images/SuzeeHan.jpg")
-							.col-md-8
-								h4.text-black.text-left.margin-top-5p Suzee Han
-						.row.margin-top-5p
-							.col-md-4
-								img.width-50x.height-50x.border-50p.float-right(src="../../../images/MichaelChen.jpg")
-							.col-md-8
-								h4.text-black.text-left.margin-top-5p Michael Chen
-						.row.margin-top-5p
-							.col-md-4
-								img.width-50x.height-50x.border-50p.float-right(src="../../../images/TommyYu.jpg")
-							.col-md-8
-								h4.text-black.text-left.margin-top-5p Tommy Yu
-						.row.margin-top-5p
-							.col-md-12.text-center
-								button.border-square.bg-white.border-orange.border-orange.text-orange ADD ATTENDEE
-						.row.margin-top-10p
-							.col-md-12
-								h3.text-left.text-normal.text-gray.margin-left-1p ADDITIONAL RESOURCES
-						.row.margin-top-5p
-							.col-md-12.text-center
-								button.border-square.bg-white.border-orange.border-orange.text-orange ADD ATTENDEE
-						.row.margin-top-10p
-							.col-md-12.text-center
-								button.border-square.bg-white.border-orange.border-orange.text-orange ADD TASK
+							.col-md-12.margin-top-1p.padding-bottom-2p.margin-left-1p
+								h3.text-left.text-normal.text-black MEETING AGENDA
+						.row
+							.col-md-1.margin-top-1p.padding-bottom-2p.margin-0.padding-0
+								div.height-100p.width-100p
+									.progress.progress-striped.progress-vertical-circle-bigger.progress-striped.active.progress-success.margin-top-n1x.margin-bottom-0p
+										.bar(style="width:40px")
+							.col-md-10.margin-0.padding-0
+									input.text-h3.height-30x.form-control.border-square.border-none.text-left.bg-transparent(id='makeMeeting', type='text', name='agendaTopic', placeholder= 'ADD AGENDA ITEM', autocomplete='off')
+						.row
+							.col-md-1.margin-top-1p.padding-bottom-2p.margin-0.padding-0
+								div.height-100p.width-100p
+									.progress.progress-striped.progress-vertical-line-shorter.progress-striped.active.progress-success.margin-top-n1x.margin-bottom-0p
+										.bar(style="width:40px")
+							.col-md-11.margin-0.padding-0
+								div.width-95p.margin-top-1p.overflow-scroll-y-auto.max-height-120x
+									input.text-h4.height-30x.form-control.border-square.border-none.text-left.bg-transparent(id='makeMeeting', type='text', name='notes', placeholder= 'INSERT NOTES HERE', autocomplete='off')
+						.row
+							.col-md-1.margin-top-1p.padding-bottom-2p.margin-0.padding-0
+								div.height-100p.width-100p
+									.progress.progress-striped.progress-vertical-circle-bigger.progress-striped.active.progress-success.margin-top-n1x.margin-bottom-0p
+										.bar(style="width:40px")
+							.col-md-10.margin-0.padding-0
+									input.text-h3.height-30x.form-control.border-square.border-none.text-left.bg-transparent(id='makeMeeting', type='text', name='agendaTopic', placeholder= 'ADD AGENDA ITEM', autocomplete='off')
+						.row
+							.col-md-1.margin-top-1p.padding-bottom-2p.margin-0.padding-0
+								div.height-100p.width-100p
+									.progress.progress-striped.progress-vertical-line-shorter.progress-striped.active.progress-success.margin-top-n1x.margin-bottom-0p
+										.bar(style="width:40px")
+							.col-md-11.margin-0.padding-0
+								div.width-95p.margin-top-1p.overflow-scroll-y-auto.max-height-120x
+									input.text-h4.height-30x.form-control.border-square.border-none.text-left.bg-transparent(id='makeMeeting', type='text', name='notes', placeholder= 'INSERT NOTES HERE', autocomplete='off')
+						.row
+							.col-md-1.margin-top-1p.padding-bottom-2p.margin-0.padding-0
+								div.height-100p.width-100p
+									.progress.progress-striped.progress-vertical-circle-bigger.progress-striped.active.progress-success.margin-top-n1x.margin-bottom-0p
+										.bar(style="width:40px")
+							.col-md-10.margin-0.padding-0
+									input.text-h3.height-30x.form-control.border-square.border-none.text-left.bg-transparent(id='makeMeeting', type='text', name='agendaTopic', placeholder= 'ADD AGENDA ITEM', autocomplete='off')
+						.row
+							.col-md-1.margin-top-1p.padding-bottom-2p.margin-0.padding-0
+								div.height-100p.width-100p
+									.progress.progress-striped.progress-vertical-line-shorter.progress-striped.active.progress-success.margin-top-n1x.margin-bottom-0p
+										.bar(style="width:40px")
+							.col-md-11.margin-0.padding-0
+								div.width-95p.margin-top-1p.overflow-scroll-y-auto.max-height-120x
+									input.text-h4.height-30x.form-control.border-square.border-none.text-left.bg-transparent(id='makeMeeting', type='text', name='notes', placeholder= 'INSERT NOTES HERE', autocomplete='off')
+						.row
+							.col-md-1.margin-top-1p.padding-bottom-2p.margin-0.padding-0
+								div.height-100p.width-100p
+									.progress.progress-striped.progress-vertical-circle-bigger.progress-striped.active.progress-success.margin-top-n1x.margin-bottom-0p
+										.bar(style="width:40px")
+							.col-md-11.margin-0.padding-0
+								div.width-95p.margin-top-1p.margin-left-1p
+										h3.text-black.text-left.text-capital.margin-0.text-normal ADD MORE
+			.col-md-3
+				.row.height-auto.bg-white.border-gray.border-shadow-1x.margin-left-1p.overflow-scroll-y-auto.overflow-x-hidden.padding-bottom-10p
+					.col-md-12.margin-top-1p
+						h3.text-left.text-normal.text-gray.margin-left-1p ATTENDEES
+						.container-95p.margin-center.margin-top-3p
+							div#attendeeList
+							.row.margin-top-5p#addNewAttendee(style="display: none")
+								.col-md-8
+									input.form-control.border-square.text-left.border-none(type='text', name='nameHolder', value='', id='nameHolder', placeholder= 'NAME', tabindex='1')
+								.col-md-4
+									button.border-square.bg-white.border-orange.border-orange.text-orange(type='button' onclick='addAttendee()', tabindex='3') ADD
+								.col-md-12
+									input.form-control.border-square.text-left.border-none(type='text', name='emailHolder', value='', id='emailHolder', placeholder= 'EMAIL', tabindex='2')
+							.row.margin-top-5p
+								.col-md-12.text-center
+									button.border-square.bg-white.border-orange.border-orange.text-orange(type='button' onclick='showAttendeeForm()') NEW ATTENDEE
+							.row.margin-top-10p
+								.col-md-12
+									h3.text-left.text-normal.text-gray.margin-left-1p ADDITIONAL RESOURCES
+							.row.margin-top-5p
+								.col-md-12.text-center
+									button.border-square.bg-white.border-orange.border-orange.text-orange ADD ATTENDEE
+							.row.margin-top-10p
+								.col-md-12.text-center
+									button.border-square.bg-white.border-orange.border-orange.text-orange ADD TASK
 	script(src='../../../javascripts/meetings-assignTasks.js')
 	script(src='../../../javascripts/meetings-update.js')
 	script(src='../../../javascripts/meetings-progressBar.js')

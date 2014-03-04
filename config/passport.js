@@ -69,6 +69,9 @@ module.exports = function(passport) {
                         throw err;
                     console.log("Successfully added new user to database");
                     User.find({'local.email': email}, function(e, docs){console.log(docs);});
+                    req.session.userId = email;
+                    req.session.name = name;
+                    req.session.accountType = accountType;
                     return done(null, newUser);
                 });
             }

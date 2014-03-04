@@ -115,6 +115,7 @@ textarea:focus, input:focus{
 .form-control-smaller{
 	height:35px;	
 }
+
 .hidden-login{
 	z-index:99;
 	position: relative;

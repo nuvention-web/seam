@@ -10,6 +10,7 @@ exports.makeMeeting = function(req, res){
 			title: 'SEAM',
 			projectName: req.session.projectName,
 			meetingList: docs,
+			name: req.session.name,
 			user : req.user
 		});
 	})
@@ -288,34 +289,39 @@ exports.addTask = function(req, res){
 exports.addMeeting = function(req, res){
 	var mailBody, smtpConfig;
 	var userId = req.user.local.email;
-	var projectId = req.session.projectId;
 	var meetingTitle = req.body.meetingTitle;
 	var objective = req.body.objective;
+	var location = req.body.location;
 	var agenda = req.body.agendaTopic;
-	var duration = req.body.duration;
+	// var duration = req.body.duration;
 	var meetingTime = req.body.meetingTime;
 	var meetingDate = req.body.meetingDate;  
-	var meetingMembers = req.body.meetingMembers;
+	var attendeeNames = req.body.attendeeName;
+	var attendeeEmails = req.body.attendeeEmail;
+	var notes = req.body.notes;
 	var emailAgenda='';
-	var timerInfo= meetingTime+','+duration;
-	console.log(userId + meetingTitle + objective + agenda + duration);
-	
+	// var timerInfo= meetingTime+','+duration;
+	console.log(attendeeNames);
+	console.log(attendeeEmails);
+	console.log(attendeeNames[0]);
+	console.log(attendeeEmails[0]);
+
 	var newMeeting = new Meeting({
-		ProjectId: projectId,
 		UserId: userId,
 		meetingTitle: meetingTitle,
 		objective: objective,
+		location: location,
 		meetingDate: meetingDate,
-		meetingMembers: meetingMembers,
 		meetingTime: meetingTime,
-		timerInfo:timerInfo
+		// timerInfo: timerInfo
 	});
 
 	if(typeof agenda == 'string'){
 		emailAgenda+='1:  '+ agenda+'<br/>';
 		newMeeting.agenda.push({
 			topic: agenda,
-			duration: duration
+			// duration: duration,
+			notes: [{notes: notes}]
 		});
 	}
 	else{
@@ -324,13 +330,31 @@ exports.addMeeting = function(req, res){
 				var number= i+1;
 				emailAgenda+=number+':  '+ agenda[i]+'<br/>';
 				newMeeting.agenda.push({
-				topic: agenda[i],
-				duration: duration[i]
+					topic: agenda[i],
+					// duration: duration[i]
+					notes: [{notes: notes[i]}]
 				});
 			}
 		};
 	}
-	
+
+	if(typeof attendeeNames == 'string'){
+		newMeeting.attendees.push({
+			attendeeName: attendeeNames,
+			attendeeEmail: attendeeEmails
+		});
+	}
+	else{
+		for(var i=0; i<attendeeNames.length; i++){
+			if(attendeeNames[i] != ''){
+				newMeeting.attendees.push({
+					attendeeName: attendeeNames[i],
+					attendeeEmail: attendeeEmails[i]
+				});
+			}
+		};
+	}
+
 	newMeeting.save(function(err, doc){
 		if(err){
 			console.log('Problem adding information to database')
@@ -344,50 +368,50 @@ exports.addMeeting = function(req, res){
 		}
 	});
 
-	//email function
-	smtpConfig = nodemailer.createTransport('SMTP', {
-		service: 'Gmail',
-		auth: {
-			user: "seammeetings@gmail.com",
-			pass: "123456789a!"
-		}
-	});
-	//construct the email sending module
-	mailBody = {
-		forceEmbeddedImages: true,
-		from: "SEAM Meetings <seammeetings@gmail.com>",
-		to: meetingMembers,
-		subject: '[ '+meetingDate+' ] '+ meetingTitle + ' Meeting Agenda',
-		text: 'Date: '+ meetingDate +'\n\n'+ 'Objectives: '+objective+'\n\n'+ 'Agenda: \n\n'+ emailAgenda,
+	// //email function
+	// smtpConfig = nodemailer.createTransport('SMTP', {
+	// 	service: 'Gmail',
+	// 	auth: {
+	// 		user: "seammeetings@gmail.com",
+	// 		pass: "123456789a!"
+	// 	}
+	// });
+	// //construct the email sending module
+	// mailBody = {
+	// 	forceEmbeddedImages: true,
+	// 	from: "SEAM Meetings <seammeetings@gmail.com>",
+	// 	to: meetingMembers,
+	// 	subject: '[ '+meetingDate+' ] '+ meetingTitle + ' Meeting Agenda',
+	// 	text: 'Date: '+ meetingDate +'\n\n'+ 'Objectives: '+objective+'\n\n'+ 'Agenda: \n\n'+ emailAgenda,
 
-		// HTML body
-    	html:"<body>"+
-    	"<p style='text-align:center'><img src='cid:logo@seam'/></p>"+
-        "<p style='text-align:left; text-transform:capitalize'> Date: "+meetingDate+"<br/></p>" +
-        "<p style='text-align:left; text-transform:capitalize'> Duration: "+meetingTime+" Minutes <br/></p>" +
-        "<p style='text-align:left; text-transform:capitalize'> Objectives: "+objective+"<br/></p>" +
-        "<p style='text-align:left; text-transform:capitalize'> Agenda: <br/>"+emailAgenda+"<br/></p>"+
-        "</body>",
-	    attachments:[
-	        // Logo img
-	        {
-	            filePath: './public/images/seamlogo-red125.png',
-	            cid: 'logo@seam' // should be as unique as possible
-	        },
+	// 	// HTML body
+ //    	html:"<body>"+
+ //    	"<p style='text-align:center'><img src='cid:logo@seam'/></p>"+
+ //        "<p style='text-align:left; text-transform:capitalize'> Date: "+meetingDate+"<br/></p>" +
+ //        "<p style='text-align:left; text-transform:capitalize'> Duration: "+meetingTime+" Minutes <br/></p>" +
+ //        "<p style='text-align:left; text-transform:capitalize'> Objectives: "+objective+"<br/></p>" +
+ //        "<p style='text-align:left; text-transform:capitalize'> Agenda: <br/>"+emailAgenda+"<br/></p>"+
+ //        "</body>",
+	//     attachments:[
+	//         // Logo img
+	//         {
+	//             filePath: './public/images/seamlogo-red125.png',
+	//             cid: 'logo@seam' // should be as unique as possible
+	//         },
 
-	    ]
-	};
-	//send Email
-	smtpConfig.sendMail(mailBody, function (error, response) {
-		//Email not sent
-		if (error) {
-			res.end("Email send Failed");
-		}
-		//email send sucessfully
-		else {
-			res.end("Email send sucessfully");
-		}
-	});
+	//     ]
+	// };
+	// //send Email
+	// smtpConfig.sendMail(mailBody, function (error, response) {
+	// 	//Email not sent
+	// 	if (error) {
+	// 		res.end("Email send Failed");
+	// 	}
+	// 	//email send sucessfully
+	// 	else {
+	// 		res.end("Email send sucessfully");
+	// 	}
+	// });
 
 	res.redirect('back');
 };
