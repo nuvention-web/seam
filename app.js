@@ -93,7 +93,8 @@ app.post('/dashboard/meetings/view', user.isLoggedIn, meetings.viewMeeting);
 app.post('/dashboard/meetings/view/past', user.isLoggedIn, meetings.viewPast);
 app.get('/dashboard/meetings/view/pastMeeting', user.isLoggedIn, meetings.pastMeeting);
 
-app.post('/dashboard/meetings/start', user.isLoggedIn, meetings.startMeeting);
+app.post('/dashboard/meetings/start', user.isLoggedIn, meetings.postMeeting);
+app.get('/dashboard/meetings/start', user.isLoggedIn, meetings.getMeeting);
 app.post('/dashboard/meetings/start/addNote', user.isLoggedIn, meetings.addNote);
 app.post('/dashboard/meetings/start/addTask', user.isLoggedIn, meetings.addTask);
 app.get('/dashboard/meetings/end', user.isLoggedIn, meetings.endMeeting);

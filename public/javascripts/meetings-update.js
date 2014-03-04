@@ -5,7 +5,7 @@ $(document).ready(function(){
 		var value = $(this).attr('value');
 		var taskMembers= new Array();
 		var formData = $("#TNForm" + value).serializeArray();
-		var notes = formData[2].value;
+		var notes = formData[1].value;
 		var action = '/dashboard/meetings/start/addNote';
 		var flag = 0; //0 if notes 1 if task
 		for(var i = 3; i < formData.length; i++){
@@ -27,6 +27,7 @@ $(document).ready(function(){
 			success: function(data){
 				if(flag == 0){
 					notesList[value].innerHTML += '<h5 class="text-left margin-right-2p text-capital">' + notes + '</h5>';
+					notesList[value].scrollTop = notesList[value].scrollHeight;
 					$('#notes' + value)[0].value = '';
 				}
 				else{

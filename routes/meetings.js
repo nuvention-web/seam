@@ -54,7 +54,7 @@ exports.viewMeeting = function(req, res){
 	})
 };
 
-exports.startMeeting = function(req, res){
+exports.postMeeting = function(req, res){
 
 	var meetingId = req.body.meetingId;
 	if(meetingId == undefined){
@@ -67,11 +67,36 @@ exports.startMeeting = function(req, res){
 	console.log(meetingId);
 	Meeting.findOne({'_id': meetingId}, function(e, doc){
 		console.log(doc);
-		Task.find({'ProjectId': req.session.projectId, 'MeetingId': meetingId}, function(e, task){
+		Task.find({'MeetingId': meetingId}, function(e, task){
 			console.log(task);
 			res.render('loggedIn/meetings/startMeeting', { 
 				title: 'SEAM',
-				projectName: req.session.projectName,
+				taskList: task,
+				meeting: doc,
+				user : req.user,
+				past : 0
+			});
+		})
+	})
+};
+
+exports.getMeeting = function(req, res){
+
+	var meetingId = req.body.meetingId;
+	if(meetingId == undefined){
+		meetingId = req.session.meetingId;
+	}
+	else{
+		req.session.meetingId = meetingId;
+	}
+	
+	console.log(meetingId);
+	Meeting.findOne({'_id': meetingId}, function(e, doc){
+		console.log(doc);
+		Task.find({'MeetingId': meetingId}, function(e, task){
+			console.log(task);
+			res.render('loggedIn/meetings/startMeeting', { 
+				title: 'SEAM',
 				taskList: task,
 				meeting: doc,
 				user : req.user,
@@ -117,54 +142,54 @@ exports.endMeeting = function(req, res){
 				};
 			}
 
-//email function
-	smtpConfig = nodemailer.createTransport('SMTP', {
-		service: 'Gmail',
-		auth: {
-			user: "seammeetings@gmail.com",
-			pass: "123456789a!"
-		}
-	});
-	//construct the email sending module
-	mailBody = {
-		forceEmbeddedImages: true,
-		from: "SEAM Meetings <seammeetings@gmail.com>",
-		to: meetingInfo.meetingMembers,
-		subject: '[ '+meetingInfo.meetingDate+' ] '+meetingInfo.meetingTitle+ ' Minutes',
-		text: 'Objectives: '+objective+'\n\n'+ 'Agenda: \n\n'+ emailAgenda,
+		// //email function
+		// 	smtpConfig = nodemailer.createTransport('SMTP', {
+		// 		service: 'Gmail',
+		// 		auth: {
+		// 			user: "seammeetings@gmail.com",
+		// 			pass: "123456789a!"
+		// 		}
+		// 	});
+		// 	//construct the email sending module
+		// 	mailBody = {
+		// 		forceEmbeddedImages: true,
+		// 		from: "SEAM Meetings <seammeetings@gmail.com>",
+		// 		to: meetingInfo.meetingMembers,
+		// 		subject: '[ '+meetingInfo.meetingDate+' ] '+meetingInfo.meetingTitle+ ' Minutes',
+		// 		text: 'Objectives: '+objective+'\n\n'+ 'Agenda: \n\n'+ emailAgenda,
 
-		// HTML body
-    	html:"<body>"+
-    	"<p style='text-align:center'><img src='cid:logo@seam'/></p>"+
-        "<p style='text-align:left; text-transform:capitalize'> Date: "+meetingInfo.meetingDate+"<br/></p>" +
-        "<p style='text-align:left; text-transform:capitalize'> Duration: "+meetingInfo.meetingTime+" Minutes <br/></p>" +
-        "<p style='text-align:left; text-transform:capitalize'> Objectives: "+meetingInfo.objective+"<br/></p>" +
-        "<p style='text-align:left; text-transform:capitalize'> Agenda: <br/></p>"+
-        emailAgenda+
-        "</body>",
-	    attachments:[
-	        // Logo img
-	        {
-	            filePath: './public/images/seamlogo-red125.png',
-	            cid: 'logo@seam' // should be as unique as possible
-	        },
+		// 		// HTML body
+		//     	html:"<body>"+
+		//     	"<p style='text-align:center'><img src='cid:logo@seam'/></p>"+
+		//         "<p style='text-align:left; text-transform:capitalize'> Date: "+meetingInfo.meetingDate+"<br/></p>" +
+		//         "<p style='text-align:left; text-transform:capitalize'> Duration: "+meetingInfo.meetingTime+" Minutes <br/></p>" +
+		//         "<p style='text-align:left; text-transform:capitalize'> Objectives: "+meetingInfo.objective+"<br/></p>" +
+		//         "<p style='text-align:left; text-transform:capitalize'> Agenda: <br/></p>"+
+		//         emailAgenda+
+		//         "</body>",
+		// 	    attachments:[
+		// 	        // Logo img
+		// 	        {
+		// 	            filePath: './public/images/seamlogo-red125.png',
+		// 	            cid: 'logo@seam' // should be as unique as possible
+		// 	        },
 
-	    ]
-	};
-	//send Email
-	smtpConfig.sendMail(mailBody, function (error, response) {
-		//Email not sent
-		if (error) {
-			res.end("Email send Failed");
-		}
-		//email send sucessfully
-		else {
-			res.end("Email send sucessfully");
-		}
-	});
+		// 	    ]
+		// 	};
+		// 	//send Email
+		// 	smtpConfig.sendMail(mailBody, function (error, response) {
+		// 		//Email not sent
+		// 		if (error) {
+		// 			res.end("Email send Failed");
+		// 		}
+		// 		//email send sucessfully
+		// 		else {
+		// 			res.end("Email send sucessfully");
+		// 		}
+		// 	});
 		});
 	});
-	res.redirect('dashboard/meetings');
+	res.redirect('dashboard');
 }
 
 exports.viewPast = function(req, res){
@@ -219,7 +244,7 @@ exports.pastMeeting = function(req, res){
 
 exports.addNote = function(req, res){
 	var noteOrder = req.body.noteOrder;
-	var meetingId = req.body.meetingId;
+	var meetingId = req.session.meetingId;
 	var notes = req.body.notes;
 	console.log(req.body);
 	console.log(noteOrder + " " + meetingId + " " + notes);
