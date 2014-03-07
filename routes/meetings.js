@@ -319,7 +319,7 @@ exports.addMeeting = function(req, res){
 	var objective = req.body.objective;
 	var location = req.body.location;
 	var agenda = req.body.agendaTopic;
-	// var duration = req.body.duration;
+	var duration = req.body.duration;
 	var meetingTime = req.body.meetingTime;
 	var meetingStartTime = req.body.meetingStartTime;
 	var meetingDate = req.body.meetingDate;  
@@ -327,11 +327,9 @@ exports.addMeeting = function(req, res){
 	var attendeeEmails = req.body.attendeeEmail;
 	var notes = req.body.notes;
 	var emailAgenda='';
-	// var timerInfo= meetingTime+','+duration;
-	console.log(attendeeNames);
-	console.log(attendeeEmails);
-	console.log(attendeeNames[0]);
-	console.log(attendeeEmails[0]);
+	var timerInfo= meetingTime+','+duration;
+	console.log('log');
+	console.log(timerInfo);
 
 	var newMeeting = new Meeting({
 		UserId: userId,
@@ -341,14 +339,14 @@ exports.addMeeting = function(req, res){
 		meetingDate: meetingDate,
 		meetingStartTime:meetingStartTime,
 		meetingTime: meetingTime,
-		// timerInfo: timerInfo
+		timerInfo: timerInfo
 	});
 
 	if(typeof agenda == 'string'){
 		emailAgenda+='1:  '+ agenda+'<br/>';
 		newMeeting.agenda.push({
 			topic: agenda,
-			// duration: duration,
+			duration: duration,
 			notes: [{notes: notes}]
 		});
 	}
@@ -359,7 +357,7 @@ exports.addMeeting = function(req, res){
 				emailAgenda+=number+':  '+ agenda[i]+'<br/>';
 				newMeeting.agenda.push({
 					topic: agenda[i],
-					// duration: duration[i]
+					duration: duration[i],
 					notes: [{notes: notes[i]}]
 				});
 			}
