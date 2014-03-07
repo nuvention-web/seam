@@ -1,21 +1,27 @@
 //FUNCTIONS FOR PROGRESS BAR DURING MEETING
-$(document).ready(function(){
+$(document).ready(function(){ 
+    $.notify.defaults({ className: "success" ,globalPosition:"top center" });
     var timer= $('#progressValues').val();
+    alert(timer);
     var strVals=timer.split(',');
     var intVals=new Array();
     for(var i = 0; i < strVals.length; i++){
         intVals[i] =parseInt(strVals[i]);
-         intVals[i] *=60;
-        if(i>1)
-        {
-            intVals[i]+=intVals[i-1];
-        }
+        alert(intVals[i]);
+         //intVals[i] *=60;
     };
-    $("#progressBar").progressBar({
-        timeLimit: intVals[0], 
+    if(strVals.length>=1){
+    $("#progressBar1").progressBar({
+        timeLimit: intVals[1], 
         limit:intVals
-
-    });
+        });
+    };
+    for(var i=2; i<strVals.length;i++){
+        var progID="#progressBar"+i;
+        alert(intVals[i]);
+        var timeLimits=intVals[i];
+        setTimeout(function(){$(progID).progressBar({timeLimit: timeLimits,limit:intVals})},intVals[i-1]*1000);
+    };
     $('#countdownTimer').countdown({until: intVals[0],compact: true,format: 'MS'});
 });
 
@@ -25,12 +31,14 @@ $(document).ready(function(){
 
         this.each(function () {
             $(this).empty();
-            var barContainer = $("<div>").addClass("progress progress-striped");
+            var barContainer = $("<div>").addClass("progress progress-striped progress-vertical-line");
             var bar = $("<div>").addClass("progress-bar").addClass(settings.baseStyle)
                 .attr("role", "progressbar")
                 .attr("aria-valuenow", "0")
                 .attr("aria-valuemin", "0")
-                .attr("aria-valuemax", settings.timeLimit);
+                .attr("aria-valuemax", settings.timeLimit)
+                .width("100%")
+                .height("0%");
 
             bar.appendTo(barContainer);
             barContainer.appendTo($(this));
@@ -39,7 +47,7 @@ $(document).ready(function(){
             var limit = settings.timeLimit * 1000;
             var interval = window.setInterval(function () {
             var elapsed = new Date() - start;
-            bar.width(((elapsed / limit) * 100) + "%");
+            bar.height(((elapsed / limit) * 100) + "%");
             if(elapsed <= settings.limit[1]*1000){
                 bar.removeClass(settings.baseStyle)
                 .addClass(settings.baseStyle);
@@ -51,7 +59,6 @@ $(document).ready(function(){
             }
                 if (elapsed >= limit) {
                     window.clearInterval(interval);
-
                     bar.removeClass(settings.baseStyle)
                        .removeClass(settings.warningStyle)
                        .addClass(settings.completeStyle);
