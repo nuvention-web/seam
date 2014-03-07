@@ -4,10 +4,13 @@ block content
 	.row
 		.col-md-12.bg-white.border-gray.border-shadow-1x(style='min-height:150px; height:auto')
 			.row
-				.col-md-9.col-sm-9.col-xs-9.margin-top-1p
+				.col-md-6.col-sm-6.col-xs-6.margin-top-1p
 					h2.text-left.text-black.text-normal.padding-left-1p #{meeting.meetingTitle}
 				.col-md-3.col-sm-3.col-xs-3.margin-top-1p
-					h2.text-right.text-black.padding-right-1p #{meeting.meetingDate}
+
+				.col-md-3.col-sm-3.col-xs-3.margin-top-1p.disp-inline-block
+					h2#countdownTimer.text-right.text-black.text-normal.float-right
+					h2.text-right.text-black.padding-right-3p.float-right #{meeting.meetingDate}					
 			.row.padding-left-1p
 				.col-md-10.margin-top-1p.padding-left-1p
 					span.text-h3.text-left.text-orange
@@ -20,6 +23,7 @@ block content
 					.row
 						.col-md-12.margin-top-1p.padding-bottom-2p.margin-left-1p
 							h4.text-left.text-normal.text-gray MEETING AGENDA
+						input(type="hidden" id="progressValues" value='#{meeting.timerInfo}')
 					each agenda, i in meeting.agenda
 						.row
 							.col-md-1.margin-top-1p.padding-bottom-2p.margin-0.padding-0
@@ -32,7 +36,7 @@ block content
 							.col-md-1.margin-top-1p.padding-bottom-2p.margin-0.padding-0
 								div.height-100p.width-100p
 									.progress.progress-striped.progress-vertical-line.progress-striped.active.progress-success.margin-top-n1x.margin-bottom-0p
-										.bar(style="width:40px")
+										.bar(id='progressBar#{i+1}')
 							.col-md-11.margin-0.padding-0
 								div.width-95p.margin-top-1p.overflow-scroll-y-auto.max-height-150x#notesList
 									each note, j in agenda.notes
@@ -85,6 +89,7 @@ block content
 						button.border-square.bg-white.border-orange.border-orange.text-orange.text-h3.padding-btn(type='button', onClick="parent.location='/dashboard/meetings/end'") FINISH MEETING
 	script(src='../../../javascripts/meetings-assignTasks.js')
 	script(src='../../../javascripts/meetings-update.js')
+	script(src='../../../javascripts/notify.min.js')
 	script(src='../../../javascripts/meetings-progressBar.js')
 	script(type="text/javascript" src="../../../javascripts/jquery.plugin.js")
 	script(type="text/javascript" src="../../../javascripts/jquery.countdown.js")
