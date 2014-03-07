@@ -2,12 +2,10 @@
 $(document).ready(function(){ 
     $.notify.defaults({ className: "success" ,globalPosition:"top center" });
     var timer= $('#progressValues').val();
-    alert(timer);
     var strVals=timer.split(',');
     var intVals=new Array();
     for(var i = 0; i < strVals.length; i++){
         intVals[i] =parseInt(strVals[i]);
-        alert(intVals[i]);
          //intVals[i] *=60;
     };
     if(strVals.length>=1){
@@ -17,11 +15,14 @@ $(document).ready(function(){
         });
     };
     for(var i=2; i<strVals.length;i++){
-        var progID="#progressBar"+i;
-        alert(intVals[i]);
+        var progID="#progressBar"+i;        
         var timeLimits=intVals[i];
-        setTimeout(function(){$(progID).progressBar({timeLimit: timeLimits,limit:intVals})},intVals[i-1]*1000);
+        var item=i-1;
+        setTimeout(function(){$.notify("AGENDA ITEM "+ item+ " DONE");$(progID).progressBar({timeLimit: timeLimits,limit:intVals})},intVals[i-1]*1000);
     };
+    //end
+    var lastItem=strVals.length-1;
+    setTimeout(function(){$.notify("AGENDA ITEM "+ lastItem+ " DONE");},intVals[0]*1000);
     $('#countdownTimer').countdown({until: intVals[0],compact: true,format: 'MS'});
 });
 
