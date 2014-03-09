@@ -25,11 +25,11 @@ block content
 							h4.text-left.text-normal.text-gray MEETING AGENDA
 						input(type="hidden" id="progressValues" value='#{meeting.timerInfo}')
 					each agenda, i in meeting.agenda
-						.row
+						.row(id='agendaItem#{i+1}')
 							.col-md-1.margin-top-1p.padding-bottom-2p.margin-0.padding-0
 								div.height-100p.width-100p
-									.progress.progress-striped.progress-vertical-circle.progress-striped.active.progress-success.margin-top-n1x.margin-bottom-0p
-										.bar(style="width:40px")
+									.progress.progress-striped.progress-vertical-circle.progress-striped.active.progress-success.margin-top-n1x.margin-bottom-0p(id='progressCircle#{i+1}')
+										.bar
 							.col-md-10.margin-0.padding-0
 									h3.text-black.text-left.text-capital.margin-0.text-normal #{agenda.topic}
 						.row
@@ -37,7 +37,7 @@ block content
 								div.height-100p.width-100p
 									.progress.progress-striped.progress-vertical-line.progress-striped.active.progress-success.margin-top-n1x.margin-bottom-0p
 										.bar(id='progressBar#{i+1}')
-							.col-md-11.margin-0.padding-0
+							.col-md-11.margin-0.padding-0(id='agendaNote#{i+1}').bg-gray-out
 								div.width-95p.margin-top-1p.overflow-scroll-y-auto.max-height-150x#notesList
 									each note, j in agenda.notes
 										h4.text-black.text-left #{note.notes}
@@ -69,8 +69,8 @@ block content
 					.row
 						.col-md-1.margin-top-1p.padding-bottom-2p.margin-0.padding-0
 							div.height-100p.width-100p
-								.progress.progress-striped.progress-vertical-circle.progress-striped.active.progress-success.margin-top-n1x.margin-bottom-0p
-									.bar(style="width:40px")
+								.progress.progress-striped.progress-vertical-circle.progress-striped.active.progress-success.margin-top-n1x.margin-bottom-0p#endCirc
+									.bar
 						.col-md-10.margin-0.padding-0
 								h3.text-black.text-left.text-capital.margin-0.text-normal END
 		.col-md-3

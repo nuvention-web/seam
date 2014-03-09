@@ -276,7 +276,7 @@ textarea:focus, input:focus{
 	background-color: rgb(255,255,0);
 }
 .bg-4{
-	background-color: rgb(204,51,51);
+	background-color: rgb(51,54,63);
 }
 .bg-red{
 	background-color: rgb(204,51,51);
@@ -320,6 +320,17 @@ textarea:focus, input:focus{
 	background-color: rgb(250,250,250);
 	border: solid 2px #000;
 	border-right-color: #000;
+}
+.bg-gray-out{
+    background-color: white;
+    filter:alpha(opacity=10);
+    /* IE */
+    opacity: 0.1;
+    /* Safari, Opera */
+    -moz-opacity:0.10;
+    /* FireFox */
+    background-repeat:no-repeat;
+    background-position:center;
 }
 /* ========================================================
    1B.POSITION-DESKTOP
@@ -777,7 +788,7 @@ border-radius:50%;
 margin:0 auto;
 border-style:solid;
 border-color:  rgb(225,225,225);
-background-color: rgb(255,255,255);
+
 }
 .progress-vertical-circle-bigger {
 position: relative;

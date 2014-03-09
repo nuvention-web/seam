@@ -8,21 +8,34 @@ $(document).ready(function(){
         intVals[i] =parseInt(strVals[i]);
          //intVals[i] *=60;
     };
+   
+
+    //setTimeout(function(){$(asdf).addClass("bg-red")},1000);
     if(strVals.length>=1){
-    $("#progressBar1").progressBar({
+        $('#progressCircle1').addClass("bg-black border-black");
+        $("#agendaNote1").removeClass("bg-gray-out");  
+        $("#progressBar1").progressBar({
         timeLimit: intVals[1], 
         limit:intVals
         });
     };
     for(var i=2; i<strVals.length;i++){
-        var progID="#progressBar"+i;        
+        var progID="#progressBar"+i;
+        var progCir="#progressCircle"+i; 
+        var agendaID="#agendaNote"+i;
         var timeLimits=intVals[i];
         var item=i-1;
-        setTimeout(function(){$.notify("AGENDA ITEM "+ item+ " DONE");$(progID).progressBar({timeLimit: timeLimits,limit:intVals})},intVals[i-1]*1000);
+        setTimeout(function(){
+            $.notify("AGENDA ITEM "+ item+ " DONE"); 
+            $(agendaID).removeClass("bg-gray-out");  
+            $(progCir).addClass("bg-black"); 
+            $(progID).progressBar({timeLimit: timeLimits,limit:intVals})
+        },intVals[i-1]*1000);
     };
     //end
     var lastItem=strVals.length-1;
-    setTimeout(function(){$.notify("AGENDA ITEM "+ lastItem+ " DONE");},intVals[0]*1000);
+    var progCircle="#progressCircle"+ strVals.length-1;
+    setTimeout(function(){$("#endCirc").addClass("bg-black"); $.notify("AGENDA ITEM "+ lastItem+ " DONE");},intVals[0]*1000);
     $('#countdownTimer').countdown({until: intVals[0],compact: true,format: 'MS'});
 });
 
@@ -83,7 +96,7 @@ $(document).ready(function(){
         style3:'bg-3',
         style4:'bg-4',
         warningStyle: 'progress-bar-danger',  //bootstrap progress bar style in the warning phase
-        completeStyle: 'progress-bar-success',//bootstrap progress bar style at completion of timer
+        completeStyle: 'bg-4',//bootstrap progress bar style at completion of timer
         limit:[30,10,5]
     };
 }(jQuery));
