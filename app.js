@@ -77,7 +77,6 @@ app.post('/addEmail', landingPage.addEmail);
 app.get('/dashboard', user.isLoggedIn, dashboard.dashboard);
 // app.post('/dashboard', user.isLoggedIn, dashboard.setWelcome);
 // app.get('/dashboard/meetings', user.isLoggedIn, dashboard.meetings);
-app.get('/dashboard/tasks', user.isLoggedIn, dashboard.tasks);
 
 //Dashboard-Meetings
 app.get('/dashboard/meetings/makeMeeting', user.isLoggedIn, meetings.makeMeeting);
@@ -95,6 +94,10 @@ app.get('/dashboard/meetings/start', user.isLoggedIn, meetings.getMeeting);
 app.post('/dashboard/meetings/start/addNote', user.isLoggedIn, meetings.addNote);
 app.post('/dashboard/meetings/start/addTask', user.isLoggedIn, meetings.addTask);
 app.get('/dashboard/meetings/end', user.isLoggedIn, meetings.endMeeting);
+
+
+//Tasks
+app.get('/dashboard/tasks', user.isLoggedIn, task.getTasks);
 
 // team member stuff
 app.get('/dashboard/team', user.isLoggedIn, team.team);
