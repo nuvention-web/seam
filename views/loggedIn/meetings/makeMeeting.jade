@@ -1,4 +1,4 @@
-extends ../dashboard/dashboard
+extends ../dashboard/baseLayout
 
 block content
 	form(role='form', method='POST', action='/dashboard/meetings/makeMeeting/add', id='addMeeting')
@@ -23,8 +23,10 @@ block content
 									div.height-100p.width-100p
 										.progress.progress-striped.progress-vertical-circle-bigger.progress-striped.active.progress-success.margin-top-n1x.margin-bottom-0p
 											.bar(style="width:40px")
-								.col-md-10.margin-0.padding-0
-										input.text-h3.height-30x.form-control.border-square.border-none.text-left.bg-transparent(id='makeMeeting1', type='text', name='agendaTopic', placeholder= 'ADD AGENDA ITEM', autocomplete='off')
+								.col-md-7.margin-0.padding-0
+									input.text-h3.height-30x.form-control.border-square.border-none.text-left.bg-transparent(id='makeMeeting1', type='text', name='agendaTopic', placeholder= 'ADD AGENDA ITEM', autocomplete='off')
+								.col-md-3
+									input.text-h3.height-30x.form-control.border-square.border-none.text-right.bg-transparent(id='makeMeeting1', type='text', name='duration', placeholder= 'TIME', autocomplete='off')
 							.row
 								.col-md-1.margin-top-1p.padding-bottom-2p.margin-0.padding-0
 									div.height-100p.width-100p
@@ -33,6 +35,7 @@ block content
 								.col-md-11.margin-0.padding-0
 									div.width-95p.margin-top-1p.overflow-scroll-y-auto.max-height-120x
 										input.text-h4.height-30x.form-control.border-square.border-none.text-left.bg-transparent(id='makeMeeting1', type='text', name='notes', placeholder= 'INSERT NOTES HERE', autocomplete='off')
+								
 						.row
 							.col-md-1.margin-top-1p.padding-bottom-2p.margin-0.padding-0
 									div.height-100p.width-100p

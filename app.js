@@ -3,7 +3,6 @@
  * Module dependencies.
  */
 var landingPage = require('./routes/landingPage');
-var projects = require('./routes/projects');
 var dashboard = require('./routes/dashboard');
 var meetings = require('./routes/meetings');
 var user = require('./routes/user');
@@ -74,15 +73,10 @@ app.get('/survey', landingPage.survey);
 app.post('/addSurvey', landingPage.addSurvey);
 app.post('/addEmail', landingPage.addEmail);
 
-//Welcome-Projects
-app.get('/welcome', user.isLoggedIn, projects.welcome);
-app.post('/addProject', user.isLoggedIn, projects.addProject);
-
 //Dashboard
 app.get('/dashboard', user.isLoggedIn, dashboard.dashboard);
 // app.post('/dashboard', user.isLoggedIn, dashboard.setWelcome);
 // app.get('/dashboard/meetings', user.isLoggedIn, dashboard.meetings);
-app.get('/dashboard/tasks', user.isLoggedIn, dashboard.tasks);
 
 //Dashboard-Meetings
 app.get('/dashboard/meetings/makeMeeting', user.isLoggedIn, meetings.makeMeeting);
@@ -100,6 +94,10 @@ app.get('/dashboard/meetings/start', user.isLoggedIn, meetings.getMeeting);
 app.post('/dashboard/meetings/start/addNote', user.isLoggedIn, meetings.addNote);
 app.post('/dashboard/meetings/start/addTask', user.isLoggedIn, meetings.addTask);
 app.get('/dashboard/meetings/end', user.isLoggedIn, meetings.endMeeting);
+
+
+//Tasks
+app.get('/dashboard/tasks', user.isLoggedIn, task.getTasks);
 
 // team member stuff
 app.get('/dashboard/team', user.isLoggedIn, team.team);

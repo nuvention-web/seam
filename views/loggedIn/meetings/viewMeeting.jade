@@ -1,4 +1,4 @@
-extends ../dashboard/dashboard
+extends ../dashboard/baseLayout
 
 block content
 	.row
@@ -9,12 +9,10 @@ block content
 				.col-md-3.col-sm-3.col-xs-3.margin-top-1p
 					h2.text-right.text-black.padding-right-1p #{meeting.meetingDate}
 			.row.padding-left-1p
-				.col-md-10.margin-top-1p.padding-left-1p
+				.col-md-12.margin-top-1p.padding-left-1p
 					span.text-h3.text-left.text-orange
 						b OBJECTIVE: 
 						|  #{meeting.objective}
-				.col-md-2.col-sm-2.margin-top-1p.text-right
-					button.border-square.bg-white.border-orange.border-orange.text-orange(type='button', onClick="parent.location='/dashboard/meetings/pastMeeting'") GO BACK
 			.row.padding-left-1p
 				.col-md-10.margin-top-1p.padding-left-1p.padding-bottom-2p
 					span.text-h3.text-left.text-orange
@@ -47,6 +45,9 @@ block content
 								.col-md-8
 									h4.text-black.text-left.margin-top-1p #{attendee.attendeeName}
 									h4.text-left.margin-top-5p.text-orange.text-normal PRESENT
+			.row.margin-left-1p
+					.col-md-12.col-sm-12.col-xs-12.margin-top-1p.text-left.margin-top-2p.text-center.margin-top-10p
+						button.border-square.bg-white.border-orange.border-orange.text-orange.text-h3.padding-btn(type='button', onClick="parent.location='/dashboard/meetings/pastMeeting'") GO BACK
 	script(src='../../../javascripts/meetings-assignTasks.js')
 	script(src='../../../javascripts/meetings-update.js')
 	script(src='../../../javascripts/meetings-progressBar.js')

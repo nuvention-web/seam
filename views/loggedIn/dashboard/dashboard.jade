@@ -1,63 +1,100 @@
-doctype
-html(lang='en')
-	head
-		meta(charset='utf-8')
-		meta(http-equiv='X-UA-Compatible', content='IE=edge')
-		meta(name='viewport', content='width=device-width, initial-scale=1.0')
-		meta(name='description', content='')
-		meta(name='author', content='')
-		link(href='http://fonts.googleapis.com/css?family=Lato:300,400,700', rel='stylesheet', type='text/css')
-		link(rel='stylesheet', href='/stylesheets/bootstrap.min.css')
-		link(rel='stylesheet', href='/stylesheets/base.css')
-		link(rel='stylesheet', href='/stylesheets/fonts.css')
-		link(rel="stylesheet" href="/stylesheets/font-awesome.min.css")
-		script(src='https://code.jquery.com/jquery.js')
-		script(src='../../../javascripts/bootstrap.min.js')
-		title= title
-		script(src='https://code.jquery.com/jquery.js')
-		script(src='../../../javascripts/bootstrap.min.js')
-		script.
-			(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-			(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-			m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-			})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-			ga('create', 'UA-48300427-1', 'seam.herokuapp.com');
-			ga('send', 'pageview');
-	body.bg-gray
-		#wrapper
-			nav.navbar.navbar-inverse.navbar-fixed-top.bg-blue-gray(role='navigation')
-				.navbar-header
-					button.navbar-toggle(type='button', data-toggle='collapse', data-target='.navbar-ex1-collapse')
-						span.sr-only Toggle navigation
-						span.icon-bar
-						span.icon-bar
-					a.navbar-brand(href='/home') SEAM Meetings
-				.collapse.navbar-collapse.navbar-ex1-collapse
-					ul.nav.navbar-nav.side-nav.bg-blue-gray.text-left.padding-top-5p
-						li.text-left.text-h5
-							a.text-left(href='/dashboard')
-								i.fa.fa-home.margin-left-15x.text-h5
-								i.text-no-transform.margin-left-15x.text-h5 HOME
-						li
-							a.text-left(href='/dashboard/meetings/makeMeeting')
-								i.fa.fa-pencil.margin-left-15x.text-h5
-								i.text-no-transform.margin-left-15x.text-h5 CREATE
-						li
-							a.text-left(href='/dashboard/meetings/pastMeeting')
-								i.fa.fa-clock-o.margin-left-15x.text-h5
-								i.text-no-transform.margin-left-15x.text-h5 MINUTES
-						li
-							a.text-left(href='/dashboard')
-								i.fa.fa-check-square.margin-left-15x.text-h5
-								i.text-no-transform.margin-left-15x.text-h5 TASKS
-					ul.nav.navbar-nav.navbar-right.navbar-user
-						li.text-left.text-h5.margin-right-15x
-							h5.text-left.text-orange.text-upper(style="margin-top:17px" href='#') #{name}
-						li.text-left.text-h5
-							a.text-left.text-gray.text-h5(href='/help') HELP
-						li.text-left.text-h5
-							a.text-left.text-gray.text-h5(href='/settings') SETTINGS
-						li.text-left.text-h5.margin-right-15x
-							a.text-left.text-gray.text-h5(href='/logout') LOGOUT
-			#page-wrapper.bg-gray.margin-top-1p
-				block content
+extends baseLayout
+
+block content
+	.row
+		.col-md-12.bg-white.border-gray.border-shadow-1x(style='height:180px;')
+			.container-95p.margin-center
+				.row
+					.col-md-12.margin-top-1p
+						h4.text-left.text-normal.text-gray YOUR WEEK AHEAD
+				.row.border-gray
+					.col-md-1.border-gray
+						h4.text-center.text-normal.text-black SUNDAY
+					.col-md-2.border-gray
+						h4.text-center.text-normal.text-black MONDAY
+					.col-md-2.border-gray
+						h4.text-center.text-normal.text-black TUESDAY
+					.col-md-2.border-gray
+						h4.text-center.text-normal.text-black WEDNESDAY
+					.col-md-2.border-gray
+						h4.text-center.text-normal.text-black THURSDAY
+					.col-md-2.border-gray
+						h4.text-center.text-normal.text-black FRIDAY
+					.col-md-1.border-gray
+						h4.text-center.text-normal.text-black SATURDAY					
+				.row.border-gray
+					.col-md-1.border-gray
+
+					.col-md-2.border-gray.text-center
+						button.border-square.bg-white.border-orange.border-orange.text-orange.margin-top-3p(type='button', href="javascript:{}" onclick="document.getElementById('future#{i}').submit();") EPIC ALL HANDS
+					.col-md-2.border-gray
+						
+					.col-md-2.border-gray.text-center
+						button.border-square.bg-white.border-orange.border-orange.text-orange.margin-top-3p(type='button', href="javascript:{}" onclick="document.getElementById('future#{i}').submit();") TEAM UPDATES
+					.col-md-2.border-gray
+						
+					.col-md-2.border-gray.text-center
+						button.border-square.bg-white.border-orange.border-orange.text-orange.margin-top-3p(type='button', href="javascript:{}" onclick="document.getElementById('future#{i}').submit();") EPIC UPDATES
+					.col-md-1.border-gray
+						
+					
+	.row.margin-top-2p
+		.col-md-4
+			.row.bg-white.border-gray.border-shadow-1x.margin-right-1p(style='height:185px;')
+				.col-md-12.margin-top-1p.margin-left-1p
+					h4.text-left.text-normal.text-gray MOST UPCOMING MEETING
+				if(upcomingMeeting != undefined)
+					.col-md-12.margin-left-1p
+						form(role='form', method='POST', action='/dashboard/meetings/start', id='upcomingMeeting')
+							h2.text-left.text-normal #{upcomingMeeting.meetingTitle}
+							h4.text-left.text-normal.text-gray #{upcomingMeeting.meetingDate}
+							input(type='hidden', name='meetingId', value='#{upcomingMeeting._id}')
+							button.padding-btn-small.text-right.margin-right-3p.border-square.bg-white.border-orange.border-orange.text-orange(type='button', href="javascript:{}") EDIT AGENDA
+							button.padding-btn-small.text-right.margin-right-3p.border-square.bg-white.border-orange.border-orange.text-orange(type='button', href="javascript:{}" onclick="document.getElementById('upcomingMeeting').submit();") START
+			.row.bg-white.border-gray.border-shadow-1x.margin-right-1p.margin-bottom-3p(style='height:185px;')
+				.col-md-12.margin-top-1p.margin-left-1p
+					h4.text-left.text-normal.text-gray PREVIOUS MEETING
+					if(previousMeeting != undefined)
+						h2.text-left.text-normal #{previousMeeting.meetingTitle}
+						h4.text-left.text-normal.text-gray #{previousMeeting.meetingDate}
+						button.padding-btn-small.text-right.margin-right-3p.border-square.bg-white.border-orange.border-orange.text-orange VIEW MINUTES
+						button.padding-btn-small.text-right.border-square.bg-white.border-orange.border-orange.text-orange VIEW TASKS
+		.col-md-8
+			.row.bg-white.border-gray.border-shadow-1x.margin-left-1p.overflow-scroll-y.padding-bottom-2p(style='height:370px;')
+				.col-md-12.margin-top-1p
+					h4.text-left.text-normal.text-gray.margin-left-1p ALL UPCOMING MEETINGS
+					.container-95p.margin-center.margin-top-3p
+						each meeting, i in meetingList
+							form(role='form', method='POST', action='/dashboard/meetings/start', id='future'+i)
+								.row.border-gray
+									input(type='hidden', name='meetingId', value='#{meeting._id}')
+									.col-md-3.border-gray-right
+										h4.text-black.text-left.text-bold #{meeting.meetingDate}
+										h4.text-black.text-left #{meeting.meetingTime} Minutes
+									.col-md-5
+										h4.text-black.text-left #{meeting.meetingTitle}
+										h4.text-orange.text-left #{meeting.objective}
+									.col-md-2.text-right.margin-top-2p
+										button.padding-btn.border-square.bg-white.border-orange.border-orange.text-orange(type='button', href="javascript:{}")  EDIT
+									.col-md-2.text-left.margin-top-2p
+										button.padding-btn.border-square.bg-white.border-orange.border-orange.text-orange(type='button', href="javascript:{}" onclick="document.getElementById('future#{i}').submit();") START
+	.row.margin-top-2p
+		.col-md-12.bg-white.border-gray.border-shadow-1x(style='height:150px;')
+			.row
+				.col-md-4
+					h2.text-biggest.text-orange 76
+				.col-md-4
+					h2.text-biggest.text-blue-gray 150
+				.col-md-4
+					h2.text-biggest.text-lt-blue 95%
+			.row
+				.col-md-4
+					h3.text-black AGENDA ITEMS
+					h3.text-black.text-height-4x COMPLETED
+				.col-md-4
+					h3.text-black MINUTES
+					h3.text-black.text-height-4x SAVED
+				.col-md-4
+					h3.text-black MEETINGS FINISHED
+					h3.text-black.text-height-4x ON TIME
+>>>>>>> 8a1484b3d503d8645f333c74a04fbb092757f4ed
