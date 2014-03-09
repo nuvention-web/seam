@@ -16,32 +16,58 @@ $(document).ready(function(){
             waitVals[i]=intVals[i]+waitVals[i-1];
          }
     };
-   waitVals[0]=intVals[0];
+   waitVals[strVals.length]=intVals[0];
    
-
-    //setTimeout(function(){$(asdf).addClass("bg-red")},1000);
-    for(var i=1; i<strVals.length;i++){
-       setAgendaDelay(i);
+   //SET AGENDA ITEM TIMEOUTS
+    for(var i=1; i<=strVals.length;i++){
+       setAgendaDelay(i, strVals.length);
     };
-    //end
-    var lastItem=strVals.length-1;
-    var progCircle="#progressCircle"+ strVals.length-1;
-    setTimeout(function(){$("#endCirc").addClass("bg-black"); $.notify("AGENDA ITEM "+ lastItem+ " DONE");},intVals[0]*1000);
+    //ENDING AGENDA ITEM
     $('#countdownTimer').countdown({until: intVals[0],compact: true,format: 'MS'});
 });
-function setAgendaDelay(i){
+function setAgendaDelay(i, total){
+    var prev=i-1;
     var progID="#progressBar"+i;
     var progCir="#progressCircle"+i; 
     var agendaID="#agendaNote"+i;
+    var notesID="#notes"+prev;
+    var notesButtonID="#noteSubmit"+prev;
+    var taskButtonID="#taskSubmit"+prev;
+    var taskPersonID="#taskPersonInput"+prev;
+    var taskPersonAddID="#addTask"+prev;
     var timeLimits=intVals[i];
-    var item=i-1;
-     setTimeout(function(){
-            if(i>1){
-                $.notify("AGENDA ITEM "+ item+ " DONE"); 
+    setTimeout(function(){
+            if(prev>=1){
+                $.notify("AGENDA ITEM "+ prev+ " DONE"); 
+
+                $(notesID).removeClass("border-orange");
+                $(notesID).addClass("text-black");                
+                $(notesID).addClass("outline-black");
+
+                $(notesButtonID).removeClass("border-orange");
+                $(notesButtonID).addClass("border-black");
+                $(notesButtonID).addClass("text-black");
+
+                $(taskButtonID).removeClass("border-orange");
+                $(taskButtonID).addClass("border-black");
+                $(taskButtonID).addClass("text-black");
+
+                $(taskPersonID).removeClass("border-orange");
+                $(taskPersonID).addClass("text-black");
+                $(taskPersonID).addClass("outline-black");
+                
+                $(taskPersonAddID).removeClass("border-orange");
+                $(taskPersonAddID).addClass("border-black");
+                $(taskPersonAddID).addClass("text-black");
+
             };
+            if(i==total){
+                $('#endCirc').addClass("bg-black"); 
+            }else{
             $(agendaID).removeClass("bg-gray-out");  
             $(progCir).addClass("bg-black"); 
             $(progID).progressBar({timeLimit: timeLimits,limit:intVals})
+        }
     },waitVals[i]*1000);
 }
 
