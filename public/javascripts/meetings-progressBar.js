@@ -1,36 +1,27 @@
 //FUNCTIONS FOR PROGRESS BAR DURING MEETING
+var intVals=new Array();
+var waitVals=new Array();
+
 $(document).ready(function(){ 
     $.notify.defaults({ className: "success" ,globalPosition:"top center" });
     var timer= $('#progressValues').val();
     var strVals=timer.split(',');
-    var intVals=new Array();
+    
     for(var i = 0; i < strVals.length; i++){
         intVals[i] =parseInt(strVals[i]);
+        waitVals[i]=0;
          //intVals[i] *=60;
+         if(i>1){
+            intVals[i] =parseInt(strVals[i]);
+            waitVals[i]=intVals[i]+waitVals[i-1];
+         }
     };
+   waitVals[0]=intVals[0];
    
 
     //setTimeout(function(){$(asdf).addClass("bg-red")},1000);
-    if(strVals.length>=1){
-        $('#progressCircle1').addClass("bg-black border-black");
-        $("#agendaNote1").removeClass("bg-gray-out");  
-        $("#progressBar1").progressBar({
-        timeLimit: intVals[1], 
-        limit:intVals
-        });
-    };
-    for(var i=2; i<strVals.length;i++){
-        var progID="#progressBar"+i;
-        var progCir="#progressCircle"+i; 
-        var agendaID="#agendaNote"+i;
-        var timeLimits=intVals[i];
-        var item=i-1;
-        setTimeout(function(){
-            $.notify("AGENDA ITEM "+ item+ " DONE"); 
-            $(agendaID).removeClass("bg-gray-out");  
-            $(progCir).addClass("bg-black"); 
-            $(progID).progressBar({timeLimit: timeLimits,limit:intVals})
-        },intVals[i-1]*1000);
+    for(var i=1; i<strVals.length;i++){
+       setAgendaDelay(i);
     };
     //end
     var lastItem=strVals.length-1;
@@ -38,6 +29,22 @@ $(document).ready(function(){
     setTimeout(function(){$("#endCirc").addClass("bg-black"); $.notify("AGENDA ITEM "+ lastItem+ " DONE");},intVals[0]*1000);
     $('#countdownTimer').countdown({until: intVals[0],compact: true,format: 'MS'});
 });
+function setAgendaDelay(i){
+    var progID="#progressBar"+i;
+    var progCir="#progressCircle"+i; 
+    var agendaID="#agendaNote"+i;
+    var timeLimits=intVals[i];
+    var item=i-1;
+     setTimeout(function(){
+            if(i>1){
+                $.notify("AGENDA ITEM "+ item+ " DONE"); 
+            };
+            $(agendaID).removeClass("bg-gray-out");  
+            $(progCir).addClass("bg-black"); 
+            $(progID).progressBar({timeLimit: timeLimits,limit:intVals})
+    },waitVals[i]*1000);
+}
+
 
 (function ($) {
     $.fn.progressBar = function (options) {
@@ -100,4 +107,3 @@ $(document).ready(function(){
         limit:[30,10,5]
     };
 }(jQuery));
-
