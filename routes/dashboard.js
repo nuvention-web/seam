@@ -37,10 +37,3 @@ exports.dashboard = function(req, res){
 		})
 	})
 };
-
-exports.tasks = function(req, res){
-	res.render('loggedIn/dashboard/sidebarTasks', { 
-		title: 'SEAM',
-		projectName: req.session.projectName, 
-		user : req.user});
-};

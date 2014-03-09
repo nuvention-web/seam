@@ -56,7 +56,6 @@ exports.viewMeeting = function(req, res){
 };
 
 exports.postMeeting = function(req, res){
-
 	var meetingId = req.body.meetingId;
 	if(meetingId == undefined){
 		meetingId = req.session.meetingId;
@@ -83,7 +82,6 @@ exports.postMeeting = function(req, res){
 };
 
 exports.getMeeting = function(req, res){
-
 	var meetingId = req.body.meetingId;
 	if(meetingId == undefined){
 		meetingId = req.session.meetingId;
