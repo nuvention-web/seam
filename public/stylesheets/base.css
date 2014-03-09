@@ -159,7 +159,19 @@ textarea:focus, input:focus{
 .text-orange{
 	color:rgb(251,175,93);
 }
+.text-orange-blue-hover{
+	color:rgb(251,175,93);
+}
+.text-orange-blue-hover:hover{
+	color: rgb(147,210,253);
+}
 .text-light-blue{
+	color: rgb(147,210,253);
+}
+.text-light-blue-nohover{
+	color: rgb(147,210,253);
+}
+.text-light-blue-nohover:hover{
 	color: rgb(147,210,253);
 }
 .text-dark-blue{

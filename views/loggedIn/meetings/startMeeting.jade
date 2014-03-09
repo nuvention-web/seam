@@ -83,11 +83,12 @@ block content
 								.col-md-12.attendeeMember
 									img.width-50x.height-50x.border-50p.float-left(src="../../../images/member.png", value='#{attendee.attendeeName}')
 									h4.text-black.text-left.margin-top-1p(value='#{attendee.attendeeName}') #{attendee.attendeeName}
-									h5.text-left.margin-top-5p.text-orange.text-normal PRESENT
+									a.text-h5.text-left.margin-top-5p.text-orange-blue-hover.text-normal(id="attendance#{i}" href="#" onclick="changeAttendance('attendance#{i}');return false;") ABSENT
 			.row.margin-left-1p
 					.col-md-12.col-sm-12.col-xs-12.margin-top-1p.text-left.margin-top-2p.text-center.margin-top-10p
 						button.border-square.bg-white.border-orange.border-orange.text-orange.text-h3.padding-btn(type='button', onClick="parent.location='/dashboard/meetings/end'") FINISH MEETING
 	script(src='../../../javascripts/meetings-assignTasks.js')
+	script(src='../../../javascripts/meetings-attendance.js')
 	script(src='../../../javascripts/meetings-update.js')
 	script(src='../../../javascripts/notify.min.js')
 	script(src='../../../javascripts/meetings-progressBar.js')
