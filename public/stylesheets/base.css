@@ -249,6 +249,7 @@ textarea:focus, input:focus{
 }
 .text-smaller{
 	font-size: 10px;
+	line-height: 8px;
 }
 .text-smallest{
 	font-size: 8px;
@@ -359,6 +360,15 @@ textarea:focus, input:focus{
 .disp-inline{
 	display: inline;
 }
+#horizontal-list{
+    width: 30px;
+    white-space: nowrap;
+    overflow-x: scroll;
+    line-height: 2em;
+}
+#horizontal-list li {
+    display: inline;
+}
 .top-0x{
 	top:0px;
 }
@@ -373,6 +383,9 @@ textarea:focus, input:focus{
 }
 .overflow-scroll-y{
 	overflow-y: scroll;
+}
+.overflow-scroll-x-auto{
+	overflow-x: scroll;
 }
 .overflow-scroll-y-auto{
 	overflow-y: auto;
@@ -426,6 +439,9 @@ textarea:focus, input:focus{
 .margin-top-5p{
 	margin-top:5%;
 }
+.margin-top-7p{
+	margin-top:7%;
+}
 .margin-top-10p{
 	margin-top:10%;
 }
@@ -473,6 +489,10 @@ textarea:focus, input:focus{
 }
 .margin-bottom-3p{
 	margin-bottom: 3%;
+}
+.padding-left-right-1p{
+	padding-left:1%;
+	padding-right:1%;
 }
 .padding-5p{
 	padding:5%;
@@ -669,6 +689,9 @@ textarea:focus, input:focus{
 }
 .border-black{
 	border-color:2px solid rgb(0,0,0) !important;
+	outline: #232323 solid 1px;
+}
+.border-black-outline{
 	outline: #232323 solid 1px;
 }
 .border-red{

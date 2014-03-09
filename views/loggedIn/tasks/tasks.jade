@@ -1,60 +1,65 @@
 extends ../dashboard/baseLayout
 
-block interfaces
-	.bg-white(style="margin-left:35%; top:0px; position:absolute; width:65%; float:right")
-		.container-85p.margin-center
-			form.form-inline.form-center(role='form', method='POST', action='/addmeeting' id='addmeeting')
-				.row.padding-top-5p.margin-bottom-3p
-					.col-md-10.col-md-offset-1.text-center.red-input
-						h2.text-red IN PROGRESS
-				.row
-					.col-md-9
-						h4.text-left.text-black.text-capital email megan everett to book ford design studio for project pitch
-					.col-md-3.text-center.margin-top-1p
-						a.text-h4.text-black.margin-left-5p(href="#") EDIT
-						a.text-h4.text-black.margin-left-5p(href="#") REVIEW
-				.row
-					.col-md-9
-						h4.text-left.text-black.text-capital contact kellogg alum to moderate panel
-					.col-md-3.text-center.margin-top-1p
-						a.text-h4.text-black.margin-left-5p(href="#") EDIT
-						a.text-h4.text-black.margin-left-5p(href="#") REVIEW
-				.row
-					.col-md-9
-						h4.text-left.text-black.text-capital meet with president of isbe to coordinate joint social event
-					.col-md-3.text-center.margin-top-1p
-						a.text-h4.text-black.margin-left-5p(href="#") EDIT
-						a.text-h4.text-black.margin-left-5p(href="#") REVIEW
-				.row
-					.col-md-9
-						h4.text-left.text-black.text-capital launch newe database website
-					.col-md-3.text-center.margin-top-1p
-						a.text-h4.text-black.margin-left-5p(href="#") EDIT
-						a.text-h4.text-black.margin-left-5p(href="#") REVIEW
-				.row.padding-top-5p.margin-bottom-3p
-					.col-md-10.col-md-offset-1.text-center.red-input
-						h2.text-red COMPLETED TASKS
-				.row
-					.col-md-9
-						h4.text-left.text-black.text-capital email speakers about attending workshop
-					.col-md-3.text-center.margin-top-1p
-						a.text-h4.text-black.margin-left-5p(href="#") EDIT
-						a.text-h4.text-black.margin-left-5p(href="#") REVIEW
-				.row
-					.col-md-9
-						h4.text-left.text-black.text-capital order pizza for social event
-					.col-md-3.text-center.margin-top-1p
-						a.text-h4.text-black.margin-left-5p(href="#") EDIT
-						a.text-h4.text-black.margin-left-5p(href="#") REVIEW
-				.row
-					.col-md-9
-						h4.text-left.text-black.text-capital prepare materials for kellogg
-					.col-md-3.text-center.margin-top-1p
-						a.text-h4.text-black.margin-left-5p(href="#") EDIT
-						a.text-h4.text-black.margin-left-5p(href="#") REVIEW
-				.row
-					.col-md-9
-						h4.text-left.text-black.text-capital email Mike about speaking at workshop
-					.col-md-3.text-center.margin-top-1p
-						a.text-h4.text-black.margin-left-5p(href="#") EDIT
-						a.text-h4.text-black.margin-left-5p(href="#") REVIEW
+block content
+	.row.margin-top-2p
+		.col-md-4
+			.row.bg-white.border-gray.border-shadow-1x.margin-right-1p.overflow-x-hidden.overflow-scroll-y-auto.padding-bottom-3p(style='min-height:500px; height:auto')
+				.col-md-12.margin-top-1p
+					.row
+							.col-md-12
+								h4.text-left.text-normal.text-gray TASKS TAGS
+					.container-85p.margin-center
+						.row
+							.col-md-12.bg-red.margin-top-5p
+								h5.text-left.text-white EPIC ALL HANDS MEETING
+						.row
+							.col-md-12.bg-red.margin-top-5p
+								h5.text-left.text-white EPIC ADVISORY BOARD MEETING
+						.row
+							.col-md-12.bg-red.margin-top-5p
+								h5.text-left.text-white SEAM MEETING
+						.row
+							.col-md-12.bg-red.margin-top-5p
+								h5.text-left.text-white SEAM UPDATE MEETING
+						.row
+							.col-md-12.bg-red.margin-top-5p
+								h5.text-left.text-white FARLEY CENTER MEETING
+						.row
+							.col-md-12.bg-red.margin-top-5p
+								h5.text-left.text-white DEAN OTTINO MEETING
+						.row
+							.col-md-12.bg-gray.margin-top-5p
+								h5.text-left.text-black DEAN OTTINO MEETING
+						.row
+							.col-md-12.bg-gray.margin-top-5p
+								h5.text-left.text-black DEAN OTTINO MEETING
+
+		.col-md-8
+			.row.bg-white.border-gray.border-shadow-1x.margin-left-1p.padding-bottom-2p.overflow-scroll-y-auto(style='min-height:500px; height:auto')
+				.col-md-12.margin-top-1p
+					.row
+							.col-md-4
+								h4.text-left.text-normal.text-gray.margin-left-1p ASSIGNED TASKS
+							.col-md-8.disp-inline.overflow-y-hidden
+								.ul.horizontal-list
+									.li
+										div.padding-left-right-1p.bg-red.float-right.margin-left-1p.disp-inline
+											h5.text-smaller.text-left.text-white.float-left EPIC ALL HANDS MEETING 1 
+											a.text-small.margin-left-10x.margin-top-3p.text-white.float-right(href="#") X
+									.li
+										div.padding-left-right-1p.bg-red.float-right.margin-left-1p.disp-inline
+											h5.text-smaller.text-left.text-white.float-left EPIC ALL HANDS MEETING 2 
+											a.text-small.margin-left-10x.margin-top-3p.text-white.float-right(href="#") X
+					.container-95p.margin-center.border-black.margin-top-2p
+						.row.margin-0.border-black-outline
+							.col-md-12
+								h5.text-left.text-black Email team to ensure attendance
+						.row.margin-0.border-black-outline
+							.col-md-12
+								h5.text-left.text-black Prepare for transition
+						.row.margin-0.border-black-outline
+							.col-md-12
+								h5.text-left.text-black Congratulate the team for nice quarter
+						.row.margin-0.border-black-outline
+							.col-md-12
+								h5.text-left.text-black EPIC mixer
