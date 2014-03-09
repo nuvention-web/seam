@@ -658,8 +658,18 @@ textarea:focus, input:focus{
      -moz-border-radius: 0 !important;
           border-radius: 0 !important;
 }
+.outline-black{
+	border-color:2px solid rgb(0,0,0) !important;
+}
+.outline-black:focus{
+	outline: #232323 solid 1px;
+}
+.outline-black:hover{
+	outline: #232323 solid 1px;
+}
 .border-black{
 	border-color:2px solid rgb(0,0,0) !important;
+	outline: #232323 solid 1px;
 }
 .border-red{
 	background-color:rgb(204,51,51) !important;
