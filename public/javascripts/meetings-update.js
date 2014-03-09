@@ -3,14 +3,15 @@ $(document).ready(function(){
 
 	$('.attendeeMember img').click(function() {
         var value = $(this).attr('value');
-        var input = $('#taskPerson');
+        var input = $('#taskPersonInput');
         input.val(input.val() + value + ', ');
+        alert('hi');
         return false;
     });
 
      $('.attendeeMember h4').click(function() {
         var value = $(this).attr('value');
-        var input = $('#taskPerson');
+        var input = $('#taskPersonInput');
         input.val(input.val() + value + ', ');
         return false;
     });

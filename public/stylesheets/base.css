@@ -157,7 +157,7 @@ textarea:focus, input:focus{
 	color:#FFF;
 }
 .text-orange{
-	color:rgb(251,175,93);
+	color:rgb(204,51,51);
 }
 .text-orange-blue-hover{
 	color:rgb(251,175,93);
@@ -684,7 +684,7 @@ textarea:focus, input:focus{
 	border-width: 1px;
 }
 .border-orange{
-	border:2px solid rgb(251,175,93) !important;
+	border:2px solid rgb(204,51,51) !important;
 }
 .border-gray{
 	border:1px solid rgb(244,244,244) !important;
