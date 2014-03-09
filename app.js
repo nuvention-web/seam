@@ -3,7 +3,6 @@
  * Module dependencies.
  */
 var landingPage = require('./routes/landingPage');
-var projects = require('./routes/projects');
 var dashboard = require('./routes/dashboard');
 var meetings = require('./routes/meetings');
 var user = require('./routes/user');
@@ -73,10 +72,6 @@ app.get('/home', landingPage.home);
 app.get('/survey', landingPage.survey);
 app.post('/addSurvey', landingPage.addSurvey);
 app.post('/addEmail', landingPage.addEmail);
-
-//Welcome-Projects
-app.get('/welcome', user.isLoggedIn, projects.welcome);
-app.post('/addProject', user.isLoggedIn, projects.addProject);
 
 //Dashboard
 app.get('/dashboard', user.isLoggedIn, dashboard.dashboard);
