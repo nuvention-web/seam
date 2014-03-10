@@ -342,43 +342,47 @@ exports.addMeeting = function(req, res){
 		timerInfo: timerInfo
 	});
 
-	if(typeof agenda == 'string'){
-		emailAgenda+='1:  '+ agenda+'<br/>';
-		newMeeting.agenda.push({
-			topic: agenda,
-			duration: duration,
-			notes: [{notes: notes}]
-		});
-	}
-	else{
-		for(var i=0; i<agenda.length; i++){
-			if(agenda[i] != ''){
-				var number= i+1;
-				emailAgenda+=number+':  '+ agenda[i]+'<br/>';
-				newMeeting.agenda.push({
-					topic: agenda[i],
-					duration: duration[i],
-					notes: [{notes: notes[i]}]
-				});
-			}
-		};
+	if(agenda != undefined){	
+		if(typeof agenda == 'string'){
+			emailAgenda+='1:  '+ agenda+'<br/>';
+			newMeeting.agenda.push({
+				topic: agenda,
+				duration: duration,
+				notes: [{notes: notes}]
+			});
+		}
+		else{
+			for(var i=0; i<agenda.length; i++){
+				if(agenda[i] != ''){
+					var number= i+1;
+					emailAgenda+=number+':  '+ agenda[i]+'<br/>';
+					newMeeting.agenda.push({
+						topic: agenda[i],
+						duration: duration[i],
+						notes: [{notes: notes[i]}]
+					});
+				}
+			};
+		}
 	}
 
-	if(typeof attendeeNames == 'string'){
-		newMeeting.attendees.push({
-			attendeeName: attendeeNames,
-			attendeeEmail: attendeeEmails
-		});
-	}
-	else{
-		for(var i=0; i<attendeeNames.length; i++){
-			if(attendeeNames[i] != ''){
-				newMeeting.attendees.push({
-					attendeeName: attendeeNames[i],
-					attendeeEmail: attendeeEmails[i]
-				});
-			}
-		};
+	if(attendeeNames != undefined){	
+		if(typeof attendeeNames == 'string'){
+			newMeeting.attendees.push({
+				attendeeName: attendeeNames,
+				attendeeEmail: attendeeEmails
+			});
+		}
+		else{
+			for(var i=0; i<attendeeNames.length; i++){
+				if(attendeeNames[i] != ''){
+					newMeeting.attendees.push({
+						attendeeName: attendeeNames[i],
+						attendeeEmail: attendeeEmails[i]
+					});
+				}
+			};
+		}
 	}
 
 	newMeeting.save(function(err, doc){
