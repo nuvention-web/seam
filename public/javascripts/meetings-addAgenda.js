@@ -1,5 +1,7 @@
 //FUNCTIONS FOR ADDING AGENDA ITEMS
-
+$(function(){
+	$("input[name='meetingDate']").datetimepicker();
+});
 
 function addAgendaItemKeypress(e){
 	if (!e) e = window.event; // needed for cross browser compatibility

@@ -320,16 +320,29 @@ exports.addMeeting = function(req, res){
 	var location = req.body.location;
 	var agenda = req.body.agendaTopic;
 	var duration = req.body.duration;
-	var meetingTime = req.body.meetingTime;
-	var meetingStartTime = req.body.meetingStartTime;
-	var meetingDate = req.body.meetingDate;  
+	var meetingDate = req.body.meetingDate;
+	var meetingMonthDate = meetingDate.split('/'); // for example: 03/25/2014 8:53 PM - splits to 03,25,2014 8:53 PM 
+	var meetingYearTime = meetingMonthDate[2].split(' '); // - splits to 2014,8:53,PM
+	var meetingHourMin = meetingYearTime[1].split(':'); // - splits to 8,53
+	// var meetingStartTime = req.body.meetingStartTime;
+	var meetingTime = req.body.meetingTime;  
 	var attendeeNames = req.body.attendeeName;
 	var attendeeEmails = req.body.attendeeEmail;
 	var notes = req.body.notes;
 	var emailAgenda='';
 	var timerInfo= meetingTime+','+duration;
 	console.log('log');
-	console.log(timerInfo);
+
+	//set up the date
+	if(meetingYearTime[2] == 'PM'){
+		meetingHourMin[0] = meetingHourMin[0] + 12;
+	}
+
+	console.log(meetingYearTime[0] + meetingMonthDate[0] + meetingMonthDate[1] + meetingHourMin[0] + meetingHourMin[1]);
+
+	meetingTime = new Date(meetingYearTime[0], meetingMonthDate[0] - 1, meetingMonthDate[1], meetingHourMin[0], meetingHourMin[1]);
+
+	console.log(meetingTime);
 
 	var newMeeting = new Meeting({
 		UserId: userId,
@@ -337,7 +350,7 @@ exports.addMeeting = function(req, res){
 		objective: objective,
 		location: location,
 		meetingDate: meetingDate,
-		meetingStartTime:meetingStartTime,
+		// meetingStartTime:meetingStartTime,
 		meetingTime: meetingTime,
 		timerInfo: timerInfo
 	});
