@@ -2,6 +2,7 @@
 
 // load all the things we need
 var LocalStrategy = require('passport-local').Strategy;
+var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 // load up the user model
 var User = require('../models/user-model');
 
@@ -114,4 +115,16 @@ module.exports = function(passport) {
             return done(null, user);
         });
     }));
+
+    passport.use('google-login', new GoogleStrategy({
+        clientID: '693576074665.apps.googleusercontent.com',
+        clientSecret: '693576074665@developer.gserviceaccount.com',
+        callbackURL: "http://127.0.0.1:3000/auth/google/callback"
+      },
+      function(accessToken, refreshToken, profile, done) {
+        User.findOrCreate({ googleId: profile.id }, function (err, user) {
+          return done(err, user);
+        });
+      }
+));
 };
