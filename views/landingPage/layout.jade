@@ -41,8 +41,6 @@ html(lang='en')
 									a.text-h5(class='text-bold visible-login', href='signUp') SIGN UP
 								li
 									a#admin-btn.text-bold.visible-login.text-h5(href='javascript:void(0)') SIGN IN
-								li
-									a.text-h5(class='text-bold visible-login', href='/google/login') GOOGLE
 							else
 								li
 									a.text-h5(class='text-bold visible-login', href='/dashboard') DASHBOARD
@@ -60,6 +58,7 @@ html(lang='en')
 						.form-group.margin-right-5x
 							input.border-black.text-small.form-control.border-square.form-control-smaller(type='password', placeholder='PASSWORD' , name='password')
 						button.btn.btn-success.bg-red-border.border-square.text-small.margin-right-5x(type='submit') LOGIN
+						button.btn.btn-success.bg-red-border.border-square.text-small.margin-right-5x(type='button', onClick="parent.location='/google/login'") GOOGLE LOGIN
 						a#admin-btn-2.text-bold.hidden-login.text-white(href='javascript:void(0)') X
 		block content
 		script(src='https://code.jquery.com/jquery.js')
