@@ -1,6 +1,10 @@
 var mongoose = require('mongoose');
 var Task = require('../models/task-model');
 
+exports.getTasks=function(req, res){
+	res.render('loggedIn/tasks/tasks', { title: 'SEAM', user : req.user});
+}
+
 exports.finishTask = function(req, res){
 	var meetingId = req.body.meetingId;
 	// console.log(meetingId);

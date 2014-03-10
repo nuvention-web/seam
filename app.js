@@ -3,7 +3,6 @@
  * Module dependencies.
  */
 var landingPage = require('./routes/landingPage');
-var projects = require('./routes/projects');
 var dashboard = require('./routes/dashboard');
 var meetings = require('./routes/meetings');
 var user = require('./routes/user');
@@ -74,15 +73,10 @@ app.get('/survey', landingPage.survey);
 app.post('/addSurvey', landingPage.addSurvey);
 app.post('/addEmail', landingPage.addEmail);
 
-//Welcome-Projects
-app.get('/welcome', user.isLoggedIn, projects.welcome);
-app.post('/addProject', user.isLoggedIn, projects.addProject);
-
 //Dashboard
-app.get('/dashboard', user.isLoggedIn, dashboard.welcome);
-app.post('/dashboard', user.isLoggedIn, dashboard.setWelcome);
-app.get('/dashboard/meetings', user.isLoggedIn, dashboard.meetings);
-app.get('/dashboard/tasks', user.isLoggedIn, dashboard.tasks);
+app.get('/dashboard', user.isLoggedIn, dashboard.dashboard);
+// app.post('/dashboard', user.isLoggedIn, dashboard.setWelcome);
+// app.get('/dashboard/meetings', user.isLoggedIn, dashboard.meetings);
 
 //Dashboard-Meetings
 app.get('/dashboard/meetings/makeMeeting', user.isLoggedIn, meetings.makeMeeting);
@@ -93,10 +87,17 @@ app.post('/dashboard/meetings/view', user.isLoggedIn, meetings.viewMeeting);
 app.post('/dashboard/meetings/view/past', user.isLoggedIn, meetings.viewPast);
 app.get('/dashboard/meetings/view/pastMeeting', user.isLoggedIn, meetings.pastMeeting);
 
-app.get('/dashboard/meetings/start', user.isLoggedIn, meetings.startMeeting);
+app.get('/dashboard/meetings/pastMeeting', user.isLoggedIn, meetings.pastMeeting);
+
+app.post('/dashboard/meetings/start', user.isLoggedIn, meetings.postMeeting);
+app.get('/dashboard/meetings/start', user.isLoggedIn, meetings.getMeeting);
 app.post('/dashboard/meetings/start/addNote', user.isLoggedIn, meetings.addNote);
 app.post('/dashboard/meetings/start/addTask', user.isLoggedIn, meetings.addTask);
 app.get('/dashboard/meetings/end', user.isLoggedIn, meetings.endMeeting);
+
+
+//Tasks
+app.get('/dashboard/tasks', user.isLoggedIn, task.getTasks);
 
 // team member stuff
 app.get('/dashboard/team', user.isLoggedIn, team.team);
@@ -127,12 +128,12 @@ app.post('/deletetask', user.isLoggedIn, task.deleteTask);
 app.get('/signup', user.signup);
 app.get('/logout', user.logout);
 app.post('/signup', passport.authenticate('local-signup', {// process the signup form
-	successRedirect: '/welcome', // redirect to the secure profile section
+	successRedirect: '/dashboard', // redirect to the secure profile section
 	failureRedirect: '/signup', // redirect back to the signup page if there is an error
 	failureFlash: true // allow flash messages
 }));
 app.post('/login', passport.authenticate('local-login', {
-	successRedirect: '/welcome', // redirect to the secure profile section
+	successRedirect: '/dashboard', // redirect to the secure profile section
 	failureRedirect: '/home', // redirect back to the signup page if there is an error
 	failureFlash: true // allow flash messages
 }));

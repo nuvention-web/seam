@@ -1,24 +1,40 @@
 //FUNCTIONS FOR ASYNC UPDATE OF MEETINGS
 $(document).ready(function(){
+
+	$('.attendeeMember img').click(function() {
+        var value = $(this).attr('value');
+        var input = $('#taskPersonInput');
+        input.val(input.val() + value + ', ');
+        alert('hi');
+        return false;
+    });
+
+     $('.attendeeMember h4').click(function() {
+        var value = $(this).attr('value');
+        var input = $('#taskPersonInput');
+        input.val(input.val() + value + ', ');
+        return false;
+    });
 	//FUNCTION: ASYNC UPDATE OF NOTES
 	$('form[name="TNForm"]').submit(function(event){
 		var value = $(this).attr('value');
 		var taskMembers= new Array();
 		var formData = $("#TNForm" + value).serializeArray();
-		var notes = formData[2].value;
+		console.log(formData);
+		var notes = formData[1].value;
 		var action = '/dashboard/meetings/start/addNote';
 		var flag = 0; //0 if notes 1 if task
-		for(var i = 3; i < formData.length; i++){
-			if(formData[i].value != ""){
-				taskMembers.push(formData[i].value);
-				flag = 1;
-				action = '/dashboard/meetings/start/addTask';
-				var newVal = i - 3;
-				var inputName = '#assigned' + newVal;
-				console.log($(inputName));
-				$(inputName).val('');
-			}
-		 };
+		// for(var i = 3; i < formData.length; i++){
+		// 	if(formData[i].value != ""){
+		// 		taskMembers.push(formData[i].value);
+		// 		flag = 1;
+		// 		action = '/dashboard/meetings/start/addTask';
+		// 		var newVal = i - 3;
+		// 		var inputName = '#assigned' + newVal;
+		// 		console.log($(inputName));
+		// 		$(inputName).val('');
+		// 	}
+		//  };
 		var url = location.protocol + "//" + location.host + action;
 		$.ajax({
 			type: "POST",
@@ -27,6 +43,7 @@ $(document).ready(function(){
 			success: function(data){
 				if(flag == 0){
 					notesList[value].innerHTML += '<h5 class="text-left margin-right-2p text-capital">' + notes + '</h5>';
+					notesList[value].scrollTop = notesList[value].scrollHeight;
 					$('#notes' + value)[0].value = '';
 				}
 				else{
@@ -57,4 +74,15 @@ function addTask(number){
 	document.getElementsByName(form)[number].action = location.protocol + "//" + location.host + '/addTask';
 	document.getElementsByName(form)[number].submit();
 	return true;
+};
+
+
+function showTaskForm(id){
+	var e = document.getElementById(id);
+	if(e.style.display == 'inline'){
+			e.style.display = 'none';
+	}
+	else{
+			e.style.display = 'inline';
+	}
 };

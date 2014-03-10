@@ -30,7 +30,6 @@ h1,h2,h3,h4,h5,h6,p,a,input, textarea, span{
 	font-size:12px;
 	font-weight: 300; 
 	text-align:center;
-	vertical-align:middle;
 	/*color:#FFF;*/
 	color: #000;
 	text-decoration: none;
@@ -115,6 +114,7 @@ textarea:focus, input:focus{
 .form-control-smaller{
 	height:35px;	
 }
+
 .hidden-login{
 	z-index:99;
 	position: relative;
@@ -157,9 +157,21 @@ textarea:focus, input:focus{
 	color:#FFF;
 }
 .text-orange{
+	color:rgb(204,51,51);
+}
+.text-orange-blue-hover{
 	color:rgb(251,175,93);
 }
+.text-orange-blue-hover:hover{
+	color: rgb(147,210,253);
+}
 .text-light-blue{
+	color: rgb(147,210,253);
+}
+.text-light-blue-nohover{
+	color: rgb(147,210,253);
+}
+.text-light-blue-nohover:hover{
 	color: rgb(147,210,253);
 }
 .text-dark-blue{
@@ -169,7 +181,7 @@ textarea:focus, input:focus{
 	color:rgb(51,54,63);
 }
 .text-gray{
-	color:rgb(200,200,200);
+	color:rgb(137,137,137);
 }
 .text-black{
 	color:rgb(0,0,0) ;
@@ -215,6 +227,7 @@ textarea:focus, input:focus{
 }
 .text-h3{
 	font-size:20px;
+	line-height: 22px;
 }
 .text-h4{
 	font-size:16px;
@@ -236,6 +249,7 @@ textarea:focus, input:focus{
 }
 .text-smaller{
 	font-size: 10px;
+	line-height: 8px;
 }
 .text-smallest{
 	font-size: 8px;
@@ -257,7 +271,7 @@ textarea:focus, input:focus{
 	background-color: #FFF;
 }
 .bg-transparent{
-	background-color: transparent !important;
+	background-color: transparent;
 }
 .bg-blue-gray{
 	background-color:rgb(51,54,63);
@@ -275,7 +289,7 @@ textarea:focus, input:focus{
 	background-color: rgb(255,255,0);
 }
 .bg-4{
-	background-color: rgb(204,51,51);
+	background-color: rgb(51,54,63);
 }
 .bg-red{
 	background-color: rgb(204,51,51);
@@ -320,6 +334,17 @@ textarea:focus, input:focus{
 	border: solid 2px #000;
 	border-right-color: #000;
 }
+.bg-gray-out{
+    background-color: white;
+    filter:alpha(opacity=10);
+    /* IE */
+    opacity: 0.1;
+    /* Safari, Opera */
+    -moz-opacity:0.10;
+    /* FireFox */
+    background-repeat:no-repeat;
+    background-position:center;
+}
 /* ========================================================
    1B.POSITION-DESKTOP
 =========================================================== */
@@ -335,6 +360,15 @@ textarea:focus, input:focus{
 .disp-inline{
 	display: inline;
 }
+#horizontal-list{
+    width: 30px;
+    white-space: nowrap;
+    overflow-x: scroll;
+    line-height: 2em;
+}
+#horizontal-list li {
+    display: inline;
+}
 .top-0x{
 	top:0px;
 }
@@ -349,6 +383,9 @@ textarea:focus, input:focus{
 }
 .overflow-scroll-y{
 	overflow-y: scroll;
+}
+.overflow-scroll-x-auto{
+	overflow-x: scroll;
 }
 .overflow-scroll-y-auto{
 	overflow-y: auto;
@@ -402,6 +439,9 @@ textarea:focus, input:focus{
 .margin-top-5p{
 	margin-top:5%;
 }
+.margin-top-7p{
+	margin-top:7%;
+}
 .margin-top-10p{
 	margin-top:10%;
 }
@@ -450,6 +490,13 @@ textarea:focus, input:focus{
 .margin-bottom-3p{
 	margin-bottom: 3%;
 }
+.padding-left-right-1p{
+	padding-left:1%;
+	padding-right:1%;
+}
+.padding-5p{
+	padding:5%;
+}
 .padding-15p{
 	padding:6% 10%;
 }
@@ -461,6 +508,9 @@ textarea:focus, input:focus{
 }
 .padding-left-25x{
 	padding-left: 25px;
+}
+.padding-left-3p{
+	padding-left: 15%;
 }
 .padding-top-20x{
 	padding-top: 20px;
@@ -496,7 +546,16 @@ textarea:focus, input:focus{
 	padding-bottom: 10%;
 }
 .padding-right-1p{
-	padding-right:2%;
+	padding-right:1%;
+}
+.padding-right-3p{
+	padding-right:3%;
+}
+.padding-btn{
+	padding:3% 15%;
+}
+.padding-btn-small{
+	padding:1% 8%;
 }
 /* =======================================================
    1E.PAGES-DESKTOP
@@ -619,9 +678,21 @@ textarea:focus, input:focus{
      -moz-border-radius: 0 !important;
           border-radius: 0 !important;
 }
+.outline-black{
+	border-color:2px solid rgb(0,0,0) !important;
+}
+.outline-black:focus{
+	outline: #232323 solid 1px;
+}
+.outline-black:hover{
+	outline: #232323 solid 1px;
+}
 .border-black{
-	border-color:#000;
-	border-width: 1px;
+	border-color:2px solid rgb(0,0,0) !important;
+	outline: #232323 solid 1px;
+}
+.border-black-outline{
+	outline: #232323 solid 1px;
 }
 .border-red{
 	background-color:rgb(204,51,51) !important;
@@ -636,7 +707,7 @@ textarea:focus, input:focus{
 	border-width: 1px;
 }
 .border-orange{
-	border:2px solid rgb(251,175,93) !important;
+	border:2px solid rgb(204,51,51) !important;
 }
 .border-gray{
 	border:1px solid rgb(244,244,244) !important;
@@ -699,10 +770,10 @@ textarea:focus, input:focus{
    2.NAVIGATION-DESKTOP
 ========================================================== */
 .nav{
-	z-index: 99;
+	z-index: 59;
 }
 .navbar{
-	z-index: 89;
+	z-index: 59;
 }
 .navbar .nav > li > a {
     color:  #FFF;
@@ -746,6 +817,9 @@ textarea:focus, input:focus{
 /* =======================================================
    3.PROGRESS_BAR-DESKTOP
 ========================================================== */
+.countdown-row{
+	font-size:25px;
+}
 .timer-box{
   width: 100%;
   height: auto;
@@ -756,7 +830,9 @@ width: 25px;
 min-height:25px;
 border-radius:50%;
 margin:0 auto;
-background-color: #000;
+border-style:solid;
+border-color:  rgb(225,225,225);
+
 }
 .progress-vertical-circle-bigger {
 position: relative;
@@ -769,11 +845,9 @@ background-color: #000;
 .progress-vertical-line {
 position: relative;
 width: 2px;
-min-height:255px;
-height: auto;
+height:280px;
 margin:0px auto;
 border-radius: 0;
-background-color: #000;
 }
 .progress-vertical-line-shorter{
 	position: relative;
@@ -784,6 +858,19 @@ margin:0px auto;
 border-radius: 0;
 background-color: #000;
 }
+.progress-danger .bar,
+    .progress .bar-danger {
+      background-repeat: repeat-y;
+      }
+
+.progress-danger.progress-striped .bar,
+.progress-striped .bar-danger {
+  background-color: #ee5f5b;
+  background-image: -webkit-gradient(linear, 0 100%, 100% 0, color-stop(0.25, rgba(255, 255, 255, 0.15)), color-stop(0.25, transparent), color-stop(0.5, transparent), color-stop(0.5, rgba(255, 255, 255, 0.15)), color-stop(0.75, rgba(255, 255, 255, 0.15)), color-stop(0.75, transparent), to(transparent));
+  background-image: -webkit-linear-gradient(0deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);
+  background-image: -moz-linear-gradient(0deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);
+  background-image: -o-linear-gradient(0deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);
+  background-image: linear-gradient(0deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);
 }
 /* =======================================================
    3.HIDDEN_DIV-DESKTOP
