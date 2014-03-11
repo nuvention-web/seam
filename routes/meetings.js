@@ -221,9 +221,41 @@ exports.viewPast = function(req, res){
 
 
 exports.pastMeeting = function(req, res){
-	Meeting.find({'UserId' : req.user.local.email, 'isComplete' : 1}, function(e, meetingList){
+	Meeting.find({'UserId' : req.user.local.email, 'isComplete' : 1}).sort({meetingTime: -1}).exec(function(e, meetingList){
+		
+		var meetingTime = new Array();
+
+		for(var i = 0; i < meetingList.length; i++){
+			var date = meetingList[i].meetingTime;
+			var duration = meetingList[i].duration;
+			var year = date.getFullYear();
+			var month = date.getMonth() + 1;
+			var day = date.getDate();
+			var startHour = date.getHours();
+			var startMinutes = date.getMinutes();
+			if(startHour > 12){
+				startHour = startHour%12;
+			}
+			if(startMinutes < 10){
+				startMinutes = "0" + startMinutes;
+			}
+			var endDate = addMinutes(date, duration);
+			var endHour = endDate.getHours();
+			var endMinutes = endDate.getMinutes();
+			if(endHour > 12){
+				endHour = endHour%12;
+			}
+			if(endMinutes < 10){
+				endMinutes = "0" + endMinutes;
+			}				
+			var timeString = month + "/" + day + "/" + year + " " + startHour + ":" + startMinutes + " - " + endHour + ":" + endMinutes; 
+			meetingTime[i] = timeString;
+			console.log(meetingTime[i]);
+		}
+
 		res.render('loggedIn/meetings/pastMeeting', { 
 			title: 'SEAM', 
+			meetingTime: meetingTime,
 			meetingList: meetingList,
 			name: req.session.name,
 			user : req.user
@@ -320,16 +352,29 @@ exports.addMeeting = function(req, res){
 	var location = req.body.location;
 	var agenda = req.body.agendaTopic;
 	var duration = req.body.duration;
-	var meetingTime = req.body.meetingTime;
-	var meetingStartTime = req.body.meetingStartTime;
-	var meetingDate = req.body.meetingDate;  
+	var meetingDate = req.body.meetingDate;
+	var meetingMonthDate = meetingDate.split('/'); // for example: 03/25/2014 8:53 PM - splits to 03,25,2014 8:53 PM 
+	var meetingYearTime = meetingMonthDate[2].split(' '); // - splits to 2014,8:53,PM
+	var meetingHourMin = meetingYearTime[1].split(':'); // - splits to 8,53
+	// var meetingStartTime = req.body.meetingStartTime;
+	var meetingTime = req.body.meetingTime;  
 	var attendeeNames = req.body.attendeeName;
 	var attendeeEmails = req.body.attendeeEmail;
 	var notes = req.body.notes;
 	var emailAgenda='';
 	var timerInfo= meetingTime+','+duration;
 	console.log('log');
-	console.log(timerInfo);
+
+	//set up the date
+	if(meetingYearTime[2] == 'PM'){
+		meetingHourMin[0] = meetingHourMin[0] + 12;
+	}
+
+	// console.log(meetingYearTime[0] + meetingMonthDate[0] + meetingMonthDate[1] + meetingHourMin[0] + meetingHourMin[1]);
+
+	meetingTime = new Date(meetingYearTime[0], meetingMonthDate[0] - 1, meetingMonthDate[1], meetingHourMin[0], meetingHourMin[1]);
+
+	// console.log(meetingTime);
 
 	var newMeeting = new Meeting({
 		UserId: userId,
@@ -337,7 +382,8 @@ exports.addMeeting = function(req, res){
 		objective: objective,
 		location: location,
 		meetingDate: meetingDate,
-		meetingStartTime:meetingStartTime,
+		duration: duration,
+		// meetingStartTime:meetingStartTime,
 		meetingTime: meetingTime,
 		timerInfo: timerInfo
 	});
@@ -445,3 +491,7 @@ exports.addMeeting = function(req, res){
 
 	res.redirect('/dashboard');
 };
+
+function addMinutes(date, minutes){
+	return new Date(date.getTime() + minutes*60000);
+}

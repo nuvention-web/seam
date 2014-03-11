@@ -9,7 +9,7 @@ block content
 						input.text-h3.height-30x.form-control.border-square.border-none.text-left.bg-transparent(id='makeMeeting', type='text', name='meetingTitle', placeholder= 'MEETING TITLE', autofocus='autofocus', autocomplete='off')
 				.row
 					.col-md-10.col-sm-10.col-xs-10.margin-top-1p
-						input.text-h4.height-30x.text-orange.form-control.border-square.border-none.text-left.bg-transparent(id='makeMeeting', type='text', name='objective', placeholder= 'OBJECTIVE', autocomplete='off')					
+						input.text-h4.height-30x.text-orange.form-control.border-square.border-none.text-left.bg-transparent(id='makeMeeting', type='text', name='objective', placeholder= 'OBJECTIVE', autocomplete='off')
 		.row.margin-top-2p.margin-bottom-3p
 			.col-md-9
 				.row.bg-white.border-gray.border-shadow-1x.margin-right-1p.margin-left.height-auto.padding-bottom-3p
@@ -54,10 +54,7 @@ block content
 									h4.text-left.text-normal.text-dark-blue SCHEDULING
 							.row 
 								.col-md-12
-									input.text-h4.height-30x.text-black.form-control.border-square.border-none.text-left.bg-transparent(id='makeMeeting', type='text', name='meetingDate', placeholder= 'DATE', autocomplete='off')
-							.row 
-								.col-md-12
-									input.text-h4.height-30x.text-black.form-control.border-square.border-none.text-left.bg-transparent(id='makeMeeting', type='text', name='meetingStartTime', placeholder= 'START TIME(HH:MM)', autocomplete='off')
+									input.text-h4.height-30x.text-black.form-control.border-square.border-none.text-left.bg-transparent(id='makeMeeting', type='text', name='meetingDate', placeholder= 'DATE AND START TIME', autocomplete='off')
 							.row 
 								.col-md-12
 									input.text-h4.height-30x.text-black.form-control.border-square.border-none.text-left.bg-transparent(id='makeMeeting', type='text', name='meetingTime', placeholder= 'DURATION(MINUTES)', autocomplete='off')
@@ -90,4 +87,8 @@ block content
 				.row.margin-left-1p
 					.col-md-12.col-sm-12.col-xs-12.margin-top-1p.text-left.margin-top-2p.text-center.margin-top-10p
 						button.border-square.bg-white.border-orange.border-orange.text-orange.text-h3.padding-btn(type='submit') SAVE MEETING
+	script(src='../../../javascripts/moment-2.4.0.js')
+	script(src='../../../javascripts/bootstrap-datetimepicker.min.js')
+	link(rel='stylesheet', href='../../../stylesheets/bootstrap-datetimepicker.css')
+	link(rel='stylesheet', href='//netdna.bootstrapcdn.com/bootstrap/3.0.0-rc2/css/bootstrap-glyphicons.css')
 	script(src='../../../javascripts/meetings-addAgenda.js')

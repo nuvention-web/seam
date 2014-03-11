@@ -12,8 +12,7 @@ block content
 						.row.border-gray
 							input(type='hidden', name='meetingId', value='#{meeting._id}')
 							.col-md-3.border-gray-right
-								h4.text-black.text-left.text-bold #{meeting.meetingDate}
-								h4.text-black.text-left #{meeting.meetingTime} Minutes
+								h4.text-black.text-left.text-bold #{meetingTime[i]}
 							.col-md-5
 								h4.text-black.text-left #{meeting.meetingTitle}
 								h4.text-orange.text-left #{meeting.objective}
