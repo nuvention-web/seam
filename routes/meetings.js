@@ -429,18 +429,17 @@ exports.addMeeting = function(req, res){
 	var notes = req.body.notes;
 	var emailAgenda='';
 	var timerInfo= meetingTime+','+duration;
-	console.log('log');
 
 	//set up the date
-	if(meetingYearTime[2] == 'PM'){
-		meetingHourMin[0] = meetingHourMin[0] + 12;
-	}
+	// if(meetingYearTime[2] == 'PM'){
+	// 	meetingHourMin[0] = meetingHourMin[0] + 12;
+	// }
 
+	console.log(meetingMonthDate[1]);
 	// console.log(meetingYearTime[0] + meetingMonthDate[0] + meetingMonthDate[1] + meetingHourMin[0] + meetingHourMin[1]);
 
 	meetingDate = new Date(meetingYearTime[0], meetingMonthDate[0] - 1, meetingMonthDate[1], meetingHourMin[0], meetingHourMin[1]);
-
-	// console.log(meetingTime);
+	console.log('The meeting time: ' + meetingDate);
 
 	var newMeeting = new Meeting({
 		UserId: userId,
@@ -506,7 +505,7 @@ exports.addMeeting = function(req, res){
 		}
 		else{
 			console.log('Added new meeting successfully');
-			Meeting.find({}, function(e, docs){console.log(docs);});
+			// Meeting.find({}, function(e, docs){console.log(docs);});
 		}
 	});
 
