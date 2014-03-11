@@ -13,7 +13,7 @@ $(document).ready(function(){
          //intVals[i] *=60;
          if(i>1){
             intVals[i] =parseInt(strVals[i]);
-            waitVals[i]=intVals[i]+waitVals[i-1];
+            waitVals[i]=intVals[i-1]+waitVals[i-1];
          }
     };
    waitVals[strVals.length]=intVals[0];
@@ -36,6 +36,8 @@ function setAgendaDelay(i, total){
     var taskPersonID="#taskPersonInput"+prev;
     var taskPersonAddID="#addTask"+prev;
     var timeLimits=intVals[i];
+
+    alert(progID+ " "+ timeLimits+ " "+waitVals[i]);
     setTimeout(function(){
             if(prev>=1){
                 $.notify("AGENDA ITEM "+ prev+ " DONE"); 
