@@ -18,7 +18,8 @@
     "connect-flash": "~0.1.1", 
     "bcrypt-nodejs": "*",
     "email-templates": "0.0.5",
-    "nodemailer": "0.3.x"
+    "nodemailer": "0.3.x",
+    "mongoose-findorcreate": "*"
   },
   "readmeFilename": "README.md",
   "gitHead": "7ad1af6b88ca09aedbc265067776b2832d139c5a",

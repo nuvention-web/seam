@@ -137,7 +137,12 @@ app.post('/login', passport.authenticate('local-login', {
 	failureRedirect: '/home', // redirect back to the signup page if there is an error
 	failureFlash: true // allow flash messages
 }));
-
+app.get('/google/login', passport.authenticate('google-login'));
+app.get('/auth/google/callback',  passport.authenticate('google-login', {
+	successRedirect: '/dashboard', // redirect to the secure profile section
+	failureRedirect: '/', // redirect back to the signup page if there is an error
+	failureFlash: true // allow flash messages
+}))
 //error page
 app.get('/error', index.error);
 
