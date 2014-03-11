@@ -1,19 +1,27 @@
 //FUNCTIONS FOR ASYNC UPDATE OF MEETINGS
+var taskInput;
 $(document).ready(function(){
 
 	$('.attendeeMember img').click(function() {
         var value = $(this).attr('value');
-        var input = $('#taskPersonInput');
-        input.val(input.val() + value + ', ');
-        alert('hi');
+        var e = document.getElementById(taskInput);
+        if (e.value.indexOf(value) !=-1) {
+       	
+		}else{
+			e.value= e.value+ value+", ";
+ 		}
         return false;
     });
 
      $('.attendeeMember h4').click(function() {
         var value = $(this).attr('value');
-        var input = $('#taskPersonInput');
-        input.val(input.val() + value + ', ');
-        return false;
+        var e = document.getElementById(taskInput);
+        if (e.value.indexOf(value) !=-1) {
+       	
+		}else{
+			e.value= e.value+ value+", ";
+ 		}
+ 		return false;
     });
 	//FUNCTION: ASYNC UPDATE OF NOTES
 	$('form[name="TNForm"]').submit(function(event){
@@ -79,6 +87,7 @@ function addTask(number){
 
 function showTaskForm(id){
 	var e = document.getElementById(id);
+	taskInput=id+"Input";
 	if(e.style.display == 'inline'){
 			e.style.display = 'none';
 	}
