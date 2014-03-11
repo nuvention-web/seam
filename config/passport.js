@@ -120,7 +120,8 @@ module.exports = function(passport) {
 	passport.use('google-login', new GoogleStrategy({
 		clientID: '693576074665-5metufhdq7f2r5vogsiro86rf1uvtumj.apps.googleusercontent.com',
 		clientSecret: 'tlvVeRLtCgk6_eEDCGPSNrlt',
-		callbackURL: 'http://localhost:3000/auth/google/callback/',
+		callbackURL: 'http://seam.herokuapp.com/auth/google/callback/',
+		// callbackURL: 'http://localhost:3000/auth/google/callback/',
 		scope: 'profile email https://www.googleapis.com/auth/drive.file https://www.googleapis.com/auth/drive.readonly https://www.googleapis.com/auth/calendar',
 		passReqToCallback : true // allows us to pass back the entire request to the callback 
 	 },
