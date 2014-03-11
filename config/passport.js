@@ -112,6 +112,7 @@ module.exports = function(passport) {
 			req.session.name = user.local.name;
 			req.session.accountType = user.local.accountType;
 			// all is well, return successful user
+			console.log('THIS IS USER STUFF: ' + user);
 			return done(null, user);
 		});
 	}));
@@ -123,9 +124,13 @@ module.exports = function(passport) {
 		scope: 'profile email' 
 	 },
 	function(accessToken, refreshToken, profile, done) {
+		console.log(profile);
 		User.findOrCreate({ 
 			'google.id': profile.id, 
+			'google.email': profile.emails[0].value,
+			'google.name': profile.displayName
 		}, function (err, user) {
+			console.log('THIS IS USER STUFF: ' + user);
 			return done(err, user);
 		});
 	}));

@@ -1,4 +1,5 @@
 var mongoose = require('mongoose');
+var findOrCreate = require('mongoose-findorcreate');
 var bcrypt   = require('bcrypt-nodejs');
 var Schema = mongoose.Schema;
 // define the schema for our user model
@@ -30,6 +31,8 @@ var userSchema = Schema({
     }
 
 });
+
+userSchema.plugin(findOrCreate);
 
 // methods ======================
 // generating a hash
