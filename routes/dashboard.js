@@ -28,31 +28,33 @@ exports.dashboard = function(req, res){
 			var meetingDate = new Array();
 
 			for(var i = 0; i < meetingList.length; i++){
-				var date = meetingList[i].meetingDate;
-				var duration = meetingList[i].meetingTime;
-				var year = date.getFullYear();
-				var month = date.getMonth() + 1;
-				var day = date.getDate();
-				var startHour = date.getHours();
-				var startMinutes = date.getMinutes();
-				if(startHour > 12){
-					startHour = startHour%12;
+				if(meetingList[i].meetingDate != undefined){
+					var date = meetingList[i].meetingDate;
+					var duration = meetingList[i].meetingTime;
+					var year = date.getFullYear();
+					var month = date.getMonth() + 1;
+					var day = date.getDate();
+					var startHour = date.getHours();
+					var startMinutes = date.getMinutes();
+					if(startHour > 12){
+						startHour = startHour%12;
+					}
+					if(startMinutes < 10){
+						startMinutes = "0" + startMinutes;
+					}
+					var endDate = addMinutes(date, duration);
+					var endHour = endDate.getHours();
+					var endMinutes = endDate.getMinutes();
+					if(endHour > 12){
+						endHour = endHour%12;
+					}
+					if(endMinutes < 10){
+						endMinutes = "0" + endMinutes;
+					}				
+					var timeString = month + "/" + day + "/" + year + " " + startHour + ":" + startMinutes + " - " + endHour + ":" + endMinutes; 
+					meetingDate[i] = timeString;
+					console.log(meetingDate[i]);
 				}
-				if(startMinutes < 10){
-					startMinutes = "0" + startMinutes;
-				}
-				var endDate = addMinutes(date, duration);
-				var endHour = endDate.getHours();
-				var endMinutes = endDate.getMinutes();
-				if(endHour > 12){
-					endHour = endHour%12;
-				}
-				if(endMinutes < 10){
-					endMinutes = "0" + endMinutes;
-				}				
-				var timeString = month + "/" + day + "/" + year + " " + startHour + ":" + startMinutes + " - " + endHour + ":" + endMinutes; 
-				meetingDate[i] = timeString;
-				console.log(meetingDate[i]);
 			}
 
 			res.render('loggedIn/dashboard/dashboard', { 
