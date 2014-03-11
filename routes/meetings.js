@@ -186,7 +186,7 @@ exports.endMeeting = function(req, res){
 		if(e) console.log(e);
 		else console.log("Successfully finished meeting");
 	});
-	Meeting.find({'ProjectId': meetingId, 'UserId' : req.user.local.email}, function(e, docs){
+	Meeting.find({'ProjectId': meetingId, 'UserId' : req.session.userId}, function(e, docs){
 		Meeting.findOne({'_id': meetingId}, function(e, doc){
 			meetingInfo=doc;
 			agenda=doc.agenda;
@@ -268,7 +268,7 @@ exports.viewPast = function(req, res){
 	}
 	
 	console.log(meetingId);
-	Meeting.find({'ProjectId': req.session.projectId, 'UserId' : req.user.local.email}, function(e, docs){
+	Meeting.find({'ProjectId': req.session.projectId, 'UserId' : req.session.userId}, function(e, docs){
 		Meeting.findOne({'_id': meetingId}, function(e, doc){
 			console.log(doc);
 			res.render('loggedIn/meetings/viewMeeting', { 
@@ -285,7 +285,7 @@ exports.viewPast = function(req, res){
 
 
 exports.pastMeeting = function(req, res){
-	Meeting.find({'UserId' : req.user.local.email, 'isComplete' : 1}).sort({meetingDate: -1}).exec(function(e, meetingList){
+	Meeting.find({'UserId' : req.session.userId, 'isComplete' : 1}).sort({meetingDate: -1}).exec(function(e, meetingList){
 		
 		var meetingDate = new Array();
 
@@ -358,7 +358,7 @@ exports.addNote = function(req, res){
 	var notes = req.body.notes;
 	console.log(req.body);
 	console.log(noteOrder + " " + meetingId + " " + notes);
-	Meeting.findOne({'ProjectId': req.session.projectId, '_id': meetingId}, function(e, doc){
+	Meeting.findOne({'_id': meetingId}, function(e, doc){
 		doc.agenda[noteOrder].notes.push({notes: notes});
 		doc.save(function(err, doc){
 			if(err){
@@ -412,7 +412,7 @@ exports.addTask = function(req, res){
 
 exports.addMeeting = function(req, res){
 	var mailBody, smtpConfig;
-	var userId = req.user.local.email;
+	var userId = req.session.userId;
 	var meetingTitle = req.body.meetingTitle;
 	var objective = req.body.objective;
 	var location = req.body.location;
