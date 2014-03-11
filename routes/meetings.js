@@ -56,7 +56,7 @@ exports.viewMeeting = function(req, res){
 };
 
 exports.postMeeting = function(req, res){
-
+	console.log("in post");
 	var meetingId = req.body.meetingId;
 	if(meetingId == undefined){
 		meetingId = req.session.meetingId;
@@ -68,11 +68,42 @@ exports.postMeeting = function(req, res){
 	console.log(meetingId);
 	Meeting.findOne({'_id': meetingId}, function(e, doc){
 		console.log(doc);
-		Task.find({'MeetingId': meetingId}, function(e, task){
+		Task.findOne({'MeetingId': meetingId}, function(e, task){
 			console.log(task);
+
+			var meetingDate;
+
+			var date = doc.meetingDate;
+			var duration = doc.meetingTime;
+			console.log(duration);
+			var year = date.getFullYear();
+			var month = date.getMonth() + 1;
+			var day = date.getDate();
+			var startHour = date.getHours();
+			var startMinutes = date.getMinutes();
+			if(startHour > 12){
+				startHour = startHour%12;
+			}
+			if(startMinutes < 10){
+				startMinutes = "0" + startMinutes;
+			}
+			var endDate = addMinutes(date, duration);
+			var endHour = endDate.getHours();
+			var endMinutes = endDate.getMinutes();
+			if(endHour > 12){
+				endHour = endHour%12;
+			}
+			if(endMinutes < 10){
+				endMinutes = "0" + endMinutes;
+			}				
+			var timeString = month + "/" + day + "/" + year + " " + startHour + ":" + startMinutes + " - " + endHour + ":" + endMinutes; 
+			meetingDate = timeString;
+			console.log(meetingDate);
+
 			res.render('loggedIn/meetings/startMeeting', { 
 				title: 'SEAM',
 				name: req.session.name,
+				meetingDate: meetingDate,
 				taskList: task,
 				meeting: doc,
 				user : req.user,
@@ -83,7 +114,7 @@ exports.postMeeting = function(req, res){
 };
 
 exports.getMeeting = function(req, res){
-
+	console.log("in get");
 	var meetingId = req.body.meetingId;
 	if(meetingId == undefined){
 		meetingId = req.session.meetingId;
@@ -97,8 +128,39 @@ exports.getMeeting = function(req, res){
 		console.log(doc);
 		Task.find({'MeetingId': meetingId}, function(e, task){
 			console.log(task);
+
+			var meetingDate;
+
+			var date = doc.meetingDate;
+			var duration = doc.meetingTime;
+			console.log(duration);
+			var year = date.getFullYear();
+			var month = date.getMonth() + 1;
+			var day = date.getDate();
+			var startHour = date.getHours();
+			var startMinutes = date.getMinutes();
+			if(startHour > 12){
+				startHour = startHour%12;
+			}
+			if(startMinutes < 10){
+				startMinutes = "0" + startMinutes;
+			}
+			var endDate = addMinutes(date, duration);
+			var endHour = endDate.getHours();
+			var endMinutes = endDate.getMinutes();
+			if(endHour > 12){
+				endHour = endHour%12;
+			}
+			if(endMinutes < 10){
+				endMinutes = "0" + endMinutes;
+			}				
+			var timeString = month + "/" + day + "/" + year + " " + startHour + ":" + startMinutes + " - " + endHour + ":" + endMinutes; 
+			meetingDate = timeString;
+			console.log(meetingDate);
+
 			res.render('loggedIn/meetings/startMeeting', { 
 				title: 'SEAM',
+				meetingDate: meetingDate,
 				taskList: task,
 				meeting: doc,
 				user : req.user,
@@ -221,13 +283,13 @@ exports.viewPast = function(req, res){
 
 
 exports.pastMeeting = function(req, res){
-	Meeting.find({'UserId' : req.user.local.email, 'isComplete' : 1}).sort({meetingTime: -1}).exec(function(e, meetingList){
+	Meeting.find({'UserId' : req.user.local.email, 'isComplete' : 1}).sort({meetingDate: -1}).exec(function(e, meetingList){
 		
-		var meetingTime = new Array();
+		var meetingDate = new Array();
 
 		for(var i = 0; i < meetingList.length; i++){
-			var date = meetingList[i].meetingTime;
-			var duration = meetingList[i].duration;
+			var date = meetingList[i].meetingDate;
+			var duration = meetingList[i].meetingTime;
 			var year = date.getFullYear();
 			var month = date.getMonth() + 1;
 			var day = date.getDate();
@@ -249,13 +311,13 @@ exports.pastMeeting = function(req, res){
 				endMinutes = "0" + endMinutes;
 			}				
 			var timeString = month + "/" + day + "/" + year + " " + startHour + ":" + startMinutes + " - " + endHour + ":" + endMinutes; 
-			meetingTime[i] = timeString;
-			console.log(meetingTime[i]);
+			meetingDate[i] = timeString;
+			console.log(meetingDate[i]);
 		}
 
 		res.render('loggedIn/meetings/pastMeeting', { 
 			title: 'SEAM', 
-			meetingTime: meetingTime,
+			meetingDate: meetingDate,
 			meetingList: meetingList,
 			name: req.session.name,
 			user : req.user
@@ -372,7 +434,7 @@ exports.addMeeting = function(req, res){
 
 	// console.log(meetingYearTime[0] + meetingMonthDate[0] + meetingMonthDate[1] + meetingHourMin[0] + meetingHourMin[1]);
 
-	meetingTime = new Date(meetingYearTime[0], meetingMonthDate[0] - 1, meetingMonthDate[1], meetingHourMin[0], meetingHourMin[1]);
+	meetingDate = new Date(meetingYearTime[0], meetingMonthDate[0] - 1, meetingMonthDate[1], meetingHourMin[0], meetingHourMin[1]);
 
 	// console.log(meetingTime);
 

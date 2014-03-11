@@ -23,13 +23,13 @@ var Project = require('../models/project-model');
 // };
 
 exports.dashboard = function(req, res){
-	Meeting.find({'UserId' : req.user.local.email, 'isComplete' : 0}).sort({meetingTime: 1}).exec(function(e, meetingList){
-		Meeting.find({'UserId' : req.user.local.email, 'isComplete' : 1}).sort({meetingTime: 1}).exec(function(e, finMeetingList){
-			var meetingTime = new Array();
+	Meeting.find({'UserId' : req.user.local.email, 'isComplete' : 0}).sort({meetingDate: 1}).exec(function(e, meetingList){
+		Meeting.find({'UserId' : req.user.local.email, 'isComplete' : 1}).sort({meetingDate: 1}).exec(function(e, finMeetingList){
+			var meetingDate = new Array();
 
 			for(var i = 0; i < meetingList.length; i++){
-				var date = meetingList[i].meetingTime;
-				var duration = meetingList[i].duration;
+				var date = meetingList[i].meetingDate;
+				var duration = meetingList[i].meetingTime;
 				var year = date.getFullYear();
 				var month = date.getMonth() + 1;
 				var day = date.getDate();
@@ -51,8 +51,8 @@ exports.dashboard = function(req, res){
 					endMinutes = "0" + endMinutes;
 				}				
 				var timeString = month + "/" + day + "/" + year + " " + startHour + ":" + startMinutes + " - " + endHour + ":" + endMinutes; 
-				meetingTime[i] = timeString;
-				console.log(meetingTime[i]);
+				meetingDate[i] = timeString;
+				console.log(meetingDate[i]);
 			}
 
 			res.render('loggedIn/dashboard/dashboard', { 
@@ -60,7 +60,7 @@ exports.dashboard = function(req, res){
 				upcomingMeeting: meetingList[0],
 				previousMeeting: finMeetingList[0],
 				meetingList: meetingList,
-				meetingTime: meetingTime,
+				meetingDate: meetingDate,
 				pastMeetingList: finMeetingList,
 				name: req.session.name,
 				user : req.user
