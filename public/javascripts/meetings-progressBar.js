@@ -36,8 +36,6 @@ function setAgendaDelay(i, total){
     var taskPersonID="#taskPersonInput"+prev;
     var taskPersonAddID="#addTask"+prev;
     var timeLimits=intVals[i];
-
-    alert(progID+ " "+ timeLimits+ " "+waitVals[i]);
     setTimeout(function(){
             if(prev>=1){
                 $.notify("AGENDA ITEM "+ prev+ " DONE"); 
