@@ -121,16 +121,21 @@ module.exports = function(passport) {
 		clientID: '693576074665-5metufhdq7f2r5vogsiro86rf1uvtumj.apps.googleusercontent.com',
 		clientSecret: 'tlvVeRLtCgk6_eEDCGPSNrlt',
 		callbackURL: 'http://localhost:3000/auth/google/callback/',
-		scope: 'profile email' 
+		scope: 'profile email https://www.googleapis.com/auth/drive.file https://www.googleapis.com/auth/drive.readonly https://www.googleapis.com/auth/calendar',
+		passReqToCallback : true // allows us to pass back the entire request to the callback 
 	 },
-	function(accessToken, refreshToken, profile, done) {
+	function(req, accessToken, refreshToken, profile, done) {
 		console.log(profile);
 		User.findOrCreate({ 
 			'google.id': profile.id, 
 			'google.email': profile.emails[0].value,
 			'google.name': profile.displayName
 		}, function (err, user) {
-			console.log('THIS IS USER STUFF: ' + user);
+			req.session.userId = user.google.id;
+			req.session.email = user.google.email;
+			req.session.name = user.google.name; 
+			req.session.accessToken = accessToken;
+			req.session.refreshToken = refreshToken;
 			return done(err, user);
 		});
 	}));
