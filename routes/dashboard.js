@@ -23,8 +23,8 @@ var Project = require('../models/project-model');
 // };
 
 exports.dashboard = function(req, res){
-	Meeting.find({'UserId' : req.user.local.email, 'isComplete' : 0}).sort({meetingDate: 1}).exec(function(e, meetingList){
-		Meeting.find({'UserId' : req.user.local.email, 'isComplete' : 1}).sort({meetingDate: 1}).exec(function(e, finMeetingList){
+	Meeting.find({'UserId' : req.session.userId, 'isComplete' : 0}).sort({meetingDate: 1}).exec(function(e, meetingList){
+		Meeting.find({'UserId' : req.session.userId, 'isComplete' : 1}).sort({meetingDate: 1}).exec(function(e, finMeetingList){
 			var meetingDate = new Array();
 
 			for(var i = 0; i < meetingList.length; i++){

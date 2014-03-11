@@ -47,7 +47,7 @@ block content
 					.col-md-12.margin-left-1p
 						form(role='form', method='POST', action='/dashboard/meetings/start', id='upcomingMeeting')
 							h2.text-left.text-normal #{upcomingMeeting.meetingTitle}
-							h4.text-left.text-normal.text-gray #{meetingDate}
+							h4.text-left.text-normal.text-gray #{meetingDate[0]}
 							input(type='hidden', name='meetingId', value='#{upcomingMeeting._id}')
 							button.padding-btn-small.text-right.margin-right-3p.border-square.bg-white.border-orange.border-orange.text-orange(type='button', href="javascript:{}") EDIT AGENDA
 							button.padding-btn-small.text-right.margin-right-3p.border-square.bg-white.border-orange.border-orange.text-orange(type='button', href="javascript:{}" onclick="document.getElementById('upcomingMeeting').submit();") START
