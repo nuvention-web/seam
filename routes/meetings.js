@@ -350,6 +350,7 @@ exports.addMeeting = function(req, res){
 		objective: objective,
 		location: location,
 		meetingDate: meetingDate,
+		duration: duration,
 		// meetingStartTime:meetingStartTime,
 		meetingTime: meetingTime,
 		timerInfo: timerInfo
