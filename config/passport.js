@@ -117,13 +117,15 @@ module.exports = function(passport) {
 	}));
 
 	passport.use('google-login', new GoogleStrategy({
-		clientID: '693576074665.apps.googleusercontent.com',
-		clientSecret: '693576074665@developer.gserviceaccount.com',
-		callbackURL: 'http://127.0.0.1:3000/auth/google/callback',
-		scope: 'email' 
+		clientID: '693576074665-5metufhdq7f2r5vogsiro86rf1uvtumj.apps.googleusercontent.com',
+		clientSecret: 'tlvVeRLtCgk6_eEDCGPSNrlt',
+		callbackURL: 'http://localhost:3000/auth/google/callback/',
+		scope: 'profile email' 
 	 },
 	function(accessToken, refreshToken, profile, done) {
-		User.findOrCreate({ googleId: profile.id }, function (err, user) {
+		User.findOrCreate({ 
+			'google.id': profile.id, 
+		}, function (err, user) {
 			return done(err, user);
 		});
 	}));
