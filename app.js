@@ -69,6 +69,7 @@ if ('development' == app.get('env')) {
 //Landing Page
 app.get('/', landingPage.home);
 app.get('/home', landingPage.home);
+app.get('/login', landingPage.login);
 app.get('/survey', landingPage.survey);
 app.post('/addSurvey', landingPage.addSurvey);
 app.post('/addEmail', landingPage.addEmail);

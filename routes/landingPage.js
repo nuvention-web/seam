@@ -7,6 +7,10 @@ exports.home = function(req, res){
 	res.render('landingPage/home', { title: 'MeetingBuddy!', user : req.user});
 };
 
+exports.login = function(req, res){
+	res.render('landingPage/login', { title: 'MeetingBuddy!', user : req.user});
+};
+
 exports.survey = function(req, res){
 	res.render('landingPage/survey', {title: 'Survey', user : req.user});
 };
