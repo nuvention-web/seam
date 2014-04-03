@@ -16,8 +16,12 @@ $(function(){
 				console.log('in else if');
 				var currentTime = parseInt($('input[name="meetingTime"]').val());
 				console.log('currentTime: ' + currentTime);
-				var addTime = parseInt(this.value);
-				console.log('addTime: ' + addTime);
+				if(this.value == ""){
+					var addTime = 0;
+				}
+				else{
+					var addTime = parseInt(this.value);
+				}
 				var total = currentTime + addTime;
 				$('input[name="meetingTime"]').val(total);
 			}
@@ -25,8 +29,13 @@ $(function(){
 				console.log('pastTime: ' + pastTime);
 				var currentTime = parseInt($('input[name="meetingTime"]').val()) - parseInt(pastTime);
 				console.log('currentTime: ' + currentTime);
-				var addTime = parseInt(this.value);
-				console.log('addTime: ' + addTime);
+				if(this.value == ""){
+					var addTime = 0;
+				}
+				else{
+					var addTime = parseInt(this.value);
+				}
+				console.log('addTime: ' + this.value);
 				var total = currentTime + addTime;
 				$('input[name="meetingTime"]').val(total);
 			}
