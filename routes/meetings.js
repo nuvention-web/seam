@@ -419,10 +419,6 @@ exports.addMeeting = function(req, res){
 	var agenda = req.body.agendaTopic;
 	var duration = req.body.duration;
 	var meetingDate = req.body.meetingDate;
-	var meetingMonthDate = meetingDate.split('/'); // for example: 03/25/2014 8:53 PM - splits to 03,25,2014 8:53 PM 
-	var meetingYearTime = meetingMonthDate[2].split(' '); // - splits to 2014,8:53,PM
-	var meetingHourMin = meetingYearTime[1].split(':'); // - splits to 8,53
-	// var meetingStartTime = req.body.meetingStartTime;
 	var meetingTime = req.body.meetingTime;  
 	var attendeeNames = req.body.attendeeName;
 	var attendeeEmails = req.body.attendeeEmail;
@@ -430,16 +426,15 @@ exports.addMeeting = function(req, res){
 	var emailAgenda='';
 	var timerInfo= meetingTime+','+duration;
 
-	//set up the date
-	// if(meetingYearTime[2] == 'PM'){
-	// 	meetingHourMin[0] = meetingHourMin[0] + 12;
-	// }
+	console.log(meetingDate);
 
-	console.log(meetingMonthDate[1]);
-	// console.log(meetingYearTime[0] + meetingMonthDate[0] + meetingMonthDate[1] + meetingHourMin[0] + meetingHourMin[1]);
-
-	meetingDate = new Date(meetingYearTime[0], meetingMonthDate[0] - 1, meetingMonthDate[1], meetingHourMin[0], meetingHourMin[1]);
-	console.log('The meeting time: ' + meetingDate);
+	if(meetingDate != ''){
+		var meetingMonthDate = meetingDate.split('/'); // for example: 03/25/2014 8:53 PM - splits to 03,25,2014 8:53 PM 
+		var meetingYearTime = meetingMonthDate[2].split(' '); // - splits to 2014,8:53,PM
+		var meetingHourMin = meetingYearTime[1].split(':'); // - splits to 8,53
+		meetingDate = new Date(meetingYearTime[0], meetingMonthDate[0] - 1, meetingMonthDate[1], meetingHourMin[0], meetingHourMin[1]);
+		console.log('The meeting time: ' + meetingDate);
+	}
 
 	var newMeeting = new Meeting({
 		UserId: userId,
