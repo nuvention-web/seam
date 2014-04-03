@@ -428,7 +428,7 @@ exports.addMeeting = function(req, res){
 
 	console.log(meetingDate);
 
-	if(meetingDate != ''){
+	if(meetingDate != ""){
 		var meetingMonthDate = meetingDate.split('/'); // for example: 03/25/2014 8:53 PM - splits to 03,25,2014 8:53 PM 
 		var meetingYearTime = meetingMonthDate[2].split(' '); // - splits to 2014,8:53,PM
 		var meetingHourMin = meetingYearTime[1].split(':'); // - splits to 8,53
