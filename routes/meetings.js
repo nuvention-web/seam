@@ -378,34 +378,32 @@ exports.addNote = function(req, res){
 
 exports.addTask = function(req, res){
 	var meetingTask = req.body.notes;
-	var meetingPerson = req.body.assigned;
+	var meetingPerson = req.body.taskPerson;
 	var meetingId = req.session.meetingId;
-	var projectId = req.session.projectId;
 	var userId = req.session.userId;
+	var taskPersonLength = meetingPerson.length;
+	meetingPerson = meetingPerson.slice(0, taskPersonLength - 2);
 
-	for(var i=0; i<meetingPerson.length; i++){
-		if(meetingPerson[i] != ""){
-			var newTask = new Task({
-				ProjectId: projectId,
-				UserId: userId,
-				MeetingId: meetingId,
-				meetingTask: meetingTask,
-				meetingPerson: meetingPerson[i]
-			});
+	if(meetingPerson != ""){
+		var newTask = new Task({
+			UserId: userId,
+			MeetingId: meetingId,
+			meetingTask: meetingTask,
+			meetingPerson: meetingPerson
+		});
 
-			newTask.save(function(err, doc){
-				if(err){
-					console.log('Problem adding task to database')
-					console.log(err);
-					res.location('error');
-					res.redirect('error', {user : req.user});
-				}
-				else{
-					console.log('Added new task successfully');
-					Task.find({}, function(e, docs){console.log(docs);});
-				}
-			});
-		}
+		newTask.save(function(err, doc){
+			if(err){
+				console.log('Problem adding task to database')
+				console.log(err);
+				res.location('error');
+				res.redirect('error', {user : req.user});
+			}
+			else{
+				console.log('Added new task successfully');
+				Task.find({}, function(e, docs){console.log(docs);});
+			}
+		});
 	}
 	res.redirect('back');
 };
