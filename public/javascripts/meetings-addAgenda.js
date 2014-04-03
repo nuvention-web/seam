@@ -1,6 +1,18 @@
 //FUNCTIONS FOR ADDING AGENDA ITEMS
 $(function(){
 	$("input[name='meetingDate']").datetimepicker();
+	
+	$('input[name="duration"]').on("focusout", function() {
+		if($('input[name="meetingTime"]').val() == ''){
+			$('input[name="meetingTime"]').val(this.value);
+		}
+		else{
+			var currentTime = $('input[name="meetingTime"]').val();
+			var addTime = this.value;
+			var total = currentTime + addTime;
+			$('input[name="meetingTime"]').val(total);
+		}
+	});
 });
 
 function addAgendaItemKeypress(e){
@@ -45,6 +57,18 @@ function addAgendaItem(){
      			'<input id="makeMeeting'+i+'" type="text" name="notes" placeholder="INSERT NOTES HERE" autocomplete="off" class="text-h4 height-30x form-control border-square border-none text-left bg-transparent"/>'+
      			'</div></div></div></div>').appendTo(agendaBox);
 	i++;
+
+	$('input[name="duration"]').on("focusout", function() {
+		if($('input[name="meetingTime"]').val() == ''){
+			$('input[name="meetingTime"]').val(this.value);
+		}
+		else{
+			var currentTime = $('input[name="meetingTime"]').val();
+			var addTime = this.time;
+			var total = currentTime + addTime;
+			$('input[name="meetingTime"]').val(total);
+		}
+	});
 };
 
 //FUNCTION: REMOVE AGENDA FIELDS GIVEN INPUT
