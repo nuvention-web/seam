@@ -76,38 +76,6 @@ function addAgendaItem(){
      			'<input id="makeMeeting'+i+'" type="text" name="notes" placeholder="INSERT NOTES HERE" autocomplete="off" class="text-h4 height-30x form-control border-square border-none text-left bg-transparent"/>'+
      			'</div></div></div></div>').appendTo(agendaBox);
 	i++;
-
-	// $('input[name="duration"]').on("focusin", function() {
-	// 	pastTime = this.value;
-	// });
-	
-
-	// $('input[name="duration"]').on("focusout", function() {
-	// 	if($('input[name="meetingTime"]').val() == ''){
-	// 		console.log('in if');
-	// 		$('input[name="meetingTime"]').val(this.value);
-	// 	}
-	// 	else{
-	// 		if(pastTime == ""){
-	// 			console.log('in else if');
-	// 			var currentTime = parseInt($('input[name="meetingTime"]').val());
-	// 			console.log('currentTime: ' + currentTime);
-	// 			var addTime = parseInt(this.value);
-	// 			console.log('addTime: ' + addTime);
-	// 			var total = currentTime + addTime;
-	// 			$('input[name="meetingTime"]').val(total);
-	// 		}
-	// 		else{
-	// 			console.log('pastTime: ' + pastTime);
-	// 			var currentTime = parseInt($('input[name="meetingTime"]').val()) - parseInt(pastTime);
-	// 			console.log('currentTime: ' + currentTime);
-	// 			var addTime = parseInt(this.value);
-	// 			console.log('addTime: ' + addTime);
-	// 			var total = currentTime + addTime;
-	// 			$('input[name="meetingTime"]').val(total);
-	// 		}
-	// 	}
-	// });
 };
 
 //FUNCTION: REMOVE AGENDA FIELDS GIVEN INPUT
