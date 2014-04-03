@@ -1,16 +1,35 @@
 //FUNCTIONS FOR ADDING AGENDA ITEMS
 $(function(){
 	$("input[name='meetingDate']").datetimepicker();
+
+	$('#agendaBox').on("focusin", 'input[name="duration"]', function() {
+		pastTime = this.value;
+	});
 	
-	$('input[name="duration"]').on("focusout", function() {
+	$('#agendaBox').on("focusout", 'input[name="duration"]', function() {
 		if($('input[name="meetingTime"]').val() == ''){
+			console.log('in if');
 			$('input[name="meetingTime"]').val(this.value);
 		}
 		else{
-			var currentTime = $('input[name="meetingTime"]').val();
-			var addTime = this.value;
-			var total = currentTime + addTime;
-			$('input[name="meetingTime"]').val(total);
+			if(pastTime == ""){
+				console.log('in else if');
+				var currentTime = parseInt($('input[name="meetingTime"]').val());
+				console.log('currentTime: ' + currentTime);
+				var addTime = parseInt(this.value);
+				console.log('addTime: ' + addTime);
+				var total = currentTime + addTime;
+				$('input[name="meetingTime"]').val(total);
+			}
+			else{
+				console.log('pastTime: ' + pastTime);
+				var currentTime = parseInt($('input[name="meetingTime"]').val()) - parseInt(pastTime);
+				console.log('currentTime: ' + currentTime);
+				var addTime = parseInt(this.value);
+				console.log('addTime: ' + addTime);
+				var total = currentTime + addTime;
+				$('input[name="meetingTime"]').val(total);
+			}
 		}
 	});
 });
@@ -58,17 +77,37 @@ function addAgendaItem(){
      			'</div></div></div></div>').appendTo(agendaBox);
 	i++;
 
-	$('input[name="duration"]').on("focusout", function() {
-		if($('input[name="meetingTime"]').val() == ''){
-			$('input[name="meetingTime"]').val(this.value);
-		}
-		else{
-			var currentTime = $('input[name="meetingTime"]').val();
-			var addTime = this.time;
-			var total = currentTime + addTime;
-			$('input[name="meetingTime"]').val(total);
-		}
-	});
+	// $('input[name="duration"]').on("focusin", function() {
+	// 	pastTime = this.value;
+	// });
+	
+
+	// $('input[name="duration"]').on("focusout", function() {
+	// 	if($('input[name="meetingTime"]').val() == ''){
+	// 		console.log('in if');
+	// 		$('input[name="meetingTime"]').val(this.value);
+	// 	}
+	// 	else{
+	// 		if(pastTime == ""){
+	// 			console.log('in else if');
+	// 			var currentTime = parseInt($('input[name="meetingTime"]').val());
+	// 			console.log('currentTime: ' + currentTime);
+	// 			var addTime = parseInt(this.value);
+	// 			console.log('addTime: ' + addTime);
+	// 			var total = currentTime + addTime;
+	// 			$('input[name="meetingTime"]').val(total);
+	// 		}
+	// 		else{
+	// 			console.log('pastTime: ' + pastTime);
+	// 			var currentTime = parseInt($('input[name="meetingTime"]').val()) - parseInt(pastTime);
+	// 			console.log('currentTime: ' + currentTime);
+	// 			var addTime = parseInt(this.value);
+	// 			console.log('addTime: ' + addTime);
+	// 			var total = currentTime + addTime;
+	// 			$('input[name="meetingTime"]').val(total);
+	// 		}
+	// 	}
+	// });
 };
 
 //FUNCTION: REMOVE AGENDA FIELDS GIVEN INPUT
