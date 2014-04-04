@@ -84,6 +84,10 @@ app.get('/dashboard/meetings/makeMeeting', user.isLoggedIn, meetings.makeMeeting
 app.get('/dashboard/meetings/makeMeeting/new', user.isLoggedIn, meetings.makeNewMeeting);
 app.post('/dashboard/meetings/makeMeeting/add', user.isLoggedIn, meetings.addMeeting);
 
+//update and edit meetings
+app.post('/dashboard/meetings/edit', user.isLoggedIn, meetings.editMeeting);
+app.post('/dashboard/meetings/edit/update', user.isLoggedIn, meetings.updateMeeting);
+
 app.post('/dashboard/meetings/view', user.isLoggedIn, meetings.viewMeeting);
 app.post('/dashboard/meetings/view/past', user.isLoggedIn, meetings.viewPast);
 app.get('/dashboard/meetings/view/pastMeeting', user.isLoggedIn, meetings.pastMeeting);
