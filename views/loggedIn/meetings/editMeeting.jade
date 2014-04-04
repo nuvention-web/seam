@@ -73,8 +73,8 @@ block content
 							div#attendeeList
 								each attendee, i in meeting.attendees
 									.row
-										input(type='hidden', name='#{attendee.attendeeName}', value='#{attendee.attendeeName}')
-										input(type='hidden', name='#{attendee.attendeeEmail}', value='#{attendee.attendeeEmail}')
+										input(type='hidden', name='attendeeName', value='#{attendee.attendeeName}')
+										input(type='hidden', name='attendeeEmail', value='#{attendee.attendeeEmail}')
 										.col-md-4.margin-top-5p
 											img.width-50x.border-50p.float-right(src='../../../images/member.png')
 										.col-md-8
