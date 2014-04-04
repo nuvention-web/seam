@@ -1,6 +1,6 @@
 //FUNCTION: ADD NOTE TO MEETING INTERFACE
 function editAgenda(elementId){
-	document.getElementById(elementId).action = location.protocol + "//" + location.host + '/addnote';
+	document.getElementById(elementId).action = location.protocol + "//" + location.host + '/dashboard/meetings/edit';
 	document.getElementById(elementId).submit();
 	return true;
 };

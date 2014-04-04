@@ -16,6 +16,159 @@ exports.makeMeeting = function(req, res){
 	})
 };
 
+exports.editMeeting = function(req, res){
+	var meetingId = req.body.meetingId;
+	if(meetingId == undefined){
+		meetingId = req.session.meetingId;
+	}
+	else{
+		req.session.meetingId = meetingId;
+	}
+	console.log(meetingId);
+	Meeting.findOne({'_id': meetingId}, function(e, doc){
+		var duration = 0;
+		if(doc.duration != ''){
+			var sepDuration = doc.duration.split(',');
+			for(var i = 0; i < sepDuration.length; i++){
+				if(sepDuration[i] != ',')
+				duration = parseInt(duration) + parseInt(sepDuration[i]);
+			}
+		}
+
+		if(doc.meetingDate != undefined){
+			var meetingDate;
+
+			var date = doc.meetingDate;
+			var duration = doc.meetingTime;
+			console.log(duration);
+			var year = date.getFullYear();
+			var month = date.getMonth() + 1;
+			var day = date.getDate();
+			var startHour = date.getHours();
+			var startMinutes = date.getMinutes();
+			var meridiam = 'AM';
+			if(startHour > 12){
+				startHour = startHour%12;
+				meridiam = 'PM'
+			}
+			if(startMinutes < 10){
+				startMinutes = "0" + startMinutes;
+			}
+			var endDate = addMinutes(date, duration);
+			var endHour = endDate.getHours();
+			var endMinutes = endDate.getMinutes();
+			if(endHour > 12){
+				endHour = endHour%12;
+			}
+			if(endMinutes < 10){
+				endMinutes = "0" + endMinutes;
+			}				
+			var timeString = month + "/" + day + "/" + year + " " + startHour + ":" + startMinutes + " " + meridiam;
+			meetingDate = timeString;
+			console.log(meetingDate);
+		}
+
+		res.render('loggedIn/meetings/editMeeting', { 
+			title: 'SEAM',
+			meeting: doc,
+			meetingDate: meetingDate,
+			meetingDuration: duration,
+			name: req.session.name,
+			user : req.user
+		});
+	})
+};
+
+exports.updateMeeting = function(req, res){
+	var userId = req.session.userId;
+	var meetingId = req.body.meetingId;
+	var conditions = { _id: meetingId};
+	var meetingTitle = req.body.meetingTitle;
+	var objective = req.body.objective;
+	var location = req.body.location;
+	var agenda = req.body.agendaTopic;
+	var duration = req.body.duration;
+	var meetingDate = req.body.meetingDate;
+	var meetingTime = req.body.meetingTime;  
+	var attendeeNames = req.body.attendeeName;
+	var attendeeEmails = req.body.attendeeEmail;
+	var notes = req.body.notes;
+	var emailAgenda='';
+	var timerInfo= meetingTime+','+duration;
+
+	console.log(meetingDate);
+
+	if(meetingDate != ""){
+		var meetingMonthDate = meetingDate.split('/'); // for example: 03/25/2014 8:53 PM - splits to 03,25,2014 8:53 PM 
+		var meetingYearTime = meetingMonthDate[2].split(' '); // - splits to 2014,8:53,PM
+		var meetingHourMin = meetingYearTime[1].split(':'); // - splits to 8,53
+		meetingDate = new Date(meetingYearTime[0], meetingMonthDate[0] - 1, meetingMonthDate[1], meetingHourMin[0], meetingHourMin[1]);
+		console.log('The meeting time: ' + meetingDate);
+	}
+
+	var meetingData = {
+		UserId: userId,
+		meetingTitle: meetingTitle,
+		objective: objective,
+		location: location,
+		meetingDate: meetingDate,
+		duration: duration,
+		agenda: new Array(),
+		attendees: new Array(),
+		// meetingStartTime:meetingStartTime,
+		meetingTime: meetingTime,
+		timerInfo: timerInfo
+	};
+
+	if(agenda != undefined){	
+		if(typeof agenda == 'string'){
+			emailAgenda+='1:  '+ agenda+'<br/>';
+			meetingData.agenda.push({
+				topic: agenda,
+				duration: duration,
+				notes: [{notes: notes}]
+			});
+		}
+		else{
+			for(var i=0; i<agenda.length; i++){
+				if(agenda[i] != ''){
+					var number= i+1;
+					emailAgenda+=number+':  '+ agenda[i]+'<br/>';
+					meetingData.agenda.push({
+						topic: agenda[i],
+						duration: duration[i],
+						notes: [{notes: notes[i]}]
+					});
+				}
+			};
+		}
+	}
+
+	if(attendeeNames != undefined){	
+		if(typeof attendeeNames == 'string'){
+			meetingData.attendees.push({
+				attendeeName: attendeeNames,
+				attendeeEmail: attendeeEmails
+			});
+		}
+		else{
+			for(var i=0; i<attendeeNames.length; i++){
+				if(attendeeNames[i] != ''){
+					meetingData.attendees.push({
+						attendeeName: attendeeNames[i],
+						attendeeEmail: attendeeEmails[i]
+					});
+				}
+			};
+		}
+	}
+
+	var update = { $set: meetingData };
+	var options = { upsert: true };
+
+	Meeting.update(conditions, update, options, function(){res.redirect('dashboard');});
+}
+
 exports.makeNewMeeting = function(req, res){
 	Meeting.find({'ProjectId': req.session.projectId, 'UserId' : req.user.local.email}, function(e, docs){
 		Project.findOne({'_id': req.session.projectId}, function(e, proj){

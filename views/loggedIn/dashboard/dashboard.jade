@@ -47,7 +47,7 @@ block content
 							h2.text-left.text-normal #{upcomingMeeting.meetingTitle}
 							h4.text-left.text-normal.text-gray #{meetingDate[0]}
 							input(type='hidden', name='meetingId', value='#{upcomingMeeting._id}')
-							button.padding-btn-small.text-right.margin-right-3p.border-square.bg-white.border-orange.border-orange.text-orange(type='button', href="javascript:{}") EDIT AGENDA
+							button.padding-btn-small.text-right.margin-right-3p.border-square.bg-white.border-orange.border-orange.text-orange(type='button', href="javascript:{}", onclick="editAgenda('upcomingMeeting')") EDIT AGENDA
 							button.padding-btn-small.text-right.margin-right-3p.border-square.bg-white.border-orange.border-orange.text-orange(type='button', href="javascript:{}" onclick="startAgenda('upcomingMeeting')") START
 			.row.bg-white.border-gray.border-shadow-1x.margin-right-1p.margin-bottom-3p(style='height:185px;')
 				.col-md-12.margin-top-1p.margin-left-1p
@@ -75,7 +75,7 @@ block content
 										h4.text-black.text-left #{meeting.meetingTitle}
 										h4.text-orange.text-left #{meeting.objective}
 									.col-md-2.text-right.margin-top-2p
-										button.padding-btn.border-square.bg-white.border-orange.border-orange.text-orange(type='button', href="javascript:{}")  EDIT
+										button.padding-btn.border-square.bg-white.border-orange.border-orange.text-orange(type='button', href="javascript:{}", onclick="editAgenda('future#{i}')")  EDIT
 									.col-md-2.text-left.margin-top-2p
 										button.padding-btn.border-square.bg-white.border-orange.border-orange.text-orange(type='button', href="javascript:{}" onclick="startAgenda('future#{i}')") START
 	//.row.margin-top-2p
