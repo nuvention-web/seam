@@ -69,6 +69,7 @@ if ('development' == app.get('env')) {
 //Landing Page
 app.get('/', landingPage.home);
 app.get('/home', landingPage.home);
+app.get('/login', landingPage.login);
 app.get('/survey', landingPage.survey);
 app.post('/addSurvey', landingPage.addSurvey);
 app.post('/addEmail', landingPage.addEmail);
@@ -82,6 +83,10 @@ app.get('/dashboard', user.isLoggedIn, dashboard.dashboard);
 app.get('/dashboard/meetings/makeMeeting', user.isLoggedIn, meetings.makeMeeting);
 app.get('/dashboard/meetings/makeMeeting/new', user.isLoggedIn, meetings.makeNewMeeting);
 app.post('/dashboard/meetings/makeMeeting/add', user.isLoggedIn, meetings.addMeeting);
+
+//update and edit meetings
+app.post('/dashboard/meetings/edit', user.isLoggedIn, meetings.editMeeting);
+app.post('/dashboard/meetings/edit/update', user.isLoggedIn, meetings.updateMeeting);
 
 app.post('/dashboard/meetings/view', user.isLoggedIn, meetings.viewMeeting);
 app.post('/dashboard/meetings/view/past', user.isLoggedIn, meetings.viewPast);
