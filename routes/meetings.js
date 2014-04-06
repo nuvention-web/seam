@@ -361,51 +361,6 @@ exports.endMeeting = function(req, res){
 				};
 			}
 
-		// //email function
-		// 	smtpConfig = nodemailer.createTransport('SMTP', {
-		// 		service: 'Gmail',
-		// 		auth: {
-		// 			user: "seammeetings@gmail.com",
-		// 			pass: "123456789a!"
-		// 		}
-		// 	});
-		// 	//construct the email sending module
-		// 	mailBody = {
-		// 		forceEmbeddedImages: true,
-		// 		from: "SEAM Meetings <seammeetings@gmail.com>",
-		// 		to: meetingInfo.meetingMembers,
-		// 		subject: '[ '+meetingInfo.meetingDate+' ] '+meetingInfo.meetingTitle+ ' Minutes',
-		// 		text: 'Objectives: '+objective+'\n\n'+ 'Agenda: \n\n'+ emailAgenda,
-
-		// 		// HTML body
-		//     	html:"<body>"+
-		//     	"<p style='text-align:center'><img src='cid:logo@seam'/></p>"+
-		//         "<p style='text-align:left; text-transform:capitalize'> Date: "+meetingInfo.meetingDate+"<br/></p>" +
-		//         "<p style='text-align:left; text-transform:capitalize'> Duration: "+meetingInfo.meetingTime+" Minutes <br/></p>" +
-		//         "<p style='text-align:left; text-transform:capitalize'> Objectives: "+meetingInfo.objective+"<br/></p>" +
-		//         "<p style='text-align:left; text-transform:capitalize'> Agenda: <br/></p>"+
-		//         emailAgenda+
-		//         "</body>",
-		// 	    attachments:[
-		// 	        // Logo img
-		// 	        {
-		// 	            filePath: './public/images/seamlogo-red125.png',
-		// 	            cid: 'logo@seam' // should be as unique as possible
-		// 	        },
-
-		// 	    ]
-		// 	};
-		// 	//send Email
-		// 	smtpConfig.sendMail(mailBody, function (error, response) {
-		// 		//Email not sent
-		// 		if (error) {
-		// 			res.end("Email send Failed");
-		// 		}
-		// 		//email send sucessfully
-		// 		else {
-		// 			res.end("Email send sucessfully");
-		// 		}
-		// 	});
 		});
 	});
 	res.redirect('dashboard');
@@ -699,11 +654,11 @@ function emailFunction(emailBody,icsFilePath,res){
 	 smtpConfig.sendMail(emailBody, function (error, response) {
 	//Email not sent
  	if (error) {
-		res.end("Email send Failed");
+		console.log("Email Failed");
  	}
  	//email send sucessfully
 	else {
-		res.end("Email send sucessfully");
+		console.log("Email Failed");
 		deleteFile(icsFilePath);
  	}
 
