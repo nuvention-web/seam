@@ -572,7 +572,7 @@ exports.addMeeting = function(req, res){
 		meetingEndTime= new Date(meetingYearTime[0], meetingMonthDate[0] - 1, meetingMonthDate[1], hour, meetingHourMin[1]);
 		var length=parseInt(duration);
 		meetingEndTime.setMinutes(meetingStartTime.getMinutes()+length);
-		emailDate=meetingStartTime.getMonth()+"/"+meetingStartTime.getDate()+"/"+meetingStartTime.getFullYear();
+		emailDate=parseInt(meetingStartTime.getMonth()+1)+"/"+meetingStartTime.getDate()+"/"+meetingStartTime.getFullYear();
 		icalDate=meetingStartTime.getMonth()+""+meetingStartTime.getDate()+""+meetingStartTime.getFullYear();
 		var icalStartTime=meetingStartTime.getFullYear()+"-"+('0' + meetingStartTime.getMonth()).slice(-2)+"-"+('0' + meetingStartTime.getDate()).slice(-2)+"T0"+ ('0' +meetingStartTime.getHours()).slice(-2)+":"+('0' + meetingStartTime.getMinutes()).slice(-2)+"-5:00";
 		var icalEndTime=meetingEndTime.getFullYear()+"-"+('0' + meetingEndTime.getMonth()).slice(-2)+"-"+('0' + meetingEndTime.getDate()).slice(-2)+"T0"+ ('0' +meetingEndTime.getHours()).slice(-2)+":"+('0' + meetingEndTime.getMinutes()).slice(-2)+"-5:00";
