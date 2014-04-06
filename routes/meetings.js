@@ -587,6 +587,10 @@ exports.addMeeting = function(req, res){
 		var meetingYearTime = meetingMonthDate[2].split(' '); // - splits to 2014,8:53,PM
 		var meetingHourMin = meetingYearTime[1].split(':'); // - splits to 8,53
 		var hour=parseInt(meetingHourMin[0]);
+		if(meetingYearTime[2]=="PM"){
+			console.log("PM");
+			hour+=12;
+		}
 		meetingStartTime = new Date(meetingYearTime[0], meetingMonthDate[0] - 1, meetingMonthDate[1], hour, meetingHourMin[1]);
 		meetingEndTime= new Date(meetingYearTime[0], meetingMonthDate[0] - 1, meetingMonthDate[1], hour, meetingHourMin[1]);
 		var length=parseInt(duration);
