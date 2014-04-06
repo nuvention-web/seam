@@ -430,6 +430,9 @@ textarea:focus, input:focus{
 .margin-top-1p{
 	margin-top:1%;
 }
+.margin-top-1-5p{
+	margin-top:1.5%;
+}
 .margin-top-2p{
 	margin-top:2%;
 }
@@ -673,6 +676,11 @@ textarea:focus, input:focus{
 	-webkit-box-shadow: 0 0 8px  rgba(204,51,51, .8);
 	-moz-box-shadow: 0 0 8px  rgba(204,51,51, .8);
 }
+.border-shadow-gray{
+  -moz-box-shadow:    2px 2px 4px 5px #ccc;
+  -webkit-box-shadow: 2px 2px 4px 5px #ccc;
+  box-shadow:         2px 2px 4px 5px #ccc;
+}
 .border-square{
 	-webkit-border-radius: 0 !important;
      -moz-border-radius: 0 !important;
@@ -813,6 +821,12 @@ textarea:focus, input:focus{
 	width: 80%;
 	margin:0 10%;
 	margin-top:29%;
+}
+.loginBox {
+	width: 30%;
+	margin:0 35%;
+	margin-top:12%;
+	background-color: rgb(234,234,234);
 }
 /* =======================================================
    3.PROGRESS_BAR-DESKTOP

@@ -1,6 +1,46 @@
 //FUNCTIONS FOR ADDING AGENDA ITEMS
 $(function(){
 	$("input[name='meetingDate']").datetimepicker();
+
+	$('#agendaBox').on("focusin", 'input[name="duration"]', function() {
+		pastTime = this.value;
+	});
+	
+	$('#agendaBox').on("focusout", 'input[name="duration"]', function() {
+		if($('input[name="meetingTime"]').val() == ''){
+			console.log('in if');
+			$('input[name="meetingTime"]').val(this.value);
+		}
+		else{
+			if(pastTime == ""){
+				console.log('in else if');
+				var currentTime = parseInt($('input[name="meetingTime"]').val());
+				console.log('currentTime: ' + currentTime);
+				if(this.value == ""){
+					var addTime = 0;
+				}
+				else{
+					var addTime = parseInt(this.value);
+				}
+				var total = currentTime + addTime;
+				$('input[name="meetingTime"]').val(total);
+			}
+			else{
+				console.log('pastTime: ' + pastTime);
+				var currentTime = parseInt($('input[name="meetingTime"]').val()) - parseInt(pastTime);
+				console.log('currentTime: ' + currentTime);
+				if(this.value == ""){
+					var addTime = 0;
+				}
+				else{
+					var addTime = parseInt(this.value);
+				}
+				console.log('addTime: ' + this.value);
+				var total = currentTime + addTime;
+				$('input[name="meetingTime"]').val(total);
+			}
+		}
+	});
 });
 
 function addAgendaItemKeypress(e){

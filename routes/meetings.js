@@ -16,6 +16,159 @@ exports.makeMeeting = function(req, res){
 	})
 };
 
+exports.editMeeting = function(req, res){
+	var meetingId = req.body.meetingId;
+	if(meetingId == undefined){
+		meetingId = req.session.meetingId;
+	}
+	else{
+		req.session.meetingId = meetingId;
+	}
+	console.log(meetingId);
+	Meeting.findOne({'_id': meetingId}, function(e, doc){
+		var duration = 0;
+		if(doc.duration != ''){
+			var sepDuration = doc.duration.split(',');
+			for(var i = 0; i < sepDuration.length; i++){
+				if(sepDuration[i] != ',')
+				duration = parseInt(duration) + parseInt(sepDuration[i]);
+			}
+		}
+
+		if(doc.meetingDate != undefined){
+			var meetingDate;
+
+			var date = doc.meetingDate;
+			var duration = doc.meetingTime;
+			console.log(duration);
+			var year = date.getFullYear();
+			var month = date.getMonth() + 1;
+			var day = date.getDate();
+			var startHour = date.getHours();
+			var startMinutes = date.getMinutes();
+			var meridiam = 'AM';
+			if(startHour > 12){
+				startHour = startHour%12;
+				meridiam = 'PM'
+			}
+			if(startMinutes < 10){
+				startMinutes = "0" + startMinutes;
+			}
+			var endDate = addMinutes(date, duration);
+			var endHour = endDate.getHours();
+			var endMinutes = endDate.getMinutes();
+			if(endHour > 12){
+				endHour = endHour%12;
+			}
+			if(endMinutes < 10){
+				endMinutes = "0" + endMinutes;
+			}				
+			var timeString = month + "/" + day + "/" + year + " " + startHour + ":" + startMinutes + " " + meridiam;
+			meetingDate = timeString;
+			console.log(meetingDate);
+		}
+
+		res.render('loggedIn/meetings/editMeeting', { 
+			title: 'SEAM',
+			meeting: doc,
+			meetingDate: meetingDate,
+			meetingDuration: duration,
+			name: req.session.name,
+			user : req.user
+		});
+	})
+};
+
+exports.updateMeeting = function(req, res){
+	var userId = req.session.userId;
+	var meetingId = req.body.meetingId;
+	var conditions = { _id: meetingId};
+	var meetingTitle = req.body.meetingTitle;
+	var objective = req.body.objective;
+	var location = req.body.location;
+	var agenda = req.body.agendaTopic;
+	var duration = req.body.duration;
+	var meetingDate = req.body.meetingDate;
+	var meetingTime = req.body.meetingTime;  
+	var attendeeNames = req.body.attendeeName;
+	var attendeeEmails = req.body.attendeeEmail;
+	var notes = req.body.notes;
+	var emailAgenda='';
+	var timerInfo= meetingTime+','+duration;
+
+	console.log(meetingDate);
+
+	if(meetingDate != ""){
+		var meetingMonthDate = meetingDate.split('/'); // for example: 03/25/2014 8:53 PM - splits to 03,25,2014 8:53 PM 
+		var meetingYearTime = meetingMonthDate[2].split(' '); // - splits to 2014,8:53,PM
+		var meetingHourMin = meetingYearTime[1].split(':'); // - splits to 8,53
+		meetingDate = new Date(meetingYearTime[0], meetingMonthDate[0] - 1, meetingMonthDate[1], meetingHourMin[0], meetingHourMin[1]);
+		console.log('The meeting time: ' + meetingDate);
+	}
+
+	var meetingData = {
+		UserId: userId,
+		meetingTitle: meetingTitle,
+		objective: objective,
+		location: location,
+		meetingDate: meetingDate,
+		duration: duration,
+		agenda: new Array(),
+		attendees: new Array(),
+		// meetingStartTime:meetingStartTime,
+		meetingTime: meetingTime,
+		timerInfo: timerInfo
+	};
+
+	if(agenda != undefined){	
+		if(typeof agenda == 'string'){
+			emailAgenda+='1:  '+ agenda+'<br/>';
+			meetingData.agenda.push({
+				topic: agenda,
+				duration: duration,
+				notes: [{notes: notes}]
+			});
+		}
+		else{
+			for(var i=0; i<agenda.length; i++){
+				if(agenda[i] != ''){
+					var number= i+1;
+					emailAgenda+=number+':  '+ agenda[i]+'<br/>';
+					meetingData.agenda.push({
+						topic: agenda[i],
+						duration: duration[i],
+						notes: [{notes: notes[i]}]
+					});
+				}
+			};
+		}
+	}
+
+	if(attendeeNames != undefined){	
+		if(typeof attendeeNames == 'string'){
+			meetingData.attendees.push({
+				attendeeName: attendeeNames,
+				attendeeEmail: attendeeEmails
+			});
+		}
+		else{
+			for(var i=0; i<attendeeNames.length; i++){
+				if(attendeeNames[i] != ''){
+					meetingData.attendees.push({
+						attendeeName: attendeeNames[i],
+						attendeeEmail: attendeeEmails[i]
+					});
+				}
+			};
+		}
+	}
+
+	var update = { $set: meetingData };
+	var options = { upsert: true };
+
+	Meeting.update(conditions, update, options, function(){res.redirect('dashboard');});
+}
+
 exports.makeNewMeeting = function(req, res){
 	Meeting.find({'ProjectId': req.session.projectId, 'UserId' : req.user.local.email}, function(e, docs){
 		Project.findOne({'_id': req.session.projectId}, function(e, proj){
@@ -174,10 +327,10 @@ exports.getMeeting = function(req, res){
 
 exports.endMeeting = function(req, res){
 	var meetingId = req.session.meetingId;
-	var meetingInfo;
 	var mailBody, smtpConfig;
 	var emailAgenda='';
-	var agenda,meetingTitle,meetingDate,objective;
+	var agenda,meetingTitle,meetingDate,objective,meetingAttendees,emailDate,emailTime,owner;
+	var emailList='';
 	// console.log(meetingId);
 	Meeting.findByIdAndUpdate(meetingId, {
 		'isComplete' : 1
@@ -188,73 +341,50 @@ exports.endMeeting = function(req, res){
 	});
 	Meeting.find({'ProjectId': meetingId, 'UserId' : req.session.userId}, function(e, docs){
 		Meeting.findOne({'_id': meetingId}, function(e, doc){
-			meetingInfo=doc;
 			agenda=doc.agenda;
+			meetingTitle=doc.meetingTitle;
+			objective=doc.objective;
+			meetingAttendees=doc.attendees;
+			meetingDate=doc.meetingDate;
+			owner=doc.UserId;
+			emailList=owner+',';
+			var meetingYear = meetingDate.getFullYear(); 
+			var meetingMonth = meetingDate.getMonth(); 
+			var meetingDay = meetingDate.getDate(); 
+			emailDate= meetingMonth +"/"+meetingDay+"/"+meetingYear ;
+			emailTime=doc.meetingTime;
 			if(typeof agenda == 'string'){
 				emailAgenda+="<p style='text-align:left; text-transform:capitalize'> 1: "+agenda.topic+"<br/></p>";
 			}
 			else{
 				for(var i=0; i<agenda.length; i++){
-					console.log(agenda);
-					console.log(agenda.length);
 					if(agenda[i] != ''){
 						var number= i+1;
 						var notes= agenda[i].notes;
 						emailAgenda+=number+':  '+ agenda[i].topic+'<br/>';
-						for(var z=0; z<notes.length;z++){
-							emailAgenda+="<p style='margin-left:5em; text-transform:capitalize'> " +String.fromCharCode(97 + z)+". "+notes[z].notes+"<br/></p>";
+						var initialNoteCount= -1; //If there is initial note count =0
+						if(notes.length>0 && notes[0].notes!='' ){
+							emailAgenda+="<p style='margin-left:5em; text-transform:capitalize'> A"+". "+notes[0].notes+"<br/></p>";
+							initialNoteCount=0;
+						}
+						for(var z=1; z<notes.length;z++){
+							emailAgenda+="<p style='margin-left:5em; text-transform:capitalize'> " +String.fromCharCode(97 + z+ initialNoteCount)+". "+notes[z].notes+"<br/></p>";
 						}
 					}
 				};
 			}
+			if(meetingAttendees!=''){
+				for(var i=0; i<meetingAttendees.length; i++){
+					emailList+=meetingAttendees[i].attendeeEmail+',';
+				}
+			}
+			mailBody=createMinutesBody(emailDate,meetingTitle,emailList,objective,emailAgenda,emailTime,objective,emailAgenda);
+			emailFunction(mailBody,res);
 
-		// //email function
-		// 	smtpConfig = nodemailer.createTransport('SMTP', {
-		// 		service: 'Gmail',
-		// 		auth: {
-		// 			user: "seammeetings@gmail.com",
-		// 			pass: "123456789a!"
-		// 		}
-		// 	});
-		// 	//construct the email sending module
-		// 	mailBody = {
-		// 		forceEmbeddedImages: true,
-		// 		from: "SEAM Meetings <seammeetings@gmail.com>",
-		// 		to: meetingInfo.meetingMembers,
-		// 		subject: '[ '+meetingInfo.meetingDate+' ] '+meetingInfo.meetingTitle+ ' Minutes',
-		// 		text: 'Objectives: '+objective+'\n\n'+ 'Agenda: \n\n'+ emailAgenda,
-
-		// 		// HTML body
-		//     	html:"<body>"+
-		//     	"<p style='text-align:center'><img src='cid:logo@seam'/></p>"+
-		//         "<p style='text-align:left; text-transform:capitalize'> Date: "+meetingInfo.meetingDate+"<br/></p>" +
-		//         "<p style='text-align:left; text-transform:capitalize'> Duration: "+meetingInfo.meetingTime+" Minutes <br/></p>" +
-		//         "<p style='text-align:left; text-transform:capitalize'> Objectives: "+meetingInfo.objective+"<br/></p>" +
-		//         "<p style='text-align:left; text-transform:capitalize'> Agenda: <br/></p>"+
-		//         emailAgenda+
-		//         "</body>",
-		// 	    attachments:[
-		// 	        // Logo img
-		// 	        {
-		// 	            filePath: './public/images/seamlogo-red125.png',
-		// 	            cid: 'logo@seam' // should be as unique as possible
-		// 	        },
-
-		// 	    ]
-		// 	};
-		// 	//send Email
-		// 	smtpConfig.sendMail(mailBody, function (error, response) {
-		// 		//Email not sent
-		// 		if (error) {
-		// 			res.end("Email send Failed");
-		// 		}
-		// 		//email send sucessfully
-		// 		else {
-		// 			res.end("Email send sucessfully");
-		// 		}
-		// 	});
 		});
 	});
+
+	
 	res.redirect('dashboard');
 }
 
@@ -378,34 +508,32 @@ exports.addNote = function(req, res){
 
 exports.addTask = function(req, res){
 	var meetingTask = req.body.notes;
-	var meetingPerson = req.body.assigned;
+	var meetingPerson = req.body.taskPerson;
 	var meetingId = req.session.meetingId;
-	var projectId = req.session.projectId;
 	var userId = req.session.userId;
+	var taskPersonLength = meetingPerson.length;
+	meetingPerson = meetingPerson.slice(0, taskPersonLength - 2);
 
-	for(var i=0; i<meetingPerson.length; i++){
-		if(meetingPerson[i] != ""){
-			var newTask = new Task({
-				ProjectId: projectId,
-				UserId: userId,
-				MeetingId: meetingId,
-				meetingTask: meetingTask,
-				meetingPerson: meetingPerson[i]
-			});
+	if(meetingPerson != ""){
+		var newTask = new Task({
+			UserId: userId,
+			MeetingId: meetingId,
+			meetingTask: meetingTask,
+			meetingPerson: meetingPerson
+		});
 
-			newTask.save(function(err, doc){
-				if(err){
-					console.log('Problem adding task to database')
-					console.log(err);
-					res.location('error');
-					res.redirect('error', {user : req.user});
-				}
-				else{
-					console.log('Added new task successfully');
-					Task.find({}, function(e, docs){console.log(docs);});
-				}
-			});
-		}
+		newTask.save(function(err, doc){
+			if(err){
+				console.log('Problem adding task to database')
+				console.log(err);
+				res.location('error');
+				res.redirect('error', {user : req.user});
+			}
+			else{
+				console.log('Added new task successfully');
+				Task.find({}, function(e, docs){console.log(docs);});
+			}
+		});
 	}
 	res.redirect('back');
 };
@@ -419,43 +547,51 @@ exports.addMeeting = function(req, res){
 	var agenda = req.body.agendaTopic;
 	var duration = req.body.duration;
 	var meetingDate = req.body.meetingDate;
-	var meetingMonthDate = meetingDate.split('/'); // for example: 03/25/2014 8:53 PM - splits to 03,25,2014 8:53 PM 
-	var meetingYearTime = meetingMonthDate[2].split(' '); // - splits to 2014,8:53,PM
-	var meetingHourMin = meetingYearTime[1].split(':'); // - splits to 8,53
-	// var meetingStartTime = req.body.meetingStartTime;
 	var meetingTime = req.body.meetingTime;  
 	var attendeeNames = req.body.attendeeName;
 	var attendeeEmails = req.body.attendeeEmail;
 	var notes = req.body.notes;
 	var emailAgenda='';
+	var emailDate='';
+	var emailList=userId+',';
 	var timerInfo= meetingTime+','+duration;
+	var icalEmail=[];
+	icalEmail.push({name:"Creator", email:userId});
+	var meetingStartTime,meetingEndTime,meetingEndTime,icalDate,icalStartTime,icalEndTime='';
 
-	//set up the date
-	// if(meetingYearTime[2] == 'PM'){
-	// 	meetingHourMin[0] = meetingHourMin[0] + 12;
-	// }
-
-	console.log(meetingMonthDate[1]);
-	// console.log(meetingYearTime[0] + meetingMonthDate[0] + meetingMonthDate[1] + meetingHourMin[0] + meetingHourMin[1]);
-
-	meetingDate = new Date(meetingYearTime[0], meetingMonthDate[0] - 1, meetingMonthDate[1], meetingHourMin[0], meetingHourMin[1]);
-	console.log('The meeting time: ' + meetingDate);
+	if(meetingDate != ""){
+		var meetingMonthDate = meetingDate.split('/'); // for example: 03/25/2014 8:53 PM - splits to 03,25,2014 8:53 PM 
+		var meetingYearTime = meetingMonthDate[2].split(' '); // - splits to 2014,8:53,PM
+		var meetingHourMin = meetingYearTime[1].split(':'); // - splits to 8,53
+		var hour=parseInt(meetingHourMin[0]);
+		if(meetingYearTime[2]=="PM"){
+			console.log("PM");
+			hour+=12;
+		}
+		meetingStartTime = new Date(meetingYearTime[0], meetingMonthDate[0] - 1, meetingMonthDate[1], hour, meetingHourMin[1]);
+		meetingEndTime= new Date(meetingYearTime[0], meetingMonthDate[0] - 1, meetingMonthDate[1], hour, meetingHourMin[1]);
+		var length=parseInt(duration);
+		meetingEndTime.setMinutes(meetingStartTime.getMinutes()+length);
+		emailDate=meetingStartTime.getMonth()+"/"+meetingStartTime.getDate()+"/"+meetingStartTime.getFullYear();
+		icalDate=meetingStartTime.getMonth()+""+meetingStartTime.getDate()+""+meetingStartTime.getFullYear();
+		var icalStartTime=meetingStartTime.getFullYear()+"-"+('0' + meetingStartTime.getMonth()).slice(-2)+"-"+('0' + meetingStartTime.getDate()).slice(-2)+"T0"+ ('0' +meetingStartTime.getHours()).slice(-2)+":"+('0' + meetingStartTime.getMinutes()).slice(-2)+"-5:00";
+		var icalEndTime=meetingEndTime.getFullYear()+"-"+('0' + meetingEndTime.getMonth()).slice(-2)+"-"+('0' + meetingEndTime.getDate()).slice(-2)+"T0"+ ('0' +meetingEndTime.getHours()).slice(-2)+":"+('0' + meetingEndTime.getMinutes()).slice(-2)+"-5:00";
+	}
 
 	var newMeeting = new Meeting({
 		UserId: userId,
 		meetingTitle: meetingTitle,
 		objective: objective,
 		location: location,
-		meetingDate: meetingDate,
+		meetingDate: meetingStartTime,
 		duration: duration,
-		// meetingStartTime:meetingStartTime,
 		meetingTime: meetingTime,
 		timerInfo: timerInfo
 	});
 
 	if(agenda != undefined){	
 		if(typeof agenda == 'string'){
-			emailAgenda+='1:  '+ agenda+'<br/>';
+			emailAgenda+='1:  '+ agenda+'<br/>'+"<p style='margin-left:5em;'> "+notes+"<br/></p>";
 			newMeeting.agenda.push({
 				topic: agenda,
 				duration: duration,
@@ -466,7 +602,7 @@ exports.addMeeting = function(req, res){
 			for(var i=0; i<agenda.length; i++){
 				if(agenda[i] != ''){
 					var number= i+1;
-					emailAgenda+=number+':  '+ agenda[i]+'<br/>';
+					emailAgenda+=number+':  '+ agenda[i]+'<br/>'+"<p style='margin-left:5em;'> "+notes[i]+"<br/></p>";
 					newMeeting.agenda.push({
 						topic: agenda[i],
 						duration: duration[i],
@@ -479,6 +615,8 @@ exports.addMeeting = function(req, res){
 
 	if(attendeeNames != undefined){	
 		if(typeof attendeeNames == 'string'){
+			emailList+=attendeeEmails;
+			icalEmail.push({name:attendeeNames, email:attendeeEmails});
 			newMeeting.attendees.push({
 				attendeeName: attendeeNames,
 				attendeeEmail: attendeeEmails
@@ -487,6 +625,8 @@ exports.addMeeting = function(req, res){
 		else{
 			for(var i=0; i<attendeeNames.length; i++){
 				if(attendeeNames[i] != ''){
+					emailList+=attendeeEmails[i]+',';
+					icalEmail.push({name:attendeeNames[i], email:attendeeEmails[i]});
 					newMeeting.attendees.push({
 						attendeeName: attendeeNames[i],
 						attendeeEmail: attendeeEmails[i]
@@ -509,54 +649,146 @@ exports.addMeeting = function(req, res){
 		}
 	});
 
-	// //email function
-	// smtpConfig = nodemailer.createTransport('SMTP', {
-	// 	service: 'Gmail',
-	// 	auth: {
-	// 		user: "seammeetings@gmail.com",
-	// 		pass: "123456789a!"
-	// 	}
-	// });
-	// //construct the email sending module
-	// mailBody = {
-	// 	forceEmbeddedImages: true,
-	// 	from: "SEAM Meetings <seammeetings@gmail.com>",
-	// 	to: meetingMembers,
-	// 	subject: '[ '+meetingDate+' ] '+ meetingTitle + ' Meeting Agenda',
-	// 	text: 'Date: '+ meetingDate +'\n\n'+ 'Objectives: '+objective+'\n\n'+ 'Agenda: \n\n'+ emailAgenda,
-
-	// 	// HTML body
- //    	html:"<body>"+
- //    	"<p style='text-align:center'><img src='cid:logo@seam'/></p>"+
- //        "<p style='text-align:left; text-transform:capitalize'> Date: "+meetingDate+"<br/></p>" +
- //        "<p style='text-align:left; text-transform:capitalize'> Duration: "+meetingTime+" Minutes <br/></p>" +
- //        "<p style='text-align:left; text-transform:capitalize'> Objectives: "+objective+"<br/></p>" +
- //        "<p style='text-align:left; text-transform:capitalize'> Agenda: <br/>"+emailAgenda+"<br/></p>"+
- //        "</body>",
-	//     attachments:[
-	//         // Logo img
-	//         {
-	//             filePath: './public/images/seamlogo-red125.png',
-	//             cid: 'logo@seam' // should be as unique as possible
-	//         },
-
-	//     ]
-	// };
-	// //send Email
-	// smtpConfig.sendMail(mailBody, function (error, response) {
-	// 	//Email not sent
-	// 	if (error) {
-	// 		res.end("Email send Failed");
-	// 	}
-	// 	//email send sucessfully
-	// 	else {
-	// 		res.end("Email send sucessfully");
-	// 	}
-	// });
+	//Create ical File
+	var icsFilePath=createiCal(userId,meetingTitle,icalDate,icalEmail,meetingStartTime,meetingEndTime,objective,location);
+	mailBody=createAgendaBody(emailList,emailDate,meetingTitle,objective,emailAgenda,location,duration,icsFilePath);
+	emailFunction(mailBody,res,icsFilePath);
 
 	res.redirect('/dashboard');
 };
 
 function addMinutes(date, minutes){
 	return new Date(date.getTime() + minutes*60000);
+}
+
+function emailFunction(emailBody,res,icsFilePath){
+	var smptpConfig;
+	//email function
+	smtpConfig = nodemailer.createTransport('SMTP', {
+	service: 'Gmail',
+	auth: {
+		user: "seammeetings@gmail.com",
+	 	pass: "123456789a!"
+	}
+	 });
+
+	//send Email
+	 smtpConfig.sendMail(emailBody, function (error, response) {
+	//Email not sent
+ 	if (error) {
+		res.end("Email Failed");
+ 	}
+ 	//email send sucessfully
+	else {
+		res.end("Email Successfully");
+		if(icsFilePath==''){
+			deleteFile(icsFilePath);
+		}
+		else{
+		}
+ 	}
+
+ });
+}
+function createAgendaBody(emailList,emailDate,meetingTitle,objective,emailAgenda,location,meetingTime,icsFilePath){
+	var mailBody;
+	console.log(emailList+' '+emailDate+' '+meetingTitle+' '+objective+' '+emailAgenda+' '+location+' '+meetingTime+' '+icsFilePath);
+	//construct the email sending module
+	mailBody = {
+	 	forceEmbeddedImages: true,
+	 	from: "SEAM Meetings <seammeetings@gmail.com>",
+		to: emailList,
+	 	subject: '[ '+emailDate+' ] '+ meetingTitle + ' Meeting Agenda',
+	 	text: 'Date: '+ emailDate +'\n\n'+ 'Objectives: '+objective+'\n\n'+ 'Agenda: \n\n'+ emailAgenda,
+
+	// HTML body
+     	html:"<body>"+
+     	"<p style='text-align:center'><img src='cid:logo@seam'/></p>"+
+        "<p style='text-align:left; text-transform:capitalize'> Date: "+emailDate+"<br/></p>" +
+        "<p style='text-align:left; text-transform:capitalize'> Location: "+location+"<br/></p>" +
+        "<p style='text-align:left; text-transform:capitalize'> Duration: "+meetingTime+" Minutes <br/></p>" +
+        "<p style='text-align:left; text-transform:capitalize'> Objectives: "+objective+"<br/></p>" +
+        "<p style='text-align:left; text-transform:capitalize'> Agenda: <br/>"+emailAgenda+"<br/></p>"+ 
+        "</body>",
+        attachments:[
+         // Logo img
+	        {
+             filePath: './public/images/seamlogo-red125.png',
+             cid: 'logo@seam' // should be as unique as possible
+         },
+        {
+        	filePath: icsFilePath,
+        	cid: 'ics@meet'
+
+        },
+    ]
+ };
+ return mailBody;
+}
+function createMinutesBody(emailDate,meetingTitle,emailList,objective,emailAgenda,emailTime,objective,emailAgenda){
+	var mailBody;
+	//construct the email sending module
+			mailBody = {
+			 	forceEmbeddedImages: true,
+			 	from: "SEAM Meetings <seammeetings@gmail.com>",
+				to: emailList,
+			 	subject: '[ '+emailDate+' ] '+ meetingTitle + ' Meeting Minutes',
+			 	text: 'Date: '+ emailDate +'\n\n'+ 'Objectives: '+objective+'\n\n'+ 'Agenda: \n\n'+ emailAgenda,
+
+			// HTML body
+		     	html:"<body>"+
+		     	"<p style='text-align:center'><img src='cid:logo@seam'/></p>"+
+		        "<p style='text-align:left; text-transform:capitalize'> Duration: "+emailTime+" Minutes<br/></p>" +
+		        "<p style='text-align:left; text-transform:capitalize'> Objectives: "+objective+"<br/></p>" +
+		        "<p style='text-align:left; text-transform:capitalize'> Agenda: <br/>"+emailAgenda+"<br/></p>"+ 
+		        "</body>",
+		        attachments:[
+		         // Logo img
+			        {
+		             filePath: './public/images/seamlogo-red125.png',
+		             cid: 'logo@seam' // should be as unique as possible
+		         }
+		    	]
+		 	};
+	return mailBody;
+}
+//Creates ics File and returns File Name
+function createiCal(userId,meetingTitle,icalDate,icalEmail,icalSTime,icalETime,objective,location){
+	//ical Module
+	var iCalEvent = require('icalevent');
+	var tempFileName='icsFiles/'+userId+meetingTitle+icalDate+'.ics';
+	var fs= require('fs');
+	console.log(userId+","+meetingTitle+","+icalDate+","+icalEmail+","+icalSTime+","+icalETime+","+objective+","+location);
+	//Create Event
+	var events = new iCalEvent({
+	    offset: new Date().getTimezoneOffset(),
+	    method: 'request',
+	    status: 'confirmed',
+	    attendees: icalEmail,
+	    start: icalSTime,
+	    end: icalETime,
+	    summary: meetingTitle+' Meeting',
+	    description: objective,
+	    location: location,
+	    organizer: {
+	    	name: "Creator",
+	        email: userId
+	    },
+	});
+
+	//Write to ics File 
+	fs.writeFile(tempFileName, events.toFile(), function (err) {
+	  if (err) return console.log(err);
+	  console.log('File Created');
+	});
+
+	return tempFileName;
+}
+function deleteFile(fileName){
+	//Deletes File
+	var fs= require('fs');
+	fs.unlink(fileName, function (err) {
+	  	if (err) throw err;
+	  		console.log('successfully deleted file');
+	});
 }
