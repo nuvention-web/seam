@@ -76,6 +76,8 @@ $(document).ready(function(){
 						notesList[value].scrollTop = notesList[value].scrollHeight;
 						$('#notes' + value)[0].value = '';
 					}
+					value = parseInt(value) + 1;
+					showTaskForm("taskPerson" + value, "addTask" + value);
 				}                  
 			}
 		});
@@ -101,13 +103,23 @@ function addTask(number){
 };
 
 
-function showTaskForm(id){
+function showTaskForm(id, buttonid){
+	console.log(id + " " + buttonid);
 	var e = document.getElementById(id);
-	taskInput=id+"Input";
+	var button = document.getElementById(buttonid);
+	var input = document.getElementById(id + "Input");
+	taskInput = id + "Input";
+	console.log("type = " + button.type);
 	if(e.style.display == 'inline'){
-			e.style.display = 'none';
+		e.style.display = 'none';
+		button.type = 'button';
+		input.value = '';
+		console.log("type = " + button.type);
 	}
 	else{
-			e.style.display = 'inline';
+		e.style.display = 'inline';
+		button.type = 'submit';
+		input.value = '';
+		console.log("type = " +  button.type);
 	}
 };

@@ -1,8 +1,16 @@
 var mongoose = require('mongoose');
 var Task = require('../models/task-model');
+var Meeting = require('../models/meeting-model');
 
 exports.getTasks=function(req, res){
-	res.render('loggedIn/tasks/tasks', { title: 'SEAM', user : req.user});
+	Meeting.find({'UserId' : req.user.local.email, 'isComplete' : 1}, function(e, docs){
+		console.log(docs);
+		res.render('loggedIn/tasks/tasks', { 
+			title: 'SEAM', 
+			name: req.session.name,
+			meetingList: docs
+ 		});
+	});
 }
 
 exports.finishTask = function(req, res){
