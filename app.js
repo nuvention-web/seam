@@ -103,6 +103,7 @@ app.get('/dashboard/meetings/end', user.isLoggedIn, meetings.endMeeting);
 
 //Tasks
 app.get('/dashboard/tasks', user.isLoggedIn, task.getTasks);
+app.post('/dashboard/tasks/current', user.isLoggedIn, task.getTasksByMeeting);
 
 // team member stuff
 app.get('/dashboard/team', user.isLoggedIn, team.team);
