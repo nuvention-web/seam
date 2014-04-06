@@ -2,7 +2,7 @@ var mongoose = require('mongoose');
 var Task = require('../models/task-model');
 var Meeting = require('../models/meeting-model');
 
-exports.getTasks=function(req, res){
+exports.getTasks = function(req, res){
 	Meeting.find({'UserId' : req.user.local.email, 'isComplete' : 1}, function(e, docs){
 		console.log(docs);
 		res.render('loggedIn/tasks/tasks', { 
@@ -10,6 +10,18 @@ exports.getTasks=function(req, res){
 			name: req.session.name,
 			meetingList: docs
  		});
+	});
+}
+
+exports.getTasksByMeeting = function(req, res){
+	console.log(req);
+
+	var meetingId = req.body.meetingId;
+
+	console.log('inside server: ' + meetingId);
+
+	Task.find({'MeetingId': meetingId, 'UserId' :  req.session.userId}, function(e, doc){
+		res.json({'tasks' : doc});
 	});
 }
 
