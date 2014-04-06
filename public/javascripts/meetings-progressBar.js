@@ -10,9 +10,9 @@ $(document).ready(function(){
     for(var i = 0; i < strVals.length; i++){
         intVals[i] =parseInt(strVals[i]);
         waitVals[i]=0;
-         intVals[i] *=60;
+        intVals[i] *=60;
          if(i>1){
-            intVals[i] =parseInt(strVals[i]);
+            intVals[i] =parseInt(strVals[i])*=60;
             waitVals[i]=intVals[i-1]+waitVals[i-1];
          }
     };
