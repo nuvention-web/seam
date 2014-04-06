@@ -327,10 +327,10 @@ exports.getMeeting = function(req, res){
 
 exports.endMeeting = function(req, res){
 	var meetingId = req.session.meetingId;
-	var meetingInfo;
 	var mailBody, smtpConfig;
 	var emailAgenda='';
-	var agenda,meetingTitle,meetingDate,objective;
+	var agenda,meetingTitle,meetingDate,objective,meetingAttendees,emailDate,emailTime,owner;
+	var emailList='';
 	// console.log(meetingId);
 	Meeting.findByIdAndUpdate(meetingId, {
 		'isComplete' : 1
@@ -341,73 +341,50 @@ exports.endMeeting = function(req, res){
 	});
 	Meeting.find({'ProjectId': meetingId, 'UserId' : req.session.userId}, function(e, docs){
 		Meeting.findOne({'_id': meetingId}, function(e, doc){
-			meetingInfo=doc;
 			agenda=doc.agenda;
+			meetingTitle=doc.meetingTitle;
+			objective=doc.objective;
+			meetingAttendees=doc.attendees;
+			meetingDate=doc.meetingDate;
+			owner=doc.UserId;
+			emailList=owner+',';
+			var meetingYear = meetingDate.getFullYear(); 
+			var meetingMonth = meetingDate.getMonth(); 
+			var meetingDay = meetingDate.getDate(); 
+			emailDate= meetingMonth +"/"+meetingDay+"/"+meetingYear ;
+			emailTime=doc.meetingTime;
 			if(typeof agenda == 'string'){
 				emailAgenda+="<p style='text-align:left; text-transform:capitalize'> 1: "+agenda.topic+"<br/></p>";
 			}
 			else{
 				for(var i=0; i<agenda.length; i++){
-					console.log(agenda);
-					console.log(agenda.length);
 					if(agenda[i] != ''){
 						var number= i+1;
 						var notes= agenda[i].notes;
 						emailAgenda+=number+':  '+ agenda[i].topic+'<br/>';
-						for(var z=0; z<notes.length;z++){
-							emailAgenda+="<p style='margin-left:5em; text-transform:capitalize'> " +String.fromCharCode(97 + z)+". "+notes[z].notes+"<br/></p>";
+						var initialNoteCount= -1; //If there is initial note count =0
+						if(notes.length>0 && notes[0].notes!='' ){
+							emailAgenda+="<p style='margin-left:5em; text-transform:capitalize'> A"+". "+notes[0].notes+"<br/></p>";
+							initialNoteCount=0;
+						}
+						for(var z=1; z<notes.length;z++){
+							emailAgenda+="<p style='margin-left:5em; text-transform:capitalize'> " +String.fromCharCode(97 + z+ initialNoteCount)+". "+notes[z].notes+"<br/></p>";
 						}
 					}
 				};
 			}
+			if(meetingAttendees!=''){
+				for(var i=0; i<meetingAttendees.length; i++){
+					emailList+=meetingAttendees[i].attendeeEmail+',';
+				}
+			}
+			mailBody=createMinutesBody(emailDate,meetingTitle,emailList,objective,emailAgenda,emailTime,objective,emailAgenda);
+			emailFunction(mailBody,res);
 
-		// //email function
-		// 	smtpConfig = nodemailer.createTransport('SMTP', {
-		// 		service: 'Gmail',
-		// 		auth: {
-		// 			user: "seammeetings@gmail.com",
-		// 			pass: "123456789a!"
-		// 		}
-		// 	});
-		// 	//construct the email sending module
-		// 	mailBody = {
-		// 		forceEmbeddedImages: true,
-		// 		from: "SEAM Meetings <seammeetings@gmail.com>",
-		// 		to: meetingInfo.meetingMembers,
-		// 		subject: '[ '+meetingInfo.meetingDate+' ] '+meetingInfo.meetingTitle+ ' Minutes',
-		// 		text: 'Objectives: '+objective+'\n\n'+ 'Agenda: \n\n'+ emailAgenda,
-
-		// 		// HTML body
-		//     	html:"<body>"+
-		//     	"<p style='text-align:center'><img src='cid:logo@seam'/></p>"+
-		//         "<p style='text-align:left; text-transform:capitalize'> Date: "+meetingInfo.meetingDate+"<br/></p>" +
-		//         "<p style='text-align:left; text-transform:capitalize'> Duration: "+meetingInfo.meetingTime+" Minutes <br/></p>" +
-		//         "<p style='text-align:left; text-transform:capitalize'> Objectives: "+meetingInfo.objective+"<br/></p>" +
-		//         "<p style='text-align:left; text-transform:capitalize'> Agenda: <br/></p>"+
-		//         emailAgenda+
-		//         "</body>",
-		// 	    attachments:[
-		// 	        // Logo img
-		// 	        {
-		// 	            filePath: './public/images/seamlogo-red125.png',
-		// 	            cid: 'logo@seam' // should be as unique as possible
-		// 	        },
-
-		// 	    ]
-		// 	};
-		// 	//send Email
-		// 	smtpConfig.sendMail(mailBody, function (error, response) {
-		// 		//Email not sent
-		// 		if (error) {
-		// 			res.end("Email send Failed");
-		// 		}
-		// 		//email send sucessfully
-		// 		else {
-		// 			res.end("Email send sucessfully");
-		// 		}
-		// 	});
 		});
 	});
+
+	
 	res.redirect('dashboard');
 }
 
@@ -614,7 +591,7 @@ exports.addMeeting = function(req, res){
 
 	if(agenda != undefined){	
 		if(typeof agenda == 'string'){
-			emailAgenda+='1:  '+ agenda+'<br/>'+'    '+notes+'<br/>';
+			emailAgenda+='1:  '+ agenda+'<br/>'+"<p style='margin-left:5em;'> "+notes+"<br/></p>";
 			newMeeting.agenda.push({
 				topic: agenda,
 				duration: duration,
@@ -625,7 +602,7 @@ exports.addMeeting = function(req, res){
 			for(var i=0; i<agenda.length; i++){
 				if(agenda[i] != ''){
 					var number= i+1;
-					emailAgenda+=number+':  '+ agenda[i]+'<br/>'+'&nbsp;&nbsp;&nbsp;&nbsp;'+notes[i]+'<br/><br/>';
+					emailAgenda+=number+':  '+ agenda[i]+'<br/>'+"<p style='margin-left:5em;'> "+notes[i]+"<br/></p>";
 					newMeeting.agenda.push({
 						topic: agenda[i],
 						duration: duration[i],
@@ -675,7 +652,7 @@ exports.addMeeting = function(req, res){
 	//Create ical File
 	var icsFilePath=createiCal(userId,meetingTitle,icalDate,icalEmail,meetingStartTime,meetingEndTime,objective,location);
 	mailBody=createAgendaBody(emailList,emailDate,meetingTitle,objective,emailAgenda,location,duration,icsFilePath);
-	emailFunction(mailBody,icsFilePath);
+	emailFunction(mailBody,res,icsFilePath);
 
 	res.redirect('/dashboard');
 };
@@ -684,7 +661,7 @@ function addMinutes(date, minutes){
 	return new Date(date.getTime() + minutes*60000);
 }
 
-function emailFunction(emailBody,icsFilePath,res){
+function emailFunction(emailBody,res,icsFilePath){
 	var smptpConfig;
 	//email function
 	smtpConfig = nodemailer.createTransport('SMTP', {
@@ -699,12 +676,16 @@ function emailFunction(emailBody,icsFilePath,res){
 	 smtpConfig.sendMail(emailBody, function (error, response) {
 	//Email not sent
  	if (error) {
-		res.end("Email send Failed");
+		res.end("Email Failed");
  	}
  	//email send sucessfully
 	else {
-		res.end("Email send sucessfully");
-		deleteFile(icsFilePath);
+		res.end("Email Successfully");
+		if(icsFilePath==''){
+			deleteFile(icsFilePath);
+		}
+		else{
+		}
  	}
 
  });
@@ -744,7 +725,33 @@ function createAgendaBody(emailList,emailDate,meetingTitle,objective,emailAgenda
  };
  return mailBody;
 }
+function createMinutesBody(emailDate,meetingTitle,emailList,objective,emailAgenda,emailTime,objective,emailAgenda){
+	var mailBody;
+	//construct the email sending module
+			mailBody = {
+			 	forceEmbeddedImages: true,
+			 	from: "SEAM Meetings <seammeetings@gmail.com>",
+				to: emailList,
+			 	subject: '[ '+emailDate+' ] '+ meetingTitle + ' Meeting Minutes',
+			 	text: 'Date: '+ emailDate +'\n\n'+ 'Objectives: '+objective+'\n\n'+ 'Agenda: \n\n'+ emailAgenda,
 
+			// HTML body
+		     	html:"<body>"+
+		     	"<p style='text-align:center'><img src='cid:logo@seam'/></p>"+
+		        "<p style='text-align:left; text-transform:capitalize'> Duration: "+emailTime+" Minutes<br/></p>" +
+		        "<p style='text-align:left; text-transform:capitalize'> Objectives: "+objective+"<br/></p>" +
+		        "<p style='text-align:left; text-transform:capitalize'> Agenda: <br/>"+emailAgenda+"<br/></p>"+ 
+		        "</body>",
+		        attachments:[
+		         // Logo img
+			        {
+		             filePath: './public/images/seamlogo-red125.png',
+		             cid: 'logo@seam' // should be as unique as possible
+		         }
+		    	]
+		 	};
+	return mailBody;
+}
 //Creates ics File and returns File Name
 function createiCal(userId,meetingTitle,icalDate,icalEmail,icalSTime,icalETime,objective,location){
 	//ical Module
