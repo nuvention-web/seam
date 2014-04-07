@@ -430,6 +430,9 @@ textarea:focus, input:focus{
 .margin-top-1p{
 	margin-top:1%;
 }
+.margin-top-1-5p{
+	margin-top:1.5%;
+}
 .margin-top-2p{
 	margin-top:2%;
 }
@@ -673,6 +676,11 @@ textarea:focus, input:focus{
 	-webkit-box-shadow: 0 0 8px  rgba(204,51,51, .8);
 	-moz-box-shadow: 0 0 8px  rgba(204,51,51, .8);
 }
+.border-shadow-gray{
+  -moz-box-shadow:    2px 2px 4px 5px #ccc;
+  -webkit-box-shadow: 2px 2px 4px 5px #ccc;
+  box-shadow:         2px 2px 4px 5px #ccc;
+}
 .border-square{
 	-webkit-border-radius: 0 !important;
      -moz-border-radius: 0 !important;
@@ -731,6 +739,18 @@ textarea:focus, input:focus{
 }
 .border-shadow-1x{
 	box-shadow: 1px 1px 1px 1px rgb(230,230,230);
+}
+.btn-red-hover{
+	color:rgb(204,51,51);
+	background-color: rgb(255,255,255);
+	border:2px solid rgb(204,51,51) !important;
+	border-radius: 3px!important;
+	transition:all 0.5s ease-in-out;
+}
+.btn-red-hover:hover{
+	color:rgb(255,255,255);
+	background-color: rgb(204,51,51);
+	border:2px solid rgb(204,51,51);
 }
 /* =======================================================
    2.WRAPPER-DESKTOP
@@ -814,6 +834,12 @@ textarea:focus, input:focus{
 	margin:0 10%;
 	margin-top:29%;
 }
+.loginBox {
+	width: 30%;
+	margin:0 35%;
+	margin-top:12%;
+	background-color: rgb(234,234,234);
+}
 /* =======================================================
    3.PROGRESS_BAR-DESKTOP
 ========================================================== */
@@ -833,14 +859,17 @@ margin:0 auto;
 border-style:solid;
 border-color:  rgb(225,225,225);
 
+
 }
 .progress-vertical-circle-bigger {
 position: relative;
-width: 40px;
-min-height:40px;
+width: 25px;
+min-height:25px;
 border-radius:50%;
 margin:0 auto;
-background-color: #000;
+margin-top: 5px;
+border-style:solid;
+border-color:  rgb(225,225,225);
 }
 .progress-vertical-line {
 position: relative;
@@ -850,13 +879,13 @@ margin:0px auto;
 border-radius: 0;
 }
 .progress-vertical-line-shorter{
-	position: relative;
+position: relative;
 width: 2px;
 min-height:150px;
 height: auto;
 margin:0px auto;
 border-radius: 0;
-background-color: #000;
+background-color: rgb(225,225,225);
 }
 .progress-danger .bar,
     .progress .bar-danger {
