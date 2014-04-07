@@ -40,7 +40,10 @@ block content
 							.col-md-11.margin-0.padding-0(id='agendaNote#{i+1}').bg-gray-out
 								div.width-95p.margin-top-1p.overflow-scroll-y-auto.max-height-150x#notesList
 									each note, j in agenda.notes
-										h4.text-black.text-left #{note.notes}
+										if(j==0)
+											h5.text-black.text-left.text-italic.margin-bottom-1p #{note.notes}
+										else	
+											h5.text-black.text-left #{note.notes}
 								form(role='form', method='POST', name='TNForm', action='/dashboard/meetings/start/addNote', value='#{i}', id='TNForm#{i}')
 									input(type='hidden', name='noteOrder', value='#{i}')
 									div.container-95p.margin-top-2p
