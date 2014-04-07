@@ -58,7 +58,7 @@ function addAgendaItemKeypress(e){
 function addAgendaItem(){
 	var agendaBox = $('#agendaBox');
 	var i = $('#agendaBox div').size();
-	$('<div id="agendaItem'+ i + '">'+
+	$('<div id="agendaItem'+ i + '" value= ' + i + '>'+
 		'<div class="row">'+
 		'<div class="col-md-1 margin-top-1p padding-bottom-2p margin-0 padding-0">'+
     		'<div class="height-100p width-100p">'+
@@ -69,7 +69,7 @@ function addAgendaItem(){
     		'<input id="makeMeeting'+i+'" type="text" name="agendaTopic" placeholder="ADD AGENDA ITEM" autocomplete="off" class="text-h3 height-30x form-control border-square border-none text-left bg-transparent"/>'+
   				'</div>'+
   		'<div class="col-md-3">'+
-  				'<input id="makeMeeting'+i+'" type="text" name="duration" class=" text-h3 height-30x form-control border-square border-none text-right bg-transparent" placeholder= "TIME" autocomplete="off"/>'+
+  				'<input id="duration'+i+'" type="text" name="duration" class=" text-h3 height-30x form-control border-square border-none text-right bg-transparent" placeholder= "TIME" autocomplete="off"/>'+
   				'</div>'+
   		'<div class="col-md-1 padding-0 text-center" style="margin-top:0.5%;">'+
   			'<a class="text-h2 text-normal" href="#" onclick="removeAgenda(agendaItem'+ i + ');return false;">X</a>'+
@@ -89,6 +89,12 @@ function addAgendaItem(){
 
 //FUNCTION: REMOVE AGENDA FIELDS GIVEN INPUT
 function removeAgenda(tabId){
+		var length = tabId.id.length
+		var value = (tabId.id).slice(length - 2, length);
+		var duration = '#duration' + value;
+		var currentTime = parseInt($('input[name="meetingTime"]').val()) - parseInt($(duration).val());
+		$('input[name="meetingTime"]').val(currentTime);
+		// console.log($('input[name="duration"]').val());
         $(tabId).remove();
 };
 function showAttendeeForm(){
