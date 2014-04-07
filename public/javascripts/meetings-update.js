@@ -55,24 +55,24 @@ $(document).ready(function(){
 			success: function(data){
 				if(flag == 0){
 					if(notesList[value] == undefined){
-						notesList.innerHTML += '<h5 class="text-left margin-right-2p text-capital">' + notes + '</h5>';
+						notesList.innerHTML += '<h5 class="text-left margin-right-2p ">' + notes + '</h5>';
 						notesList.scrollTop = notesList.scrollHeight;
 						$('#notes' + value)[0].value = '';
 					}
 					else{
-						notesList[value].innerHTML += '<h5 class="text-left margin-right-2p text-capital">' + notes + '</h5>';
+						notesList[value].innerHTML += '<h5 class="text-left margin-right-2p">' + notes + '</h5>';
 						notesList[value].scrollTop = notesList[value].scrollHeight;
 						$('#notes' + value)[0].value = '';
 					}
 				}
 				else{
 					if(notesList[value] == undefined){
-						notesList.innerHTML += '<h5 class="text-left margin-right-2p text-capital"> Task: ' + notes + '</h5>';
+						notesList.innerHTML += '<h5 class="text-left margin-right-2p"> Task: ' + notes + '</h5>';
 						notesList.scrollTop = notesList.scrollHeight;
 						$('#notes' + value)[0].value = '';
 					}
 					else{
-						notesList[value].innerHTML += '<h5 class="text-left margin-right-2p text-capital"> Task: ' + notes + '</h5>';
+						notesList[value].innerHTML += '<h5 class="text-left margin-right-2p"> Task: ' + notes + '</h5>';
 						notesList[value].scrollTop = notesList[value].scrollHeight;
 						$('#notes' + value)[0].value = '';
 					}
