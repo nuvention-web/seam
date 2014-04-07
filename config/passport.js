@@ -119,10 +119,10 @@ module.exports = function(passport) {
 
 	passport.use('google-login', new GoogleStrategy({
 		clientID: '693576074665-oo32lv3ek5fjb19s1omv7otneh193sl5.apps.googleusercontent.com',
-		// clientID: '693576074665-5metufhdq7f2r5vogsiro86rf1uvtumj.apps.googleusercontent.com', // local testing
 		clientSecret: 'keos66Ez_LwYzTV9CvXvNoFe', 
-		// clientSecret: 'tlvVeRLtCgk6_eEDCGPSNrlt', // local testing
 		callbackURL: 'http://seam.herokuapp.com/auth/google/callback/',
+		// clientID: '693576074665-5metufhdq7f2r5vogsiro86rf1uvtumj.apps.googleusercontent.com', // local testing
+		// clientSecret: 'tlvVeRLtCgk6_eEDCGPSNrlt', // local testing
 		// callbackURL: 'http://localhost:3000/auth/google/callback/', // local testing
 		scope: 'profile email https://www.googleapis.com/auth/drive.file https://www.googleapis.com/auth/drive.readonly https://www.googleapis.com/auth/calendar',
 		passReqToCallback : true // allows us to pass back the entire request to the callback 
