@@ -368,11 +368,11 @@ exports.endMeeting = function(req, res){
 						emailAgenda+=number+':  '+ agenda[i].topic+'<br/>';
 						var initialNoteCount= -1; //If there is initial note count =0
 						if(notes.length>0 && notes[0].notes!='' ){
-							emailAgenda+="<p style='margin-left:5em; text-transform:capitalize'> A"+". "+notes[0].notes+"<br/></p>";
+							emailAgenda+="<p style='margin-left:5em;'> A"+". "+notes[0].notes+"<br/></p>";
 							initialNoteCount=0;
 						}
 						for(var z=1; z<notes.length;z++){
-							emailAgenda+="<p style='margin-left:5em; text-transform:capitalize'> " +String.fromCharCode(97 + z+ initialNoteCount)+". "+notes[z].notes+"<br/></p>";
+							emailAgenda+="<p style='margin-left:5em;'> " +String.fromCharCode(97 + z+ initialNoteCount)+". "+notes[z].notes+"<br/></p>";
 						}
 					}
 				};
@@ -714,11 +714,11 @@ function createAgendaBody(emailList,emailDate,meetingTitle,objective,emailAgenda
 	// HTML body
      	html:"<body>"+
      	"<p style='text-align:center'><img src='cid:logo@seam'/></p>"+
-        "<p style='text-align:left; text-transform:capitalize'> Date: "+emailDate+"<br/></p>" +
-        "<p style='text-align:left; text-transform:capitalize'> Location: "+location+"<br/></p>" +
-        "<p style='text-align:left; text-transform:capitalize'> Duration: "+meetingTime+" Minutes <br/></p>" +
-        "<p style='text-align:left; text-transform:capitalize'> Objectives: "+objective+"<br/></p>" +
-        "<p style='text-align:left; text-transform:capitalize'> Agenda: <br/>"+emailAgenda+"<br/></p>"+ 
+        "<p style='text-align:left;'> Date: "+emailDate+"<br/></p>" +
+        "<p style='text-align:left;'> Location: "+location+"<br/></p>" +
+        "<p style='text-align:left;'> Duration: "+meetingTime+" Minutes <br/></p>" +
+        "<p style='text-align:left;'> Objectives: "+objective+"<br/></p>" +
+        "<p style='text-align:left;'> Agenda: <br/>"+emailAgenda+"<br/></p>"+ 
         "</body>",
         attachments:[
          // Logo img
@@ -748,9 +748,9 @@ function createMinutesBody(emailDate,meetingTitle,emailList,objective,emailAgend
 			// HTML body
 		     	html:"<body>"+
 		     	"<p style='text-align:center'><img src='cid:logo@seam'/></p>"+
-		        "<p style='text-align:left; text-transform:capitalize'> Duration: "+emailTime+" Minutes<br/></p>" +
-		        "<p style='text-align:left; text-transform:capitalize'> Objectives: "+objective+"<br/></p>" +
-		        "<p style='text-align:left; text-transform:capitalize'> Agenda: <br/>"+emailAgenda+"<br/></p>"+ 
+		        "<p style='text-align:left;'> Duration: "+emailTime+" Minutes<br/></p>" +
+		        "<p style='text-align:left;'> Objectives: "+objective+"<br/></p>" +
+		        "<p style='text-align:left;'> Agenda: <br/>"+emailAgenda+"<br/></p>"+ 
 		        "</body>",
 		        attachments:[
 		         // Logo img
