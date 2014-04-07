@@ -27,7 +27,8 @@ exports.editMeeting = function(req, res){
 	console.log(meetingId);
 	Meeting.findOne({'_id': meetingId}, function(e, doc){
 		var duration = 0;
-		if(doc.duration != ''){
+		if(doc.duration != '' && doc.duration != undefined){
+			console.log(doc.duration);
 			var sepDuration = doc.duration.split(',');
 			for(var i = 0; i < sepDuration.length; i++){
 				if(sepDuration[i] != ',')
@@ -35,9 +36,9 @@ exports.editMeeting = function(req, res){
 			}
 		}
 
-		if(doc.meetingDate != undefined){
-			var meetingDate;
+		var meetingDate = '';
 
+		if(doc.meetingDate != undefined && doc.meetingDate != ''){
 			var date = doc.meetingDate;
 			var duration = doc.meetingTime;
 			console.log(duration);
@@ -99,11 +100,16 @@ exports.updateMeeting = function(req, res){
 	console.log(meetingDate);
 
 	if(meetingDate != ""){
-		var meetingMonthDate = meetingDate.split('/'); // for example: 03/25/2014 8:53 PM - splits to 03,25,2014 8:53 PM 
-		var meetingYearTime = meetingMonthDate[2].split(' '); // - splits to 2014,8:53,PM
-		var meetingHourMin = meetingYearTime[1].split(':'); // - splits to 8,53
-		meetingDate = new Date(meetingYearTime[0], meetingMonthDate[0] - 1, meetingMonthDate[1], meetingHourMin[0], meetingHourMin[1]);
-		console.log('The meeting time: ' + meetingDate);
+		if(typeof parseInt(meetingDate[0]) == 'number'){
+			var meetingMonthDate = meetingDate.split('/'); // for example: 03/25/2014 8:53 PM - splits to 03,25,2014 8:53 PM 
+			var meetingYearTime = meetingMonthDate[2].split(' '); // - splits to 2014,8:53,PM
+			var meetingHourMin = meetingYearTime[1].split(':'); // - splits to 8,53
+			meetingDate = new Date(meetingYearTime[0], meetingMonthDate[0] - 1, meetingMonthDate[1], meetingHourMin[0], meetingHourMin[1]);
+			console.log('The meeting time: ' + meetingDate);
+		}
+		else{
+			meetingDate = '';
+		}
 	}
 
 	var meetingData = {
@@ -223,8 +229,10 @@ exports.postMeeting = function(req, res){
 		console.log(doc);
 		Task.findOne({'MeetingId': meetingId}, function(e, task){
 			console.log(task);
-			if(doc.meetingDate != undefined){
-				var meetingDate;
+
+			var meetingDate = '';
+
+			if(doc.meetingDate != undefined && doc.meetingDate != ''){
 
 				var date = doc.meetingDate;
 				var duration = doc.meetingTime;
@@ -268,7 +276,7 @@ exports.postMeeting = function(req, res){
 };
 
 exports.getMeeting = function(req, res){
-	console.log("in get");
+
 	var meetingId = req.body.meetingId;
 	if(meetingId == undefined){
 		meetingId = req.session.meetingId;
@@ -282,8 +290,10 @@ exports.getMeeting = function(req, res){
 		console.log(doc);
 		Task.find({'MeetingId': meetingId}, function(e, task){
 			console.log(task);
-			if(doc.meetingDate != undefined){
-				var meetingDate;
+
+			var meetingDate = '';
+
+			if(doc.meetingDate != undefined && doc.meetingDate != ''){
 
 				var date = doc.meetingDate;
 				var duration = doc.meetingTime;
@@ -570,22 +580,27 @@ exports.addMeeting = function(req, res){
 	var meetingStartTime,meetingEndTime,meetingEndTime,icalDate,icalStartTime,icalEndTime='';
 
 	if(meetingDate != ""){
-		var meetingMonthDate = meetingDate.split('/'); // for example: 03/25/2014 8:53 PM - splits to 03,25,2014 8:53 PM 
-		var meetingYearTime = meetingMonthDate[2].split(' '); // - splits to 2014,8:53,PM
-		var meetingHourMin = meetingYearTime[1].split(':'); // - splits to 8,53
-		var hour=parseInt(meetingHourMin[0]);
-		if(meetingYearTime[2]=="PM"){
-			console.log("PM");
-			hour+=12;
+		if(typeof parseInt(meetingDate[0]) == 'number'){
+			var meetingMonthDate = meetingDate.split('/'); // for example: 03/25/2014 8:53 PM - splits to 03,25,2014 8:53 PM 
+			var meetingYearTime = meetingMonthDate[2].split(' '); // - splits to 2014,8:53,PM
+			var meetingHourMin = meetingYearTime[1].split(':'); // - splits to 8,53
+			var hour=parseInt(meetingHourMin[0]);
+			if(meetingYearTime[2]=="PM"){
+				console.log("PM");
+				hour+=12;
+			}
+			meetingStartTime = new Date(meetingYearTime[0], meetingMonthDate[0] - 1, meetingMonthDate[1], hour, meetingHourMin[1]);
+			meetingEndTime= new Date(meetingYearTime[0], meetingMonthDate[0] - 1, meetingMonthDate[1], hour, meetingHourMin[1]);
+			var length=parseInt(duration);
+			meetingEndTime.setMinutes(meetingStartTime.getMinutes()+length);
+			emailDate=parseInt(meetingStartTime.getMonth()+1)+"/"+meetingStartTime.getDate()+"/"+meetingStartTime.getFullYear();
+			icalDate=meetingStartTime.getMonth()+""+meetingStartTime.getDate()+""+meetingStartTime.getFullYear();
+			var icalStartTime=meetingStartTime.getFullYear()+"-"+('0' + meetingStartTime.getMonth()).slice(-2)+"-"+('0' + meetingStartTime.getDate()).slice(-2)+"T0"+ ('0' +meetingStartTime.getHours()).slice(-2)+":"+('0' + meetingStartTime.getMinutes()).slice(-2)+"-5:00";
+			var icalEndTime=meetingEndTime.getFullYear()+"-"+('0' + meetingEndTime.getMonth()).slice(-2)+"-"+('0' + meetingEndTime.getDate()).slice(-2)+"T0"+ ('0' +meetingEndTime.getHours()).slice(-2)+":"+('0' + meetingEndTime.getMinutes()).slice(-2)+"-5:00";
 		}
-		meetingStartTime = new Date(meetingYearTime[0], meetingMonthDate[0] - 1, meetingMonthDate[1], hour, meetingHourMin[1]);
-		meetingEndTime= new Date(meetingYearTime[0], meetingMonthDate[0] - 1, meetingMonthDate[1], hour, meetingHourMin[1]);
-		var length=parseInt(duration);
-		meetingEndTime.setMinutes(meetingStartTime.getMinutes()+length);
-		emailDate=parseInt(meetingStartTime.getMonth()+1)+"/"+meetingStartTime.getDate()+"/"+meetingStartTime.getFullYear();
-		icalDate=meetingStartTime.getMonth()+""+meetingStartTime.getDate()+""+meetingStartTime.getFullYear();
-		var icalStartTime=meetingStartTime.getFullYear()+"-"+('0' + meetingStartTime.getMonth()).slice(-2)+"-"+('0' + meetingStartTime.getDate()).slice(-2)+"T0"+ ('0' +meetingStartTime.getHours()).slice(-2)+":"+('0' + meetingStartTime.getMinutes()).slice(-2)+"-5:00";
-		var icalEndTime=meetingEndTime.getFullYear()+"-"+('0' + meetingEndTime.getMonth()).slice(-2)+"-"+('0' + meetingEndTime.getDate()).slice(-2)+"T0"+ ('0' +meetingEndTime.getHours()).slice(-2)+":"+('0' + meetingEndTime.getMinutes()).slice(-2)+"-5:00";
+		else{
+			meetingDate = '';
+		}
 	}
 
 	var newMeeting = new Meeting({
