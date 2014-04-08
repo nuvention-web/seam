@@ -3,7 +3,7 @@ var Task = require('../models/task-model');
 var Meeting = require('../models/meeting-model');
 
 exports.getTasks = function(req, res){
-	Meeting.find({'UserId' : req.user.local.email, 'isComplete' : 1}, function(e, docs){
+	Meeting.find({'UserId' : req.session.userId, 'isComplete' : 1}, function(e, docs){
 		console.log(docs);
 		res.render('loggedIn/tasks/tasks', { 
 			title: 'SEAM', 
