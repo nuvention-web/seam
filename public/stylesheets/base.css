@@ -104,8 +104,8 @@ input{
 textarea{
 	border:none;
 	outline: none;
-	resize: none;
 	overflow-x:hidden;
+	resize:none;
 	box-shadow:none !important;
 }
 textarea:focus, input:focus{
