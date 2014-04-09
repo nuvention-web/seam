@@ -80,9 +80,9 @@ function addAgendaItem(){
     			'<div class="progress progress-striped progress-vertical-line-shorter progress-striped active progress-success margin-top-n1x margin-bottom-0p">'+
        				'<div style="width:40px" class="bar">'+
        				'</div></div></div></div>'+
-  		'<div class="col-md-11 margin-0 padding-0">'+
+  		'<div class="col-md-9 margin-0 padding-0">'+
     		'<div class="width-95p margin-top-1p overflow-scroll-y-auto max-height-120x">'+
-     			'<input id="makeMeeting'+i+'" type="text" name="notes" placeholder="INSERT NOTES HERE" autocomplete="off" class="text-h4 height-30x form-control border-square border-none text-left bg-transparent"/>'+
+     			'<textarea id="makeMeeting'+i+'" type="text" name="notes" placeholder="INSERT NOTES HERE" autocomplete="off" class="text-h4 height-30x form-control border-square border-none text-left bg-transparent"/>'+
      			'</div></div></div></div>').appendTo(agendaBox);
 	i++;
 };

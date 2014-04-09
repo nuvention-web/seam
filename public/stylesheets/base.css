@@ -101,9 +101,17 @@ input{
 	color:rgb(204,51,51) !important;
 	text-transform: uppercase;
 }
+textarea{
+	border:none;
+	outline: none;
+	resize: none;
+	overflow-x:hidden;
+	box-shadow:none !important;
+}
 textarea:focus, input:focus{
     outline: 0;
     border:none;
+    box-shadow:none !important;
 }
 .form-control{
 	margin:0 auto;
