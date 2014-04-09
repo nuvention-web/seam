@@ -573,6 +573,7 @@ exports.addMeeting = function(req, res){
 	var icalEmail=[];
 	var creatorEmail= getCreatorEmail(req, userId);
 	var emailList=creatorEmail+',';
+	console.log("duration"+duration+"meetingTime"+meetingTime);
 	icalEmail.push({name:"Creator", email:creatorEmail});
 	var meetingStartTime,meetingEndTime,meetingEndTime,icalDate,icalStartTime,icalEndTime='';
 
@@ -588,7 +589,7 @@ exports.addMeeting = function(req, res){
 			}
 			meetingStartTime = new Date(meetingYearTime[0], meetingMonthDate[0] - 1, meetingMonthDate[1], hour, meetingHourMin[1]);
 			meetingEndTime= new Date(meetingYearTime[0], meetingMonthDate[0] - 1, meetingMonthDate[1], hour, meetingHourMin[1]);
-			var length=parseInt(duration);
+			var length=parseInt(meetingTime);
 			meetingEndTime.setMinutes(meetingStartTime.getMinutes()+length);
 			emailDate=parseInt(meetingStartTime.getMonth()+1)+"/"+meetingStartTime.getDate()+"/"+meetingStartTime.getFullYear();
 			icalDate=meetingStartTime.getMonth()+""+meetingStartTime.getDate()+""+meetingStartTime.getFullYear();
@@ -673,7 +674,7 @@ exports.addMeeting = function(req, res){
 
 	//Create ical File
 	var icsFilePath=createiCal(creatorEmail,meetingTitle,icalDate,icalEmail,meetingStartTime,meetingEndTime,objective,location);
-	mailBody=createAgendaBody(emailList,emailDate,meetingTitle,objective,emailAgenda,location,duration,icsFilePath);
+	mailBody=createAgendaBody(emailList,emailDate,meetingTitle,objective,emailAgenda,location,meetingTime,icsFilePath);
 	emailFunction(mailBody,res,icsFilePath);
 
 	res.redirect('/dashboard');
