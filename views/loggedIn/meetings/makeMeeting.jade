@@ -6,10 +6,10 @@ block content
 			.col-md-12.bg-white.border-gray.border-shadow-1x(style='min-height:150px; height:auto')
 				.row
 					.col-md-10.col-sm-10.col-xs-10.margin-top-1p
-						input.text-h3.height-30x.form-control.border-square.border-none.text-left.bg-transparent(id='makeMeeting', type='text', name='meetingTitle', placeholder= 'MEETING TITLE', autofocus='autofocus', autocomplete='off')
+						input.noEnterSubmit.text-h3.height-30x.form-control.border-square.border-none.text-left.bg-transparent(id='makeMeeting', type='text', name='meetingTitle', placeholder= 'MEETING TITLE', autofocus='autofocus', autocomplete='off')
 				.row
 					.col-md-10.col-sm-10.col-xs-10.margin-top-1p
-						input.text-h4.height-30x.text-orange.form-control.border-square.border-none.text-left.bg-transparent(id='makeMeeting', type='text', name='objective', placeholder= 'OBJECTIVE', autocomplete='off')
+						input.noEnterSubmit.text-h4.height-30x.text-orange.form-control.border-square.border-none.text-left.bg-transparent(id='makeMeeting', type='text', name='objective', placeholder= 'OBJECTIVE', autocomplete='off')
 		.row.margin-top-2p.margin-bottom-3p
 			.col-md-9
 				.row.bg-white.border-gray.border-shadow-1x.margin-right-1p.margin-left.height-auto.padding-bottom-3p
@@ -20,7 +20,7 @@ block content
 							.col-md-4.margin-top-1p.padding-bottom-2p
 								h4.text-right.text-normal.text-gray TOTAL
 							.col-md-2.margin-top-1-5p
-								input.text-h3.text-gray.text-left(id='makeMeeting', type='text', name='meetingTime', autocomplete='off', value='0', readonly) 
+								input.text-h3.text-gray.text-left.noEnterSubmit(id='makeMeeting', type='text', name='meetingTime', autocomplete='off', value='0', readonly) 
 						#agendaBox
 							.row
 								.col-md-1.margin-top-1p.padding-bottom-2p.margin-0.padding-0
@@ -28,17 +28,17 @@ block content
 										.progress.progress-striped.progress-vertical-circle-bigger.progress-striped.active.progress-success.margin-top-n1x.margin-bottom-0p
 											.bar(style="width:40px")
 								.col-md-7.margin-0.padding-0
-									input.text-h3.height-30x.form-control.border-square.border-none.text-left.bg-transparent(id='makeMeeting1', type='text', name='agendaTopic', placeholder= 'ADD AGENDA ITEM', autocomplete='off')
+									input.noEnterSubmit.text-h3.height-30x.form-control.border-square.border-none.text-left.bg-transparent(id='makeMeeting1', type='text', name='agendaTopic', placeholder= 'ADD AGENDA ITEM', autocomplete='off')
 								.col-md-3
-									input.text-h3.height-30x.form-control.border-square.border-none.text-right.bg-transparent(id='makeMeeting1', type='text', name='duration', placeholder= 'TIME', autocomplete='off')
+									input.noEnterSubmit.text-h3.height-30x.form-control.border-square.border-none.text-right.bg-transparent(id='makeMeeting1', type='text', name='duration', placeholder= 'TIME', autocomplete='off')
 							.row
 								.col-md-1.margin-top-1p.padding-bottom-2p.margin-0.padding-0
 									div.height-100p.width-100p
 										.progress.progress-striped.progress-vertical-line-shorter.progress-striped.active.progress-success.margin-top-n1x.margin-bottom-0p
 											.bar(style="width:40px")
 								.col-md-9.margin-0.padding-0
-									div.width-95p.margin-top-1p.overflow-scroll-y-auto.max-height-120x
-										textarea.text-h4.height-30x.form-control.border-square.border-none.text-left.bg-transparent(id='makeMeeting1', type='text', name='notes', placeholder= 'INSERT NOTES HERE', autocomplete='off')
+									div.width-95p.margin-top-1p.overflow-scroll-y-auto.max-height-150x
+										textarea.text-h4.height-30x.form-control.border-square.border-none.text-left.bg-transparent(rows='6', id='makeMeeting1', type='text', name='notes', placeholder= 'INSERT NOTES HERE', autocomplete='off')
 								
 						.row
 							.col-md-1.margin-top-1p.padding-bottom-2p.margin-0.padding-0
@@ -58,24 +58,24 @@ block content
 									h4.text-left.text-normal.text-dark-blue SCHEDULING
 							.row 
 								.col-md-12
-									input.text-h4.height-30x.text-black.form-control.border-square.border-none.text-left.bg-transparent(id='makeMeeting', type='text', name='meetingDate', placeholder= 'DATE AND START TIME', autocomplete='off')
+									input.noEnterSubmit.text-h4.height-30x.text-black.form-control.border-square.border-none.text-left.bg-transparent(id='makeMeeting', type='text', name='meetingDate', placeholder= 'DATE AND START TIME', autocomplete='off')
 							//- .row 
 							//- 	.col-md-12
-							//- 		input.text-h4.height-30x.text-black.form-control.border-square.border-none.text-left.bg-transparent(id='makeMeeting', type='text', name='meetingTime', placeholder= 'DURATION(MINUTES)', autocomplete='off')
+							//- 		input.noEnterSubmit.text-h4.height-30x.text-black.form-control.border-square.border-none.text-left.bg-transparent(id='makeMeeting', type='text', name='meetingTime', placeholder= 'DURATION(MINUTES)', autocomplete='off')
 							.row 
 								.col-md-12
-									input.text-h4.height-30x.text-orange.form-control.border-square.border-none.text-left.bg-transparent(id='makeMeeting', type='text', name='location', placeholder= 'LOCATION', autocomplete='off')
+									input.noEnterSubmit.text-h4.height-30x.text-orange.form-control.border-square.border-none.text-left.bg-transparent(id='makeMeeting', type='text', name='location', placeholder= 'LOCATION', autocomplete='off')
 							.row
 								.col-md-12
 									h4.text-left.text-normal.text-dark-blue ATTENDEES
 							div#attendeeList
 							.row.margin-top-5p#addNewAttendee(style="display: none")
 								.col-md-8
-									input.form-control.border-square.text-left.border-none(type='text', name='nameHolder', value='', id='nameHolder', placeholder= 'NAME', tabindex='1')
+									input.noEnterSubmit.form-control.border-square.text-left.border-none(type='text', name='nameHolder', value='', id='nameHolder', placeholder= 'NAME', tabindex='1')
 								.col-md-4
 									button.border-square.btn-red-hover.padding-btn(type='button' onclick='addAttendee()', tabindex='3') ADD
 								.col-md-12
-									input.form-control.border-square.text-left.border-none(type='text', name='emailHolder', value='', id='emailHolder', placeholder= 'EMAIL', tabindex='2')
+									input.noEnterSubmit.form-control.border-square.text-left.border-none(type='text', name='emailHolder', value='', id='emailHolder', placeholder= 'EMAIL', tabindex='2')
 							.row.margin-top-5p
 								.col-md-8.col-md-offset-2.text-center
 									button.border-square.btn-red-hover.padding-btn(type='button' onclick='showAttendeeForm()') NEW ATTENDEE
