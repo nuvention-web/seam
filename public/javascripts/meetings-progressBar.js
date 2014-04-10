@@ -41,23 +41,18 @@ function setAgendaDelay(i, total){
                 $.notify("AGENDA ITEM "+ prev+ " DONE"); 
 
                 $(notesID).removeClass("border-orange");
-                $(notesID).addClass("text-black");                
-                $(notesID).addClass("outline-black");
+                $(notesID).addClass("text-black"); 
 
                 $(notesButtonID).removeClass("border-orange");
-                $(notesButtonID).addClass("border-black");
                 $(notesButtonID).addClass("text-black");
 
                 $(taskButtonID).removeClass("border-orange");
-                $(taskButtonID).addClass("border-black");
                 $(taskButtonID).addClass("text-black");
 
                 $(taskPersonID).removeClass("border-orange");
                 $(taskPersonID).addClass("text-black");
-                $(taskPersonID).addClass("outline-black");
                 
                 $(taskPersonAddID).removeClass("border-orange");
-                $(taskPersonAddID).addClass("border-black");
                 $(taskPersonAddID).addClass("text-black");
                 document.getElementById('alertSound').play();
             };
