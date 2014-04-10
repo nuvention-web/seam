@@ -1,10 +1,11 @@
+
 extends ../dashboard/baseLayout
 
 block content
 	form(role='form', method='POST', action='/dashboard/meetings/edit/update', id='addMeeting')
 		input#meetingId(type='hidden', name='meetingId', value='#{meeting._id}')
 		.row
-			.col-md-12.bg-white.border-gray.border-shadow-1x(style='min-height:150px; height:auto')
+			.col-md-12.bg-white.border-gray.border-shadow-1x.border-round(style='min-height:150px; height:auto')
 				.row
 					.col-md-10.col-sm-10.col-xs-10.margin-top-1p
 						input.text-h3.height-30x.form-control.border-square.border-none.text-left.bg-transparent(id='makeMeeting', type='text', name='meetingTitle', placeholder= 'MEETING TITLE', autofocus='autofocus', autocomplete='off', value='#{meeting.meetingTitle}')
@@ -13,7 +14,7 @@ block content
 						input.text-h4.height-30x.text-orange.form-control.border-square.border-none.text-left.bg-transparent(id='makeMeeting', type='text', name='objective', placeholder= 'OBJECTIVE', autocomplete='off', value='#{meeting.objective}')
 		.row.margin-top-2p.margin-bottom-3p
 			.col-md-9
-				.row.bg-white.border-gray.border-shadow-1x.margin-right-1p.margin-left.height-auto.padding-bottom-3p
+				.row.bg-white.border-gray.border-shadow-1x.border-round.margin-right-1p.margin-left.height-auto.padding-bottom-3p
 					.container-95p.margin-center
 						.row
 							.col-md-8.margin-top-1p.padding-bottom-2p
@@ -51,7 +52,7 @@ block content
 								div.width-95p.margin-top-1p.margin-left-1p
 									a#addAgendaItem.text-gray.text-h3.margin-0(href="#" onclick="addAgendaItem()") ADD MORE
 			.col-md-3
-				.row.height-auto.bg-white.border-gray.border-shadow-1x.margin-left-1p.overflow-scroll-y-auto.overflow-x-hidden.padding-bottom-10p
+				.row.height-auto.bg-white.border-gray.border-shadow-1x.border-round.margin-left-1p.overflow-scroll-y-auto.overflow-x-hidden.padding-bottom-10p
 					.col-md-12.margin-top-1p.margin-left-3p
 						h4.text-left.text-normal.text-gray.margin-left-3p MEETING LOGISTICS
 						.container-95p.margin-center.margin-top-5p
