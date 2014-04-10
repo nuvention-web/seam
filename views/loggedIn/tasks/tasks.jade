@@ -3,7 +3,7 @@ extends ../dashboard/baseLayout
 block content
 	.row.margin-top-2p
 		.col-md-4
-			.row.bg-white.border-gray.border-shadow-1x.margin-right-1p.overflow-x-hidden.overflow-scroll-y-auto.padding-bottom-3p(style='min-height:500px; height:auto')
+			.row.bg-white.border-gray.border-shadow-1x.border-round.margin-right-1p.overflow-x-hidden.overflow-scroll-y-auto.padding-bottom-3p(style='min-height:500px; height:auto')
 				.col-md-12.margin-top-1p
 					.row
 							.col-md-12
@@ -16,7 +16,7 @@ block content
 									input(type='hidden', name='meetingId', value='#{meeting._id}')
 									button.padding-btn-small.text-left.margin-right-3p.border-square.btn-red-hover.btn-block(type='submit') #{meeting.meetingTitle}
 		.col-md-8
-			.row.bg-white.border-gray.border-shadow-1x.margin-left-1p.padding-bottom-2p.overflow-scroll-y-auto(style='min-height:500px; height:auto')
+			.row.bg-white.border-gray.border-shadow-1x.border-round.margin-left-1p.padding-bottom-2p.overflow-scroll-y-auto(style='min-height:500px; height:auto')
 				.col-md-12.margin-top-1p
 					.row
 						.col-md-4

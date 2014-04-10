@@ -663,14 +663,19 @@ textarea:focus, input:focus{
 	-moz-box-shadow: 0 0 8px  rgba(204,51,51, .8);
 }
 .border-shadow-gray{
-  -moz-box-shadow:    2px 2px 4px 5px #ccc;
-  -webkit-box-shadow: 2px 2px 4px 5px #ccc;
-  box-shadow:         2px 2px 4px 5px #ccc;
+  -moz-box-shadow:    5px 5px 7px 8px #ccc;
+  -webkit-box-shadow: 5px 5px 7px 8px #ccc;
+  box-shadow:         5px 5px 7px 8px #ccc;
 }
 .border-square{
 	-webkit-border-radius: 0 !important;
      -moz-border-radius: 0 !important;
           border-radius: 0 !important;
+}
+.border-round{
+	-webkit-border-radius: 12px !important;
+     -moz-border-radius: 12px !important;
+          border-radius: 12px !important;
 }
 .outline-black{
 	border-color:2px solid rgb(0,0,0) !important;
@@ -731,7 +736,7 @@ textarea:focus, input:focus{
 	border:none;
 }
 .border-shadow-1x{
-	box-shadow: 1px 1px 1px 1px rgb(230,230,230);
+	box-shadow: 2px 2px 2px 2px rgb(230,230,230);
 }
 .btn-blue-hover{
 	color:rgb(0,114,188);
