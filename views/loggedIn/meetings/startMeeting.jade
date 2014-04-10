@@ -9,11 +9,10 @@ block content
 				.col-md-2.col-sm-3.col-xs-3.margin-top-1p
 
 				.col-md-4.col-sm-3.col-xs-3.margin-top-1p.disp-inline-block
-					h2#countdownTimer.text-right.text-black.text-normal.float-right
 					h2.text-right.text-black.padding-right-3p.float-right #{meetingDate}					
 			.row.padding-left-1p
 				.col-md-10.margin-top-1p.padding-left-1p
-					span.text-h3.text-left.text-orange
+					span.text-h3.text-left.text-blue
 						b OBJECTIVE: 
 						|  #{meeting.objective}
 	.row.margin-top-2p.margin-bottom-3p
@@ -77,7 +76,25 @@ block content
 						.col-md-10.margin-0.padding-0
 								h3.text-black.text-left.text-capital.margin-0.text-normal WRAP-UP MEETING
 		.col-md-3
-			.row.height-auto.bg-white.border-gray.border-shadow-1x.margin-left-1p.overflow-scroll-y-auto.overflow-x-hidden.padding-bottom-10p
+			.row.height-auto.bg-white.border-gray.border-shadow-1x.margin-left-1p.overflow-scroll-y-auto.overflow-x-hidden.padding-bottom-3p
+				.col-md-12.margin-top-1p
+					h4.text-left.text-normal.text-gray.margin-left-1p MEETING INFORMATION
+					.container-95p.margin-center.margin-top-3p
+						.row
+							.col-md-12
+								h4.text-left.text-blue.text-normal Date: #{meetingDate}
+						.row
+							.col-md-12
+								h4.text-left.text-blue.text-normal Start Time:
+						.row
+							.col-md-12
+								h4.text-left.text-blue.text-normal End Time:
+						.row
+							.col-md-7
+								h4.text-right.text-black.text-normal Time Remaining:
+							.col-md-5
+								h5#countdownTimer.text-left.text-black.text-normal
+			.row.height-auto.bg-white.border-gray.border-shadow-1x.margin-left-1p.overflow-scroll-y-auto.overflow-x-hidden.margin-top-10p.padding-bottom-10p
 				.col-md-12.margin-top-1p
 					h4.text-left.text-normal.text-gray.margin-left-1p ATTENDEES
 					.container-95p.margin-center.margin-top-3p
