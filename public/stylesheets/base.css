@@ -263,19 +263,19 @@ textarea:focus, input:focus{
 	background-color:rgb(51,54,63);
 }
 .bg-green{
-	background-color: rgb(0,85,0);
+	background-color: rgb(141,199,63);
 }
 .bg-1{
-	background-color: rgb(0,85,0);
+	background-color: rgb(141,199,63);
 }
 .bg-2{
-	background-color: rgb(255,150,0);
+	background-color: rgb(248,148,29);
 }
 .bg-3{
-	background-color: rgb(255,255,0);
+	background-color: rgb(248,148,29);
 }
 .bg-4{
-	background-color: rgb(51,54,63);
+	background-color: rgb(204,51,51);
 }
 .bg-red{
 	background-color: rgb(204,51,51);
@@ -705,7 +705,7 @@ textarea:focus, input:focus{
 	border-width: 1px;
 }
 .border-orange{
-	border:2px solid rgb(204,51,51) !important;
+	border:1px solid rgb(248,148,29) !important;
 }
 .border-gray{
 	border:1px solid rgb(244,244,244) !important;
@@ -744,6 +744,18 @@ textarea:focus, input:focus{
 	color:rgb(255,255,255);
 	background-color: rgb(0,114,188);
 	border:2px solid rgb(0,114,188);
+}
+.btn-orange-hover{
+	color:rgb(248,148,29);
+	background-color: rgb(255,255,255);
+	border:1px solid rgb(248,148,29) !important;
+	border-radius: 3px!important;
+	transition:all 0.5s ease-in-out;
+}
+.btn-orange-hover:hover{
+	color:rgb(255,255,255);
+	background-color: rgb(248,148,29);
+	border:1px solid rgb(248,148,29);
 }
 .btn-red-hover{
 	color:rgb(204,51,51);
@@ -851,9 +863,6 @@ textarea:focus, input:focus{
 .countdown-row{
 	font-size:25px;
 }
-#countdownTimer{
-	font-size: 5px !important;
-}
 .timer-box{
   width: 100%;
   height: auto;
@@ -879,6 +888,7 @@ margin-top: 5px;
 border-style:solid;
 border-color:  rgb(225,225,225);
 }
+
 .progress-vertical-line {
 position: relative;
 width: 2px;
