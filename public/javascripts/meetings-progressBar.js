@@ -59,10 +59,11 @@ function setAgendaDelay(i, total){
                 $(taskPersonAddID).removeClass("border-orange");
                 $(taskPersonAddID).addClass("border-black");
                 $(taskPersonAddID).addClass("text-black");
-
+                document.getElementById('alertSound').play();
             };
             if(i==total){
                 $('#endCirc').addClass("bg-green"); 
+                document.getElementById('alertSound').play();
             }else{
             $(agendaID).removeClass("bg-gray-out");  
             $(progCir).addClass("bg-green"); 
@@ -126,10 +127,10 @@ function setAgendaDelay(i, total){
         onFinish: function () {},  //invoked once the timer expires
         baseStyle: 'bg-1',  //bootstrap progress bar style at the beginning of the timer
         style2:'bg-2',
-        style3:'bg-3',
-        style4:'bg-4',
+        style3:'bg-1',
+        style4:'bg-1',
         warningStyle: 'progress-bar-danger',  //bootstrap progress bar style in the warning phase
-        completeStyle: 'bg-4',//bootstrap progress bar style at completion of timer
+        completeStyle: 'bg-1',//bootstrap progress bar style at completion of timer
         limit:[30,10,5]
     };
 }(jQuery));
