@@ -1,3 +1,9 @@
+ $(document).ready(function(){ 
+	$('body').on('keypress', '.noEnterSubmit', function(e){ 
+		   if ( e.which == 13 ) {e.preventDefault();}
+
+	});
+});
 //FUNCTIONS FOR ADDING AGENDA ITEMS
 $(function(){
 	$("input[name='meetingDate']").datetimepicker();
@@ -66,10 +72,10 @@ function addAgendaItem(){
         			'<div style="width:40px" class="bar"></div>'+
       					'</div></div></div>'+
 		'<div class="col-md-7 margin-0 padding-0">'+
-    		'<input id="makeMeeting'+i+'" type="text" name="agendaTopic" placeholder="ADD AGENDA ITEM" autocomplete="off" class="text-h3 height-30x form-control border-square border-none text-left bg-transparent"/>'+
+    		'<input id="makeMeeting'+i+'" type="text" name="agendaTopic" placeholder="ADD AGENDA ITEM" autocomplete="off" class="text-h3 noEnterSubmit height-30x form-control border-square border-none text-left bg-transparent"/>'+
   				'</div>'+
   		'<div class="col-md-3">'+
-  				'<input id="duration'+i+'" type="text" name="duration" class=" text-h3 height-30x form-control border-square border-none text-right bg-transparent" placeholder= "TIME" autocomplete="off"/>'+
+  				'<input id="duration'+i+'" type="text" name="duration" class=" text-h3 noEnterSubmit height-30x form-control border-square border-none text-right bg-transparent" placeholder= "TIME" autocomplete="off"/>'+
   				'</div>'+
   		'<div class="col-md-1 padding-0 text-center" style="margin-top:0.5%;">'+
   			'<a class="text-h2 text-normal" href="#" onclick="removeAgenda(agendaItem'+ i + ');return false;">X</a>'+
