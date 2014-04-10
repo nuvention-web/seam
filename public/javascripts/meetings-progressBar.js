@@ -62,10 +62,10 @@ function setAgendaDelay(i, total){
 
             };
             if(i==total){
-                $('#endCirc').addClass("bg-black"); 
+                $('#endCirc').addClass("bg-green"); 
             }else{
             $(agendaID).removeClass("bg-gray-out");  
-            $(progCir).addClass("bg-black"); 
+            $(progCir).addClass("bg-green"); 
             $(progID).progressBar({timeLimit: timeLimits,limit:intVals})
         }
     },waitVals[i]*1000);
@@ -102,7 +102,7 @@ function setAgendaDelay(i, total){
                 bar.addClass(settings.style2);
             }else if(elapsed <= settings.limit[3]*1000){
                 bar.removeClass(settings.baseStyle)
-                .addClass(settings.style4);
+                .addClass(settings.style3);
             }
                 if (elapsed >= limit) {
                     window.clearInterval(interval);
