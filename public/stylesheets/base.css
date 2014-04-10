@@ -154,45 +154,23 @@ textarea:focus, input:focus{
 .text-white-redhover:hover{
 	color:rgb(204,51,51) !important;
 }
-.text-red{
-	color:rgb(204,51,51) !important;
-}
-.text-red-hover{
-	color:rgb(204,51,51);
-}
-.text-red-hover:hover{
-	cursor: pointer;
-	color:#FFF;
-}
 .text-orange{
-	color:rgb(204,51,51);
-}
-.text-orange-blue-hover{
-	color:rgb(251,175,93);
-}
-.text-orange-blue-hover:hover{
-	color: rgb(147,210,253);
-}
-.text-light-blue{
-	color: rgb(147,210,253);
-}
-.text-light-blue-nohover{
-	color: rgb(147,210,253);
-}
-.text-light-blue-nohover:hover{
-	color: rgb(147,210,253);
-}
-.text-dark-blue{
-	color:rgb(51,54,63);
-}
-.text-blue-gray{
-	color:rgb(51,54,63);
+	color:rgb(248,148,29);
 }
 .text-gray{
 	color:rgb(137,137,137);
 }
+.text-pink{
+	color:rgb(242,108,79);
+}
+.text-green{
+	color:rgb(141,199,63);
+}
+.text-blue{
+	color:rgb(0,114,188);
+}
 .text-black{
-	color:rgb(0,0,0) ;
+	color:rgb(0,0,0);
 }
 .text-black-nohover{
 	color:rgb(0,0,0) ;
@@ -728,6 +706,9 @@ textarea:focus, input:focus{
 .border-gray{
 	border:1px solid rgb(244,244,244) !important;
 }
+.border-white{
+	border:1px solid rgb(255,255,255) !important;
+}
 .border-gray-left{
 	border-left:1px solid rgb(244,244,244);
 }
@@ -784,7 +765,7 @@ textarea:focus, input:focus{
 	border-left:5px solid transparent;
 }
 .side-nav > li:hover{
-	border-left:5px solid rgb(251,175,93);
+	border-left:5px solid rgb(0,114,188);
 }
 .side-nav>li>a {
 	width: 225px;
