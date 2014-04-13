@@ -451,6 +451,9 @@ textarea:focus, input:focus{
 .margin-left-25x{
 	margin-left: 45px;
 }
+.margin-left-n1p{
+	margin-left: -2%;
+}
 .margin-left-1p{
 	margin-left: 1%;
 }
@@ -563,7 +566,7 @@ textarea:focus, input:focus{
 	height: 500px;
 }
 .container-75p{
-	width:77%;
+	width:76%;
 }
 .container-85p{
 	width:85%;
