@@ -17,10 +17,23 @@ $(document).ready(function(){
          }
     };
    waitVals[strVals.length]=intVals[0];
-   
    //SET AGENDA ITEM TIMEOUTS
     for(var i=1; i<=strVals.length;i++){
-       setAgendaDelay(i, strVals.length);
+       $('#agendaItem'+i).each(function() {
+                var tis = $(this);
+                var state = false;
+                var hiddenBox= tis.next('div');
+                if(i>1)
+                    hiddenBox.hide().css('height','auto').slideUp();
+            tis.click(function() {
+              state = !state;
+              toggleID=tis.next('.answer');
+              toggleID.slideToggle(state);
+              hiddenBox.slideToggle(state);
+              tis.toggleClass('active',state);
+            });
+          });
+        setAgendaDelay(i, strVals.length);
     };
     //ENDING AGENDA ITEM
     $('#countdownTimer').countdown({until: intVals[0],compact: true,format: 'MS'});
@@ -39,28 +52,13 @@ function setAgendaDelay(i, total){
     setTimeout(function(){
             if(prev>=1){
                 $.notify("AGENDA ITEM "+ prev+ " DONE"); 
-
-                $(notesID).removeClass("border-orange");
-                $(notesID).addClass("text-black"); 
-
-                $(notesButtonID).removeClass("border-orange");
-                $(notesButtonID).addClass("text-black");
-
-                $(taskButtonID).removeClass("border-orange");
-                $(taskButtonID).addClass("text-black");
-
-                $(taskPersonID).removeClass("border-orange");
-                $(taskPersonID).addClass("text-black");
-                
-                $(taskPersonAddID).removeClass("border-orange");
-                $(taskPersonAddID).addClass("text-black");
+                $('#agendaItem'+i).next('div').slideToggle(true);
                 document.getElementById('alertSound').play();
             };
             if(i==total){
                 $('#endCirc').addClass("bg-green"); 
                 document.getElementById('alertSound').play();
-            }else{
-            $(agendaID).removeClass("bg-gray-out");  
+            }else{ 
             $(progCir).addClass("bg-green"); 
             $(progID).progressBar({timeLimit: timeLimits,limit:intVals})
         }
