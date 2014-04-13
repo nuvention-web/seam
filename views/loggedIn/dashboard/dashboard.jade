@@ -26,15 +26,15 @@ block content
 					.col-md-1.border-gray
 
 					.col-md-2.border-gray.text-center
-						button.border-square.btn-red-hover.margin-top-3p(type='button', href="javascript:{}" onclick="document.getElementById('future#{i}').submit();") EPIC ALL HANDS
+						button.border-square.btn-blue-hover.margin-top-3p(type='button', href="javascript:{}" onclick="document.getElementById('future#{i}').submit();") EPIC ALL HANDS
 					.col-md-2.border-gray
 						
 					.col-md-2.border-gray.text-center
-						button.border-square.bg-white.btn-red-hover.margin-top-3p(type='button', href="javascript:{}" onclick="document.getElementById('future#{i}').submit();") TEAM UPDATES
+						button.border-square.bg-white.btn-blue-hover.margin-top-3p(type='button', href="javascript:{}" onclick="document.getElementById('future#{i}').submit();") TEAM UPDATES
 					.col-md-2.border-gray
 						
 					.col-md-2.border-gray.text-center
-						button.border-square.bg-white.btn-red-hover.margin-top-3p(type='button', href="javascript:{}" onclick="document.getElementById('future#{i}').submit();") EPIC UPDATES
+						button.border-square.bg-white.btn-blue-hover.margin-top-3p(type='button', href="javascript:{}" onclick="document.getElementById('future#{i}').submit();") EPIC UPDATES
 					.col-md-1.border-gray			
 	.row.margin-top-2p
 		.col-md-4
@@ -47,8 +47,8 @@ block content
 							h2.text-left.text-normal #{upcomingMeeting.meetingTitle}
 							h4.text-left.text-normal.text-gray #{meetingDate[0]}
 							input(type='hidden', name='meetingId', value='#{upcomingMeeting._id}')
-							button.padding-btn-small.text-right.margin-right-3p.border-square.btn-red-hover(type='button', href="javascript:{}", onclick="editAgenda('upcomingMeeting')") EDIT AGENDA
-							button.padding-btn-small.text-right.margin-right-3p.border-square.btn-red-hover(type='button', href="javascript:{}" onclick="startAgenda('upcomingMeeting')") START
+							button.padding-btn-small.text-right.margin-right-3p.border-square.btn-blue-hover(type='button', href="javascript:{}", onclick="editAgenda('upcomingMeeting')") EDIT AGENDA
+							button.padding-btn-small.text-right.margin-right-3p.border-square.btn-blue-hover(type='button', href="javascript:{}" onclick="startAgenda('upcomingMeeting')") START
 			.row.bg-white.border-gray.border-shadow-1x.margin-right-1p.margin-bottom-3p.border-round(style='height:185px;')
 				.col-md-12.margin-top-1p.margin-left-1p
 					h4.text-left.text-normal.text-gray PREVIOUS MEETING
@@ -57,8 +57,8 @@ block content
 							h2.text-left.text-normal #{previousMeeting.meetingTitle}
 							h4.text-left.text-normal.text-gray #{meetingDate[0]}
 							input(type='hidden', name='meetingId', value='#{previousMeeting._id}')
-							button.padding-btn-small.text-right.margin-right-3p.border-square.btn-red-hover(type='button', href="javascript:{}", onclick="viewMinutes('previousMeeting')") VIEW MINUTES
-							button.padding-btn-small.text-right.margin-right-3p.border-square.btn-red-hover(type='button', href="javascript:{}") VIEW TASKS
+							button.padding-btn-small.text-right.margin-right-3p.border-square.btn-blue-hover(type='button', href="javascript:{}", onclick="viewMinutes('previousMeeting')") VIEW MINUTES
+							button.padding-btn-small.text-right.margin-right-3p.border-square.btn-blue-hover(type='button', href="javascript:{}") VIEW TASKS
 
 		.col-md-8
 			.row.bg-white.border-gray.border-shadow-1x.margin-left-1p.overflow-scroll-y.padding-bottom-2p.border-round(style='height:370px;')
@@ -75,9 +75,9 @@ block content
 										h4.text-black.text-left #{meeting.meetingTitle}
 										h4.text-orange.text-left #{meeting.objective}
 									.col-md-2.text-right.margin-top-2p
-										button.padding-btn.border-square.btn-red-hover(type='button', href="javascript:{}", onclick="editAgenda('future#{i}')")  EDIT
+										button.padding-btn.border-square.btn-blue-hover(type='button', href="javascript:{}", onclick="editAgenda('future#{i}')")  EDIT
 									.col-md-2.text-left.margin-top-2p
-										button.padding-btn.border-square.btn-red-hover(type='button', href="javascript:{}" onclick="startAgenda('future#{i}')") START
+										button.padding-btn.border-square.btn-blue-hover(type='button', href="javascript:{}" onclick="startAgenda('future#{i}')") START
 	//.row.margin-top-2p
 		.col-md-12.bg-white.border-gray.border-shadow-1x.border-round(style='height:150px;')
 			.row

@@ -463,6 +463,9 @@ textarea:focus, input:focus{
 .margin-left-15p{
 	margin-left: 15.5%;
 }
+.margin-left-35p{
+	margin-left: 63.5%;
+}
 .margin-right-15x{
 	margin-right:15px;
 }
@@ -946,3 +949,12 @@ background-color: rgb(225,225,225);
     *zoom:1;/* For IE7*/
     white-space:normal;
 }
+/* =======================================================
+   3.DROPDOWN-DESKTOP
+========================================================== */
+#faqs h2	{ cursor:pointer; }
+#faqs h2.active	{ color:#d74646; }
+.answer	{ background: url(../../images/open.png);  width: 24px; height: 24px; }
+.answer.active	{ background: url(../images/close.png); width: 20px; height: 20px;}
+#faqs div { height:0; overflow:hidden; position:relative; }
+#faqs div h1	{ padding:0; margin-bottom:10px; }
