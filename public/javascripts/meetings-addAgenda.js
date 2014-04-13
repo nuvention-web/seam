@@ -75,7 +75,7 @@ function addAgendaItem(){
     		'<input id="makeMeeting'+i+'" type="text" name="agendaTopic" placeholder="ADD AGENDA ITEM" autocomplete="off" class="text-h3 noEnterSubmit height-30x form-control border-square border-none text-left bg-transparent"/>'+
   				'</div>'+
   		'<div class="col-md-3">'+
-  				'<input id="duration'+i+'" type="text" name="duration" class=" text-h3 noEnterSubmit height-30x form-control border-square border-none text-right bg-transparent" placeholder= "TIME" autocomplete="off"/>'+
+  				'<input id="duration'+i+'" type="number" name="duration" class=" text-h3 noEnterSubmit height-30x form-control border-square border-none text-right bg-transparent" placeholder= "TIME" autocomplete="off" required/>'+
   				'</div>'+
   		'<div class="col-md-1 padding-0 text-center" style="margin-top:0.5%;">'+
   			'<a class="text-h2 text-normal" href="#" onclick="removeAgenda(agendaItem'+ i + ');return false;">X</a>'+

@@ -171,10 +171,6 @@ exports.updateMeeting = function(req, res){
 
 	var update = { $set: meetingData };
 	var options = { upsert: true };	
-	//Create ical File
-	var icsFilePath=createiCal(creatorEmail,meetingTitle,icalDate,icalEmail,meetingStartTime,meetingEndTime,objective,location);
-	mailBody=createAgendaBody(emailList,emailDate,meetingTitle,objective,emailAgenda,location,duration,icsFilePath);
-	emailFunction(mailBody,res,icsFilePath);
 
 	Meeting.update(conditions, update, options, function(){res.redirect('dashboard');});
 }
