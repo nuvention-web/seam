@@ -584,6 +584,8 @@ exports.addMeeting = function(req, res){
 				hour+=12;
 			}
 			meetingStartTime = new Date(meetingYearTime[0], meetingMonthDate[0] - 1, meetingMonthDate[1], hour, meetingHourMin[1]);
+
+			console.log("date: "+ meetingStartTime);
 			meetingEndTime= new Date(meetingYearTime[0], meetingMonthDate[0] - 1, meetingMonthDate[1], hour, meetingHourMin[1]);
 			var length=parseInt(meetingTime);
 			meetingEndTime.setMinutes(meetingStartTime.getMinutes()+length);
@@ -591,6 +593,7 @@ exports.addMeeting = function(req, res){
 			icalDate=meetingStartTime.getMonth()+""+meetingStartTime.getDate()+""+meetingStartTime.getFullYear();
 			var icalStartTime=meetingStartTime.getFullYear()+"-"+('0' + meetingStartTime.getMonth()).slice(-2)+"-"+('0' + meetingStartTime.getDate()).slice(-2)+"T0"+ ('0' +meetingStartTime.getHours()).slice(-2)+":"+('0' + meetingStartTime.getMinutes()).slice(-2)+"-5:00";
 			var icalEndTime=meetingEndTime.getFullYear()+"-"+('0' + meetingEndTime.getMonth()).slice(-2)+"-"+('0' + meetingEndTime.getDate()).slice(-2)+"T0"+ ('0' +meetingEndTime.getHours()).slice(-2)+":"+('0' + meetingEndTime.getMinutes()).slice(-2)+"-5:00";
+			console.log("start"+icalStartTime);
 		}
 		else{
 			meetingDate = '';
@@ -669,7 +672,7 @@ exports.addMeeting = function(req, res){
 	});
 
 	//Create ical File
-	var icsFilePath=createiCal(creatorEmail,meetingTitle,icalDate,icalEmail,meetingStartTime,meetingEndTime,objective,location);
+	var icsFilePath=createiCal(creatorEmail,meetingTitle,icalDate,icalEmail,meetingDate,meetingEndTime,objective,location);
 	mailBody=createAgendaBody(emailList,emailDate,meetingTitle,objective,emailAgenda,location,meetingTime,icsFilePath);
 	emailFunction(mailBody,res,icsFilePath);
 
