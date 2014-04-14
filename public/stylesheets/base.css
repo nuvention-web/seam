@@ -159,6 +159,12 @@ textarea:focus, input:focus{
 .text-gray{
 	color:rgb(137,137,137);
 }
+.text-gray-hover{
+	color:rgb(137,137,137);
+}
+.text-gray-hover:hover{
+	color:rgb(0,114,188);
+}
 .text-pink{
 	color:rgb(242,108,79);
 }
@@ -170,6 +176,12 @@ textarea:focus, input:focus{
 }
 .text-black{
 	color:rgb(0,0,0);
+}
+.text-black-hover{
+	color:rgb(0,0,0);
+}
+.text-black-hover:hover{
+	color:rgb(0,114,188);
 }
 .text-black-nohover{
 	color:rgb(0,0,0) ;
@@ -686,6 +698,11 @@ textarea:focus, input:focus{
 	-webkit-border-radius: 12px !important;
      -moz-border-radius: 12px !important;
           border-radius: 12px !important;
+}
+.border-round{
+	-webkit-border-radius: 12px !important;
+     -moz-border-radius: 12px !important;
+          -moz-border-radius-topleft: : 12px !important;
 }
 .outline-black{
 	border-color:2px solid rgb(0,0,0) !important;
