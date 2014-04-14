@@ -5,15 +5,11 @@ var Project = require('../models/project-model');
 var nodemailer = require('nodemailer');
 
 exports.makeMeeting = function(req, res){
-	Meeting.find({'ProjectId': req.session.projectId, 'UserId' : req.user.local.email}, function(e, docs){
-		res.render('loggedIn/meetings/makeMeeting', { 
-			title: 'SEAM',
-			projectName: req.session.projectName,
-			meetingList: docs,
-			name: req.session.name,
-			user : req.user
-		});
-	})
+	res.render('loggedIn/meetings/makeMeeting', { 
+		title: 'SEAM',
+		name: req.session.name,
+		user : req.session.userId
+	});
 };
 
 exports.editMeeting = function(req, res){
@@ -176,17 +172,11 @@ exports.updateMeeting = function(req, res){
 }
 
 exports.makeNewMeeting = function(req, res){
-	Meeting.find({'ProjectId': req.session.projectId, 'UserId' : req.user.local.email}, function(e, docs){
-		Project.findOne({'_id': req.session.projectId}, function(e, proj){
-			res.render('loggedIn/meetings/makeNewMeeting', {
-				memberList: proj.groupMembers,
-				title: 'SEAM', 
-				meetingList: docs,
-				projectName: req.session.projectName,
-				user : req.user
-			});
-		});
-	})
+	res.render('loggedIn/meetings/makeMeeting', { 
+		title: 'SEAM',
+		name: req.session.name,
+		user : req.session.userId
+	});
 };
 
 exports.viewMeeting = function(req, res){
