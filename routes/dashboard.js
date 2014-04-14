@@ -23,8 +23,19 @@ var Project = require('../models/project-model');
 // };
 
 exports.dashboard = function(req, res){
-	Meeting.find({'UserId' : req.session.userId, 'isComplete' : 0}).sort({meetingDate: 1}).exec(function(e, meetingList){
-		Meeting.find({'UserId' : req.session.userId, 'isComplete' : 1}).sort({meetingDate: 1}).exec(function(e, finMeetingList){
+
+	var userId;
+
+	if(req.session.email==undefined){
+		userId = req.session.userId;
+	}else{
+		userId = req.session.email;
+	}
+
+	console.log("THIS IS THE USERID: " + userId);
+
+	Meeting.find({ $or: [{'UserId' : userId, 'isComplete' : 0}, {'attendees.attendeeEmail' : userId, 'isComplete' : 0}]}).sort({meetingDate: 1}).exec(function(e, meetingList){
+		Meeting.find({ $or: [{'UserId' : userId, 'isComplete' : 1}, {'attendees.attendeeEmail' : userId, 'isComplete' : 1}]}).sort({meetingDate: 1}).exec(function(e, finMeetingList){
 			var meetingDate = new Array();
 
 			for(var i = 0; i < meetingList.length; i++){
@@ -80,4 +91,14 @@ exports.tasks = function(req, res){
 
 function addMinutes(date, minutes){
 	return new Date(date.getTime() + minutes*60000);
+}
+
+//Function that returns email if it is Google Login and email if local
+function getCreatorEmail(req,userId){
+
+	if(req.session.email==undefined){
+		return userId;
+	}else{
+		return req.session.email;
+	}
 }

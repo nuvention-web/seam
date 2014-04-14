@@ -170,7 +170,7 @@ exports.updateMeeting = function(req, res){
 	}
 
 	var update = { $set: meetingData };
-	var options = { upsert: true };
+	var options = { upsert: true };	
 
 	Meeting.update(conditions, update, options, function(){res.redirect('dashboard');});
 }
@@ -339,7 +339,7 @@ exports.endMeeting = function(req, res){
 	var meetingId = req.session.meetingId;
 	var mailBody, smtpConfig;
 	var emailAgenda='';
-	var agenda,meetingTitle,meetingDate,objective,meetingAttendees,emailDate,emailTime,owner;
+	var agenda,meetingTitle,meetingDate,objective,meetingAttendees,emailDate,emailTime,creatorEmail;
 	var emailList='';
 	// console.log(meetingId);
 	Meeting.findByIdAndUpdate(meetingId, {
@@ -356,14 +356,12 @@ exports.endMeeting = function(req, res){
 			objective=doc.objective;
 			meetingAttendees=doc.attendees;
 			meetingDate=doc.meetingDate;
-			if(req.session.email==undefined){
-				owner=userId;
-			}else{
-				owner=req.session.email;
-			}
-			emailList=owner+',';
+			var creatorEmail= getCreatorEmail(req,doc.userId);
+
+			console.log("EMAIL: "+creatorEmail);
+			emailList=creatorEmail+',';
 			var meetingYear = meetingDate.getFullYear(); 
-			var meetingMonth = meetingDate.getMonth(); 
+			var meetingMonth = meetingDate.getMonth()+1; 
 			var meetingDay = meetingDate.getDate(); 
 			emailDate= meetingMonth +"/"+meetingDay+"/"+meetingYear ;
 			emailTime=doc.meetingTime;
@@ -569,13 +567,9 @@ exports.addMeeting = function(req, res){
 	var emailDate='';
 	var timerInfo= meetingTime+','+duration;
 	var icalEmail=[];
-	var creatorEmail='';
-	if(req.session.email==undefined){
-		creatorEmail=userId;
-	}else{
-		creatorEmail=req.session.email;
-	}
+	var creatorEmail= getCreatorEmail(req, userId);
 	var emailList=creatorEmail+',';
+	console.log("duration"+duration+"meetingTime"+meetingTime);
 	icalEmail.push({name:"Creator", email:creatorEmail});
 	var meetingStartTime,meetingEndTime,meetingEndTime,icalDate,icalStartTime,icalEndTime='';
 
@@ -591,7 +585,7 @@ exports.addMeeting = function(req, res){
 			}
 			meetingStartTime = new Date(meetingYearTime[0], meetingMonthDate[0] - 1, meetingMonthDate[1], hour, meetingHourMin[1]);
 			meetingEndTime= new Date(meetingYearTime[0], meetingMonthDate[0] - 1, meetingMonthDate[1], hour, meetingHourMin[1]);
-			var length=parseInt(duration);
+			var length=parseInt(meetingTime);
 			meetingEndTime.setMinutes(meetingStartTime.getMinutes()+length);
 			emailDate=parseInt(meetingStartTime.getMonth()+1)+"/"+meetingStartTime.getDate()+"/"+meetingStartTime.getFullYear();
 			icalDate=meetingStartTime.getMonth()+""+meetingStartTime.getDate()+""+meetingStartTime.getFullYear();
@@ -676,7 +670,7 @@ exports.addMeeting = function(req, res){
 
 	//Create ical File
 	var icsFilePath=createiCal(creatorEmail,meetingTitle,icalDate,icalEmail,meetingStartTime,meetingEndTime,objective,location);
-	mailBody=createAgendaBody(emailList,emailDate,meetingTitle,objective,emailAgenda,location,duration,icsFilePath);
+	mailBody=createAgendaBody(emailList,emailDate,meetingTitle,objective,emailAgenda,location,meetingTime,icsFilePath);
 	emailFunction(mailBody,res,icsFilePath);
 
 	res.redirect('/dashboard');
@@ -816,4 +810,14 @@ function deleteFile(fileName){
 	  	if (err) throw err;
 	  		console.log('successfully deleted file');
 	});
+}
+
+//Function that returns email if it is Google Login and email if local
+function getCreatorEmail(req,userId){
+
+	if(req.session.email==undefined){
+		return userId;
+	}else{
+		return req.session.email;
+	}
 }
