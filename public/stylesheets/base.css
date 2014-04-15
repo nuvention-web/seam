@@ -261,6 +261,13 @@ textarea:focus, input:focus{
 	-o-background-size: cover;
 	background-size: cover;
 }
+.bg-frontpg-blur{
+	background: url(../images/bg-blur.jpg) no-repeat center center fixed;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+}
 .bg-black{
 	background-color: #000;
 }
@@ -631,6 +638,10 @@ textarea:focus, input:focus{
 /* ========================================================
    1C.IMAGES-DESKTOP
 =========================================================== */
+.img-10p{
+	width:10%;
+	height:10%;
+}
 .img-15p{
 	width:15%;
 	height:15%;
@@ -699,10 +710,21 @@ textarea:focus, input:focus{
      -moz-border-radius: 12px !important;
           border-radius: 12px !important;
 }
-.border-round{
-	-webkit-border-radius: 12px !important;
-     -moz-border-radius: 12px !important;
-          -moz-border-radius-topleft: : 12px !important;
+.border-round-top{
+	border-top-left-radius:     12px !important;
+	-webkit-top-left-radius: 12px !important;
+     -moz-top-left-radius: 12px !important;
+	border-top-right-radius:    12px !important;
+	-webkit-top-right-radius: 12px !important;
+     -moz-top-right-radius: 12px !important;
+}
+.border-round-bottom{
+	border-bottom-left-radius:     12px !important;
+	-webkit-bottom-left-radius: 12px !important;
+     -moz-bottom-left-radius: 12px !important;
+	border-bottom-right-radius:    12px !important;
+	-webkit-bottom-right-radius: 12px !important;
+     -moz-bottom-right-radius: 12px !important;
 }
 .outline-black{
 	border-color:2px solid rgb(0,0,0) !important;
@@ -800,6 +822,14 @@ textarea:focus, input:focus{
 	color:rgb(255,255,255);
 	background-color: rgb(204,51,51);
 	border:2px solid rgb(204,51,51);
+}
+.box-gray{
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 5%;
+	width:45%;
+	height: 60%;
+	background-color: rgb(233,233,233);
 }
 /* =======================================================
    2.WRAPPER-DESKTOP
