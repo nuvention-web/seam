@@ -10,17 +10,30 @@ $(document).ready(function(){
     for(var i = 0; i < strVals.length; i++){
         intVals[i] =parseInt(strVals[i]);
         waitVals[i]=0;
-         //intVals[i] *=60;
+        intVals[i] *=60;
          if(i>1){
-            intVals[i] =parseInt(strVals[i]);
-            waitVals[i]=intVals[i]+waitVals[i-1];
+            intVals[i] =parseInt(strVals[i])*60;
+            waitVals[i]=intVals[i-1]+waitVals[i-1];
          }
     };
    waitVals[strVals.length]=intVals[0];
-   
    //SET AGENDA ITEM TIMEOUTS
     for(var i=1; i<=strVals.length;i++){
-       setAgendaDelay(i, strVals.length);
+       $('#agendaItem'+i).each(function() {
+                var tis = $(this);
+                var state = false;
+                var hiddenBox= tis.next('div');
+                if(i>1)
+                    hiddenBox.hide().css('height','auto').slideUp();
+            tis.click(function() {
+              state = !state;
+              toggleID=tis.next('.answer');
+              toggleID.slideToggle(state);
+              hiddenBox.slideToggle(state);
+              tis.toggleClass('active',state);
+            });
+          });
+        setAgendaDelay(i, strVals.length);
     };
     //ENDING AGENDA ITEM
     $('#countdownTimer').countdown({until: intVals[0],compact: true,format: 'MS'});
@@ -39,33 +52,14 @@ function setAgendaDelay(i, total){
     setTimeout(function(){
             if(prev>=1){
                 $.notify("AGENDA ITEM "+ prev+ " DONE"); 
-
-                $(notesID).removeClass("border-orange");
-                $(notesID).addClass("text-black");                
-                $(notesID).addClass("outline-black");
-
-                $(notesButtonID).removeClass("border-orange");
-                $(notesButtonID).addClass("border-black");
-                $(notesButtonID).addClass("text-black");
-
-                $(taskButtonID).removeClass("border-orange");
-                $(taskButtonID).addClass("border-black");
-                $(taskButtonID).addClass("text-black");
-
-                $(taskPersonID).removeClass("border-orange");
-                $(taskPersonID).addClass("text-black");
-                $(taskPersonID).addClass("outline-black");
-                
-                $(taskPersonAddID).removeClass("border-orange");
-                $(taskPersonAddID).addClass("border-black");
-                $(taskPersonAddID).addClass("text-black");
-
+                $('#agendaItem'+i).next('div').slideToggle(true);
+                document.getElementById('alertSound').play();
             };
             if(i==total){
-                $('#endCirc').addClass("bg-black"); 
-            }else{
-            $(agendaID).removeClass("bg-gray-out");  
-            $(progCir).addClass("bg-black"); 
+                $('#endCirc').addClass("bg-green"); 
+                document.getElementById('alertSound').play();
+            }else{ 
+            $(progCir).addClass("bg-green"); 
             $(progID).progressBar({timeLimit: timeLimits,limit:intVals})
         }
     },waitVals[i]*1000);
@@ -102,7 +96,7 @@ function setAgendaDelay(i, total){
                 bar.addClass(settings.style2);
             }else if(elapsed <= settings.limit[3]*1000){
                 bar.removeClass(settings.baseStyle)
-                .addClass(settings.style4);
+                .addClass(settings.style3);
             }
                 if (elapsed >= limit) {
                     window.clearInterval(interval);
@@ -126,10 +120,10 @@ function setAgendaDelay(i, total){
         onFinish: function () {},  //invoked once the timer expires
         baseStyle: 'bg-1',  //bootstrap progress bar style at the beginning of the timer
         style2:'bg-2',
-        style3:'bg-3',
-        style4:'bg-4',
+        style3:'bg-1',
+        style4:'bg-1',
         warningStyle: 'progress-bar-danger',  //bootstrap progress bar style in the warning phase
-        completeStyle: 'bg-4',//bootstrap progress bar style at completion of timer
+        completeStyle: 'bg-1',//bootstrap progress bar style at completion of timer
         limit:[30,10,5]
     };
 }(jQuery));

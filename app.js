@@ -69,6 +69,7 @@ if ('development' == app.get('env')) {
 //Landing Page
 app.get('/', landingPage.home);
 app.get('/home', landingPage.home);
+app.get('/login', landingPage.login);
 app.get('/survey', landingPage.survey);
 app.post('/addSurvey', landingPage.addSurvey);
 app.post('/addEmail', landingPage.addEmail);
@@ -82,6 +83,10 @@ app.get('/dashboard', user.isLoggedIn, dashboard.dashboard);
 app.get('/dashboard/meetings/makeMeeting', user.isLoggedIn, meetings.makeMeeting);
 app.get('/dashboard/meetings/makeMeeting/new', user.isLoggedIn, meetings.makeNewMeeting);
 app.post('/dashboard/meetings/makeMeeting/add', user.isLoggedIn, meetings.addMeeting);
+
+//update and edit meetings
+app.post('/dashboard/meetings/edit', user.isLoggedIn, meetings.editMeeting);
+app.post('/dashboard/meetings/edit/update', user.isLoggedIn, meetings.updateMeeting);
 
 app.post('/dashboard/meetings/view', user.isLoggedIn, meetings.viewMeeting);
 app.post('/dashboard/meetings/view/past', user.isLoggedIn, meetings.viewPast);
@@ -98,6 +103,7 @@ app.get('/dashboard/meetings/end', user.isLoggedIn, meetings.endMeeting);
 
 //Tasks
 app.get('/dashboard/tasks', user.isLoggedIn, task.getTasks);
+app.post('/dashboard/tasks/current', user.isLoggedIn, task.getTasksByMeeting);
 
 // team member stuff
 app.get('/dashboard/team', user.isLoggedIn, team.team);
@@ -137,7 +143,12 @@ app.post('/login', passport.authenticate('local-login', {
 	failureRedirect: '/home', // redirect back to the signup page if there is an error
 	failureFlash: true // allow flash messages
 }));
-
+app.get('/google/login', passport.authenticate('google-login'));
+app.get('/auth/google/callback',  passport.authenticate('google-login', {
+	successRedirect: '/dashboard', // redirect to the secure profile section
+	failureRedirect: '/', // redirect back to the signup page if there is an error
+	failureFlash: true // allow flash messages
+}))
 //error page
 app.get('/error', index.error);
 

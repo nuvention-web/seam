@@ -20,7 +20,6 @@ body{
 	font-family: 'Lato', sans-serif;
 	font-size:1em;
 	line-height:20px;
-	margin-top: 50px;
 }
 /* ========================================================
    0B.TYPOGRAPHY-DESKTOP
@@ -101,9 +100,17 @@ input{
 	color:rgb(204,51,51) !important;
 	text-transform: uppercase;
 }
+textarea{
+	border:none;
+	outline: none;
+	overflow-x:hidden;
+	resize:none;
+	box-shadow:none !important;
+}
 textarea:focus, input:focus{
     outline: 0;
     border:none;
+    box-shadow:none !important;
 }
 .form-control{
 	margin:0 auto;
@@ -146,45 +153,35 @@ textarea:focus, input:focus{
 .text-white-redhover:hover{
 	color:rgb(204,51,51) !important;
 }
-.text-red{
-	color:rgb(204,51,51) !important;
-}
-.text-red-hover{
-	color:rgb(204,51,51);
-}
-.text-red-hover:hover{
-	cursor: pointer;
-	color:#FFF;
-}
 .text-orange{
-	color:rgb(204,51,51);
-}
-.text-orange-blue-hover{
-	color:rgb(251,175,93);
-}
-.text-orange-blue-hover:hover{
-	color: rgb(147,210,253);
-}
-.text-light-blue{
-	color: rgb(147,210,253);
-}
-.text-light-blue-nohover{
-	color: rgb(147,210,253);
-}
-.text-light-blue-nohover:hover{
-	color: rgb(147,210,253);
-}
-.text-dark-blue{
-	color:rgb(51,54,63);
-}
-.text-blue-gray{
-	color:rgb(51,54,63);
+	color:rgb(248,148,29);
 }
 .text-gray{
 	color:rgb(137,137,137);
 }
+.text-gray-hover{
+	color:rgb(137,137,137);
+}
+.text-gray-hover:hover{
+	color:rgb(0,114,188);
+}
+.text-pink{
+	color:rgb(242,108,79);
+}
+.text-green{
+	color:rgb(141,199,63);
+}
+.text-blue{
+	color:rgb(0,114,188);
+}
 .text-black{
-	color:rgb(0,0,0) ;
+	color:rgb(0,0,0);
+}
+.text-black-hover{
+	color:rgb(0,0,0);
+}
+.text-black-hover:hover{
+	color:rgb(0,114,188);
 }
 .text-black-nohover{
 	color:rgb(0,0,0) ;
@@ -208,7 +205,7 @@ textarea:focus, input:focus{
 	text-align: right;
 }
 .text-center{
-	text-align: center !important;
+	text-align: center;
 }
 .text-vertical-center{
 	vertical-align: center;
@@ -277,19 +274,19 @@ textarea:focus, input:focus{
 	background-color:rgb(51,54,63);
 }
 .bg-green{
-	background-color: rgb(0,85,0);
+	background-color: rgb(141,199,63);
 }
 .bg-1{
-	background-color: rgb(0,85,0);
+	background-color: rgb(141,199,63);
 }
 .bg-2{
-	background-color: rgb(255,150,0);
+	background-color: rgb(248,148,29);
 }
 .bg-3{
-	background-color: rgb(255,255,0);
+	background-color: rgb(248,148,29);
 }
 .bg-4{
-	background-color: rgb(51,54,63);
+	background-color: rgb(204,51,51);
 }
 .bg-red{
 	background-color: rgb(204,51,51);
@@ -430,6 +427,9 @@ textarea:focus, input:focus{
 .margin-top-1p{
 	margin-top:1%;
 }
+.margin-top-1-5p{
+	margin-top:1.5%;
+}
 .margin-top-2p{
 	margin-top:2%;
 }
@@ -463,6 +463,9 @@ textarea:focus, input:focus{
 .margin-left-25x{
 	margin-left: 45px;
 }
+.margin-left-n1p{
+	margin-left: -2%;
+}
 .margin-left-1p{
 	margin-left: 1%;
 }
@@ -474,6 +477,9 @@ textarea:focus, input:focus{
 }
 .margin-left-15p{
 	margin-left: 15.5%;
+}
+.margin-left-35p{
+	margin-left: 63.5%;
 }
 .margin-right-15x{
 	margin-right:15px;
@@ -572,7 +578,7 @@ textarea:focus, input:focus{
 	height: 500px;
 }
 .container-75p{
-	width:77%;
+	width:76%;
 }
 .container-85p{
 	width:85%;
@@ -673,10 +679,30 @@ textarea:focus, input:focus{
 	-webkit-box-shadow: 0 0 8px  rgba(204,51,51, .8);
 	-moz-box-shadow: 0 0 8px  rgba(204,51,51, .8);
 }
+.border-shadow-gray{
+  -moz-box-shadow:    5px 5px 7px 8px #ccc;
+  -webkit-box-shadow: 5px 5px 7px 8px #ccc;
+  box-shadow:         5px 5px 7px 8px #ccc;
+}
+.border-shadow-gray-small{
+	-moz-box-shadow:    1px 1px 2px 2px #ccc;
+  -webkit-box-shadow: 1px 1px 2px 2px #ccc;
+  box-shadow:         1px 1px 2px 2px #ccc;
+}
 .border-square{
 	-webkit-border-radius: 0 !important;
      -moz-border-radius: 0 !important;
           border-radius: 0 !important;
+}
+.border-round{
+	-webkit-border-radius: 12px !important;
+     -moz-border-radius: 12px !important;
+          border-radius: 12px !important;
+}
+.border-round{
+	-webkit-border-radius: 12px !important;
+     -moz-border-radius: 12px !important;
+          -moz-border-radius-topleft: : 12px !important;
 }
 .outline-black{
 	border-color:2px solid rgb(0,0,0) !important;
@@ -694,6 +720,10 @@ textarea:focus, input:focus{
 .border-black-outline{
 	outline: #232323 solid 1px;
 }
+.border-blue{
+	background-color:rgb(0,114,188) !important;
+	border-width: 1px;
+}
 .border-red{
 	background-color:rgb(204,51,51) !important;
 	border-width: 1px;
@@ -707,10 +737,13 @@ textarea:focus, input:focus{
 	border-width: 1px;
 }
 .border-orange{
-	border:2px solid rgb(204,51,51) !important;
+	border:1px solid rgb(248,148,29) !important;
 }
 .border-gray{
 	border:1px solid rgb(244,244,244) !important;
+}
+.border-white{
+	border:1px solid rgb(255,255,255) !important;
 }
 .border-gray-left{
 	border-left:1px solid rgb(244,244,244);
@@ -730,7 +763,43 @@ textarea:focus, input:focus{
 	border:none;
 }
 .border-shadow-1x{
-	box-shadow: 1px 1px 1px 1px rgb(230,230,230);
+	box-shadow: 2px 2px 2px 2px rgb(230,230,230);
+}
+.btn-blue-hover{
+	color:rgb(0,114,188);
+	background-color: rgb(255,255,255);
+	border:2px solid rgb(0,114,188) !important;
+	border-radius: 3px !important;
+	transition:all 0.5s ease-in-out;
+}
+.btn-blue-hover:hover{
+	color:rgb(255,255,255);
+	background-color: rgb(0,114,188);
+	border:2px solid rgb(0,114,188);
+}
+.btn-orange-hover{
+	color:rgb(248,148,29);
+	background-color: rgb(255,255,255);
+	border:1px solid rgb(248,148,29) !important;
+	border-radius: 3px!important;
+	transition:all 0.5s ease-in-out;
+}
+.btn-orange-hover:hover{
+	color:rgb(255,255,255);
+	background-color: rgb(248,148,29);
+	border:1px solid rgb(248,148,29);
+}
+.btn-red-hover{
+	color:rgb(204,51,51);
+	background-color: rgb(255,255,255);
+	border:2px solid rgb(204,51,51) !important;
+	border-radius: 3px!important;
+	transition:all 0.5s ease-in-out;
+}
+.btn-red-hover:hover{
+	color:rgb(255,255,255);
+	background-color: rgb(204,51,51);
+	border:2px solid rgb(204,51,51);
 }
 /* =======================================================
    2.WRAPPER-DESKTOP
@@ -746,17 +815,17 @@ textarea:focus, input:focus{
 	left: 225px;
 	width: 225px;
 	position: fixed;
-	top: 50px;
 	height: 100%;
 	border-radius: 0;
 	border: none;
 	overflow-y: auto;
+	overflow-x:hidden;
 }
 .side-nav >li{
 	border-left:5px solid transparent;
 }
 .side-nav > li:hover{
-	border-left:5px solid rgb(251,175,93);
+	border-left:5px solid rgb(0,114,188);
 }
 .side-nav>li>a {
 	width: 225px;
@@ -774,6 +843,7 @@ textarea:focus, input:focus{
 }
 .navbar{
 	z-index: 59;
+	box-shadow: 1px solid rgb(0,0,0) !important;
 }
 .navbar .nav > li > a {
     color:  #FFF;
@@ -814,6 +884,12 @@ textarea:focus, input:focus{
 	margin:0 10%;
 	margin-top:29%;
 }
+.loginBox {
+	width: 30%;
+	margin:0 35%;
+	margin-top:12%;
+	background-color: rgb(234,234,234);
+}
 /* =======================================================
    3.PROGRESS_BAR-DESKTOP
 ========================================================== */
@@ -833,15 +909,19 @@ margin:0 auto;
 border-style:solid;
 border-color:  rgb(225,225,225);
 
+
 }
 .progress-vertical-circle-bigger {
 position: relative;
-width: 40px;
-min-height:40px;
+width: 25px;
+min-height:25px;
 border-radius:50%;
 margin:0 auto;
-background-color: #000;
+margin-top: 5px;
+border-style:solid;
+border-color:  rgb(225,225,225);
 }
+
 .progress-vertical-line {
 position: relative;
 width: 2px;
@@ -850,13 +930,13 @@ margin:0px auto;
 border-radius: 0;
 }
 .progress-vertical-line-shorter{
-	position: relative;
+position: relative;
 width: 2px;
 min-height:150px;
 height: auto;
 margin:0px auto;
 border-radius: 0;
-background-color: #000;
+background-color: rgb(225,225,225);
 }
 .progress-danger .bar,
     .progress .bar-danger {
@@ -889,3 +969,12 @@ background-color: #000;
     *zoom:1;/* For IE7*/
     white-space:normal;
 }
+/* =======================================================
+   3.DROPDOWN-DESKTOP
+========================================================== */
+#faqs h2	{ cursor:pointer; }
+#faqs h2.active	{ color:#d74646; }
+.answer	{ background: url(../../images/open.png);  width: 24px; height: 24px; }
+.answer.active	{ background: url(../images/close.png); width: 20px; height: 20px;}
+#faqs div { height:0; overflow:hidden; position:relative; }
+#faqs div h1	{ padding:0; margin-bottom:10px; }

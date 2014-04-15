@@ -1,0 +1,109 @@
+
+extends ../dashboard/baseLayout
+
+block content
+	form(role='form', method='POST', action='/dashboard/meetings/edit/update', id='addMeeting')
+		input#meetingId(type='hidden', name='meetingId', value='#{meeting._id}')
+		.row
+			.col-md-12.bg-white.border-gray.border-shadow-1x.border-round(style='min-height:150px; height:auto')
+				.row
+					.col-md-10.col-sm-10.col-xs-10.margin-top-1p
+						input.text-h3.height-30x.form-control.border-square.border-none.text-left.bg-transparent(id='makeMeeting', type='text', name='meetingTitle', placeholder= 'MEETING TITLE', autofocus='autofocus', autocomplete='off', value='#{meeting.meetingTitle}')
+				.row
+					.col-md-10.col-sm-10.col-xs-10.margin-top-1p
+						input.text-h4.height-30x.text-orange.form-control.border-square.border-none.text-left.bg-transparent(id='makeMeeting', type='text', name='objective', placeholder= 'OBJECTIVE', autocomplete='off', value='#{meeting.objective}')
+		.row.margin-top-2p.margin-bottom-3p
+			.col-md-9
+				.row.bg-white.border-gray.border-shadow-1x.border-round.margin-right-1p.margin-left.height-auto.padding-bottom-3p
+					.container-95p.margin-center
+						.row
+							.col-md-8.margin-top-1p.padding-bottom-2p
+								h4.text-left.text-normal.text-gray MEETING AGENDA
+							.col-md-2.margin-top-1p.padding-bottom-2p
+								h4.text-left.text-normal.text-gray DURATION
+							.col-md-1.margin-top-2p
+								input.text-h4.text-gray.text-left(id='makeMeeting', type='text', name='meetingTime', autocomplete='off', value='#{meetingDuration}', readonly)
+						#agendaBox
+							each agenda, i in meeting.agenda
+								.row
+									.col-md-1.margin-top-1p.padding-bottom-2p.margin-0.padding-0
+										div.height-100p.width-100p
+											.progress.progress-striped.progress-vertical-circle-bigger.progress-striped.active.progress-success.margin-top-n1x.margin-bottom-0p
+												.bar(style="width:40px")
+									.col-md-7.margin-0.padding-0
+										input.text-h3.height-30x.form-control.border-square.border-none.text-left.bg-transparent(id='makeMeeting1', type='text', name='agendaTopic', placeholder= 'ADD AGENDA ITEM', autocomplete='off', value='#{agenda.topic}')
+									.col-md-3
+										input.text-h3.height-30x.form-control.border-square.border-none.text-right.bg-transparent(id='makeMeeting1', type='text', name='duration', placeholder= 'TIME', autocomplete='off', value='#{agenda.duration}')
+								.row
+									.col-md-1.margin-top-1p.padding-bottom-2p.margin-0.padding-0
+										div.height-100p.width-100p
+											.progress.progress-striped.progress-vertical-line-shorter.progress-striped.active.progress-success.margin-top-n1x.margin-bottom-0p
+												.bar(style="width:40px")
+									.col-md-11.margin-0.padding-0
+										div.width-95p.margin-top-1p.overflow-scroll-y-auto.max-height-150x
+											textarea.text-h4.height-30x.form-control.border-square.border-none.text-left.bg-transparent(rows='6',id='makeMeeting1', type='text', name='notes', placeholder= 'INSERT NOTES HERE', autocomplete='off', value='#{agenda.notes[0].notes}')
+								
+						.row
+							.col-md-1.margin-top-1p.padding-bottom-2p.margin-0.padding-0
+									div.height-100p.width-100p
+										.progress.progress-striped.progress-vertical-circle-bigger.progress-striped.active.progress-success.margin-top-n1x.margin-bottom-0p
+											.bar(style="width:40px")
+							.col-md-11.margin-0.padding-0
+								div.width-95p.margin-top-1p.margin-left-1p
+									a#addAgendaItem.text-gray.text-h3.margin-0(href="#" onclick="addAgendaItem()") ADD MORE
+			.col-md-3
+				.row.height-auto.bg-white.border-gray.border-shadow-1x.border-round.margin-left-1p.overflow-scroll-y-auto.overflow-x-hidden.padding-bottom-10p
+					.col-md-12.margin-top-1p.margin-left-3p
+						h4.text-left.text-normal.text-gray.margin-left-3p MEETING LOGISTICS
+						.container-95p.margin-center.margin-top-5p
+							.row
+								.col-md-12
+									h4.text-left.text-normal.text-dark-blue SCHEDULING
+							.row 
+								.col-md-12
+									input.text-h4.height-30x.text-black.form-control.border-square.border-none.text-left.bg-transparent(id='makeMeeting', type='text', name='meetingDate', placeholder= 'DATE AND START TIME', autocomplete='off', value='#{meetingDate}')
+							//- .row 
+							//- 	.col-md-12
+							//- 		input.text-h4.height-30x.text-black.form-control.border-square.border-none.text-left.bg-transparent(id='makeMeeting', type='text', name='meetingTime', placeholder= 'DURATION(MINUTES)', autocomplete='off')
+							.row 
+								.col-md-12
+									input.text-h4.height-30x.text-orange.form-control.border-square.border-none.text-left.bg-transparent(id='makeMeeting', type='text', name='location', placeholder= 'LOCATION', autocomplete='off', value='#{meeting.location}')
+							.row
+								.col-md-12
+									h4.text-left.text-normal.text-dark-blue ATTENDEES
+							div#attendeeList
+								each attendee, i in meeting.attendees
+									.row
+										input(type='hidden', name='attendeeName', value='#{attendee.attendeeName}')
+										input(type='hidden', name='attendeeEmail', value='#{attendee.attendeeEmail}')
+										.col-md-4.margin-top-5p
+											img.width-50x.border-50p.float-right(src='../../../images/member.png')
+										.col-md-8
+											h4.text-black.text-left.margin-top-5p #{attendee.attendeeName}
+							.row.margin-top-5p#addNewAttendee(style="display: none")
+								.col-md-8
+									input.form-control.border-square.text-left.border-none(type='text', name='nameHolder', value='', id='nameHolder', placeholder= 'NAME', tabindex='1')
+								.col-md-4
+									button.border-square.btn-red-hover.padding-btn(type='button' onclick='addAttendee()', tabindex='3') ADD
+								.col-md-12
+									input.form-control.border-square.text-left.border-none(type='text', name='emailHolder', value='', id='emailHolder', placeholder= 'EMAIL', tabindex='2')
+							.row.margin-top-5p
+								.col-md-8.col-md-offset-2.text-center
+									button.border-square.bg-white.btn-red-hover.padding-btn(type='button' onclick='showAttendeeForm()') NEW ATTENDEE
+							//.row.margin-top-10p
+								.col-md-12
+									h4.text-left.text-normal.text-dark-blue RESOURCES
+							//.row.margin-top-5p
+								.col-md-10.col-md-offset-1.text-center
+									button.border-square.btn-red-hover.text-orange.padding-btn ADD ATTACHMENT
+							//.row.margin-top-5p
+								.col-md-8.col-md-offset-2.text-center
+									button.border-square.btn-red-hover.padding-btn  ADD TASK
+				.row.margin-left-1p
+					.col-md-12.col-sm-12.col-xs-12.margin-top-1p.text-left.margin-top-2p.text-center.margin-top-10p
+						button.border-square.btn-red-hover.text-h3.padding-btn(type='submit') UPDATE MEETING
+	script(src='../../../javascripts/moment-2.4.0.js')
+	script(src='../../../javascripts/bootstrap-datetimepicker.min.js')
+	link(rel='stylesheet', href='../../../stylesheets/bootstrap-datetimepicker.css')
+	link(rel='stylesheet', href='//netdna.bootstrapcdn.com/bootstrap/3.0.0-rc2/css/bootstrap-glyphicons.css')
+	script(src='../../../javascripts/meetings-addAgenda.js')
