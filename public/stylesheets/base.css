@@ -1004,7 +1004,7 @@ background-color: rgb(225,225,225);
 ========================================================== */
 #faqs h2	{ cursor:pointer; }
 #faqs h2.active	{ color:#d74646; }
-.answer	{ background: url(../../images/open.png);  width: 24px; height: 24px; }
+.answer	{ background: url(../../images/open.png);  width: 24px; height: 24px;cursor: pointer; }
 .answer.active	{ background: url(../images/close.png); width: 20px; height: 20px;}
 #faqs div { height:0; overflow:hidden; position:relative; }
 #faqs div h1	{ padding:0; margin-bottom:10px; }
