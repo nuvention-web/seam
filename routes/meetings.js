@@ -1,6 +1,5 @@
 var mongoose = require('mongoose');
 var Meeting = require('../models/meeting-model');
-var Task = require('../models/task-model');
 var Project = require('../models/project-model');
 var nodemailer = require('nodemailer');
 
@@ -217,51 +216,47 @@ exports.postMeeting = function(req, res){
 	console.log(meetingId);
 	Meeting.findOne({'_id': meetingId}, function(e, doc){
 		console.log(doc);
-		Task.findOne({'MeetingId': meetingId}, function(e, task){
-			console.log(task);
 
-			var meetingDate = '';
+		var meetingDate = '';
 
-			if(doc.meetingDate != undefined && doc.meetingDate != ''){
+		if(doc.meetingDate != undefined && doc.meetingDate != ''){
 
-				var date = doc.meetingDate;
-				var duration = doc.meetingTime;
-				console.log(duration);
-				var year = date.getFullYear();
-				var month = date.getMonth() + 1;
-				var day = date.getDate();
-				var startHour = date.getHours();
-				var startMinutes = date.getMinutes();
-				if(startHour > 12){
-					startHour = startHour%12;
-				}
-				if(startMinutes < 10){
-					startMinutes = "0" + startMinutes;
-				}
-				var endDate = addMinutes(date, duration);
-				var endHour = endDate.getHours();
-				var endMinutes = endDate.getMinutes();
-				if(endHour > 12){
-					endHour = endHour%12;
-				}
-				if(endMinutes < 10){
-					endMinutes = "0" + endMinutes;
-				}				
-				var timeString = month + "/" + day + "/" + year + " " + startHour + ":" + startMinutes + " - " + endHour + ":" + endMinutes; 
-				meetingDate = timeString;
-				console.log(meetingDate);
+			var date = doc.meetingDate;
+			var duration = doc.meetingTime;
+			console.log(duration);
+			var year = date.getFullYear();
+			var month = date.getMonth() + 1;
+			var day = date.getDate();
+			var startHour = date.getHours();
+			var startMinutes = date.getMinutes();
+			if(startHour > 12){
+				startHour = startHour%12;
 			}
+			if(startMinutes < 10){
+				startMinutes = "0" + startMinutes;
+			}
+			var endDate = addMinutes(date, duration);
+			var endHour = endDate.getHours();
+			var endMinutes = endDate.getMinutes();
+			if(endHour > 12){
+				endHour = endHour%12;
+			}
+			if(endMinutes < 10){
+				endMinutes = "0" + endMinutes;
+			}				
+			var timeString = month + "/" + day + "/" + year + " " + startHour + ":" + startMinutes + " - " + endHour + ":" + endMinutes; 
+			meetingDate = timeString;
+			console.log(meetingDate);
+		}
 
-			res.render('loggedIn/meetings/startMeeting', { 
-				title: 'SEAM',
-				name: req.session.name,
-				meetingDate: meetingDate,
-				taskList: task,
-				meeting: doc,
-				user : req.user,
-				past : 0
-			});
-		})
+		res.render('loggedIn/meetings/startMeeting', { 
+			title: 'SEAM',
+			name: req.session.name,
+			meetingDate: meetingDate,
+			meeting: doc,
+			user : req.user,
+			past : 0
+		});
 	})
 };
 
@@ -278,50 +273,46 @@ exports.getMeeting = function(req, res){
 	console.log(meetingId);
 	Meeting.findOne({'_id': meetingId}, function(e, doc){
 		console.log(doc);
-		Task.find({'MeetingId': meetingId}, function(e, task){
-			console.log(task);
 
-			var meetingDate = '';
+		var meetingDate = '';
 
-			if(doc.meetingDate != undefined && doc.meetingDate != ''){
+		if(doc.meetingDate != undefined && doc.meetingDate != ''){
 
-				var date = doc.meetingDate;
-				var duration = doc.meetingTime;
-				console.log(duration);
-				var year = date.getFullYear();
-				var month = date.getMonth() + 1;
-				var day = date.getDate();
-				var startHour = date.getHours();
-				var startMinutes = date.getMinutes();
-				if(startHour > 12){
-					startHour = startHour%12;
-				}
-				if(startMinutes < 10){
-					startMinutes = "0" + startMinutes;
-				}
-				var endDate = addMinutes(date, duration);
-				var endHour = endDate.getHours();
-				var endMinutes = endDate.getMinutes();
-				if(endHour > 12){
-					endHour = endHour%12;
-				}
-				if(endMinutes < 10){
-					endMinutes = "0" + endMinutes;
-				}				
-				var timeString = month + "/" + day + "/" + year + " " + startHour + ":" + startMinutes + " - " + endHour + ":" + endMinutes; 
-				meetingDate = timeString;
-				console.log(meetingDate);
+			var date = doc.meetingDate;
+			var duration = doc.meetingTime;
+			console.log(duration);
+			var year = date.getFullYear();
+			var month = date.getMonth() + 1;
+			var day = date.getDate();
+			var startHour = date.getHours();
+			var startMinutes = date.getMinutes();
+			if(startHour > 12){
+				startHour = startHour%12;
 			}
+			if(startMinutes < 10){
+				startMinutes = "0" + startMinutes;
+			}
+			var endDate = addMinutes(date, duration);
+			var endHour = endDate.getHours();
+			var endMinutes = endDate.getMinutes();
+			if(endHour > 12){
+				endHour = endHour%12;
+			}
+			if(endMinutes < 10){
+				endMinutes = "0" + endMinutes;
+			}				
+			var timeString = month + "/" + day + "/" + year + " " + startHour + ":" + startMinutes + " - " + endHour + ":" + endMinutes; 
+			meetingDate = timeString;
+			console.log(meetingDate);
+		}
 
-			res.render('loggedIn/meetings/startMeeting', { 
-				title: 'SEAM',
-				meetingDate: meetingDate,
-				taskList: task,
-				meeting: doc,
-				user : req.user,
-				past : 0
-			});
-		})
+		res.render('loggedIn/meetings/startMeeting', { 
+			title: 'SEAM',
+			meetingDate: meetingDate,
+			meeting: doc,
+			user : req.user,
+			past : 0
+		});
 	})
 };
 
@@ -501,7 +492,7 @@ exports.addNote = function(req, res){
 			}
 			else{
 				console.log('Added notes successfully');
-				Meeting.find({}, function(e, docs){console.log(docs);});
+				// Meeting.find({}, function(e, docs){console.log(docs);});
 			}
 		});	
 		res.redirect('back');
@@ -509,22 +500,17 @@ exports.addNote = function(req, res){
 };
 
 exports.addTask = function(req, res){
-	var meetingTask = req.body.notes;
-	var meetingPerson = req.body.taskPerson;
+
+	var taskOrder = req.body.noteOrder;
 	var meetingId = req.session.meetingId;
-	var userId = req.session.userId;
-	var taskPersonLength = meetingPerson.length;
-	meetingPerson = meetingPerson.slice(0, taskPersonLength - 2);
-
-	if(meetingPerson != ""){
-		var newTask = new Task({
-			UserId: userId,
-			MeetingId: meetingId,
-			meetingTask: meetingTask,
-			meetingPerson: meetingPerson
-		});
-
-		newTask.save(function(err, doc){
+	var task = req.body.taskName;
+	var taskAssignee = req.body.taskAssignee;
+	var taskDueDate = req.body.taskDueDate;
+	console.log(req.body);
+	console.log(taskOrder + " " + meetingId + " " + task);
+	Meeting.findOne({'_id': meetingId}, function(e, doc){
+		doc.agenda[taskOrder].tasks.push({ assigneeName: taskAssignee, task: task, taskDueDate: taskDueDate});
+		doc.save(function(err, doc){
 			if(err){
 				console.log('Problem adding task to database')
 				console.log(err);
@@ -532,12 +518,12 @@ exports.addTask = function(req, res){
 				res.redirect('error', {user : req.user});
 			}
 			else{
-				console.log('Added new task successfully');
-				Task.find({}, function(e, docs){console.log(docs);});
+				console.log('Added task successfully');
+				// Meeting.find({}, function(e, docs){console.log(docs);});
 			}
 		});
-	}
-	res.redirect('back');
+		res.redirect('back');
+	})
 };
 
 exports.addMeeting = function(req, res){

@@ -7,6 +7,17 @@ html, body {
 	height: 100%;
 }
 
+/*this is my css to remove bullets from the autocomplete*/
+ul.ui-autocomplete {
+    list-style: none;
+}
+
+/*this is my css to remove bullets from the autocomplete*/
+
+.ui-helper-hidden-accessible { 
+	display:none; 
+}
+
 html, hmtl a{
 	width:100%;
 	font-size: 100%; 
