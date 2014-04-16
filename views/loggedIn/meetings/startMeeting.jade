@@ -40,7 +40,11 @@ block content
 									h5#countdownTimer.text-left.text-black.text-normal
 				.row.height-auto.bg-white.border-gray.border-shadow-1x.margin-left-1p.overflow-scroll-y-auto.overflow-x-hidden.margin-top-10p.padding-bottom-10p.border-round
 					.col-md-12.margin-top-1p
-						h4.text-left.text-normal.text-gray.margin-left-1p ATTENDEES
+						.row#attendeeMinimize
+							.col-md-10
+								h4.text-left.text-normal.text-gray.margin-left-1p ATTENDEES
+							.col-md-1.margin-top-2p
+								.answer 
 						.container-95p.margin-center.margin-top-3p
 							each attendee, i in meeting.attendees
 								.row.margin-top-10p

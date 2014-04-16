@@ -14,7 +14,7 @@ block content
 							.col-md-12.margin-left-1p.margin-top-2p
 								form(role='form', method='POST', action='/dashboard/tasks/current', id='meetingTasks'+i, value='#{i}', name='meetingTasks')
 									input(type='hidden', name='meetingId', value='#{meeting._id}')
-									button.padding-btn-small.text-left.margin-right-3p.border-square.btn-red-hover.btn-block(type='submit') #{meeting.meetingTitle}
+									button.padding-btn-small.text-left.margin-right-3p.border-square.btn-orange-hover.btn-block(type='submit') #{meeting.meetingTitle}
 		.col-md-8
 			.row.bg-white.border-gray.border-shadow-1x.border-round.margin-left-1p.padding-bottom-2p.overflow-scroll-y-auto(style='min-height:500px; height:auto')
 				.col-md-12.margin-top-1p
