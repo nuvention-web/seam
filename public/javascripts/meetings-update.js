@@ -85,29 +85,29 @@ $(document).ready(function(){
 				if(flag == 0){
 					if(notesList[value] == undefined){
 						allNotes.innerHTML += '<h5 class="text-left margin-right-2p ">' + notes + '</h5>';
-						allNotes.scrollTop = notesList.scrollHeight;
+						notesList.scrollTop = notesList.scrollHeight;
 						$('#notes' + value)[0].value = '';
 					}
 					else{
 						allNotes[value].innerHTML += '<h5 class="text-left margin-right-2p">' + notes + '</h5>';
-						allNotes[value].scrollTop = notesList[value].scrollHeight;
+						notesList[value].scrollTop = notesList[value].scrollHeight;
 						$('#notes' + value)[0].value = '';
 					}
 				}
 				else{
 					if(notesList[value] == undefined){
 						allTasks.innerHTML += '<h5 class="text-left margin-right-2p"> @' + taskAssignee + task + '</h5>';
-						allTasks.scrollTop = notesList.scrollHeight;
+						notesList.scrollTop = notesList.scrollHeight;
 						$('#taskAssignee' + value)[0].value = '';
 						$('#taskName' + value)[0].value = '';
-						$('textarea[name="notes"]').focus();
+						$('#notes' + value)[0].focus();
 					}
 					else{
 						allTasks[value].innerHTML += '<h5 class="text-left margin-right-2p"> @' + taskAssignee + task + '</h5>';
-						allTasks[value].scrollTop = notesList[value].scrollHeight;
+						notesList[value].scrollTop = notesList[value].scrollHeight;
 						$('#taskAssignee' + value)[0].value = '';
 						$('#taskName' + value)[0].value = '';
-						$('textarea[name="notes"]').focus();
+						$('#notes' + value)[0].focus();
 					}
 				}                  
 			}
