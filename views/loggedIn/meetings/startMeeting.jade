@@ -49,7 +49,7 @@ block content
 							each attendee, i in meeting.attendees
 								.row.margin-top-10p
 									.col-md-12.attendeeMember
-										img.width-50x.height-50x.border-50p.float-left(src="../../../images/member.png", value='#{attendee.attendeeName}')
+										img.width-50x.height-50x.border-50p.float-left(name='attendee', src="../../../images/member.png", value='#{attendee.attendeeName}')
 										h4.text-black.text-left.margin-top-1p(value='#{attendee.attendeeName}') #{attendee.attendeeName}
 										a.text-h5.text-left.margin-top-5p.text-light-blue-nohover.text-normal(id="attendance#{i}" href="#" onclick="changeAttendance('attendance#{i}');return false;") PRESENT
 				.row.margin-left-1p
@@ -99,18 +99,13 @@ block content
 												.col-md-3.padding-0-right
 													.input-group
 														span.input-group-addon.border-square.border-orange-bot.border-orange-left @
-														textarea.text-h5.margin-left-2p.form-control.border-square.border-orange-no-top.border-orange-bot.border-orange-right.border-orange-left.text-left.bg-white.margin-0.margin-right-1p(rows="1",id='notes#{i}', type='text', name='notes', placeholder= 'Assignee', tabindex='#{i+1}', autocomplete='off')
+														input.text-h5.margin-left-2p.form-control.border-square.border-orange-no-top.border-orange-bot.border-orange-right.border-orange-left.text-left.bg-white.margin-0.margin-right-1p(rows="1",id='notes#{i}', type='text', name='taskAssignee', placeholder= 'Assignee', tabindex='#{i+1}', autocomplete='off')
 												.col-md-5.padding-0
-													textarea.text-h5.margin-left-2p.form-control.border-square.border-orange-no-top.border-orange-bot.border-orange-right.border-orange-left.text-left.bg-white.margin-0.margin-right-1p(rows="1",id='notes#{i}', type='text', name='notes', placeholder= 'Type Task...', tabindex='#{i+1}', autocomplete='off')
+													input.text-h5.margin-left-2p.form-control.border-square.border-orange-no-top.border-orange-bot.border-orange-right.border-orange-left.text-left.bg-white.margin-0.margin-right-1p(rows="1",id='notes#{i}', type='text', name='notes', placeholder= 'Type Task...', tabindex='#{i+1}', autocomplete='off')
 												.col-md-3.padding-0-left
-													textarea.text-h5.margin-left-2p.form-control.border-square.border-orange-no-top.border-orange-bot.border-orange-right.border-orange-left.text-left.bg-white.margin-0.margin-right-1p(rows="1",id='notes#{i}', type='text', name='notes', placeholder= 'Due Date', tabindex='#{i+1}', autocomplete='off')
+													input.text-h5.margin-left-2p.form-control.border-square.border-orange-no-top.border-orange-bot.border-orange-right.border-orange-left.text-left.bg-white.margin-0.margin-right-1p(rows="1",id='notes#{i}', type='text', name='taskDueDate', placeholder= 'Due Date', tabindex='#{i+1}', autocomplete='off')
 												.col-md-1
 													button.bg-white.text-blue-hoverorange.text-left.margin-0.padding-0(id='addTask#{i+1}' type='button', value='#{i}')<i class="fa fa-check fa-md"></i> 
-											.row(style="display: none", id='taskPerson#{i+1}')
-												.col-md-10
-													input.text-h5.height-30x.margin-left-2p.form-control.border-square.border-orange.text-left.bg-white.margin-0.margin-right-1p(id='taskPerson#{i+1}Input', type='text', name='taskPerson', placeholder='Add People', autocomplete='off')
-												.col-md-2
-													button.padding-btn.text-left.border-square.btn-orange-hover(id='addTask#{i+1}' type='button', value='#{i}') ADD TASK
 										else
 											.row
 												.col-md-11
@@ -121,18 +116,13 @@ block content
 												.col-md-3.padding-0-right
 													.input-group
 														span.input-group-addon.border-square.border-orange-bot.border-orange-left @
-														textarea.text-h5.margin-left-2p.form-control.border-square.border-orange-no-top.border-orange-bot.border-orange-right.border-orange-left.text-left.bg-white.margin-0.margin-right-1p(rows="1",id='notes#{i}', type='text', name='notes', placeholder= 'Assignee', tabindex='#{i+1}', autocomplete='off')
+														input.text-h5.margin-left-2p.form-control.border-square.border-orange-no-top.border-orange-bot.border-orange-right.border-orange-left.text-left.bg-white.margin-0.margin-right-1p(rows="1",id='notes#{i}', type='text', name='taskAssignee', placeholder= 'Assignee', tabindex='#{i+1}', autocomplete='off')
 												.col-md-5.padding-0
-													textarea.text-h5.margin-left-2p.form-control.border-square.border-orange-no-top.border-orange-bot.border-orange-right.border-orange-left.text-left.bg-white.margin-0.margin-right-1p(rows="1",id='notes#{i}', type='text', name='notes', placeholder= 'Type Task...', tabindex='#{i+1}', autocomplete='off')
+													input.text-h5.margin-left-2p.form-control.border-square.border-orange-no-top.border-orange-bot.border-orange-right.border-orange-left.text-left.bg-white.margin-0.margin-right-1p(rows="1",id='notes#{i}', type='text', name='notes', placeholder= 'Type Task...', tabindex='#{i+1}', autocomplete='off')
 												.col-md-3.padding-0-left
-													textarea.text-h5.margin-left-2p.form-control.border-square.border-orange-no-top.border-orange-bot.border-orange-right.border-orange-left.text-left.bg-white.margin-0.margin-right-1p(rows="1",id='notes#{i}', type='text', name='notes', placeholder= 'Due Date', tabindex='#{i+1}', autocomplete='off')
+													input.text-h5.margin-left-2p.form-control.border-square.border-orange-no-top.border-orange-bot.border-orange-right.border-orange-left.text-left.bg-white.margin-0.margin-right-1p(rows="1",id='notes#{i}', type='text', name='taskDueDate', placeholder= 'Due Date', tabindex='#{i+1}', autocomplete='off')
 												.col-md-1
 													button.bg-white.text-blue-hoverorange.text-left.margin-0.padding-0(id='addTask#{i+1}' type='button', value='#{i}')<i class="fa fa-check fa-md"></i> 
-											.row(style="display: none", id='taskPerson#{i+1}')
-												.col-md-10
-													input.text-h5.height-30x.margin-left-2p.form-control.border-square.border-orange.text-left.bg-white.margin-0.margin-right-1p(id='taskPerson#{i+1}Input', type='text', name='taskPerson', placeholder='Add People', autocomplete='off')
-												.col-md-2
-													button.padding-btn.text-left.border-square.btn-orange-hover(id='addTask#{i+1}' type='button', value='#{i}') ADD TASK
 					.row
 						.col-md-1.margin-top-1p.padding-bottom-2p.margin-0.padding-0
 							div.height-100p.width-100p
@@ -145,6 +135,10 @@ block content
 	script(src='../../../javascripts/meetings-attendance.js')
 	script(src='../../../javascripts/meetings-update.js')
 	script(src='../../../javascripts/notify.min.js')
+	script(src='../../../javascripts/moment-2.4.0.js')
+	script(src='../../../javascripts/bootstrap-datetimepicker.min.js')
+	link(rel='stylesheet', href='../../../stylesheets/bootstrap-datetimepicker.css')
+	link(rel='stylesheet', href='//netdna.bootstrapcdn.com/bootstrap/3.0.0-rc2/css/bootstrap-glyphicons.css')
 	script(type="text/javascript" src='../../../javascripts/meetings-progressBar.js')
 	script(type="text/javascript" src="../../../javascripts/jquery.plugin.js")
 	script(type="text/javascript" src="../../../javascripts/jquery.countdown.js")

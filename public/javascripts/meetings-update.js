@@ -1,6 +1,28 @@
 //FUNCTIONS FOR ASYNC UPDATE OF MEETINGS
-var taskInput;
 $(document).ready(function(){
+
+	var taskInput;
+
+	// array used for autocomplete
+	var attendeeTags = new Array();
+	// adding all out attendees to the autocompelete source
+	$("img[name='attendee']").each(function(){
+		attendeeTags.push($(this).attr('value'));
+		console.log(attendeeTags);
+	});
+	//autocomeplete function
+	$("input[name='taskAssignee']").autocomplete({
+		source: attendeeTags,
+		messages: {
+	        noResults: '',
+	        results: function() {}
+    	}
+    });
+
+    //for calender of datepicker
+    $("input[name='taskDueDate']").datetimepicker({
+    	pickTime: false
+    });
 
 	$('.attendeeMember img').click(function() {
         var value = $(this).attr('value');
