@@ -1,74 +1,81 @@
 //FUNCTIONS FOR ASYNC UPDATE OF MEETINGS
 $(document).ready(function(){
 
-	var taskInput;
-
 	// array used for autocomplete
 	var attendeeTags = new Array();
 	// adding all out attendees to the autocompelete source
 	$("img[name='attendee']").each(function(){
 		attendeeTags.push($(this).attr('value'));
-		console.log(attendeeTags);
+		// console.log(attendeeTags);
 	});
 	//autocomeplete function
-	$("input[name='taskAssignee']").autocomplete({
-		source: attendeeTags,
-		messages: {
-	        noResults: '',
-	        results: function() {}
-    	}
-    });
 
+
+    $("input[name='taskAssignee']")
+      // don't navigate away from the field on tab when selecting an item
+      .bind( "keydown", function( event ) {
+        if ( event.keyCode === $.ui.keyCode.TAB &&
+            $( this ).data( "ui-autocomplete" ).menu.active ) {
+          event.preventDefault();
+        }
+      })
+      .autocomplete({
+        minLength: 0,
+        source: function( request, response ) {
+          // delegate back to autocomplete, but extract the last term
+          response( $.ui.autocomplete.filter(
+            attendeeTags, extractLast( request.term ) ) );
+        },
+        focus: function() {
+          // prevent value inserted on focus
+          return false;
+        },
+       	noResults: '',
+       	results: function() {},
+        select: function( event, ui ) {
+          var terms = split( this.value );
+          // remove the current input
+          terms.pop();
+          // add the selected item
+          terms.push( ui.item.value );
+          // add placeholder to get the comma-and-space at the end
+          terms.push( "" );
+          this.value = terms.join( ", " );
+          return false;
+        }
+      });
+
+      var defaultWeek = getWeekFromNow();
     //for calender of datepicker
     $("input[name='taskDueDate']").datetimepicker({
-    	pickTime: false
+    	pickTime: false,
+    	defaultDate: defaultWeek
     });
 
-	$('.attendeeMember img').click(function() {
-        var value = $(this).attr('value');
-        var e = document.getElementById(taskInput);
-        if (e.value.indexOf(value) !=-1) {
-       	
-		}else{
-			e.value= e.value+ value+", ";
- 		}
-        return false;
-    });
+    $('textarea[name="notes"]').keypress(function (event) {
+		if (event.keyCode == 13 && event.shiftKey) {
+			var value = $(this).attr('value');
+			$("#TNForm" + value).submit();
+		}
+	});
 
-     $('.attendeeMember h4').click(function() {
-        var value = $(this).attr('value');
-        var e = document.getElementById(taskInput);
-        if (e.value.indexOf(value) !=-1) {
-       	
-		}else{
-			e.value= e.value+ value+", ";
- 		}
- 		return false;
-    });
 	//FUNCTION: ASYNC UPDATE OF NOTES
 	$('form[name="TNForm"]').submit(function(event){
 		var value = $(this).attr('value');
-		var taskMembers= new Array();
 		var formData = $("#TNForm" + value).serializeArray();
 		console.log(formData);
 		var notes = formData[1].value;
+		var taskAssignee = formData[2].value;
+		var task = formData[3].value;
+
 		var action = '/dashboard/meetings/start/addNote';
 		var flag = 0; //0 if notes 1 if task
-		if(formData[2].value != ''){
+		if(taskAssignee != ''){
+			console.log('this is a task')
 			action = '/dashboard/meetings/start/addTask';
 			flag = 1;
 		}
-		// for(var i = 3; i < formData.length; i++){
-		// 	if(formData[i].value != ""){
-		// 		taskMembers.push(formData[i].value);
-		// 		flag = 1;
-		// 		action = '/dashboard/meetings/start/addTask';
-		// 		var newVal = i - 3;
-		// 		var inputName = '#assigned' + newVal;
-		// 		console.log($(inputName));
-		// 		$(inputName).val('');
-		// 	}
-		//  };
+
 		var url = location.protocol + "//" + location.host + action;
 		$.ajax({
 			type: "POST",
@@ -77,29 +84,31 @@ $(document).ready(function(){
 			success: function(data){
 				if(flag == 0){
 					if(notesList[value] == undefined){
-						notesList.innerHTML += '<h5 class="text-left margin-right-2p ">' + notes + '</h5>';
-						notesList.scrollTop = notesList.scrollHeight;
+						allNotes.innerHTML += '<h5 class="text-left margin-right-2p ">' + notes + '</h5>';
+						allNotes.scrollTop = notesList.scrollHeight;
 						$('#notes' + value)[0].value = '';
 					}
 					else{
-						notesList[value].innerHTML += '<h5 class="text-left margin-right-2p">' + notes + '</h5>';
-						notesList[value].scrollTop = notesList[value].scrollHeight;
+						allNotes[value].innerHTML += '<h5 class="text-left margin-right-2p">' + notes + '</h5>';
+						allNotes[value].scrollTop = notesList[value].scrollHeight;
 						$('#notes' + value)[0].value = '';
 					}
 				}
 				else{
 					if(notesList[value] == undefined){
-						notesList.innerHTML += '<h5 class="text-left margin-right-2p"> Task: ' + notes + '</h5>';
-						notesList.scrollTop = notesList.scrollHeight;
-						$('#notes' + value)[0].value = '';
+						allTasks.innerHTML += '<h5 class="text-left margin-right-2p"> @' + taskAssignee + task + '</h5>';
+						allTasks.scrollTop = notesList.scrollHeight;
+						$('#taskAssignee' + value)[0].value = '';
+						$('#taskName' + value)[0].value = '';
+						$('textarea[name="notes"]').focus();
 					}
 					else{
-						notesList[value].innerHTML += '<h5 class="text-left margin-right-2p"> Task: ' + notes + '</h5>';
-						notesList[value].scrollTop = notesList[value].scrollHeight;
-						$('#notes' + value)[0].value = '';
+						allTasks[value].innerHTML += '<h5 class="text-left margin-right-2p"> @' + taskAssignee + task + '</h5>';
+						allTasks[value].scrollTop = notesList[value].scrollHeight;
+						$('#taskAssignee' + value)[0].value = '';
+						$('#taskName' + value)[0].value = '';
+						$('textarea[name="notes"]').focus();
 					}
-					value = parseInt(value) + 1;
-					showTaskForm("taskPerson" + value, "addTask" + value);
 				}                  
 			}
 		});
@@ -124,24 +133,30 @@ function addTask(number){
 	return true;
 };
 
-
-function showTaskForm(id, buttonid){
-	console.log(id + " " + buttonid);
-	var e = document.getElementById(id);
-	var button = document.getElementById(buttonid);
-	var input = document.getElementById(id + "Input");
-	taskInput = id + "Input";
-	console.log("type = " + button.type);
-	if(e.style.display == 'inline'){
-		e.style.display = 'none';
-		button.type = 'button';
-		input.value = '';
-		console.log("type = " + button.type);
-	}
-	else{
-		e.style.display = 'inline';
-		button.type = 'submit';
-		input.value = '';
-		console.log("type = " +  button.type);
-	}
+function split( val ) {
+	return val.split( /,\s*/ );
 };
+
+function extractLast( term ) {
+	return split( term ).pop();
+};
+
+
+function getWeekFromNow(){
+	var today = new Date();
+	today.setDate(today.getDate()+7);
+	var dd = today.getDate();
+	var mm = today.getMonth()+1; //January is 0!
+	var yyyy = today.getFullYear();
+
+	if(dd < 10) {
+	    dd = '0' + dd;
+	} 
+
+	if(mm < 10) {
+	    mm = '0' + mm;
+	} 
+
+	today = mm + '/' + dd + '/' + yyyy;
+	return today;
+}
