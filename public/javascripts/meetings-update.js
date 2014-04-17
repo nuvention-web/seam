@@ -96,14 +96,14 @@ $(document).ready(function(){
 				}
 				else{
 					if(notesList[value] == undefined){
-						allTasks.innerHTML += '<h5 class="text-left margin-right-2p"> @' + taskAssignee + task + '</h5>';
+						allTasks.innerHTML += '<h5 class="text-left text-blue text-italics margin-right-2p"> @ ' + taskAssignee + task + ' </h5>';
 						notesList.scrollTop = notesList.scrollHeight;
 						$('#taskAssignee' + value)[0].value = '';
 						$('#taskName' + value)[0].value = '';
 						$('#notes' + value)[0].focus();
 					}
 					else{
-						allTasks[value].innerHTML += '<h5 class="text-left margin-right-2p"> @' + taskAssignee + task + '</h5>';
+						allTasks[value].innerHTML += '<h5 class="text-left text-blue text-italics margin-right-2p"> @ ' + taskAssignee +' '+ task + ' </h5>';
 						notesList[value].scrollTop = notesList[value].scrollHeight;
 						$('#taskAssignee' + value)[0].value = '';
 						$('#taskName' + value)[0].value = '';
