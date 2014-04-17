@@ -135,6 +135,9 @@ textarea{
 .line-height-12x{
 	line-height: 12px;
 }
+.line-height-15x{
+	line-height: 15px !important;
+}
 .line-height-30x{
 	line-height: 30px !important;
 }
@@ -629,8 +632,8 @@ textarea{
 .padding-left-3p{
 	padding-left: 3%;
 }
-.padding-left-6p{
-	padding-left: 6.5%;
+.padding-left-5p{
+	padding-left: 4.5%;
 }
 .padding-top-20x{
 	padding-top: 20px;
@@ -698,7 +701,7 @@ textarea{
 	height: 500px;
 }
 .container-70p{
-	width:61%;
+	width:43%;
 }
 .container-75p{
 	width:76%;
