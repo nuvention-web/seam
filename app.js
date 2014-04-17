@@ -73,7 +73,7 @@ app.get('/login', landingPage.login);
 app.get('/survey', landingPage.survey);
 app.post('/addSurvey', landingPage.addSurvey);
 app.post('/addEmail', landingPage.addEmail);
-
+app.post('/contact', landingPage.contact);
 //Dashboard
 app.get('/dashboard', user.isLoggedIn, dashboard.dashboard);
 // app.post('/dashboard', user.isLoggedIn, dashboard.setWelcome);
