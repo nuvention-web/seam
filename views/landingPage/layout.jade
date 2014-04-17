@@ -11,8 +11,10 @@ html(lang='en')
 		link(rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16.png")
 		link(rel="shortcut icon" href="/images/favicon.ico" type="image/x-icon")
 		link(href='http://fonts.googleapis.com/css?family=Lato:300,400,700', rel='stylesheet', type='text/css')
-		link(rel='stylesheet', href='../../stylesheets/bootstrap.min.css')
-		link(rel='stylesheet', href='../../stylesheets/base.css')
+		link(rel='stylesheet' href='../../stylesheets/bootstrap.min.css')
+		link(rel='stylesheet' href='../../stylesheets/base.css')
+		link(rel="stylesheet" href="../../stylesheets/ligatures.css")
+		link(rel="stylesheet" type="text/css" href="../../stylesheets/flaticon.css")
 		title SEAM
 		script.
 			(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
@@ -21,7 +23,7 @@ html(lang='en')
 			})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 			ga('create', 'UA-50079131-1', 'seam.co');
 			ga('send', 'pageview');
-	body#home-pg.bg-frontpg
+	body#home-pg.bg-frontpg-2
 		div.navbar.bg-transparent.navbar-inverse.navbar-fixed-top(role='navigation')
 			.container
 				.navbar-header
@@ -30,10 +32,11 @@ html(lang='en')
 						span.icon-bar
 						span.icon-bar
 						span.icon-bar
-					a.text-white.navbar-brand.text-bold(href='home') SEAM
+					a.navbar-brand.text-white.text-bold(href='home')
+						img.img-responsive( src="../../images/logo-landing.png")
 				.navbar-collapse.collapse
 					.navbar-right
-						ul.nav.navbar-nav
+						ul.nav.navbar-nav.margin-top-3p
 							if typeof user === 'undefined'
 								li
 									a.text-h5(class='text-bold visible-login', href='home#home-page') HOME

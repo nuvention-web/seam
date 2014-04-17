@@ -2,106 +2,151 @@ extends layout
 
 block content
 	div#home-page.page.full-page
-		.bg-frontpg
-			.tagLine
-				h2.text-white The newest member in your meetings.
-				.btn-box
-					a.btn.btn-primary.btn-lg.btn-block.img-30p.margin-center.border-square.margin-top-3p.bg-red-border(href='home#about-page') LEARN MORE
-	div#about-page.page.padding-top-7p.bg-white
+		.container.margin-bottom-10p
+			.row.margin-top-10p
+				.col-md-6
+					h1.text-big-35x.line-height-30x.text-white.text-bold.text-left
+						| Say 
+						span.text-big-35x.text-bold.text-left.text-ltblue hello 
+						| to the newest
+					h1.text-big-35x.line-height-30x.text-white.text-bold.text-left member of your meeting
+				.col-md-6.margin-top-3p
+					h1.text-big-25x.text-white.text-bold.text-right Bad meetings suck.
+					h1.text-big-25x.text-white.text-bold.text-right We feel your pain.
+			.row
+				.col-md-12
+					h1.line-height-12x.text-white.text-normal.text-right That's why we created SEAM.
+					h1.line-height-12x.text-white.text-normal.text-right From meeting prep to run to follow-up,
+					h1.line-height-12x.text-white.text-normal.text-right SEAM covers all the bases in helping you
+					h1.line-height-12x.text-white.text-normal.text-right hold great meetings. Great meetings
+					h1.line-height-12x.text-white.text-normal.text-right down on future meetings. And we believe 
+					h1.line-height-12x.text-white.text-normal.text-right the fewer meetings the better.
+			.row
+				.col-md-12
+					btn.float-right.btn.btn-primary.btn-lg.btn-block.text-center.padding-btn-small.img-40p.border-round-5x.margin-top-3p.bg-blue-transparent(href='home#about-page') SIGN UP FOR A FREE SEAM ACCOUNT
+	div#about-page.page.padding-top-3p.bg-white.padding-bottom-5p
 		.container
 			.row
-				.col-md-10.col-md-offset-1
-					h3 SEAM transforms the way you prep, run, and follow-up with your meetings. Focus on what's important.
-					br
+				.col-md-12
+					h1.text-big-35x.text-center SEAM's got your back.
+			.row.margin-top-5p
+				.col-md-4
+					.bg-green.border-round-5x.container-90p
+						.row
+							.col-md-12
+								h1.text-white.text-center.text-bold GET READY
+						.row
+							.col-md-12.margin-top-10p.margin-bottom-10p
+								h1
+									i.text-big-35x.text-center-imp.text-black.flaticon-space25
+						.row
+							.col-md-12.padding-bottom-10p
+								h3.text-white.line-height-5x.text-center.text-normal Create a clear,
+								h3.text-white.line-height-5x.text-center.text-normal easy-to-share agenda
+								h3.text-white.line-height-5x.text-center.text-normal using our neat templates.
+				.col-md-4
+					.bg-pink.border-round-5x.container-90p
+						.row
+							.col-md-12
+								h1.text-white.text-center.text-bold GET SET
+						.row
+							.col-md-12.margin-top-10p.margin-bottom-10p
+								h1
+									i.text-big-35x.text-center-imp.text-black.flaticon-launching1
+						.row
+							.col-md-12.padding-bottom-10p
+								h3.text-white.line-height-5x.text-center.text-normal Start the agenda during the
+								h3.text-white.line-height-5x.text-center.text-normal meeting to time discussions,
+								h3.text-white.line-height-5x.text-center.text-normal take notes and tag tasks.
+				.col-md-4
+					.bg-orange.border-round-5x.container-90p
+						.row
+							.col-md-12
+								h1.text-white.text-center.text-bold GO
+						.row
+							.col-md-12.margin-top-10p.margin-bottom-10p
+								h1
+									i.text-big-35x.text-center-imp.text-black.flaticon-rocket1
+						.row
+							.col-md-12.padding-bottom-10p
+								h3.text-white.line-height-5x.text-center.text-normal Get an email recap with
+								h3.text-white.line-height-5x.text-center.text-normal notes and tasks after
+								h3.text-white.line-height-5x.text-center.text-normal the meeting.
+	div#about-page.page.padding-top-3p.bg-drkblue.padding-bottom-5p
+		.container
 			.row
-				.col-md-10.col-md-offset-1
-					h3 SEAM provides an easy-to-use tool that leverages technology to simplify the process of preparing for, running, and following up on meetings in order to 
-						span.text-h3.text-red.text-bold increase 
-						| worker productivity.
-					br
+				.col-md-12
+					h1.text-big-35x.text-white.text-big-35x.text-center Learn more about your meetings.
+					h1.text-big-30x.text-white.text-center Use SEAM to find out:
+			.row.margin-top-5p
+				.col-md-2
+					.container-70p.bg-white-o5.border-round-5x.float-right
+						i.text-drkblue.flaticon-dollar131
+				.col-md-8
+					h2.text-left.text-white.margin-top-5p
+						| how many 
+						span.text-white.text-h2.text-normal dollars 
+						| your meetings are saving
+			.row.margin-top-5p
+				.col-md-8.col-md-offset-2
+					h2.text-right.text-white.margin-top-5p
+						| how much 
+						span.text-white.text-h2.text-normal time 
+						| your meetings are saving
+				.col-md-2
+					.container-70p.bg-white-o5.border-round-5x
+						i.text-drkblue.flaticon-time
+			.row.margin-top-5p
+				.col-md-2
+					.container-70p.bg-white-o5.border-round-5x.padding-left-6p.float-right
+						i.text-drkblue.flaticon-idea2
+				.col-md-8
+					h2.text-left.text-white.margin-top-5p
+						| what meeting discussions attendees found 
+						span.text-white.text-h2.text-normal efficient
+	div#team-page.page.padding-top-3p.bg-white.padding-bottom-5p
+		.container
 			.row
-				.col-md-10.col-md-offset-1
-					h3 Middle management spends 
-						span.text-h3.text-red.text-bold 17 hours 
-						| in meetings weekly.
-						br
-						span.text-h3.text-red.text-bold 44% 
-						| of those are unproductive.
-						br
-						| That's 
-						span.text-h3.text-red.text-bold 2.3 months 
-						| wasted a year
-					br
-			.row.fade-in.one
-				.col-md-10.col-md-offset-1
-					h3
-						span.text-h3.text-red.text-bold It's time to take back your time.
-					br
-			form.form-inline.form-center(role='form', name='userEmail', method='POST', action='addEmail')
-				.row.margin-top-3p
-					.col-md-6.col-md-offset-3
-						input#userEmail.form-control.border-square(name='userEmail', type='email', placeholder='EMAIL')
-				.row.margin-top-5p.fade-in.one
-					.col-md-4.col-md-offset-4.fade-in.one
-						button.btn.btn-primary.btn-lg.btn-block.margin-center.border-square.bg-red-border(type='submit') I'M READY
-
-		hr.margin-top-5p
-		div#team-page.page.bg-white.padding-bottom-1p
-			.container
-				.row
-					.col-md-12
-						h1 Meet the team
-				.row
-					.col-md-4
-						img.img-responsive.margin-center(src='images/joLee.jpg', alt='Josephine Lee')
-						h5.text-bold JOSEPHINE LEE
-						br
-						h5 Northwestern Senior
-							br
-							| Learning and Organizational Change.
-							br
-							| President of EPIC.
-					.col-md-4
-						img.img-responsive.margin-center(src='images/AlexPopelard.jpg', alt='Alexandre Popelard')
-						h5.text-bold ALEXANDRE POPELARD
-						br
-						h5 Kellogg School of Management
-							br
-							| MMM(MBA+MEM)
-							br
-							| Senior Engineer at Toyota.
-					.col-md-4
-						img.img-responsive.margin-center(src='images/SuzeeHan.jpg', alt='Suzee Han')
-						h5.text-bold SUZEE HAN
-						br
-						h5 Northwestern Junior
-							br
-							| Biological Science
-							br
-							| Director of Project Pitch			
-				.row.margin-top-5p
-					.col-md-4
-						img.img-responsive.margin-center(src='images/MichaelChen.jpg', alt='Michael Chen')
-						h5.text-bold MICHAEL CHEN
-						br
-						h5 Northwestern Junior
-							br
-							| Computer Science and Biological Science
-							br
-							| Software Developer at MD Andersen Cancer Center	
-					.col-md-4
-						img.img-responsive.margin-center(src='images/TommyYu.jpg', alt='Tommy Yu')
-						h5.text-bold TOMMY YU
-						br
-						h5 Northwestern Senior
-							br
-							| Computer Science
-							br
-							| Software Developer at Nokia
-					.col-md-4
-						img.img-responsive.margin-center(src='images/blank.jpg', alt='Abe')
-						h5.text-bold ABE
-						br
-						h5 Our meeting buddy.
-				footer.margin-top-5p
-					h5 &copy; Powered by SEAM 2014.
+				.col-md-12
+					h1.text-big-35x.text-center The minds behind SEAM.
+			.row.margin-top-5p
+				.col-md-2.col-md-offset-1
+					img.border-round-5x.border-dark-gray-5x.img-responsive.margin-center(src='images/joLee.jpg', alt='Josephine Lee')
+				.col-md-2
+					img.border-round-5x.border-blue-5x.img-responsive.margin-center(src='images/AlexPopelard.jpg', alt='Alexandre Popelard')
+				.col-md-2
+					img.border-round-5x.border-pink-5x.img-responsive.margin-center(src='images/SuzeeHan.jpg', alt='Suzee Han')
+				.col-md-2
+					img.border-round-5x.border-orange-5x.img-responsive.margin-center(src='images/MichaelChen.jpg', alt='Michael Chen')
+				.col-md-2
+					img.border-round-5x.border-green-5x.img-responsive.margin-center(src='images/TommyYu.jpg', alt='Tommy Yu')
+	div#contact-page.page.padding-top-3p.bg-white.padding-bottom-5p
+		.container
+			.row
+				.col-md-12
+					h1.text-big-35x.text-center Contact us.
+		form.form-horizontal(action='/contact', method='post', role='form')
+			.form-group.margin-top-3p
+				.col-md-4.col-md-offset-4
+					input.text-h4.text-left.form-control.outline-gray.form-square(name='names', type='text', placeholder='Name', required)
+			.form-group
+				.col-md-4.col-md-offset-4
+					input.text-h4.text-left.form-control.outline-gray.form-square(name='email', type='text', placeholder='Email', required)
+			.form-group
+				.col-md-4.col-md-offset-4
+					textarea.text-h4.text-left.form-control.outline-gray(name='comments', rows='5', placeholder='Message', required)
+			.form-group
+				.col-md-2.col-md-offset-5.margin-top-3p
+					button.btn.btn-primary.bg-pink-orange-hover.btn-lg.btn-block.border-round-5x(type='submit') Send Message
+	div#footer-page.page.bg-drk-gray.padding-top-1p.padding-bottom-1p
+		.row
+			.col-md-12.margin-top-1p
+				img.margin-center.img-responsive.img-8p.center-box(src="images/logo-noWord.png" ,alt="SEAM")
+		.row
+			.col-md-12.text-center.margin-top-3p
+				a.text-white-orange-hover.text-50x.lsf-icon(href="http://twitter.com/" , title="twitter")
+				a.text-white-green-hover.text-50x.lsf-icon(href="http://twitter.com/" , title="facebook")
+				a.text-white-pink-hover.text-50x.lsf-icon(href="http://twitter.com/" , title="linkedin")
+		.row
+			.col-md-12.margin-top-1p
+				h4.text-white &copy; Powered by SEAM 2014.
