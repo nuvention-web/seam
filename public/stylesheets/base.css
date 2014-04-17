@@ -7,6 +7,17 @@ html, body {
 	height: 100%;
 }
 
+/*this is my css to remove bullets from the autocomplete*/
+ul.ui-autocomplete {
+    list-style: none;
+}
+
+/*this is my css to remove bullets from the autocomplete*/
+
+.ui-helper-hidden-accessible { 
+	display:none; 
+}
+
 html, hmtl a{
 	width:100%;
 	font-size: 100%; 
@@ -24,7 +35,7 @@ body{
 /* ========================================================
    0B.TYPOGRAPHY-DESKTOP
 =========================================================== */
-h1,h2,h3,h4,h5,h6,p,a,input, textarea, span{
+h1,h2,h3,h4,h5,h6,p,a,input, textarea,i, span{
 	font-family: 'Lato', sans-serif;
 	font-size:12px;
 	font-weight: 300; 
@@ -80,37 +91,15 @@ button{
 	border:none !important;
 }
 input{
-	border:none;
-	background-color: transparent;
-	outline: none;
-  	box-shadow:none !important;
-}
-.red-input input::-webkit-input-placeholder {
-	color:rgb(204,51,51) !important;
-	text-transform: uppercase;
-}
-.red-input input::-moz-placeholder {
-	color:rgb(204,51,51) !important;
-	text-transform: uppercase;
-}
-.red-input input:-moz-placeholder {   /* Older versions of Firefox */
-	color:rgb(204,51,51) !important;	text-transform: uppercase;
-}
-.red-input input:-ms-input-placeholder { 
-	color:rgb(204,51,51) !important;
-	text-transform: uppercase;
+outline: none;
+  border:none !important;
+  box-shadow:none !important;
 }
 textarea{
-	border:none;
-	outline: none;
-	overflow-x:hidden;
 	resize:none;
-	box-shadow:none !important;
-}
-textarea:focus, input:focus{
-    outline: 0;
-    border:none;
-    box-shadow:none !important;
+	outline: none;
+  border:none !important;
+  box-shadow:none !important;
 }
 .form-control{
 	margin:0 auto;
@@ -121,7 +110,12 @@ textarea:focus, input:focus{
 .form-control-smaller{
 	height:35px;	
 }
-
+.input-group-addon{
+	background-color: transparent !important;
+	outline: none;
+  border:none !important;
+  box-shadow:none !important;
+}
 .hidden-login{
 	z-index:99;
 	position: relative;
@@ -138,14 +132,41 @@ textarea:focus, input:focus{
 .cursor-pointer{
 	cursor: pointer;
 }
+.line-height-12x{
+	line-height: 12px;
+}
+.line-height-30x{
+	line-height: 30px !important;
+}
+.line-height-60x{
+	line-height: 60px !important;
+}
 /* ========================================================
    1A.FONTS-DESKTOP
 =========================================================== */
 .text-white{
 	color:rgb(255,255,255) !important;
 }
-.text-height-4x{
-	line-height: 4px;
+.line-height-5x{
+	line-height: 5px;
+}
+.text-white-orange-hover{
+	color:rgb(255,255,255);
+}
+.text-white-orange-hover:hover{
+	color:rgb(248,148,29);
+}
+.text-white-pink-hover{
+	color:rgb(255,255,255);
+}
+.text-white-pink-hover:hover{
+	color:rgb(242,108,79);
+}
+.text-white-green-hover{
+	color:rgb(255,255,255);
+}
+.text-white-green-hover:hover{
+	color:rgb(141,199,63);
 }
 .text-white-redhover{
 	color:rgb(255,255,255) !important;
@@ -155,6 +176,13 @@ textarea:focus, input:focus{
 }
 .text-orange{
 	color:rgb(248,148,29);
+}
+.text-orange-hoverblue{
+	color:rgb(248,148,29);
+}
+.text-orange-hoverblue:hover{
+	transition:all 0.5s ease-in-out;
+	color:rgb(0,114,188);
 }
 .text-gray{
 	color:rgb(137,137,137);
@@ -171,8 +199,20 @@ textarea:focus, input:focus{
 .text-green{
 	color:rgb(141,199,63);
 }
+.text-ltblue{
+	color:rgb(109,207,246);
+}
+.text-drkblue{
+	color:rgb(0,118,163);
+}
 .text-blue{
 	color:rgb(0,114,188);
+}
+.text-blue-hoverorange{
+	color:rgb(0,114,188);
+}
+.text-blue-hoverorange:hover{
+	color:rgb(248,148,29);
 }
 .text-black{
 	color:rgb(0,0,0);
@@ -207,6 +247,9 @@ textarea:focus, input:focus{
 .text-center{
 	text-align: center;
 }
+.text-center-imp{
+	text-align: center !important;
+}
 .text-vertical-center{
 	vertical-align: center;
 }
@@ -218,6 +261,17 @@ textarea:focus, input:focus{
 }
 .text-italic{
 	font-style: italic;
+}
+.text-big-35x{
+	font-size:35px;
+	line-height: 20px;
+}
+.text-big-30x{
+	font-size:30px;
+	line-height: 20px;
+}
+.text-50x{
+	font-size:50px;
 }
 .text-h2{
 	font-size:24px;
@@ -261,6 +315,13 @@ textarea:focus, input:focus{
 	-o-background-size: cover;
 	background-size: cover;
 }
+.bg-frontpg-2{
+	background: url(../images/bg-landing.jpg) no-repeat center center fixed;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+}
 .bg-frontpg-blur{
 	background: url(../images/bg-blur.jpg) no-repeat center center fixed;
 	-webkit-background-size: cover;
@@ -268,20 +329,45 @@ textarea:focus, input:focus{
 	-o-background-size: cover;
 	background-size: cover;
 }
+.bg-jo{
+	background: url(../images/joLee.jpg) no-repeat;
+}
+.bg-alex{
+	background: url(../images/AlexPopelard.jpg) no-repeat;
+}
 .bg-black{
 	background-color: #000;
 }
 .bg-white{
 	background-color: #FFF;
 }
+.bg-white-o5{
+	background-color: rgba(255,255,255,0.5);
+}
 .bg-transparent{
 	background-color: transparent;
 }
-.bg-blue-gray{
-	background-color:rgb(51,54,63);
+.bg-drkblue{
+	background-color: rgb(0,118,163);
+}
+.bg-ltblue{
+	background-color:rgb(109,207,246);
 }
 .bg-green{
 	background-color: rgb(141,199,63);
+}
+.bg-pink{
+	background-color: rgb(242,108,79);
+}
+.bg-pink-orange-hover{
+	background-color: rgb(242,108,79);
+}
+.bg-pink-orange-hover:hover{
+	background-color: rgb(248,148,29);
+	transition:all 0.5s ease-in-out;
+}
+.bg-orange{
+	background-color: rgb(248,148,29);
 }
 .bg-1{
 	background-color: rgb(141,199,63);
@@ -297,6 +383,12 @@ textarea:focus, input:focus{
 }
 .bg-red{
 	background-color: rgb(204,51,51);
+}
+.bg-blue-transparent{
+	background-color: rgba(0,114,188,0.5);
+}
+.bg-blue-transparent:hover{
+	background-color: rgba(0,114,188,0.2);
 }
 .bg-red-hover{
 	background-color: rgb(204,51,51);
@@ -409,6 +501,12 @@ textarea:focus, input:focus{
 .padding-0{
 	padding:0 !important;
 }
+.padding-0-right{
+	padding-right:0 !important;
+}
+.padding-0-left{
+	padding-left:0 !important;
+}
 .margin-top-n12p{
 	margin-top: -12%;
 }
@@ -503,6 +601,9 @@ textarea:focus, input:focus{
 .margin-bottom-3p{
 	margin-bottom: 3%;
 }
+.margin-bottom-10p{
+	margin-bottom: 10%;
+}
 .padding-left-right-1p{
 	padding-left:1%;
 	padding-right:1%;
@@ -519,11 +620,17 @@ textarea:focus, input:focus{
 .padding-left-1p{
 	padding-left: 1%;
 }
+.padding-left-2p{
+	padding-left: 2%;
+}
 .padding-left-25x{
 	padding-left: 25px;
 }
 .padding-left-3p{
-	padding-left: 15%;
+	padding-left: 3%;
+}
+.padding-left-6p{
+	padding-left: 6.5%;
 }
 .padding-top-20x{
 	padding-top: 20px;
@@ -555,8 +662,14 @@ textarea:focus, input:focus{
 .padding-bottom-3p{
 	padding-bottom: 3%;
 }
+.padding-bottom-5p{
+	padding-bottom: 5%;
+}
 .padding-bottom-10p{
 	padding-bottom: 10%;
+}
+.padding-bottom-15p{
+	padding-bottom: 15%;
 }
 .padding-right-1p{
 	padding-right:1%;
@@ -568,7 +681,7 @@ textarea:focus, input:focus{
 	padding:3% 15%;
 }
 .padding-btn-small{
-	padding:1% 8%;
+	padding:1.5% 3.5%;
 }
 /* =======================================================
    1E.PAGES-DESKTOP
@@ -583,6 +696,9 @@ textarea:focus, input:focus{
 }
 .container-500x{
 	height: 500px;
+}
+.container-70p{
+	width:61%;
 }
 .container-75p{
 	width:76%;
@@ -620,6 +736,12 @@ textarea:focus, input:focus{
 .height-auto{
 	height: auto;
 }
+.height-100x{
+	height:100px;
+}
+.min-height-180x{
+	min-height: 170px;
+}
 .max-height-120x{
 	max-height: 120px;
 }
@@ -638,6 +760,10 @@ textarea:focus, input:focus{
 /* ========================================================
    1C.IMAGES-DESKTOP
 =========================================================== */
+.img-8p{
+	width:8%;
+	height:8%;
+}
 .img-10p{
 	width:10%;
 	height:10%;
@@ -649,6 +775,10 @@ textarea:focus, input:focus{
 .img-30p{
 	width:30%;
 	height:30%;
+}
+.img-40p{
+	width:40%;
+	height:40%;
 }
 .img-45p{
 	width:45%;
@@ -705,6 +835,11 @@ textarea:focus, input:focus{
      -moz-border-radius: 0 !important;
           border-radius: 0 !important;
 }
+.border-round-5x{
+	-webkit-border-radius: 5px !important;
+     -moz-border-radius: 5px !important;
+          border-radius: 5px !important;
+}
 .border-round{
 	-webkit-border-radius: 12px !important;
      -moz-border-radius: 12px !important;
@@ -735,6 +870,15 @@ textarea:focus, input:focus{
 .outline-black:hover{
 	outline: #232323 solid 1px;
 }
+.outline-gray{
+	outline: rgb(204,204,204) solid 1px;
+}
+.outline-gray:focus{
+	outline: rgb(204,204,204) solid 1px;
+}
+.outline-gray:hover{
+	outline: rgb(204,204,204) solid 1px;
+}
 .border-black{
 	border-color:2px solid rgb(0,0,0) !important;
 	outline: #232323 solid 1px;
@@ -746,20 +890,38 @@ textarea:focus, input:focus{
 	background-color:rgb(0,114,188) !important;
 	border-width: 1px;
 }
-.border-red{
-	background-color:rgb(204,51,51) !important;
-	border-width: 1px;
+.border-dark-gray-5x{
+	border:5px solid rgb(200,200,200) !important;
 }
-.border-gray-blue{
-	background-color:rgb(212,219,226)!important;
-	border-width: 1px;
+.border-blue-5x{
+	border:5px solid rgb(0,114,188) !important;
 }
-.border-gray-blue:hover{
-	background-color:rgb(212,219,226)!important;
-	border-width: 1px;
+.border-green-5x{
+	border:5px solid rgb(141,199,63) !important;
+}
+.border-pink-5x{
+	border:5px solid rgb(242,108,79) !important;
+}
+.border-orange-5x{
+	border:5px solid rgb(248,148,29) !important;
 }
 .border-orange{
 	border:1px solid rgb(248,148,29) !important;
+}
+.border-orange-top{
+	border-top:1px solid rgb(248,148,29) !important;
+}
+.border-orange-left{
+	border-left:1px solid rgb(248,148,29) !important;
+}
+.border-orange-right{
+	border-right:1px solid rgb(248,148,29) !important;
+}
+.border-orange-no-top{
+	border-bottom: :1px solid rgb(255,255,255) !important;
+}
+.border-orange-bot{
+	border-bottom:1px solid rgb(248,148,29) !important;
 }
 .border-gray{
 	border:1px solid rgb(244,244,244) !important;
@@ -831,6 +993,7 @@ textarea:focus, input:focus{
 	height: 60%;
 	background-color: rgb(233,233,233);
 }
+
 /* =======================================================
    2.WRAPPER-DESKTOP
 ========================================================== */
@@ -955,7 +1118,7 @@ border-color:  rgb(225,225,225);
 .progress-vertical-line {
 position: relative;
 width: 2px;
-height:280px;
+height:240px;
 margin:0px auto;
 border-radius: 0;
 }

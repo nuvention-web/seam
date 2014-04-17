@@ -73,7 +73,7 @@ app.get('/login', landingPage.login);
 app.get('/survey', landingPage.survey);
 app.post('/addSurvey', landingPage.addSurvey);
 app.post('/addEmail', landingPage.addEmail);
-
+app.post('/contact', landingPage.contact);
 //Dashboard
 app.get('/dashboard', user.isLoggedIn, dashboard.dashboard);
 // app.post('/dashboard', user.isLoggedIn, dashboard.setWelcome);
@@ -102,8 +102,8 @@ app.get('/dashboard/meetings/end', user.isLoggedIn, meetings.endMeeting);
 
 
 //Tasks
-app.get('/dashboard/tasks', user.isLoggedIn, task.getTasks);
-app.post('/dashboard/tasks/current', user.isLoggedIn, task.getTasksByMeeting);
+// app.get('/dashboard/tasks', user.isLoggedIn, task.getTasks);
+// app.post('/dashboard/tasks/current', user.isLoggedIn, task.getTasksByMeeting);
 
 // team member stuff
 app.get('/dashboard/team', user.isLoggedIn, team.team);
@@ -127,8 +127,8 @@ app.post('/addMember', user.isLoggedIn, team.addMember);
 
 
 //product stuff
-app.post('/finishTask', user.isLoggedIn, task.finishTask);
-app.post('/deletetask', user.isLoggedIn, task.deleteTask);
+// app.post('/finishTask', user.isLoggedIn, task.finishTask);
+// app.post('/deletetask', user.isLoggedIn, task.deleteTask);
 
 //account
 app.get('/signup', user.signup);

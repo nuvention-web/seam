@@ -6,12 +6,17 @@ html(lang='en')
 		meta(name='viewport', content='width=device-width, initial-scale=1.0')
 		meta(name='description', content='')
 		meta(name='author', content='')
+		link(rel="icon" type="image/png" sizes="64x64" href="/images/favicon-64.png")
+		link(rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32.png")
+		link(rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16.png")
+		link(rel="shortcut icon" href="/images/favicon.ico" type="image/x-icon")
 		link(href='http://fonts.googleapis.com/css?family=Lato:300,400,700', rel='stylesheet', type='text/css')
 		link(rel='stylesheet', href='/stylesheets/bootstrap.min.css')
 		link(rel='stylesheet', href='/stylesheets/base.css')
 		link(rel='stylesheet', href='/stylesheets/fonts.css')
 		link(rel="stylesheet" href="/stylesheets/font-awesome.min.css")
 		script(src='https://code.jquery.com/jquery.js')
+		script(src='https://code.jquery.com/ui/1.10.4/jquery-ui.js')
 		script(src='../../../javascripts/bootstrap.min.js')
 		title= title
 		script.
@@ -19,7 +24,7 @@ html(lang='en')
 			(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
 			m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
 			})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-			ga('create', 'UA-48300427-1', 'seam.herokuapp.com');
+			ga('create', 'UA-50079131-1', 'seam.co');
 			ga('send', 'pageview');
 	body.bg-gray
 		#wrapper
@@ -44,15 +49,15 @@ html(lang='en')
 							a.text-left(href='/dashboard/meetings/pastMeeting')
 								i.fa.fa-clock-o.margin-left-15x.text-h5.text-black
 								i.text-no-transform.margin-left-15x.text-h5.text-black MINUTES
-						li
-							a.text-left(href='/dashboard/tasks')
-								i.fa.fa-check-square.margin-left-15x.text-h5.text-black
-								i.text-no-transform.margin-left-15x.text-h5.text-black TASKS
+						//- li
+						//- 	a.text-left(href='/dashboard/tasks')
+						//- 		i.fa.fa-check-square.margin-left-15x.text-h5.text-black
+						//- 		i.text-no-transform.margin-left-15x.text-h5.text-black TASKS
 					ul.nav.navbar-nav.navbar-right.navbar-user
 						li.text-left.text-h5.margin-right-15x
 							h5.text-left.text-pink.text-normal.text-upper(style="margin-top:17px" href='#') #{name}
 						//-li.text-left.text-h5
-							//-a.text-left.text-gray.text-h5(href='/help') HELP
+							//-a.text-left.text-gray.text-h5(href='/help') HELP  			
 						//-li.text-left.text-h5
 							//-a.text-left.text-gray.text-h5(href='/settings') SETTINGS
 						li.text-left.text-h5.margin-right-15x
