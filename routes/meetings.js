@@ -359,17 +359,17 @@ exports.endMeeting = function(req, res){
 						emailAgenda+=number+':  '+ agenda[i].topic+'<br/>';
 						var initialNoteCount= -1; //If there is initial note count =0
 						if(notes.length>0 && notes[0].notes!='' ){
-							emailAgenda+="<p style='margin-left:5em;'> A"+". "+notes[0].notes+"<br/></p>";
+							emailAgenda+="<p style='margin-left:5em;'> a"+". "+notes[0].notes+"<br/></p>";
 							initialNoteCount=0;
 						}
 						if(tasks.length>0 && tasks[0].task!='' ){
-							emailTask+="<p style=''> TASK ("+tasks[0].assigneeName+"): "+tasks[0].task+". Due: "+tasks[0].taskDueDate+"<br/></p>";
+							emailTask+="<p style=''>"+tasks[0].assigneeName+": "+tasks[0].task+" (Due: "+tasks[0].taskDueDate+")<br/></p>";
 						}
 						for(var z=1; z<notes.length;z++){
 							emailAgenda+="<p style='margin-left:5em;'> " +String.fromCharCode(97 + z+ initialNoteCount)+". "+notes[z].notes+"<br/></p>";
 						}
 						for(var z=1; z<tasks.length;z++){
-							emailTask+="<p style=''> TASK ("+tasks[z].assigneeName+"): "+tasks[z].task+". Due: "+tasks[z].taskDueDate+"<br/></p>";
+							emailTask+="<p style=''>"+tasks[z].assigneeName+": "+tasks[z].task+" (Due: "+tasks[z].taskDueDate+")<br/></p>";
 						}
 					}
 				};
@@ -380,7 +380,7 @@ exports.endMeeting = function(req, res){
 					emailList+=meetingAttendees[i].attendeeEmail+',';
 				}
 			}
-			mailBody=createMinutesBody(emailDate,meetingTitle,emailList,objective,emailAgenda,emailTask,emailTime,objective,emailAgenda);
+			mailBody=createMinutesBody(creatorEmail,emailDate,meetingTitle,emailList,objective,emailAgenda,emailTask,emailTime,objective,emailAgenda);
 			emailFunction(mailBody,res);
 
 		});
@@ -658,7 +658,7 @@ exports.addMeeting = function(req, res){
 
 	//Create ical File
 	var icsFilePath=createiCal(creatorEmail,meetingTitle,icalDate,icalEmail,meetingDate,meetingEndTime,objective,location);
-	mailBody=createAgendaBody(emailList,emailDate,meetingTitle,objective,emailAgenda,location,meetingTime,icsFilePath);
+	mailBody=createAgendaBody(creatorEmail,emailList,emailDate,meetingTitle,objective,emailAgenda,location,meetingTime,icsFilePath);
 	emailFunction(mailBody,res,icsFilePath);
 
 	res.redirect('/dashboard');
@@ -697,7 +697,7 @@ function emailFunction(emailBody,res,icsFilePath){
 
  });
 }
-function createAgendaBody(emailList,emailDate,meetingTitle,objective,emailAgenda,location,meetingTime,icsFilePath){
+function createAgendaBody(emailCreator,emailList,emailDate,meetingTitle,objective,emailAgenda,location,meetingTime,icsFilePath){
 	var mailBody;
 	console.log(emailList+' '+emailDate+' '+meetingTitle+' '+objective+' '+emailAgenda+' '+location+' '+meetingTime+' '+icsFilePath);
 	//construct the email sending module
@@ -710,7 +710,8 @@ function createAgendaBody(emailList,emailDate,meetingTitle,objective,emailAgenda
 
 	// HTML body
      	html:"<body>"+
-     	"<p style='text-align:center; margin:0 auto;  width:50px; height:50px;'><img src='cid:logo@seam'/></p>"+
+     	"<p style='text-align:center; margin:0 auto;  width:50px; height:50px;'><img src='cid:logo@seam'/></p>"+     	
+        "<p style='text-align:left;'> Creator: "+emailCreator+"<br/></p>" +
         "<p style='text-align:left;'> Date: "+emailDate+"<br/></p>" +
         "<p style='text-align:left;'> Location: "+location+"<br/></p>" +
         "<p style='text-align:left;'> Duration: "+meetingTime+" Minutes <br/></p>" +
@@ -732,7 +733,7 @@ function createAgendaBody(emailList,emailDate,meetingTitle,objective,emailAgenda
  };
  return mailBody;
 }
-function createMinutesBody(emailDate,meetingTitle,emailList,objective,emailAgenda,emailTask,emailTime,objective,emailAgenda){
+function createMinutesBody(emailCreator,emailDate,meetingTitle,emailList,objective,emailAgenda,emailTask,emailTime,objective,emailAgenda){
 	var mailBody;
 	//construct the email sending module
 			mailBody = {
@@ -745,6 +746,7 @@ function createMinutesBody(emailDate,meetingTitle,emailList,objective,emailAgend
 			// HTML body
 		     	html:"<body>"+
 		     	"<p style='text-align:center; margin:0 auto; width:50px; height:50px; '><img src='cid:logo@seam'/></p>"+
+		        "<p style='text-align:left;'> Creator: "+emailCreator+"<br/></p>" +
 		        "<p style='text-align:left;'> Duration: "+emailTime+" Minutes<br/></p>" +
 		        "<p style='text-align:left;'> Objectives: "+objective+"<br/></p>" +
 		        "<p style='text-align:left;'> Tasks: "+emailTask+"</p>" +
