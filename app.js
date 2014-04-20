@@ -9,6 +9,7 @@ var user = require('./routes/user');
 var task = require('./routes/task');
 var index = require('./routes/index');
 var team = require('./routes/team');
+var meeting = require('./routes/asyncMeetingStruct');
 var http = require('http');
 var path = require('path');
 //include the nodemailer module
@@ -39,8 +40,23 @@ var db = mongoose.connection;
 // server setup
 var app = express();
 
+// adding functionality to javascript array
+Array.prototype.contains = function(k, callback) {  
+    var self = this;
+    return (function check(i) {
+        if (i >= self.length) {
+            return callback(false);
+        }
+        if (self[i] === k) {
+            return callback(true);
+        }
+        return process.nextTick(check.bind(null, i+1));
+    }(0));
+};
 
-
+var people = {};  
+var meetings = {};  
+var clients = [];
 
 // all environments
 app.configure(function(){
@@ -71,7 +87,101 @@ var server = app.listen(app.get('port'), function(){
 	console.log('Express server listening on port ' + app.get('port'));
 });
 
-var io = require('socket.io').listen(server);
+var socket = require('socket.io').listen(server);
+
+socket.on("connection", function (client) {  
+	
+	client.on("join", function(name, userId) {
+		var meetingId = null;
+	    people[client.id] = {"name" : name, "userId": userId, "meeting" : meetingId};
+	    client.emit("update", "You have connected to the server.");
+	    socket.sockets.emit("update", people[client.id].name + " has logged in.")
+	    socket.sockets.emit("update-people", people);
+	    client.emit("meetingList", {meetings: meetings});
+	    clients.push(client); //populate the clients array with the client object
+	});
+
+	client.on("startMeeting", function(name, userId, meetingId) {  
+		if (people[client.id].meeting === null) {
+			var meeting = new meetingStruct(name, userId, meetingId, client.id);
+			meetings[client.id] = meeting;
+			socket.sockets.emit("meetingList", {meetings: meetings}); //update the list of rooms on the frontend
+			client.room = meetingId; //name the room
+			client.join(client.room); //auto-join the creator to the room
+			meetings.addPerson(client.id); //also add the person to the room object
+			people[client.id].meeting = meetingId; //update the room key with the ID of the created room
+			people[client.id].owns = meetingId;
+ 			socket.sockets.emit("meetingStarted", "meetingId");
+		} else {
+			socket.sockets.emit("update", "already in meeting");
+		}
+	});
+
+	client.on("joinMeeting", function(name, userId) {  
+		var meeting = meetings[client.id];
+		if (client.id === meeting.owner) {
+			client.emit("update", "You are the owner of this room and you have already been joined.");
+		} 
+		else {
+			meetings.people.contains(client.id, function(found) {
+				if (found) {
+				  client.emit("update", "You have already joined this room.");
+				} 
+				else {
+					if (people[client.id].inroom !== null) { //make sure that one person joins one room at a time
+				  		client.emit("update", "You are already in a meeting");
+					}
+					else {
+						room.addPerson(client.id);
+						people[client.id].inroom = client.id;
+						client.room = meeting.name;
+						client.join(client.room); //add person to the room
+						user = people[client.id];
+						socket.sockets.in(client.room).emit("update", user.name + " has connected to meeting.");
+					}
+				}
+			});
+		}
+	});
+
+	client.on("send", function(msg) {  
+		if (socket.sockets.manager.roomClients[client.id]['/'+client.room] !== undefined ) {
+			socket.sockets.in(client.room).emit("note", people[client.id], msg);
+		} 
+		else {
+			client.emit("update", "Please connect to a room.");
+		}
+	});
+
+	client.on("finishMeeting", function(id) {  
+		var meeting = meetings[client.id];
+		if (client.id === meeting.owner) {
+			var i = 0;
+			while(i < clients.length) {
+		  		if(clients[i].id == room.people[i]) {
+		    		people[clients[i].id].inroom = null;
+		   			clients[i].leave(room.name);
+		  		}
+		  		i++;
+			}
+			delete meeting[client.id];
+			people[meeting.owner].owns = null; //reset the owns object to null so new room can be added
+			socket.sockets.emit("roomList", {meetings: meetings});
+			socket.sockets.in(client.room).emit("update", "The owner (" +user.name + ") is leaving the meeting. The meeting is removed.");
+		} 
+		else {
+			room.people.contains(client.id, function(found) {
+		    	if (found) { //make sure that the client is in fact part of this room
+		    		var personIndex = meeting.people.indexOf(client.id);
+					room.people.splice(personIndex, 1);
+					socket.sockets.emit("update", people[client.id].name + " has left the room.");
+					client.leave(room.name);
+		    	}
+		 	});
+		}
+	});
+
+});
 
 //Landing Page
 app.get('/', landingPage.home);
