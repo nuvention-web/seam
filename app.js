@@ -9,7 +9,7 @@ var user = require('./routes/user');
 var task = require('./routes/task');
 var index = require('./routes/index');
 var team = require('./routes/team');
-var meeting = require('./routes/asyncMeetingStruct');
+var meetingStruct = require('./routes/asyncMeetingStruct');
 var http = require('http');
 var path = require('path');
 //include the nodemailer module
@@ -103,12 +103,12 @@ socket.on("connection", function (client) {
 
 	client.on("startMeeting", function(name, userId, meetingId) {  
 		if (people[client.id].meeting === null) {
-			var meeting = new meetingsListtruct(name, userId, meetingId, client.id);
+			var meeting = new meetingStruct(name, userId, meetingId, client.id);
 			meetingsList[client.id] = meeting;
 			socket.sockets.emit("meetingList", {meetingsList: meetingsList}); //update the list of rooms on the frontend
 			client.room = meetingId; //name the room
 			client.join(client.room); //auto-join the creator to the room
-			meetingsList.addPerson(client.id); //also add the person to the room object
+			meeting.addPerson(client.id); //also add the person to the room object
 			people[client.id].meeting = meetingId; //update the room key with the ID of the created room
 			people[client.id].owns = meetingId;
  			socket.sockets.emit("meetingStarted", "meetingId");
@@ -139,7 +139,7 @@ socket.on("connection", function (client) {
 	});
 
 	client.on("send", function(msg, value) {  
-		socket.sockets.in(client.room).emit("newNoteOrTask", people[client.id], msg, value);
+		socket.sockets.to(client.room).emit("newNoteOrTask", people[client.id], msg, value);
 	});
 
 	client.on("finishMeeting", function(name, userId) {  
@@ -156,7 +156,7 @@ socket.on("connection", function (client) {
 				delete meeting[client.id];
 				people[meeting.owner].owns = null; //reset the owns object to null so new meeting can be started
 				socket.sockets.emit("roomList", {meetingsList: meetingsList});
-				socket.sockets.in(client.room).emit("update", "The owner (" +user.name + ") finished the meeting. The meeting is removed.");
+				socket.sockets.to(client.room).emit("finish", "The owner (" +user.name + ") finished the meeting.");
 			}
 		}
 	});

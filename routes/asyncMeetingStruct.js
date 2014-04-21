@@ -1,4 +1,4 @@
-function meeting(name, userId, MeetingId, owner) {  
+function meetingStruct(name, userId, meetingId, owner) {  
   this.name = name;
   this.userId = userId;
   this.meetingId = meetingId;
@@ -7,10 +7,10 @@ function meeting(name, userId, MeetingId, owner) {
   this.status = "available";
 };
 
-meeting.prototype.addPerson = function(personID) {  
+meetingStruct.prototype.addPerson = function(personID) {  
   if (this.status === "available") {
     this.people.push(personID);
   }
 };
 
-module.exports = meeting;  
+module.exports = meetingStruct;

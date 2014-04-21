@@ -1,6 +1,6 @@
-//FUNCTIONS FOR ASYNC UPDATE OF MEETINGS
-$(document).ready(function(){
 
+$(document).ready(function(){
+//FUNCTIONS FOR ASYNC UPDATE OF MEETINGS
 	var socket = io.connect("127.0.0.1:3000");
 	var name = $("input[name='name']").attr('value');
 	var userId = $("input[name='userId']").attr('value');
@@ -18,14 +18,14 @@ $(document).ready(function(){
 		console.log(msg);
 		if(msg[0] == '@'){
 			if(notesList[value] == undefined){
-				allTasks.innerHTML += '<h5 class="text-left text-blue margin-right-2p"> @ ' + taskAssignee + ' '+task + ' </h5>';
+				allTasks.innerHTML += '<h5 class="text-left text-blue margin-right-2p">' + msg + '</h5>';
 				notesList.scrollTop = notesList.scrollHeight;
 				$('#taskAssignee' + value)[0].value = '';
 				$('#taskName' + value)[0].value = '';
 				$('#notes' + value)[0].focus();
 			}
 			else{
-				allTasks[value].innerHTML += '<h5 class="text-left text-blue margin-right-2p"> @ ' + taskAssignee +' '+task + ' </h5>';
+				allTasks[value].innerHTML += '<h5 class="text-left text-blue margin-right-2p">' + msg + '</h5>';
 				notesList[value].scrollTop = notesList[value].scrollHeight;
 				$('#taskAssignee' + value)[0].value = '';
 				$('#taskName' + value)[0].value = '';
@@ -34,12 +34,12 @@ $(document).ready(function(){
 		}
 		else{
 			if(notesList[value] == undefined){
-				allNotes.innerHTML += '<h5 class="text-left margin-right-2p ">' + notes + '</h5>';
+				allNotes.innerHTML += '<h5 class="text-left margin-right-2p ">' + msg + '</h5>';
 				notesList.scrollTop = notesList.scrollHeight;
 				$('#notes' + value)[0].value = '';
 			}
 			else{
-				allNotes[value].innerHTML += '<h5 class="text-left margin-right-2p">' + notes + '</h5>';
+				allNotes[value].innerHTML += '<h5 class="text-left margin-right-2p">' + msg + '</h5>';
 				notesList[value].scrollTop = notesList[value].scrollHeight;
 				$('#notes' + value)[0].value = '';
 			}
