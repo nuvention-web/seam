@@ -105,24 +105,29 @@ socket.on("connection", function (client) {
 
 	client.on("joinMeeting", function(name, userId, meetingId) {  
 		var meeting = meetingsList[meetingId];
-		if (client.id === meeting.owner) {
-			client.emit("update", "You are the starter of this meeting and you have already joined.");
-		} 
-		else {
-			var peopleInMeeting = meeting.people
-			var isInMeeting = false;
-			for(var i = 0; i < peopleInMeeting.length; i++){
-				if(peopleInMeeting[i] === client.id){
-					client.emit("update", "You are already in this meeting.");
-					isInMeeting = true;
+		if(meeting == undefined){
+			client.emit("joinFailure", "Meeting has not been started yet. Redirecting to dashboard.");
+		}
+		else{
+			if (client.id === meeting.owner) {
+				client.emit("update", "You are the starter of this meeting and you have already joined.");
+			} 
+			else {
+				var peopleInMeeting = meeting.people
+				var isInMeeting = false;
+				for(var i = 0; i < peopleInMeeting.length; i++){
+					if(peopleInMeeting[i] === client.id){
+						client.emit("update", "You are already in this meeting.");
+						isInMeeting = true;
+					}
 				}
-			}
-			if(!isInMeeting){
-				client.room = meeting.meetingId;
-				client.join(client.room); //add person to the room
-				meeting.addPerson(client.id); //also add the person to the room object
-				user = people[client.id];
-				socket.sockets.in(client.room).emit("update", user.name + " has connected to meeting.");
+				if(!isInMeeting){
+					client.room = meeting.meetingId;
+					client.join(client.room); //add person to the room
+					meeting.addPerson(client.id); //also add the person to the room object
+					user = people[client.id];
+					socket.sockets.in(client.room).emit("update", user.name + " has connected to meeting.");
+				}
 			}
 		}
 	});
