@@ -36,7 +36,7 @@ exports.dashboard = function(req, res){
 	console.log("THIS IS THE USERID: " + userId);
 
 	Meeting.find({ $or: [{'UserId' : userId, 'isComplete' : 0}, {'attendees.attendeeEmail' : userMail, 'isComplete' : 0}]}).sort({meetingDate: 1}).exec(function(e, meetingList){
-		Meeting.find({ $or: [{'UserId' : userId, 'isComplete' : 1}, {'attendees.attendeeEmail' : userMail, 'isComplete' : 1}]}).sort({meetingDate: 1}).exec(function(e, finMeetingList){
+		Meeting.find({ $or: [{'UserId' : userId, 'isComplete' : 1}, {'attendees.attendeeEmail' : userMail, 'isComplete' : 1}]}).sort({meetingDate: -1}).exec(function(e, finMeetingList){
 			var meetingDate = new Array();
 
 			for(var i = 0; i < meetingList.length; i++){
@@ -77,7 +77,7 @@ exports.dashboard = function(req, res){
 				meetingDate: meetingDate,
 				pastMeetingList: finMeetingList,
 				name: req.session.name,
-				user : req.user
+				user : userId
 			});
 		});
 	})

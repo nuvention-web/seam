@@ -9,6 +9,7 @@ var user = require('./routes/user');
 var task = require('./routes/task');
 var index = require('./routes/index');
 var team = require('./routes/team');
+var meetingStruct = require('./routes/asyncMeetingStruct');
 var http = require('http');
 var path = require('path');
 //include the nodemailer module
@@ -39,8 +40,9 @@ var db = mongoose.connection;
 // server setup
 var app = express();
 
-
-
+var people = {};  
+var meetingsList = {};  
+var clients = [];
 
 // all environments
 app.configure(function(){
@@ -65,6 +67,95 @@ app.configure(function(){
 if ('development' == app.get('env')) {
   app.use(express.errorHandler());
 }
+
+//server listening
+var server = app.listen(app.get('port'), function(){
+	console.log('Express server listening on port ' + app.get('port'));
+});
+
+var socket = require('socket.io').listen(server);
+
+socket.on("connection", function (client) {  
+	
+	client.on("join", function(name, userId) {
+		var meetingId = null;
+	    people[client.id] = {"name" : name, "userId": userId, "meeting" : meetingId};
+	    client.emit("update", "You have connected to the server.");
+	    client.emit("update", people[client.id].name + " has logged in.")
+	    client.emit("meetingList", {meetingsList: meetingsList});
+	    clients.push(client); //populate the clients array with the client object
+	});
+
+	client.on("startMeeting", function(name, userId, meetingId) {  
+		if (people[client.id].meeting === null) {
+			var meeting = new meetingStruct(name, userId, meetingId, client.id);
+			meetingsList[meetingId] = meeting;
+			socket.sockets.emit("meetingList", {meetingsList: meetingsList}); //update the list of rooms on the frontend
+			client.room = meetingId; //name the room
+			client.join(client.room); //auto-join the creator to the room
+			meeting.addPerson(client.id); //also add the person to the room object
+			people[client.id].meeting = meetingId; //update the room key with the ID of the created room
+			people[client.id].owns = meetingId;
+ 			socket.sockets.emit("meetingStarted", "meetingId");
+ 			socket.emit("update", "you have started the meeting")
+		} else {
+			socket.sockets.emit("update", "you have already started meeting");
+		}
+	});
+
+	client.on("joinMeeting", function(name, userId, meetingId) {  
+		var meeting = meetingsList[meetingId];
+		if(meeting == undefined){
+			client.emit("joinFailure", "Meeting has not been started yet. Redirecting to dashboard.");
+		}
+		else{
+			if (client.id === meeting.owner) {
+				client.emit("update", "You are the starter of this meeting and you have already joined.");
+			} 
+			else {
+				var peopleInMeeting = meeting.people
+				var isInMeeting = false;
+				for(var i = 0; i < peopleInMeeting.length; i++){
+					if(peopleInMeeting[i] === client.id){
+						client.emit("update", "You are already in this meeting.");
+						isInMeeting = true;
+					}
+				}
+				if(!isInMeeting){
+					client.room = meeting.meetingId;
+					client.join(client.room); //add person to the room
+					meeting.addPerson(client.id); //also add the person to the room object
+					user = people[client.id];
+					socket.sockets.in(client.room).emit("update", user.name + " has connected to meeting.");
+				}
+			}
+		}
+	});
+ 
+	client.on("send", function(msg, value) {
+		client.broadcast.to(client.room).emit("newNoteOrTask", people[client.id], msg, value);
+	});
+
+	client.on("finishMeeting", function(name, userId) {  
+		var meeting = meetingsList[client.id];
+		if(meeting){
+			if (client.id === meeting.owner) {// only owner can finish meeting
+				var i = 0;
+				while(i < clients.length) {
+			  		if(clients[i].id == meeting.people[i]) {
+			   			clients[i].leave(meeting.meetingId);
+			  		}
+			  		i++;
+				}
+				delete meeting[client.id];
+				people[meeting.owner].owns = null; //reset the owns object to null so new meeting can be started
+				socket.sockets.emit("roomList", {meetingsList: meetingsList});
+				client.emit("update", "you have finished the meeting")
+				client.broadcast.to(client.room).emit("finish", "The owner (" + user.name + ") finished the meeting.");
+			}
+		}
+	});
+});
 
 //Landing Page
 app.get('/', landingPage.home);
@@ -96,6 +187,8 @@ app.get('/dashboard/meetings/pastMeeting', user.isLoggedIn, meetings.pastMeeting
 
 app.post('/dashboard/meetings/start', user.isLoggedIn, meetings.postMeeting);
 app.get('/dashboard/meetings/start', user.isLoggedIn, meetings.getMeeting);
+app.post('/dashboard/meetings/join', user.isLoggedIn, meetings.postJoinMeeting);
+app.get('/dashboard/meetings/join', user.isLoggedIn, meetings.getJoinMeeting);
 app.post('/dashboard/meetings/start/addNote', user.isLoggedIn, meetings.addNote);
 app.post('/dashboard/meetings/start/addTask', user.isLoggedIn, meetings.addTask);
 app.get('/dashboard/meetings/end', user.isLoggedIn, meetings.endMeeting);
@@ -151,7 +244,3 @@ app.get('/auth/google/callback',  passport.authenticate('google-login', {
 }))
 //error page
 app.get('/error', index.error);
-
-http.createServer(app).listen(app.get('port'), function(){
-  console.log('Express server listening on port ' + app.get('port'));
-});
