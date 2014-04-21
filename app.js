@@ -128,7 +128,7 @@ socket.on("connection", function (client) {
 	});
 
 	client.on("send", function(msg, value) {  
-		socket.broadcast.emit(client.room).emit("newNoteOrTask", people[client.id], msg, value);
+		socket.sockets.to(client.room).emit("newNoteOrTask", people[client.id], msg, value);
 	});
 
 	client.on("finishMeeting", function(name, userId) {  
