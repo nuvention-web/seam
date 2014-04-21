@@ -254,7 +254,8 @@ exports.postMeeting = function(req, res){
 			name: req.session.name,
 			meetingDate: meetingDate,
 			meeting: doc,
-			user : req.user,
+			user : req.session.userId,
+			name : req.session.name,
 			past : 0
 		});
 	})
@@ -310,7 +311,8 @@ exports.getMeeting = function(req, res){
 			title: 'SEAM',
 			meetingDate: meetingDate,
 			meeting: doc,
-			user : req.user,
+			user : req.session.userId,
+			name : req.session.name,
 			past : 0
 		});
 	})
@@ -320,6 +322,7 @@ exports.endMeeting = function(req, res){
 	var meetingId = req.session.meetingId;
 	var mailBody, smtpConfig;
 	var emailAgenda='';
+	var emailTask='';
 	var agenda,meetingTitle,meetingDate,objective,meetingAttendees,emailDate,emailTime,creatorEmail;
 	var emailList='';
 	// console.log(meetingId);
@@ -337,9 +340,9 @@ exports.endMeeting = function(req, res){
 			objective=doc.objective;
 			meetingAttendees=doc.attendees;
 			meetingDate=doc.meetingDate;
-			var creatorEmail= getCreatorEmail(req,doc.userId);
+			var creatorEmail= req.session.userId;
 
-			console.log("EMAIL: "+creatorEmail);
+			console.log("EMAIL creator: "+creatorEmail);
 			emailList=creatorEmail+',';
 			var meetingYear = meetingDate.getFullYear(); 
 			var meetingMonth = meetingDate.getMonth()+1; 
@@ -354,24 +357,32 @@ exports.endMeeting = function(req, res){
 					if(agenda[i] != ''){
 						var number= i+1;
 						var notes= agenda[i].notes;
+						var tasks= agenda[i].tasks;
 						emailAgenda+=number+':  '+ agenda[i].topic+'<br/>';
 						var initialNoteCount= -1; //If there is initial note count =0
 						if(notes.length>0 && notes[0].notes!='' ){
-							emailAgenda+="<p style='margin-left:5em;'> A"+". "+notes[0].notes+"<br/></p>";
+							emailAgenda+="<p style='margin-left:5em;'> a"+". "+notes[0].notes+"<br/></p>";
 							initialNoteCount=0;
+						}
+						if(tasks.length>0 && tasks[0].task!='' ){
+							emailTask+="<p style=''>"+tasks[0].assigneeName+": "+tasks[0].task+" (Due: "+tasks[0].taskDueDate+")<br/></p>";
 						}
 						for(var z=1; z<notes.length;z++){
 							emailAgenda+="<p style='margin-left:5em;'> " +String.fromCharCode(97 + z+ initialNoteCount)+". "+notes[z].notes+"<br/></p>";
 						}
+						for(var z=1; z<tasks.length;z++){
+							emailTask+="<p style=''>"+tasks[z].assigneeName+": "+tasks[z].task+" (Due: "+tasks[z].taskDueDate+")<br/></p>";
+						}
 					}
 				};
 			}
+			console.log("EMAIL: "+ emailTask);
 			if(meetingAttendees!=''){
 				for(var i=0; i<meetingAttendees.length; i++){
 					emailList+=meetingAttendees[i].attendeeEmail+',';
 				}
 			}
-			mailBody=createMinutesBody(emailDate,meetingTitle,emailList,objective,emailAgenda,emailTime,objective,emailAgenda);
+			mailBody=createMinutesBody(creatorEmail,emailDate,meetingTitle,emailList,objective,emailAgenda,emailTask,emailTime,objective,emailAgenda);
 			emailFunction(mailBody,res);
 
 		});
@@ -649,11 +660,128 @@ exports.addMeeting = function(req, res){
 
 	//Create ical File
 	var icsFilePath=createiCal(creatorEmail,meetingTitle,icalDate,icalEmail,meetingDate,meetingEndTime,objective,location);
-	mailBody=createAgendaBody(emailList,emailDate,meetingTitle,objective,emailAgenda,location,meetingTime,icsFilePath);
+	mailBody=createAgendaBody(creatorEmail,emailList,emailDate,meetingTitle,objective,emailAgenda,location,meetingTime,icsFilePath);
 	emailFunction(mailBody,res,icsFilePath);
 
 	res.redirect('/dashboard');
 };
+
+exports.postJoinMeeting = function(req, res){
+	
+	var meetingId = req.body.meetingId;
+	if(meetingId == undefined){
+		meetingId = req.session.meetingId;
+	}
+	else{
+		req.session.meetingId = meetingId;
+	}
+	
+	console.log(meetingId);
+	Meeting.findOne({'_id': meetingId}, function(e, doc){
+		console.log(doc);
+
+		var meetingDate = '';
+
+		if(doc.meetingDate != undefined && doc.meetingDate != ''){
+
+			var date = doc.meetingDate;
+			var duration = doc.meetingTime;
+			console.log(duration);
+			var year = date.getFullYear();
+			var month = date.getMonth() + 1;
+			var day = date.getDate();
+			var startHour = date.getHours();
+			var startMinutes = date.getMinutes();
+			if(startHour > 12){
+				startHour = startHour%12;
+			}
+			if(startMinutes < 10){
+				startMinutes = "0" + startMinutes;
+			}
+			var endDate = addMinutes(date, duration);
+			var endHour = endDate.getHours();
+			var endMinutes = endDate.getMinutes();
+			if(endHour > 12){
+				endHour = endHour%12;
+			}
+			if(endMinutes < 10){
+				endMinutes = "0" + endMinutes;
+			}				
+			var timeString = month + "/" + day + "/" + year + " " + startHour + ":" + startMinutes + " - " + endHour + ":" + endMinutes; 
+			meetingDate = timeString;
+			console.log(meetingDate);
+		}
+
+		res.render('loggedIn/meetings/joinMeeting', { 
+			title: 'SEAM',
+			name: req.session.name,
+			meetingDate: meetingDate,
+			meeting: doc,
+			user : req.session.userId,
+			name : req.session.name,
+			past : 0
+		});
+	})	
+}
+
+exports.getJoinMeeting = function(req, res){
+	
+	var meetingId = req.body.meetingId;
+	if(meetingId == undefined){
+		meetingId = req.session.meetingId;
+	}
+	else{
+		req.session.meetingId = meetingId;
+	}
+	
+	console.log(meetingId);
+	Meeting.findOne({'_id': meetingId}, function(e, doc){
+		console.log(doc);
+
+		var meetingDate = '';
+
+		if(doc.meetingDate != undefined && doc.meetingDate != ''){
+
+			var date = doc.meetingDate;
+			var duration = doc.meetingTime;
+			console.log(duration);
+			var year = date.getFullYear();
+			var month = date.getMonth() + 1;
+			var day = date.getDate();
+			var startHour = date.getHours();
+			var startMinutes = date.getMinutes();
+			if(startHour > 12){
+				startHour = startHour%12;
+			}
+			if(startMinutes < 10){
+				startMinutes = "0" + startMinutes;
+			}
+			var endDate = addMinutes(date, duration);
+			var endHour = endDate.getHours();
+			var endMinutes = endDate.getMinutes();
+			if(endHour > 12){
+				endHour = endHour%12;
+			}
+			if(endMinutes < 10){
+				endMinutes = "0" + endMinutes;
+			}				
+			var timeString = month + "/" + day + "/" + year + " " + startHour + ":" + startMinutes + " - " + endHour + ":" + endMinutes; 
+			meetingDate = timeString;
+			console.log(meetingDate);
+		}
+
+		res.render('loggedIn/meetings/joinMeeting', { 
+			title: 'SEAM',
+			name: req.session.name,
+			meetingDate: meetingDate,
+			meeting: doc,
+			user : req.session.userId,
+			name : req.session.name,
+			past : 0
+		});
+	})	
+}
+
 
 function addMinutes(date, minutes){
 	return new Date(date.getTime() + minutes*60000);
@@ -688,7 +816,7 @@ function emailFunction(emailBody,res,icsFilePath){
 
  });
 }
-function createAgendaBody(emailList,emailDate,meetingTitle,objective,emailAgenda,location,meetingTime,icsFilePath){
+function createAgendaBody(emailCreator,emailList,emailDate,meetingTitle,objective,emailAgenda,location,meetingTime,icsFilePath){
 	var mailBody;
 	console.log(emailList+' '+emailDate+' '+meetingTitle+' '+objective+' '+emailAgenda+' '+location+' '+meetingTime+' '+icsFilePath);
 	//construct the email sending module
@@ -701,7 +829,8 @@ function createAgendaBody(emailList,emailDate,meetingTitle,objective,emailAgenda
 
 	// HTML body
      	html:"<body>"+
-     	"<p style='text-align:center'><img src='cid:logo@seam'/></p>"+
+     	"<p style='text-align:center; margin:0 auto;  width:50px; height:50px;'><img src='cid:logo@seam'/></p>"+     	
+        "<p style='text-align:left;'> Creator: "+emailCreator+"<br/></p>" +
         "<p style='text-align:left;'> Date: "+emailDate+"<br/></p>" +
         "<p style='text-align:left;'> Location: "+location+"<br/></p>" +
         "<p style='text-align:left;'> Duration: "+meetingTime+" Minutes <br/></p>" +
@@ -711,7 +840,7 @@ function createAgendaBody(emailList,emailDate,meetingTitle,objective,emailAgenda
         attachments:[
          // Logo img
 	        {
-             filePath: './public/images/seamlogo-red125.png',
+             filePath: './public/images/favicon-64.png',
              cid: 'logo@seam' // should be as unique as possible
          },
         {
@@ -723,7 +852,7 @@ function createAgendaBody(emailList,emailDate,meetingTitle,objective,emailAgenda
  };
  return mailBody;
 }
-function createMinutesBody(emailDate,meetingTitle,emailList,objective,emailAgenda,emailTime,objective,emailAgenda){
+function createMinutesBody(emailCreator,emailDate,meetingTitle,emailList,objective,emailAgenda,emailTask,emailTime,objective,emailAgenda){
 	var mailBody;
 	//construct the email sending module
 			mailBody = {
@@ -735,15 +864,17 @@ function createMinutesBody(emailDate,meetingTitle,emailList,objective,emailAgend
 
 			// HTML body
 		     	html:"<body>"+
-		     	"<p style='text-align:center'><img src='cid:logo@seam'/></p>"+
+		     	"<p style='text-align:center; margin:0 auto; width:50px; height:50px; '><img src='cid:logo@seam'/></p>"+
+		        "<p style='text-align:left;'> Creator: "+emailCreator+"<br/></p>" +
 		        "<p style='text-align:left;'> Duration: "+emailTime+" Minutes<br/></p>" +
 		        "<p style='text-align:left;'> Objectives: "+objective+"<br/></p>" +
+		        "<p style='text-align:left;'> Tasks: "+emailTask+"</p>" +
 		        "<p style='text-align:left;'> Agenda: <br/>"+emailAgenda+"<br/></p>"+ 
 		        "</body>",
 		        attachments:[
 		         // Logo img
 			        {
-		             filePath: './public/images/seamlogo-red125.png',
+		             filePath: './public/images/favicon-64.png',
 		             cid: 'logo@seam' // should be as unique as possible
 		         }
 		    	]

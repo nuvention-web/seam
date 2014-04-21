@@ -1,18 +1,24 @@
-
-$(document).ready(function(){
 //FUNCTIONS FOR ASYNC UPDATE OF MEETINGS
-	//var socket = io.connect("127.0.0.1:3000");
-	var socket = io.connect("http://www.getseam.co");
+$(document).ready(function(){
+
+	var socket = io.connect("127.0.0.1:3000");
+	// var socket = io.connect("http://www.getseam.co");
 	var name = $("input[name='name']").attr('value');
 	var userId = $("input[name='userId']").attr('value');
 	var meetingId = $("input[name='meetingId']").attr('value');
 
 	socket.emit("join", name, userId);
 
-	socket.emit("startMeeting", name, userId, meetingId);
+	socket.emit("joinMeeting", name, userId, meetingId);
 
 	socket.on("update", function(msg){
 		console.log(msg);
+	});
+
+	socket.on("joinFailure", function(msg){
+		console.log(msg);
+		alert(msg);
+		window.location = window.location.origin + "/dashboard";
 	});
 
 	socket.on("newNoteOrTask", function(who, msg, value){
@@ -45,6 +51,11 @@ $(document).ready(function(){
 				$('#notes' + value)[0].value = '';
 			}
 		}
+	});
+
+	socket.on("finish", function(msg){
+		console.log(msg);
+		$('div[name="leaveButton"]').show();
 	});
 
 	console.log('name: ' + name + ' user: ' + userId + ' meetingId: ' + meetingId);
@@ -165,11 +176,6 @@ $(document).ready(function(){
 		});
 	return false; 
 	});
-
-	$('button[name="finish"]').click(function(){
-		socket.emit("finishMeeting", name, userId);
-	});
-
 });
 				
 //FUNCTION: ADD NOTE TO MEETING INTERFACE
