@@ -1,7 +1,8 @@
 //FUNCTIONS FOR ASYNC UPDATE OF MEETINGS
 $(document).ready(function(){
 
-	var socket = io.connect("127.0.0.1:3000");
+	//var socket = io.connect("127.0.0.1:3000");
+	var socket = io.connect("http://www.getseam.co");
 	var name = $("input[name='name']").attr('value');
 	var userId = $("input[name='userId']").attr('value');
 	var meetingId = $("input[name='meetingId']").attr('value');
@@ -44,6 +45,11 @@ $(document).ready(function(){
 				$('#notes' + value)[0].value = '';
 			}
 		}
+	});
+
+	socket.on("finish", function(msg){
+		console.log(msg);
+		$('div[name="leaveButton"]').show();
 	});
 
 	console.log('name: ' + name + ' user: ' + userId + ' meetingId: ' + meetingId);
@@ -140,7 +146,7 @@ $(document).ready(function(){
 						notesList[value].scrollTop = notesList[value].scrollHeight;
 						$('#notes' + value)[0].value = '';
 					}
-					socket.emit("send",  notes);
+					socket.emit("send",  notes, value);
 				}
 				else{
 					if(notesList[value] == undefined){

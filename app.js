@@ -81,8 +81,7 @@ socket.on("connection", function (client) {
 		var meetingId = null;
 	    people[client.id] = {"name" : name, "userId": userId, "meeting" : meetingId};
 	    client.emit("update", "You have connected to the server.");
-	    socket.sockets.emit("update", people[client.id].name + " has logged in.")
-	    socket.sockets.emit("update-people", people);
+	    client.emit("update", people[client.id].name + " has logged in.")
 	    client.emit("meetingList", {meetingsList: meetingsList});
 	    clients.push(client); //populate the clients array with the client object
 	});
@@ -98,8 +97,9 @@ socket.on("connection", function (client) {
 			people[client.id].meeting = meetingId; //update the room key with the ID of the created room
 			people[client.id].owns = meetingId;
  			socket.sockets.emit("meetingStarted", "meetingId");
+ 			socket.emit("update", "you have started the meeting")
 		} else {
-			socket.sockets.emit("update", "already started meeting");
+			socket.sockets.emit("update", "you have already started meeting");
 		}
 	});
 
@@ -126,9 +126,9 @@ socket.on("connection", function (client) {
 			}
 		}
 	});
-
-	client.on("send", function(msg, value) {  
-		socket.sockets.to(client.room).emit("newNoteOrTask", people[client.id], msg, value);
+ 
+	client.on("send", function(msg, value) {
+		client.broadcast.to(client.room).emit("newNoteOrTask", people[client.id], msg, value);
 	});
 
 	client.on("finishMeeting", function(name, userId) {  
@@ -145,7 +145,8 @@ socket.on("connection", function (client) {
 				delete meeting[client.id];
 				people[meeting.owner].owns = null; //reset the owns object to null so new meeting can be started
 				socket.sockets.emit("roomList", {meetingsList: meetingsList});
-				socket.sockets.to(client.room).emit("finish", "The owner (" +user.name + ") finished the meeting.");
+				client.emit("update", "you have finished the meeting")
+				client.broadcast.to(client.room).emit("finish", "The owner (" + user.name + ") finished the meeting.");
 			}
 		}
 	});
@@ -181,7 +182,8 @@ app.get('/dashboard/meetings/pastMeeting', user.isLoggedIn, meetings.pastMeeting
 
 app.post('/dashboard/meetings/start', user.isLoggedIn, meetings.postMeeting);
 app.get('/dashboard/meetings/start', user.isLoggedIn, meetings.getMeeting);
-app.post('/dashboard/meetings/join', user.isLoggedIn, meetings.joinMeeting);
+app.post('/dashboard/meetings/join', user.isLoggedIn, meetings.postJoinMeeting);
+app.get('/dashboard/meetings/join', user.isLoggedIn, meetings.getJoinMeeting);
 app.post('/dashboard/meetings/start/addNote', user.isLoggedIn, meetings.addNote);
 app.post('/dashboard/meetings/start/addTask', user.isLoggedIn, meetings.addTask);
 app.get('/dashboard/meetings/end', user.isLoggedIn, meetings.endMeeting);
