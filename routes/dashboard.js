@@ -77,7 +77,7 @@ exports.dashboard = function(req, res){
 				meetingDate: meetingDate,
 				pastMeetingList: finMeetingList,
 				name: req.session.name,
-				user : req.user
+				user : userId
 			});
 		});
 	})

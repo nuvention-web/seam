@@ -254,7 +254,8 @@ exports.postMeeting = function(req, res){
 			name: req.session.name,
 			meetingDate: meetingDate,
 			meeting: doc,
-			user : req.user,
+			user : req.session.userId,
+			name : req.session.name,
 			past : 0
 		});
 	})
@@ -310,7 +311,8 @@ exports.getMeeting = function(req, res){
 			title: 'SEAM',
 			meetingDate: meetingDate,
 			meeting: doc,
-			user : req.user,
+			user : req.session.userId,
+			name : req.session.name,
 			past : 0
 		});
 	})
@@ -663,6 +665,64 @@ exports.addMeeting = function(req, res){
 
 	res.redirect('/dashboard');
 };
+
+exports.joinMeeting = function(req, res){
+	
+	var meetingId = req.body.meetingId;
+	if(meetingId == undefined){
+		meetingId = req.session.meetingId;
+	}
+	else{
+		req.session.meetingId = meetingId;
+	}
+	
+	console.log(meetingId);
+	Meeting.findOne({'_id': meetingId}, function(e, doc){
+		console.log(doc);
+
+		var meetingDate = '';
+
+		if(doc.meetingDate != undefined && doc.meetingDate != ''){
+
+			var date = doc.meetingDate;
+			var duration = doc.meetingTime;
+			console.log(duration);
+			var year = date.getFullYear();
+			var month = date.getMonth() + 1;
+			var day = date.getDate();
+			var startHour = date.getHours();
+			var startMinutes = date.getMinutes();
+			if(startHour > 12){
+				startHour = startHour%12;
+			}
+			if(startMinutes < 10){
+				startMinutes = "0" + startMinutes;
+			}
+			var endDate = addMinutes(date, duration);
+			var endHour = endDate.getHours();
+			var endMinutes = endDate.getMinutes();
+			if(endHour > 12){
+				endHour = endHour%12;
+			}
+			if(endMinutes < 10){
+				endMinutes = "0" + endMinutes;
+			}				
+			var timeString = month + "/" + day + "/" + year + " " + startHour + ":" + startMinutes + " - " + endHour + ":" + endMinutes; 
+			meetingDate = timeString;
+			console.log(meetingDate);
+		}
+
+		res.render('loggedIn/meetings/joinMeeting', { 
+			title: 'SEAM',
+			name: req.session.name,
+			meetingDate: meetingDate,
+			meeting: doc,
+			user : req.session.userId,
+			name : req.session.name,
+			past : 0
+		});
+	})	
+}
 
 function addMinutes(date, minutes){
 	return new Date(date.getTime() + minutes*60000);

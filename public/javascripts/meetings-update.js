@@ -1,6 +1,53 @@
 //FUNCTIONS FOR ASYNC UPDATE OF MEETINGS
 $(document).ready(function(){
 
+	var socket = io.connect("127.0.0.1:3000");
+	var name = $("input[name='name']").attr('value');
+	var userId = $("input[name='userId']").attr('value');
+	var meetingId = $("input[name='meetingId']").attr('value');
+
+	socket.emit("join", name, userId);
+
+	socket.emit("startMeeting", name, userId, meetingId);
+
+	socket.on("update", function(msg){
+		console.log(msg);
+	});
+
+	socket.on("newNoteOrTask", function(who, msg, value){
+		console.log(msg);
+		if(msg[0] == '@'){
+			if(notesList[value] == undefined){
+				allTasks.innerHTML += '<h5 class="text-left text-blue margin-right-2p"> @ ' + taskAssignee + ' '+task + ' </h5>';
+				notesList.scrollTop = notesList.scrollHeight;
+				$('#taskAssignee' + value)[0].value = '';
+				$('#taskName' + value)[0].value = '';
+				$('#notes' + value)[0].focus();
+			}
+			else{
+				allTasks[value].innerHTML += '<h5 class="text-left text-blue margin-right-2p"> @ ' + taskAssignee +' '+task + ' </h5>';
+				notesList[value].scrollTop = notesList[value].scrollHeight;
+				$('#taskAssignee' + value)[0].value = '';
+				$('#taskName' + value)[0].value = '';
+				$('#notes' + value)[0].focus();
+			}
+		}
+		else{
+			if(notesList[value] == undefined){
+				allNotes.innerHTML += '<h5 class="text-left margin-right-2p ">' + notes + '</h5>';
+				notesList.scrollTop = notesList.scrollHeight;
+				$('#notes' + value)[0].value = '';
+			}
+			else{
+				allNotes[value].innerHTML += '<h5 class="text-left margin-right-2p">' + notes + '</h5>';
+				notesList[value].scrollTop = notesList[value].scrollHeight;
+				$('#notes' + value)[0].value = '';
+			}
+		}
+	});
+
+	console.log('name: ' + name + ' user: ' + userId + ' meetingId: ' + meetingId);
+
 	// array used for autocomplete
 	var attendeeTags = new Array();
 	// adding all out attendees to the autocompelete source
@@ -93,6 +140,7 @@ $(document).ready(function(){
 						notesList[value].scrollTop = notesList[value].scrollHeight;
 						$('#notes' + value)[0].value = '';
 					}
+					socket.emit("send",  notes);
 				}
 				else{
 					if(notesList[value] == undefined){
@@ -109,10 +157,16 @@ $(document).ready(function(){
 						$('#taskName' + value)[0].value = '';
 						$('#notes' + value)[0].focus();
 					}
-				}                  
+
+					socket.emit("send",  '@ ' + taskAssignee + ' ' + task, value);
+				}                
 			}
 		});
 	return false; 
+	});
+
+	$('button[name="finish"]').click(function(){
+		socket.emit("finishMeeting", name, userId);
 	});
 
 });
