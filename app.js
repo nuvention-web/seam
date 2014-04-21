@@ -40,20 +40,6 @@ var db = mongoose.connection;
 // server setup
 var app = express();
 
-// adding functionality to javascript array
-Array.prototype.contains = function(k, callback) {  
-    var self = this;
-    return (function check(i) {
-        if (i >= self.length) {
-            return callback(false);
-        }
-        if (self[i] === k) {
-            return callback(true);
-        }
-        return process.nextTick(check.bind(null, i+1));
-    }(0));
-};
-
 var people = {};  
 var meetingsList = {};  
 var clients = [];
@@ -104,7 +90,7 @@ socket.on("connection", function (client) {
 	client.on("startMeeting", function(name, userId, meetingId) {  
 		if (people[client.id].meeting === null) {
 			var meeting = new meetingStruct(name, userId, meetingId, client.id);
-			meetingsList[client.id] = meeting;
+			meetingsList[meetingId] = meeting;
 			socket.sockets.emit("meetingList", {meetingsList: meetingsList}); //update the list of rooms on the frontend
 			client.room = meetingId; //name the room
 			client.join(client.room); //auto-join the creator to the room
@@ -117,29 +103,32 @@ socket.on("connection", function (client) {
 		}
 	});
 
-	client.on("joinMeeting", function(name, userId) {  
-		var meeting = meetingsList[client.id];
+	client.on("joinMeeting", function(name, userId, meetingId) {  
+		var meeting = meetingsList[meetingId];
 		if (client.id === meeting.owner) {
 			client.emit("update", "You are the starter of this meeting and you have already joined.");
 		} 
 		else {
-			meetingsList.people.contains(client.id, function(found) {
-				if (found) {
-				  client.emit("update", "You are already in this meeting.");
-				} 
-				else {
-					meeting.addPerson(client.id);
-					client.room = meeting.meetingId;
-					client.join(client.room); //add person to the room
-					user = people[client.id];
-					socket.sockets.in(client.room).emit("update", user.name + " has connected to meeting.");
+			var peopleInMeeting = meeting.people
+			var isInMeeting = false;
+			for(var i = 0; i < peopleInMeeting.length; i++){
+				if(peopleInMeeting[i] === client.id){
+					client.emit("update", "You are already in this meeting.");
+					isInMeeting = true;
 				}
-			});
+			}
+			if(!isInMeeting){
+				client.room = meeting.meetingId;
+				client.join(client.room); //add person to the room
+				meeting.addPerson(client.id); //also add the person to the room object
+				user = people[client.id];
+				socket.sockets.in(client.room).emit("update", user.name + " has connected to meeting.");
+			}
 		}
 	});
 
 	client.on("send", function(msg, value) {  
-		socket.sockets.to(client.room).emit("newNoteOrTask", people[client.id], msg, value);
+		socket.broadcast.emit(client.room).emit("newNoteOrTask", people[client.id], msg, value);
 	});
 
 	client.on("finishMeeting", function(name, userId) {  

@@ -5,6 +5,7 @@ function meetingStruct(name, userId, meetingId, owner) {
   this.owner = owner;
   this.people = [];
   this.status = "available";
+  console.log("This is the owner:" + owner)
 };
 
 meetingStruct.prototype.addPerson = function(personID) {  
