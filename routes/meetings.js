@@ -402,18 +402,26 @@ exports.viewPast = function(req, res){
 	}
 	
 	console.log(meetingId);
-	Meeting.find({'ProjectId': req.session.projectId, 'UserId' : req.session.userId}, function(e, docs){
-		Meeting.findOne({'_id': meetingId}, function(e, doc){
-			console.log(doc);
-			res.render('loggedIn/meetings/viewMeeting', { 
-				title: 'SEAM',
-				projectName: req.session.projectName,
-				meeting: doc,
-				meetingList: docs,
-				user : req.user,
-				past : 1
-			});
-		})
+	Meeting.findOne({'_id': meetingId}, function(e, doc){
+		//console.log(doc);
+
+		for (var taskAssignee in taskLists) {
+			if (taskLists.hasOwnProperty(taskAssignee)) {
+				tasks = taskLists[taskAssignee];
+				console.log(taskAssignee);
+				for (var i = 0; i < tasks.length; i++){
+					console.log("task: " + tasks[i].task + " due: " + tasks[i].dueDate);
+				}
+			}
+		}
+
+		res.render('loggedIn/meetings/viewMeeting', { 
+			title: 'SEAM',
+			projectName: req.session.projectName,
+			meeting: doc,
+			user : req.user,
+			past : 1
+		});
 	})
 };
 
@@ -930,4 +938,29 @@ function getCreatorEmail(req,userId){
 	}else{
 		return req.session.email;
 	}
+}
+
+function getTaskList(meetingData){	
+	var agendas = meetingData.agenda;
+	var taskLists = {};
+	for(var i = 0; i < agendas.length; i++){
+		var tasks = agendas[i].tasks;
+		//console.log(tasks);
+		for(var j = 0; j < tasks.length; j++){
+			var task = tasks[j];
+			var assignees = task.assigneeName.split(', ');
+			for(var k = 0; k < assignees.length; k++){
+				if(assignees[k] != ""){
+					if(taskLists[assignees[k]] == undefined){
+						taskLists[assignees[k]] = new Array();
+						taskLists[assignees[k]].push({"task" : task.task, "dueDate": task.taskDueDate});
+					}
+					else{
+						taskLists[assignees[k]].push({"task" : task.task, "dueDate": task.taskDueDate});
+					}
+				}
+			}
+		}
+	}
+	return taskLists;
 }
