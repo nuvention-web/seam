@@ -405,16 +405,6 @@ exports.viewPast = function(req, res){
 	Meeting.findOne({'_id': meetingId}, function(e, doc){
 		//console.log(doc);
 
-		for (var taskAssignee in taskLists) {
-			if (taskLists.hasOwnProperty(taskAssignee)) {
-				tasks = taskLists[taskAssignee];
-				console.log(taskAssignee);
-				for (var i = 0; i < tasks.length; i++){
-					console.log("task: " + tasks[i].task + " due: " + tasks[i].dueDate);
-				}
-			}
-		}
-
 		res.render('loggedIn/meetings/viewMeeting', { 
 			title: 'SEAM',
 			projectName: req.session.projectName,
