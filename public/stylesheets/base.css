@@ -151,6 +151,13 @@ textarea{
 /* ========================================================
    1A.FONTS-DESKTOP
 =========================================================== */
+.text-justify{
+	text-align:justify;
+	text-justify:inter-word;
+}
+.text-shadow{
+	text-shadow: 2px 2px rgb(100,100,100);
+}
 .text-white{
 	color:rgb(255,255,255) !important;
 }
@@ -363,6 +370,21 @@ textarea{
 .bg-green{
 	background-color: rgb(141,199,63);
 }
+.bg-gray-t8{
+	background-color: rgba(140,140,140,0.8);
+}
+.bg-green-t8{
+	background-color: rgba(141,199,63,0.8);
+}
+.bg-pink-t8{
+	background-color: rgba(242,108,79,0.8);
+}
+.bg-blue-t8{
+	background-color: rgba(0,114,188,0.8);
+}
+.bg-orange-t8{
+	background-color: rgba(248,148,29,0.8);
+}
 .bg-pink{
 	background-color: rgb(242,108,79);
 }
@@ -533,6 +555,9 @@ textarea{
 .margin-top-10x{
 	margin-top:10px;
 }
+.margin-top-20x{
+	margin-top:20px;
+}
 .margin-top-100x{	
 	margin-top:100px;
 }
@@ -564,7 +589,7 @@ textarea{
 	margin-top: 20%;
 }
 .margin-left-5x{
-	margin-left: 5px;
+	margin-left: 15px;
 }
 .margin-left-10x{
 	margin-left: 10px;
@@ -617,6 +642,12 @@ textarea{
 }
 .padding-5p{
 	padding:5%;
+}
+.padding-left-2x{
+	padding-left:2px;
+}
+.padding-left-9x{
+	padding-left:9px;
 }
 .padding-15p{
 	padding:6% 10%;
@@ -704,8 +735,11 @@ textarea{
 .container-500x{
 	height: 500px;
 }
+.container-50p{
+	width:75px;
+}
 .container-60p{
-	width:34%;
+	width:60%;
 }
 .container-70p{
 	width:70%;
@@ -842,6 +876,11 @@ textarea{
 	-moz-box-shadow:    1px 1px 2px 2px #ccc;
   -webkit-box-shadow: 1px 1px 2px 2px #ccc;
   box-shadow:         1px 1px 2px 2px #ccc;
+}
+.border-shadow-black-small{
+	-moz-box-shadow:    2px 2px 3px 3px rgb(100,100,100);
+  -webkit-box-shadow: 2px 2px 3px 3px rgb(100,100,100);
+  box-shadow:         2px 2px 3px 3px rgb(100,100,100);
 }
 .border-square{
 	-webkit-border-radius: 0 !important;
@@ -1184,3 +1223,4 @@ background-color: rgb(225,225,225);
 .answer.active	{ background: url(../images/close.png); width: 20px; height: 20px;}
 #faqs div { height:0; overflow:hidden; position:relative; }
 #faqs div h1	{ padding:0; margin-bottom:10px; }
+
