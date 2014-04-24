@@ -120,7 +120,7 @@ module.exports = function(passport) {
 	passport.use('google-login', new GoogleStrategy({
 		clientID: '693576074665-oo32lv3ek5fjb19s1omv7otneh193sl5.apps.googleusercontent.com',
 		clientSecret: 'keos66Ez_LwYzTV9CvXvNoFe', 
-		callbackURL: 'http://seam.herokuapp.com/auth/google/callback/',
+		callbackURL: 'http://www.getseam.co/auth/google/callback/',
 		// clientID: '693576074665-5metufhdq7f2r5vogsiro86rf1uvtumj.apps.googleusercontent.com', // local testing
 		// clientSecret: 'tlvVeRLtCgk6_eEDCGPSNrlt', // local testing
 		// callbackURL: 'http://localhost:3000/auth/google/callback/', // local testing

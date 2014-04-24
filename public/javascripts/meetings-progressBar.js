@@ -1,3 +1,9 @@
+ $(document).ready(function(){ 
+    $('body').on('keypress', '.noEnterSubmit', function(e){ 
+           if ( e.which == 13 ) {e.preventDefault();}
+
+    });
+});
 //FUNCTIONS FOR PROGRESS BAR DURING MEETING
 var intVals=new Array();
 var waitVals=new Array();
@@ -17,7 +23,25 @@ $(document).ready(function(){
          }
     };
    waitVals[strVals.length]=intVals[0];
-   //SET AGENDA ITEM TIMEOUTS
+   //SET AGENDA ITEM TIMEOUTSattendeeMinimize
+
+     $('#attendeeMinimize').each(function() {
+                var tis = $(this);
+                var state = false;
+                var hiddenBox= tis.next('div');
+                if(i>1)
+                    hiddenBox.hide().css('height','auto').slideUp();
+            tis.click(function() {
+              state = !state;
+              toggleID=tis.next('.answer');
+              toggleID.slideToggle(state);
+              hiddenBox.slideToggle(state);
+              tis.toggleClass('active',state);
+            });
+          });
+
+
+
     for(var i=1; i<=strVals.length;i++){
        $('#agendaItem'+i).each(function() {
                 var tis = $(this);

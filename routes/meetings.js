@@ -1,6 +1,5 @@
 var mongoose = require('mongoose');
 var Meeting = require('../models/meeting-model');
-var Task = require('../models/task-model');
 var Project = require('../models/project-model');
 var nodemailer = require('nodemailer');
 
@@ -217,51 +216,48 @@ exports.postMeeting = function(req, res){
 	console.log(meetingId);
 	Meeting.findOne({'_id': meetingId}, function(e, doc){
 		console.log(doc);
-		Task.findOne({'MeetingId': meetingId}, function(e, task){
-			console.log(task);
 
-			var meetingDate = '';
+		var meetingDate = '';
 
-			if(doc.meetingDate != undefined && doc.meetingDate != ''){
+		if(doc.meetingDate != undefined && doc.meetingDate != ''){
 
-				var date = doc.meetingDate;
-				var duration = doc.meetingTime;
-				console.log(duration);
-				var year = date.getFullYear();
-				var month = date.getMonth() + 1;
-				var day = date.getDate();
-				var startHour = date.getHours();
-				var startMinutes = date.getMinutes();
-				if(startHour > 12){
-					startHour = startHour%12;
-				}
-				if(startMinutes < 10){
-					startMinutes = "0" + startMinutes;
-				}
-				var endDate = addMinutes(date, duration);
-				var endHour = endDate.getHours();
-				var endMinutes = endDate.getMinutes();
-				if(endHour > 12){
-					endHour = endHour%12;
-				}
-				if(endMinutes < 10){
-					endMinutes = "0" + endMinutes;
-				}				
-				var timeString = month + "/" + day + "/" + year + " " + startHour + ":" + startMinutes + " - " + endHour + ":" + endMinutes; 
-				meetingDate = timeString;
-				console.log(meetingDate);
+			var date = doc.meetingDate;
+			var duration = doc.meetingTime;
+			console.log(duration);
+			var year = date.getFullYear();
+			var month = date.getMonth() + 1;
+			var day = date.getDate();
+			var startHour = date.getHours();
+			var startMinutes = date.getMinutes();
+			if(startHour > 12){
+				startHour = startHour%12;
 			}
+			if(startMinutes < 10){
+				startMinutes = "0" + startMinutes;
+			}
+			var endDate = addMinutes(date, duration);
+			var endHour = endDate.getHours();
+			var endMinutes = endDate.getMinutes();
+			if(endHour > 12){
+				endHour = endHour%12;
+			}
+			if(endMinutes < 10){
+				endMinutes = "0" + endMinutes;
+			}				
+			var timeString = month + "/" + day + "/" + year + " " + startHour + ":" + startMinutes + " - " + endHour + ":" + endMinutes; 
+			meetingDate = timeString;
+			console.log(meetingDate);
+		}
 
-			res.render('loggedIn/meetings/startMeeting', { 
-				title: 'SEAM',
-				name: req.session.name,
-				meetingDate: meetingDate,
-				taskList: task,
-				meeting: doc,
-				user : req.user,
-				past : 0
-			});
-		})
+		res.render('loggedIn/meetings/startMeeting', { 
+			title: 'SEAM',
+			name: req.session.name,
+			meetingDate: meetingDate,
+			meeting: doc,
+			user : req.session.userId,
+			name : req.session.name,
+			past : 0
+		});
 	})
 };
 
@@ -278,50 +274,47 @@ exports.getMeeting = function(req, res){
 	console.log(meetingId);
 	Meeting.findOne({'_id': meetingId}, function(e, doc){
 		console.log(doc);
-		Task.find({'MeetingId': meetingId}, function(e, task){
-			console.log(task);
 
-			var meetingDate = '';
+		var meetingDate = '';
 
-			if(doc.meetingDate != undefined && doc.meetingDate != ''){
+		if(doc.meetingDate != undefined && doc.meetingDate != ''){
 
-				var date = doc.meetingDate;
-				var duration = doc.meetingTime;
-				console.log(duration);
-				var year = date.getFullYear();
-				var month = date.getMonth() + 1;
-				var day = date.getDate();
-				var startHour = date.getHours();
-				var startMinutes = date.getMinutes();
-				if(startHour > 12){
-					startHour = startHour%12;
-				}
-				if(startMinutes < 10){
-					startMinutes = "0" + startMinutes;
-				}
-				var endDate = addMinutes(date, duration);
-				var endHour = endDate.getHours();
-				var endMinutes = endDate.getMinutes();
-				if(endHour > 12){
-					endHour = endHour%12;
-				}
-				if(endMinutes < 10){
-					endMinutes = "0" + endMinutes;
-				}				
-				var timeString = month + "/" + day + "/" + year + " " + startHour + ":" + startMinutes + " - " + endHour + ":" + endMinutes; 
-				meetingDate = timeString;
-				console.log(meetingDate);
+			var date = doc.meetingDate;
+			var duration = doc.meetingTime;
+			console.log(duration);
+			var year = date.getFullYear();
+			var month = date.getMonth() + 1;
+			var day = date.getDate();
+			var startHour = date.getHours();
+			var startMinutes = date.getMinutes();
+			if(startHour > 12){
+				startHour = startHour%12;
 			}
+			if(startMinutes < 10){
+				startMinutes = "0" + startMinutes;
+			}
+			var endDate = addMinutes(date, duration);
+			var endHour = endDate.getHours();
+			var endMinutes = endDate.getMinutes();
+			if(endHour > 12){
+				endHour = endHour%12;
+			}
+			if(endMinutes < 10){
+				endMinutes = "0" + endMinutes;
+			}				
+			var timeString = month + "/" + day + "/" + year + " " + startHour + ":" + startMinutes + " - " + endHour + ":" + endMinutes; 
+			meetingDate = timeString;
+			console.log(meetingDate);
+		}
 
-			res.render('loggedIn/meetings/startMeeting', { 
-				title: 'SEAM',
-				meetingDate: meetingDate,
-				taskList: task,
-				meeting: doc,
-				user : req.user,
-				past : 0
-			});
-		})
+		res.render('loggedIn/meetings/startMeeting', { 
+			title: 'SEAM',
+			meetingDate: meetingDate,
+			meeting: doc,
+			user : req.session.userId,
+			name : req.session.name,
+			past : 0
+		});
 	})
 };
 
@@ -329,6 +322,7 @@ exports.endMeeting = function(req, res){
 	var meetingId = req.session.meetingId;
 	var mailBody, smtpConfig;
 	var emailAgenda='';
+	var emailTask='';
 	var agenda,meetingTitle,meetingDate,objective,meetingAttendees,emailDate,emailTime,creatorEmail;
 	var emailList='';
 	// console.log(meetingId);
@@ -346,9 +340,9 @@ exports.endMeeting = function(req, res){
 			objective=doc.objective;
 			meetingAttendees=doc.attendees;
 			meetingDate=doc.meetingDate;
-			var creatorEmail= getCreatorEmail(req,doc.userId);
+			var creatorEmail= req.session.userId;
 
-			console.log("EMAIL: "+creatorEmail);
+			console.log("EMAIL creator: "+creatorEmail);
 			emailList=creatorEmail+',';
 			var meetingYear = meetingDate.getFullYear(); 
 			var meetingMonth = meetingDate.getMonth()+1; 
@@ -363,24 +357,32 @@ exports.endMeeting = function(req, res){
 					if(agenda[i] != ''){
 						var number= i+1;
 						var notes= agenda[i].notes;
+						var tasks= agenda[i].tasks;
 						emailAgenda+=number+':  '+ agenda[i].topic+'<br/>';
 						var initialNoteCount= -1; //If there is initial note count =0
 						if(notes.length>0 && notes[0].notes!='' ){
-							emailAgenda+="<p style='margin-left:5em;'> A"+". "+notes[0].notes+"<br/></p>";
+							emailAgenda+="<p style='margin-left:5em;'> a"+". "+notes[0].notes+"<br/></p>";
 							initialNoteCount=0;
+						}
+						if(tasks.length>0 && tasks[0].task!='' ){
+							emailTask+="<p style=''>"+tasks[0].assigneeName+": "+tasks[0].task+" (Due: "+tasks[0].taskDueDate+")<br/></p>";
 						}
 						for(var z=1; z<notes.length;z++){
 							emailAgenda+="<p style='margin-left:5em;'> " +String.fromCharCode(97 + z+ initialNoteCount)+". "+notes[z].notes+"<br/></p>";
 						}
+						for(var z=1; z<tasks.length;z++){
+							emailTask+="<p style=''>"+tasks[z].assigneeName+": "+tasks[z].task+" (Due: "+tasks[z].taskDueDate+")<br/></p>";
+						}
 					}
 				};
 			}
+			console.log("EMAIL: "+ emailTask);
 			if(meetingAttendees!=''){
 				for(var i=0; i<meetingAttendees.length; i++){
 					emailList+=meetingAttendees[i].attendeeEmail+',';
 				}
 			}
-			mailBody=createMinutesBody(emailDate,meetingTitle,emailList,objective,emailAgenda,emailTime,objective,emailAgenda);
+			mailBody=createMinutesBody(creatorEmail,emailDate,meetingTitle,emailList,objective,emailAgenda,emailTask,emailTime,objective,emailAgenda);
 			emailFunction(mailBody,res);
 
 		});
@@ -400,18 +402,16 @@ exports.viewPast = function(req, res){
 	}
 	
 	console.log(meetingId);
-	Meeting.find({'ProjectId': req.session.projectId, 'UserId' : req.session.userId}, function(e, docs){
-		Meeting.findOne({'_id': meetingId}, function(e, doc){
-			console.log(doc);
-			res.render('loggedIn/meetings/viewMeeting', { 
-				title: 'SEAM',
-				projectName: req.session.projectName,
-				meeting: doc,
-				meetingList: docs,
-				user : req.user,
-				past : 1
-			});
-		})
+	Meeting.findOne({'_id': meetingId}, function(e, doc){
+		//console.log(doc);
+
+		res.render('loggedIn/meetings/viewMeeting', { 
+			title: 'SEAM',
+			projectName: req.session.projectName,
+			meeting: doc,
+			user : req.user,
+			past : 1
+		});
 	})
 };
 
@@ -501,7 +501,7 @@ exports.addNote = function(req, res){
 			}
 			else{
 				console.log('Added notes successfully');
-				Meeting.find({}, function(e, docs){console.log(docs);});
+				// Meeting.find({}, function(e, docs){console.log(docs);});
 			}
 		});	
 		res.redirect('back');
@@ -509,22 +509,17 @@ exports.addNote = function(req, res){
 };
 
 exports.addTask = function(req, res){
-	var meetingTask = req.body.notes;
-	var meetingPerson = req.body.taskPerson;
+
+	var taskOrder = req.body.noteOrder;
 	var meetingId = req.session.meetingId;
-	var userId = req.session.userId;
-	var taskPersonLength = meetingPerson.length;
-	meetingPerson = meetingPerson.slice(0, taskPersonLength - 2);
-
-	if(meetingPerson != ""){
-		var newTask = new Task({
-			UserId: userId,
-			MeetingId: meetingId,
-			meetingTask: meetingTask,
-			meetingPerson: meetingPerson
-		});
-
-		newTask.save(function(err, doc){
+	var task = req.body.taskName;
+	var taskAssignee = req.body.taskAssignee;
+	var taskDueDate = req.body.taskDueDate;
+	console.log(req.body);
+	console.log(taskOrder + " " + meetingId + " " + task);
+	Meeting.findOne({'_id': meetingId}, function(e, doc){
+		doc.agenda[taskOrder].tasks.push({ assigneeName: taskAssignee, task: task, taskDueDate: taskDueDate});
+		doc.save(function(err, doc){
 			if(err){
 				console.log('Problem adding task to database')
 				console.log(err);
@@ -532,12 +527,12 @@ exports.addTask = function(req, res){
 				res.redirect('error', {user : req.user});
 			}
 			else{
-				console.log('Added new task successfully');
-				Task.find({}, function(e, docs){console.log(docs);});
+				console.log('Added task successfully');
+				// Meeting.find({}, function(e, docs){console.log(docs);});
 			}
 		});
-	}
-	res.redirect('back');
+		res.redirect('back');
+	})
 };
 
 exports.addMeeting = function(req, res){
@@ -663,11 +658,128 @@ exports.addMeeting = function(req, res){
 
 	//Create ical File
 	var icsFilePath=createiCal(creatorEmail,meetingTitle,icalDate,icalEmail,meetingDate,meetingEndTime,objective,location);
-	mailBody=createAgendaBody(emailList,emailDate,meetingTitle,objective,emailAgenda,location,meetingTime,icsFilePath);
+	mailBody=createAgendaBody(creatorEmail,emailList,emailDate,meetingTitle,objective,emailAgenda,location,meetingTime,icsFilePath);
 	emailFunction(mailBody,res,icsFilePath);
 
 	res.redirect('/dashboard');
 };
+
+exports.postJoinMeeting = function(req, res){
+	
+	var meetingId = req.body.meetingId;
+	if(meetingId == undefined){
+		meetingId = req.session.meetingId;
+	}
+	else{
+		req.session.meetingId = meetingId;
+	}
+	
+	console.log(meetingId);
+	Meeting.findOne({'_id': meetingId}, function(e, doc){
+		console.log(doc);
+
+		var meetingDate = '';
+
+		if(doc.meetingDate != undefined && doc.meetingDate != ''){
+
+			var date = doc.meetingDate;
+			var duration = doc.meetingTime;
+			console.log(duration);
+			var year = date.getFullYear();
+			var month = date.getMonth() + 1;
+			var day = date.getDate();
+			var startHour = date.getHours();
+			var startMinutes = date.getMinutes();
+			if(startHour > 12){
+				startHour = startHour%12;
+			}
+			if(startMinutes < 10){
+				startMinutes = "0" + startMinutes;
+			}
+			var endDate = addMinutes(date, duration);
+			var endHour = endDate.getHours();
+			var endMinutes = endDate.getMinutes();
+			if(endHour > 12){
+				endHour = endHour%12;
+			}
+			if(endMinutes < 10){
+				endMinutes = "0" + endMinutes;
+			}				
+			var timeString = month + "/" + day + "/" + year + " " + startHour + ":" + startMinutes + " - " + endHour + ":" + endMinutes; 
+			meetingDate = timeString;
+			console.log(meetingDate);
+		}
+
+		res.render('loggedIn/meetings/joinMeeting', { 
+			title: 'SEAM',
+			name: req.session.name,
+			meetingDate: meetingDate,
+			meeting: doc,
+			user : req.session.userId,
+			name : req.session.name,
+			past : 0
+		});
+	})	
+}
+
+exports.getJoinMeeting = function(req, res){
+	
+	var meetingId = req.body.meetingId;
+	if(meetingId == undefined){
+		meetingId = req.session.meetingId;
+	}
+	else{
+		req.session.meetingId = meetingId;
+	}
+	
+	console.log(meetingId);
+	Meeting.findOne({'_id': meetingId}, function(e, doc){
+		console.log(doc);
+
+		var meetingDate = '';
+
+		if(doc.meetingDate != undefined && doc.meetingDate != ''){
+
+			var date = doc.meetingDate;
+			var duration = doc.meetingTime;
+			console.log(duration);
+			var year = date.getFullYear();
+			var month = date.getMonth() + 1;
+			var day = date.getDate();
+			var startHour = date.getHours();
+			var startMinutes = date.getMinutes();
+			if(startHour > 12){
+				startHour = startHour%12;
+			}
+			if(startMinutes < 10){
+				startMinutes = "0" + startMinutes;
+			}
+			var endDate = addMinutes(date, duration);
+			var endHour = endDate.getHours();
+			var endMinutes = endDate.getMinutes();
+			if(endHour > 12){
+				endHour = endHour%12;
+			}
+			if(endMinutes < 10){
+				endMinutes = "0" + endMinutes;
+			}				
+			var timeString = month + "/" + day + "/" + year + " " + startHour + ":" + startMinutes + " - " + endHour + ":" + endMinutes; 
+			meetingDate = timeString;
+			console.log(meetingDate);
+		}
+
+		res.render('loggedIn/meetings/joinMeeting', { 
+			title: 'SEAM',
+			name: req.session.name,
+			meetingDate: meetingDate,
+			meeting: doc,
+			user : req.session.userId,
+			name : req.session.name,
+			past : 0
+		});
+	})	
+}
+
 
 function addMinutes(date, minutes){
 	return new Date(date.getTime() + minutes*60000);
@@ -702,9 +814,11 @@ function emailFunction(emailBody,res,icsFilePath){
 
  });
 }
-function createAgendaBody(emailList,emailDate,meetingTitle,objective,emailAgenda,location,meetingTime,icsFilePath){
+function createAgendaBody(emailCreator,emailList,emailDate,meetingTitle,objective,emailAgenda,location,meetingTime,icsFilePath){
 	var mailBody;
 	console.log(emailList+' '+emailDate+' '+meetingTitle+' '+objective+' '+emailAgenda+' '+location+' '+meetingTime+' '+icsFilePath);
+	var htmlEmail=emailHTMLCSS();
+	htmlEmail+="<body leftmargin='0' marginwidth='0' topmargin='0' marginheight='0' offset='0'> <center> <table border='0' cellpadding='0' cellspacing='0' height='100%' width='100%' id='backgroundTable'> <tr> <td align='center' valign='top'> <!-- // Begin Template Preheader \\ --> <table border='0' cellpadding='10' cellspacing='0' width='600' id='templatePreheader'> <tr> <td valign='top' class='preheaderContent'> <!-- // Begin Module: Standard Preheader \ --> <table border='0' cellpadding='10' cellspacing='0' width='100%'> <tr> <td valign='top'> <div mc:edit='std_preheader_content'> SEAM - Tackling Meeting Inefficiency </div> </td> </tr> </table> <!-- // End Module: Standard Preheader \ --> </td> </tr> </table> <!-- // End Template Preheader \\ --> <table border='0' cellpadding='0' cellspacing='0' width='600' id='templateContainer'> <tr> <td align='center' valign='top'> <!-- // Begin Template Header \\ --> <table border='0' cellpadding='0' cellspacing='0' width='600' id='templateHeader'> <tr> <td class='headerContent'> <!-- // Begin Module: Standard Header Image \\ --> <img src='http://www.miketychen.com/images/SEAMBANNER.jpg' style='max-width:600px;' id='headerImage campaign-icon' mc:label='header_image' mc:edit='header_image' mc:allowdesigner mc:allowtext /> <!-- // End Module: Standard Header Image \\ --> </td> </tr> </table> <!-- // End Template Header \\ --> </td> </tr> <tr> <td align='center' valign='top'> <!-- // Begin Template Body \\ --> <table border='0' cellpadding='0' cellspacing='0' width='600' id='templateBody'> <tr> <td valign='top' class='bodyContent'> <!-- // Begin Module: Standard Content \\ --> <table border='0' cellpadding='20' cellspacing='0' width='100%'> <tr> <td valign='top'> <div mc:edit='std_content00'> <div class='mtg-title-box'> <h1 class='h1 text-center'>"+meetingTitle+" Minutes</h1> </div> <h2 class='h2'>Heading 2</h2> <h3 class='h3'>Heading 3</h3> <table> <tr> <td>Cell A</td> <td>Cell B</td> <td>Cell B</td> </tr> </table><h4 class='h4'>Heading 4</h4> <strong>This would be where the notes are </div> </td> </tr> </table> <table border='0' cellpadding='20' cellspacing='0' width='100%'><tr> <td>Michael Chen</td> <td>Suzee Han</td> <td>Josephine Lee</td> </tr><tr> <td>Email out 50 speakers</td> <td>Get pitch this ingredients</td> <td>Get as many students to sign up to SEAM as possible</td> </tr></table><!-- // End Module: Standard Content \\ --> </td> </tr> </table> <!-- // End Template Body \\ --> </td> </tr> </table> <br /> </td> </tr> </table> </center> </body> </html>";
 	//construct the email sending module
 	mailBody = {
 	 	forceEmbeddedImages: true,
@@ -714,18 +828,11 @@ function createAgendaBody(emailList,emailDate,meetingTitle,objective,emailAgenda
 	 	text: 'Date: '+ emailDate +'\n\n'+ 'Objectives: '+objective+'\n\n'+ 'Agenda: \n\n'+ emailAgenda,
 
 	// HTML body
-     	html:"<body>"+
-     	"<p style='text-align:center'><img src='cid:logo@seam'/></p>"+
-        "<p style='text-align:left;'> Date: "+emailDate+"<br/></p>" +
-        "<p style='text-align:left;'> Location: "+location+"<br/></p>" +
-        "<p style='text-align:left;'> Duration: "+meetingTime+" Minutes <br/></p>" +
-        "<p style='text-align:left;'> Objectives: "+objective+"<br/></p>" +
-        "<p style='text-align:left;'> Agenda: <br/>"+emailAgenda+"<br/></p>"+ 
-        "</body>",
+     	html:htmlEmail,
         attachments:[
          // Logo img
 	        {
-             filePath: './public/images/seamlogo-red125.png',
+             filePath: './public/images/favicon-64.png',
              cid: 'logo@seam' // should be as unique as possible
          },
         {
@@ -737,8 +844,10 @@ function createAgendaBody(emailList,emailDate,meetingTitle,objective,emailAgenda
  };
  return mailBody;
 }
-function createMinutesBody(emailDate,meetingTitle,emailList,objective,emailAgenda,emailTime,objective,emailAgenda){
+function createMinutesBody(emailCreator,emailDate,meetingTitle,emailList,objective,emailAgenda,emailTask,emailTime,objective,emailAgenda){
 	var mailBody;
+	var htmlEmail=emailHTMLCSS();
+	htmlEmail+="<body leftmargin='0' marginwidth='0' topmargin='0' marginheight='0' offset='0'> <center> <table border='0' cellpadding='0' cellspacing='0' height='100%' width='100%' id='backgroundTable'> <tr> <td align='center' valign='top'> <!-- // Begin Template Preheader \\ --> <table border='0' cellpadding='10' cellspacing='0' width='600' id='templatePreheader'> <tr> <td valign='top' class='preheaderContent'> <!-- // Begin Module: Standard Preheader \ --> <table border='0' cellpadding='10' cellspacing='0' width='100%'> <tr> <td valign='top'> <div mc:edit='std_preheader_content'> SEAM - Tackling Meeting Inefficiency </div> </td> </tr> </table> <!-- // End Module: Standard Preheader \ --> </td> </tr> </table> <!-- // End Template Preheader \\ --> <table border='0' cellpadding='0' cellspacing='0' width='600' id='templateContainer'> <tr> <td align='center' valign='top'> <!-- // Begin Template Header \\ --> <table border='0' cellpadding='0' cellspacing='0' width='600' id='templateHeader'> <tr> <td class='headerContent'> <!-- // Begin Module: Standard Header Image \\ --> <img src='http://www.miketychen.com/images/SEAMBANNER.jpg' style='max-width:600px;' id='headerImage campaign-icon' mc:label='header_image' mc:edit='header_image' mc:allowdesigner mc:allowtext /> <!-- // End Module: Standard Header Image \\ --> </td> </tr> </table> <!-- // End Template Header \\ --> </td> </tr> <tr> <td align='center' valign='top'> <!-- // Begin Template Body \\ --> <table border='0' cellpadding='0' cellspacing='0' width='600' id='templateBody'> <tr> <td valign='top' class='bodyContent'> <!-- // Begin Module: Standard Content \\ --> <table border='0' cellpadding='20' cellspacing='0' width='100%'> <tr> <td valign='top'> <div mc:edit='std_content00'> <div class='mtg-title-box'> <h1 class='h1 text-center'>"+meetingTitle+" Minutes</h1> </div> <h2 class='h2'>Heading 2</h2> <h3 class='h3'>Heading 3</h3> <table> <tr> <td>Cell A</td> <td>Cell B</td> <td>Cell B</td> <td>Cell B</td> <td>Cell B</td> <td>Cell B</td><td>Cell B</td><td>Cell B</td><td>Cell B</td><td>Cell B</td><td>Cell B</td><td>Cell B</td><td>Cell B</td><td>Cell B</td><td>Cell B</td> </tr> </table> <table> <tr> <td>Cell A</td> <td>Cell B</td> </tr> </table><h4 class='h4'>Heading 4</h4> <strong>Getting started:</strong> Customize your template by clicking on the style editor tabs up above. Set your fonts, colors, and styles. After setting your styling is all done you can click here in this area, delete the text, and start adding your own awesome content! <br /> <br /> After you enter your content, highlight the text you want to style and select the options you set in the style editor in the 'styles' drop down box. Want to <a href='http://www.mailchimp.com/kb/article/im-using-the-style-designer-and-i-cant-get-my-formatting-to-change' target='_blank'>get rid of styling on a bit of text</a>, but having trouble doing it? Just use the 'remove formatting' button to strip the text of any formatting and reset your style. </div> </td> </tr> </table> <!-- // End Module: Standard Content \\ --> </td> </tr> </table> <!-- // End Template Body \\ --> </td> </tr> </table> <br /> </td> </tr> </table> </center> </body> </html>";
 	//construct the email sending module
 			mailBody = {
 			 	forceEmbeddedImages: true,
@@ -748,21 +857,19 @@ function createMinutesBody(emailDate,meetingTitle,emailList,objective,emailAgend
 			 	text: 'Date: '+ emailDate +'\n\n'+ 'Objectives: '+objective+'\n\n'+ 'Agenda: \n\n'+ emailAgenda,
 
 			// HTML body
-		     	html:"<body>"+
-		     	"<p style='text-align:center'><img src='cid:logo@seam'/></p>"+
-		        "<p style='text-align:left;'> Duration: "+emailTime+" Minutes<br/></p>" +
-		        "<p style='text-align:left;'> Objectives: "+objective+"<br/></p>" +
-		        "<p style='text-align:left;'> Agenda: <br/>"+emailAgenda+"<br/></p>"+ 
-		        "</body>",
+		     	html:htmlEmail,
 		        attachments:[
 		         // Logo img
 			        {
-		             filePath: './public/images/seamlogo-red125.png',
 		             cid: 'logo@seam' // should be as unique as possible
 		         }
 		    	]
 		 	};
 	return mailBody;
+}
+function emailHTMLCSS(){
+	var head="<!DOCTYPE html PUBLIC '-//W3C//DTD XHTML 1.0 Transitional//EN' 'http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd'> <html> <head> <meta http-equiv='Content-Type' content='text/html; charset=UTF-8' /> <title>*|MC:SUBJECT|*</title> <style type='text/css'> /* Client-specific Styles */ #outlook a{padding:0;} /* Force Outlook to provide a 'view in browser' button. */ body{width:100% !important;} .ReadMsgBody{width:100%;} .ExternalClass{width:100%;} /* Force Hotmail to display emails at full width */ body{-webkit-text-size-adjust:none;} /* Prevent Webkit platforms from changing default text sizes. */ /* Reset Styles */ body{margin:0; padding:0;} img{border:0; height:auto; line-height:100%; outline:none; text-decoration:none;} table td{border-collapse:collapse;} #backgroundTable{height:100% !important; margin:0; padding:0; width:100% !important;} /* Template Styles */ /* /\/\/\/\/\/\/\/\/\/\ STANDARD STYLING: COMMON PAGE ELEMENTS /\/\/\/\/\/\/\/\/\/\ */ /** * @tab Page * @section background color * @tip Set the background color for your email. You may want to choose one that matches your company's branding. * @theme page */ body, #backgroundTable{ /*@editable*/ background-color:#FAFAFA; } /** * @tab Page * @section email border * @tip Set the border for your email. */ #templateContainer{ /*@editable*/ border:0; } /** * @tab Page * @section heading 1 * @tip Set the styling for all first-level headings in your emails. These should be the largest of your headings. * @style heading 1 */ h1, .h1{ /*@editable*/ color:#202020; display:block; /*@editable*/ font-family:Arial; /*@editable*/ font-size:40px; /*@editable*/ font-weight:bold; /*@editable*/ line-height:100%; margin-top:2%; margin-right:0; margin-bottom:1%; margin-left:0; /*@editable*/ text-align:left; } /** * @tab Page * @section heading 2 * @tip Set the styling for all second-level headings in your emails. * @style heading 2 */ h2, .h2{ /*@editable*/ color:#404040; display:block; /*@editable*/ font-family:Arial; /*@editable*/ font-size:18px; /*@editable*/ font-weight:bold; /*@editable*/ line-height:100%; margin-top:2%; margin-right:0; margin-bottom:1%; margin-left:0; /*@editable*/ text-align:left; } /** * @tab Page * @section heading 3 * @tip Set the styling for all third-level headings in your emails. * @style heading 3 */ h3, .h3{ /*@editable*/ color:#606060; display:block; /*@editable*/ font-family:Arial; /*@editable*/ font-size:16px; /*@editable*/ font-weight:bold; /*@editable*/ line-height:100%; margin-top:2%; margin-right:0; margin-bottom:1%; margin-left:0; /*@editable*/ text-align:left; } /** * @tab Page * @section heading 4 * @tip Set the styling for all fourth-level headings in your emails. These should be the smallest of your headings. * @style heading 4 */ h4, .h4{ /*@editable*/ color:#808080; display:block; /*@editable*/ font-family:Arial; /*@editable*/ font-size:14px; /*@editable*/ font-weight:bold; /*@editable*/ line-height:100%; margin-top:2%; margin-right:0; margin-bottom:1%; margin-left:0; /*@editable*/ text-align:left; } /* /\/\/\/\/\/\/\/\/\/\ STANDARD STYLING: PREHEADER /\/\/\/\/\/\/\/\/\/\ */ /** * @tab Header * @section preheader style * @tip Set the background color for your email's preheader area. * @theme page */ #templatePreheader{ /*@editable*/ background-color:#FAFAFA; } /** * @tab Header * @section preheader text * @tip Set the styling for your email's preheader text. Choose a size and color that is easy to read. */ .preheaderContent div{ /*@editable*/ color:#707070; /*@editable*/ font-family:Arial; /*@editable*/ font-size:10px; /*@editable*/ line-height:100%; /*@editable*/ text-align:left; } /** * @tab Header * @section preheader link * @tip Set the styling for your email's preheader links. Choose a color that helps them stand out from your text. */ .preheaderContent div a:link, .preheaderContent div a:visited, /* Yahoo! Mail Override */ .preheaderContent div a .yshortcuts /* Yahoo! Mail Override */{ /*@editable*/ color:#336699; /*@editable*/ font-weight:normal; /*@editable*/ text-decoration:underline; } /** * @tab Header * @section social bar style * @tip Set the background color and border for your email's footer social bar. */ #social div{ /*@editable*/ text-align:right; } /* /\/\/\/\/\/\/\/\/\/\ STANDARD STYLING: HEADER /\/\/\/\/\/\/\/\/\/\ */ /** * @tab Header * @section header style * @tip Set the background color and border for your email's header area. * @theme header */ #templateHeader{ /*@editable*/ background-color:#FFFFFF; /*@editable*/ border-bottom:5px solid #505050; } /** * @tab Header * @section left header text * @tip Set the styling for your email's header text. Choose a size and color that is easy to read. */ .leftHeaderContent div{ /*@editable*/ color:#202020; /*@editable*/ font-family:Arial; /*@editable*/ font-size:32px; /*@editable*/ font-weight:bold; /*@editable*/ line-height:100%; /*@editable*/ text-align:right; /*@editable*/ vertical-align:middle; } /** * @tab Header * @section right header text * @tip Set the styling for your email's header text. Choose a size and color that is easy to read. */ .rightHeaderContent div{ /*@editable*/ color:#202020; /*@editable*/ font-family:Arial; /*@editable*/ font-size:32px; /*@editable*/ font-weight:bold; /*@editable*/ line-height:100%; /*@editable*/ text-align:left; /*@editable*/ vertical-align:middle; } /** * @tab Header * @section header link * @tip Set the styling for your email's header links. Choose a color that helps them stand out from your text. */ .leftHeaderContent div a:link, .leftHeaderContent div a:visited, .rightHeaderContent div a:link, .rightHeaderContent div a:visited{ /*@editable*/ color:#336699; /*@editable*/ font-weight:normal; /*@editable*/ text-decoration:underline; } #headerImage{ height:auto; max-width:180px !important; } /* /\/\/\/\/\/\/\/\/\/\ STANDARD STYLING: MAIN BODY /\/\/\/\/\/\/\/\/\/\ */ /** * @tab Body * @section body style * @tip Set the background color for your email's body area. */ #templateContainer, .bodyContent{ /*@editable*/ background-color:#FDFDFD; } /** * @tab Body * @section body text * @tip Set the styling for your email's main content text. Choose a size and color that is easy to read. * @theme main */ .bodyContent div{ /*@editable*/ color:#505050; /*@editable*/ font-family:Arial; /*@editable*/ font-size:14px; /*@editable*/ line-height:150%; /*@editable*/ text-align:left; } /** * @tab Body * @section body link * @tip Set the styling for your email's main content links. Choose a color that helps them stand out from your text. */ .bodyContent div a:link, .bodyContent div a:visited, /* Yahoo! Mail Override */ .bodyContent div a .yshortcuts /* Yahoo! Mail Override */{ /*@editable*/ color:#336699; /*@editable*/ font-weight:normal; /*@editable*/ text-decoration:underline; } .bodyContent img{ display:inline; height:auto; } /* /\/\/\/\/\/\/\/\/\/\ STANDARD STYLING: FOOTER /\/\/\/\/\/\/\/\/\/\ */ /** * @tab Footer * @section footer style * @tip Set the background color and top border for your email's footer area. * @theme footer */ #templateFooter{ /*@editable*/ background-color:#FAFAFA; /*@editable*/ border-top:3px solid #909090; } /** * @tab Footer * @section footer text * @tip Set the styling for your email's footer text. Choose a size and color that is easy to read. * @theme footer */ .footerContent div{ /*@editable*/ color:#707070; /*@editable*/ font-family:Arial; /*@editable*/ font-size:11px; /*@editable*/ line-height:125%; /*@editable*/ text-align:left; } /** * @tab Footer * @section footer link * @tip Set the styling for your email's footer links. Choose a color that helps them stand out from your text. */ .footerContent div a:link, .footerContent div a:visited, /* Yahoo! Mail Override */ .footerContent div a .yshortcuts /* Yahoo! Mail Override */{ /*@editable*/ color:#336699; /*@editable*/ font-weight:normal; /*@editable*/ text-decoration:underline; } .footerContent img{ display:inline; } /** * @tab Footer * @section social bar style * @tip Set the background color and border for your email's footer social bar. * @theme footer */ #social{ /*@editable*/ background-color:#FFFFFF; /*@editable*/ border:0; } /** * @tab Footer * @section social bar style * @tip Set the background color and border for your email's footer social bar. */ #social div{ /*@editable*/ text-align:left; } /** * @tab Footer * @section utility bar style * @tip Set the background color and border for your email's footer utility bar. * @theme footer */ #utility{ /*@editable*/ background-color:#FAFAFA; /*@editable*/ border-top:0; } /** * @tab Footer * @section utility bar style * @tip Set the background color and border for your email's footer utility bar. */ #utility div{ /*@editable*/ text-align:left; } #monkeyRewards img{ max-width:170px !important; } </style> </head>";
+	return head;
 }
 //Creates ics File and returns File Name
 function createiCal(userId,meetingTitle,icalDate,icalEmail,icalSTime,icalETime,objective,location){
@@ -813,4 +920,29 @@ function getCreatorEmail(req,userId){
 	}else{
 		return req.session.email;
 	}
+}
+
+function getTaskList(meetingData){	
+	var agendas = meetingData.agenda;
+	var taskLists = {};
+	for(var i = 0; i < agendas.length; i++){
+		var tasks = agendas[i].tasks;
+		//console.log(tasks);
+		for(var j = 0; j < tasks.length; j++){
+			var task = tasks[j];
+			var assignees = task.assigneeName.split(', ');
+			for(var k = 0; k < assignees.length; k++){
+				if(assignees[k] != ""){
+					if(taskLists[assignees[k]] == undefined){
+						taskLists[assignees[k]] = new Array();
+						taskLists[assignees[k]].push({"task" : task.task, "dueDate": task.taskDueDate});
+					}
+					else{
+						taskLists[assignees[k]].push({"task" : task.task, "dueDate": task.taskDueDate});
+					}
+				}
+			}
+		}
+	}
+	return taskLists;
 }

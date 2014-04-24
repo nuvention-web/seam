@@ -1,7 +1,5 @@
 //FUNCTIONS FOR PROGRESS BAR DURING MEETING
-$(document).ready(function(){ 
-
-
+$(document).ready(function(){
 });
 
 function changeAttendance(ID){
