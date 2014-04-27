@@ -1,9 +1,3 @@
-/* Mobile Layout: 480px and below. */
-/* Tablet Layout: 481px to 768px. Inherits styles from: Mobile Layout. */
-@media only screen and (min-width: 481px) {
-}
-/* Desktop Layout: 769px to a max of 1232px.  Inherits styles from: Mobile Layout and Tablet Layout. */
-@media only screen and (min-width: 769px) {
 /* ========================================================
    0A.BASIC_STYLES-DESKTOP
 =========================================================== */
@@ -29,7 +23,7 @@ html, hmtl a{
 	-ms-text-size-adjust: 100%;
 }
 body{
-	background-color:transparent;
+	background-color:#3df;
 	color:#7F8289;
 	font-weight:300;
 	font-family: 'Lato', sans-serif;
@@ -41,7 +35,7 @@ body{
 =========================================================== */
 h1,h2,h3,h4,h5,h6,p,a,input, textarea,i, span{
 	font-family: 'Lato', sans-serif;
-	font-size:12px;
+	font-size:10px;
 	font-weight: 300; 
 	text-align:center;
 	/*color:#FFF;*/
@@ -49,37 +43,31 @@ h1,h2,h3,h4,h5,h6,p,a,input, textarea,i, span{
 	text-decoration: none;
 }
 h1{
-	font-size:26px;
-	line-height: 28px;
+	font-size:18px;
 }
 h2{
-	font-size:24px;
-	line-height: 26px;
+	font-size:16px;
 }
 h3{
-	font-size:20px;
-	line-height: 22px;
+	font-size:14px;
 }
 h4{
-	font-size:16px;
-	line-height: 18px;
+	font-size:12px;
 }
 h5{
-	font-size:14px;
-	line-height: 16px;
+	font-size:11px;
 }
 h6{
-	font-size:12px;
-	line-height: 14px;
+	font-size:10px;
 }
 p{
 	font-size:12px;
 }
 i{
-	font-size:20px;
+	font-size:8px;
 }
 a{
-	font-size:12px;
+	font-size:7px;
 }
 a:hover{
 	color:rgb(204,51,51);
@@ -140,25 +128,25 @@ textarea{
 	line-height: 12px;
 }
 .line-height-15x{
-	line-height: 15px !important;
+	line-height: 14px !important;
 }
 .line-height-30x{
-	line-height: 30px !important;
+	line-height: 18px !important;
 }
 .line-height-60x{
-	line-height: 60px !important;
+	line-height: 20px !important;
 }
 .mobile-hidden{
-	display:inline;
+	display: none;
 }
 .mobile-margin-top-150x{
-	margin-top: 0px;
+	margin-top: 150px;
 }
 .mobile-margin-top-40x{
-	margin-top:  0px;
+	margin-top: 40px;
 }
 .desk-hidden{
-	display: none;
+	display: inline;
 }
 /* ========================================================
    1A.FONTS-DESKTOP
@@ -265,10 +253,10 @@ textarea{
 	font-weight: 700;
 }
 .text-left{
-	text-align: left;
+	text-align: center;
 }
 .text-right{
-	text-align: right;
+	text-align: center;
 }
 .text-center{
 	text-align: center;
@@ -289,31 +277,28 @@ textarea{
 	font-style: italic;
 }
 .text-big-35x{
-	font-size:35px;
-	line-height: 20px;
+	font-size:25px;
 }
 .text-big-30x{
-	font-size:30px;
-	line-height: 20px;
+	font-size:20px;
 }
 .text-50x{
-	font-size:50px;
+	font-size:30px;
 }
 .text-h2{
-	font-size:24px;
-}
-.text-h3{
-	font-size:20px;
-	line-height: 22px;
-}
-.text-h4{
 	font-size:16px;
 }
-.text-h5{
+.text-h3{
 	font-size:14px;
 }
+.text-h4{
+	font-size:12px;
+}
+.text-h5{
+	font-size:11px;
+}
 .text-big{
-	font-size: 36px;
+	font-size: 20px;
 }
 .text-bigger{
 	font-size: 40px;
@@ -514,9 +499,11 @@ textarea{
 }
 .float-left{
 	float: left;
+	margin: auto;
 }
 .float-right{
-	float: right;
+	float:none;
+	margin: auto;
 }
 .overflow-scroll-y{
 	overflow-y: scroll;
@@ -1100,11 +1087,10 @@ textarea{
 }
 .navbar{
 	z-index: 59;
-	box-shadow: 1px solid rgb(0,0,0) !important;
+	background-color: #232323;
 }
 .navbar .nav > li > a {
     color:  #FFF;
-    background-color: none;
 }
 .navbar .nav > li > a:hover {
    color:  #FFF;
@@ -1114,7 +1100,6 @@ textarea{
 	color:  #FFF;
 }
 #sidebar .nav > li {
-	background-color: none;
 	border-left:5px solid rgb(51,54,63);
 }
 #sidebar .nav > li:hover{
