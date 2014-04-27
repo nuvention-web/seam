@@ -349,6 +349,7 @@ exports.endMeeting = function(req, res){
 			var meetingDay = meetingDate.getDate(); 
 			emailDate= meetingMonth +"/"+meetingDay+"/"+meetingYear ;
 			emailTime=doc.meetingTime;
+			var taskLists= getTaskList(doc);
 			if(typeof agenda == 'string'){
 				emailAgenda+="<p style='text-align:left; text-transform:capitalize'> 1: "+agenda.topic+"<br/></p>";
 			}
@@ -382,7 +383,7 @@ exports.endMeeting = function(req, res){
 					emailList+=meetingAttendees[i].attendeeEmail+',';
 				}
 			}
-			mailBody=createMinutesBody(creatorEmail,emailDate,meetingTitle,emailList,objective,emailAgenda,emailTask,emailTime,objective,emailAgenda);
+			mailBody=createMinutesBody(creatorEmail,emailDate,meetingTitle,emailList,objective,emailAgenda,emailTask,emailTime,objective,emailAgenda,taskLists);
 			emailFunction(mailBody,res);
 
 		});
@@ -818,7 +819,6 @@ function createAgendaBody(emailCreator,emailList,emailDate,meetingTitle,objectiv
 	var mailBody;
 	console.log(emailList+' '+emailDate+' '+meetingTitle+' '+objective+' '+emailAgenda+' '+location+' '+meetingTime+' '+icsFilePath);
 	var htmlEmail=emailHTMLCSS();
-	htmlEmail+="<body leftmargin='0' marginwidth='0' topmargin='0' marginheight='0' offset='0'> <center> <table border='0' cellpadding='0' cellspacing='0' height='100%' width='100%' id='backgroundTable'> <tr> <td align='center' valign='top'> <!-- // Begin Template Preheader \\ --> <table border='0' cellpadding='10' cellspacing='0' width='600' id='templatePreheader'> <tr> <td valign='top' class='preheaderContent'> <!-- // Begin Module: Standard Preheader \ --> <table border='0' cellpadding='10' cellspacing='0' width='100%'> <tr> <td valign='top'> <div mc:edit='std_preheader_content'> SEAM - Tackling Meeting Inefficiency </div> </td> </tr> </table> <!-- // End Module: Standard Preheader \ --> </td> </tr> </table> <!-- // End Template Preheader \\ --> <table border='0' cellpadding='0' cellspacing='0' width='600' id='templateContainer'> <tr> <td align='center' valign='top'> <!-- // Begin Template Header \\ --> <table border='0' cellpadding='0' cellspacing='0' width='600' id='templateHeader'> <tr> <td class='headerContent'> <!-- // Begin Module: Standard Header Image \\ --> <img src='http://www.miketychen.com/images/SEAMBANNER.jpg' style='max-width:600px;' id='headerImage campaign-icon' mc:label='header_image' mc:edit='header_image' mc:allowdesigner mc:allowtext /> <!-- // End Module: Standard Header Image \\ --> </td> </tr> </table> <!-- // End Template Header \\ --> </td> </tr> <tr> <td align='center' valign='top'> <!-- // Begin Template Body \\ --> <table border='0' cellpadding='0' cellspacing='0' width='600' id='templateBody'> <tr> <td valign='top' class='bodyContent'> <!-- // Begin Module: Standard Content \\ --> <table border='0' cellpadding='20' cellspacing='0' width='100%'> <tr> <td valign='top'> <div mc:edit='std_content00'> <div class='mtg-title-box'> <h1 class='h1 text-center'>"+meetingTitle+" Minutes</h1> </div> <h2 class='h2'>Heading 2</h2> <h3 class='h3'>Heading 3</h3> <table> <tr> <td>Cell A</td> <td>Cell B</td> <td>Cell B</td> </tr> </table><h4 class='h4'>Heading 4</h4> <strong>This would be where the notes are </div> </td> </tr> </table> <table border='0' cellpadding='20' cellspacing='0' width='100%'><tr> <td>Michael Chen</td> <td>Suzee Han</td> <td>Josephine Lee</td> </tr><tr> <td>Email out 50 speakers</td> <td>Get pitch this ingredients</td> <td>Get as many students to sign up to SEAM as possible</td> </tr></table><!-- // End Module: Standard Content \\ --> </td> </tr> </table> <!-- // End Template Body \\ --> </td> </tr> </table> <br /> </td> </tr> </table> </center> </body> </html>";
 	//construct the email sending module
 	mailBody = {
 	 	forceEmbeddedImages: true,
@@ -828,7 +828,15 @@ function createAgendaBody(emailCreator,emailList,emailDate,meetingTitle,objectiv
 	 	text: 'Date: '+ emailDate +'\n\n'+ 'Objectives: '+objective+'\n\n'+ 'Agenda: \n\n'+ emailAgenda,
 
 	// HTML body
-     	html:htmlEmail,
+     	html:"<body>"+
+     	"<p style='text-align:center; margin:0 auto;  width:50px; height:50px;'><img src='cid:logo@seam'/></p>"+     	
+        "<p style='text-align:left;'> Creator: "+emailCreator+"<br/></p>" +
+        "<p style='text-align:left;'> Date: "+emailDate+"<br/></p>" +
+        "<p style='text-align:left;'> Location: "+location+"<br/></p>" +
+        "<p style='text-align:left;'> Duration: "+meetingTime+" Minutes <br/></p>" +
+        "<p style='text-align:left;'> Objectives: "+objective+"<br/></p>" +
+        "<p style='text-align:left;'> Agenda: <br/>"+emailAgenda+"<br/></p>"+ 
+        "</body>",
         attachments:[
          // Logo img
 	        {
@@ -844,10 +852,26 @@ function createAgendaBody(emailCreator,emailList,emailDate,meetingTitle,objectiv
  };
  return mailBody;
 }
-function createMinutesBody(emailCreator,emailDate,meetingTitle,emailList,objective,emailAgenda,emailTask,emailTime,objective,emailAgenda){
+function createMinutesBody(emailCreator,emailDate,meetingTitle,emailList,objective,emailAgenda,emailTask,emailTime,objective,emailAgenda,taskLists){
 	var mailBody;
 	var htmlEmail=emailHTMLCSS();
-	htmlEmail+="<body leftmargin='0' marginwidth='0' topmargin='0' marginheight='0' offset='0'> <center> <table border='0' cellpadding='0' cellspacing='0' height='100%' width='100%' id='backgroundTable'> <tr> <td align='center' valign='top'> <!-- // Begin Template Preheader \\ --> <table border='0' cellpadding='10' cellspacing='0' width='600' id='templatePreheader'> <tr> <td valign='top' class='preheaderContent'> <!-- // Begin Module: Standard Preheader \ --> <table border='0' cellpadding='10' cellspacing='0' width='100%'> <tr> <td valign='top'> <div mc:edit='std_preheader_content'> SEAM - Tackling Meeting Inefficiency </div> </td> </tr> </table> <!-- // End Module: Standard Preheader \ --> </td> </tr> </table> <!-- // End Template Preheader \\ --> <table border='0' cellpadding='0' cellspacing='0' width='600' id='templateContainer'> <tr> <td align='center' valign='top'> <!-- // Begin Template Header \\ --> <table border='0' cellpadding='0' cellspacing='0' width='600' id='templateHeader'> <tr> <td class='headerContent'> <!-- // Begin Module: Standard Header Image \\ --> <img src='http://www.miketychen.com/images/SEAMBANNER.jpg' style='max-width:600px;' id='headerImage campaign-icon' mc:label='header_image' mc:edit='header_image' mc:allowdesigner mc:allowtext /> <!-- // End Module: Standard Header Image \\ --> </td> </tr> </table> <!-- // End Template Header \\ --> </td> </tr> <tr> <td align='center' valign='top'> <!-- // Begin Template Body \\ --> <table border='0' cellpadding='0' cellspacing='0' width='600' id='templateBody'> <tr> <td valign='top' class='bodyContent'> <!-- // Begin Module: Standard Content \\ --> <table border='0' cellpadding='20' cellspacing='0' width='100%'> <tr> <td valign='top'> <div mc:edit='std_content00'> <div class='mtg-title-box'> <h1 class='h1 text-center'>"+meetingTitle+" Minutes</h1> </div> <h2 class='h2'>Heading 2</h2> <h3 class='h3'>Heading 3</h3> <table> <tr> <td>Cell A</td> <td>Cell B</td> <td>Cell B</td> <td>Cell B</td> <td>Cell B</td> <td>Cell B</td><td>Cell B</td><td>Cell B</td><td>Cell B</td><td>Cell B</td><td>Cell B</td><td>Cell B</td><td>Cell B</td><td>Cell B</td><td>Cell B</td> </tr> </table> <table> <tr> <td>Cell A</td> <td>Cell B</td> </tr> </table><h4 class='h4'>Heading 4</h4> <strong>Getting started:</strong> Customize your template by clicking on the style editor tabs up above. Set your fonts, colors, and styles. After setting your styling is all done you can click here in this area, delete the text, and start adding your own awesome content! <br /> <br /> After you enter your content, highlight the text you want to style and select the options you set in the style editor in the 'styles' drop down box. Want to <a href='http://www.mailchimp.com/kb/article/im-using-the-style-designer-and-i-cant-get-my-formatting-to-change' target='_blank'>get rid of styling on a bit of text</a>, but having trouble doing it? Just use the 'remove formatting' button to strip the text of any formatting and reset your style. </div> </td> </tr> </table> <!-- // End Module: Standard Content \\ --> </td> </tr> </table> <!-- // End Template Body \\ --> </td> </tr> </table> <br /> </td> </tr> </table> </center> </body> </html>";
+	htmlEmail+="<body leftmargin='0' marginwidth='0' topmargin='0' marginheight='0' offset='0'> <center> <table border='0' cellpadding='0' cellspacing='0' height='100%' width='100%' id='backgroundTable'> <tr> <td align='center' valign='top'> <!-- // Begin Template Preheader \\ --> <table border='0' cellpadding='10' cellspacing='0' width='600' id='templatePreheader'> <tr> <td valign='top' class='preheaderContent'> <!-- // Begin Module: Standard Preheader \ --> <table border='0' cellpadding='10' cellspacing='0' width='100%'> <tr> <td valign='top'> <div mc:edit='std_preheader_content'> SEAM - Tackling Meeting Inefficiency </div> </td> </tr> </table> <!-- // End Module: Standard Preheader \ --> </td> </tr> </table> <!-- // End Template Preheader \\ --> <table border='0' cellpadding='0' cellspacing='0' width='600' id='templateContainer'> <tr> <td align='center' valign='top'> <!-- // Begin Template Header \\ --> <table border='0' cellpadding='0' cellspacing='0' width='600' id='templateHeader'> <tr> <td class='headerContent'> <!-- // Begin Module: Standard Header Image \\ --> <img src='http://www.miketychen.com/images/SEAMBANNER.jpg' style='max-width:600px;' id='headerImage campaign-icon' mc:label='header_image' mc:edit='header_image' mc:allowdesigner mc:allowtext /> <!-- // End Module: Standard Header Image \\ --> </td> </tr> </table> <!-- // End Template Header \\ --> </td> </tr> <tr> <td align='center' valign='top'> <!-- // Begin Template Body \\ --> <table border='0' cellpadding='0' cellspacing='0' width='600' id='templateBody'> <tr> <td valign='top' class='bodyContent'> <!-- // Begin Module: Standard Content \\ --> <table border='0' cellpadding='20' cellspacing='0' width='100%'> <tr> <td valign='top'> <div mc:edit='std_content00'> <div class='mtg-title-box'> <h1 class='h1 text-center'>"+meetingTitle+" Minutes</h1> </div>";
+
+	htmlEmail+="<h3 class='h3'>Tasks</h3><table>";
+	for (var taskAssignee in taskLists) {
+		if (taskLists.hasOwnProperty(taskAssignee)) {
+
+			htmlEmail+="<tr> <td>"+taskAssignee+"</td>";
+			tasks = taskLists[taskAssignee];
+			for (var i = 0; i < tasks.length; i++){
+				htmlEmail+="<td>"+tasks[i].task+"("+tasks[i].dueDate+")</td>";   
+			}
+			htmlEmail+="</tr>";
+		}
+	}
+	htmlEmail+="</table>";
+	htmlEmail+="<p style='text-align:left;'> Objectives: "+objective+"<br/></p>" +
+		        "<p style='text-align:left;'> Agenda: <br/>"+emailAgenda+"<br/></p></center> </body> </html>";
 	//construct the email sending module
 			mailBody = {
 			 	forceEmbeddedImages: true,
