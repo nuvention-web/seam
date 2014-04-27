@@ -87,12 +87,21 @@ block content
 									div#allNotes
 										each note, j in agenda.notes
 											if(j==0)
-												h5.text-black.text-left.text-italic.margin-bottom-1p #{note.notes}
-											else	
-												h5.text-black.text-left #{note.notes}
+												div
+													h5.text-black.text-left.text-italic.margin-bottom-1p(value='#{j+1}') #{note.notes}
+											else
+												div
+													h5#oneNote.text-black.text-left(value='#{j+1}') #{note.notes}
+													form(id='#{note._id}', name='noteInput#{j+1}', action='', method='POST', style='display: none;')
+														input(type='hidden', name='noteId', value='#{note._id}')
+														input#editNote(type='text', name='editNote', value='#{note.notes}')
 									div#allTasks
 										each task, i in agenda.tasks
-											h5.text-black.text-left @#{task.assigneeName}#{task.task}
+											div
+												h5#oneTask.text-black.text-left(value='#{i+1}') @#{task.assigneeName}#{task.task}
+												form(task='#{task._id}', name='taskInput#{i+1}', action='', method='POST', style='display: none;')
+													input(type='hidden', name='taskId', value='#{task._id}')
+													input#editTask(type='text', name='editTask', value='#{task.tasks}')
 								form(role='form', method='POST', name='TNForm', action='/dashboard/meetings/start/addNote', value='#{i}', id='TNForm#{i}')
 									input(type='hidden', name='noteOrder', value='#{i}')
 									div.container-95p.margin-top-2p
