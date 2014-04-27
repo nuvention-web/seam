@@ -137,7 +137,7 @@ $(document).ready(function(){
 				}
 				else{
 					if(notesList[value] == undefined){
-						allTasks.innerHTML += '<h5 class="text-left text-blue margin-right-2p"> @ ' + taskAssignee + ' '+task + ' </h5>';
+						allTasks.innerHTML += '<h5 class="text-left text-blue margin-right-2p"> <span class="text-h5 text-normal text-blue">@ ' + taskAssignee + '</span> ----- '+task + ' </h5>';
 						notesList.scrollTop = notesList.scrollHeight;
 						$('#taskAssignee' + value)[0].value = '';
 						$('#taskName' + value)[0].value = '';
