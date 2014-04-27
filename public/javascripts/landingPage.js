@@ -3,7 +3,7 @@
     //Navbar Color Change Function
     var scroll = 0;            
     $(document).scroll(function() { 
-        var changePos=$("#home-page").height()-100;
+        var changePos=$("#home-page").height()-1000;
         scroll = $(this).scrollTop();
         if(scroll > changePos) {
             var progress= $('.progress').css('width');
