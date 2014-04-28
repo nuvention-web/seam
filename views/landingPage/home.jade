@@ -141,8 +141,7 @@ block content
 		.container-95p.margin-center
 			.row
 				.col-md-12
-					h1.text-big-35x.text-white.text-big-35x.text-center Learn more about your meetings.
-					h1.text-big-30x.text-white.text-center Use SEAM to find out:
+					h1.text-big-35x.text-white.text-big-35x.text-center Learn more to improve your meetings.
 			.row.margin-top-3p
 				.col-md-3
 					.container-50p.bg-white-o5.border-round-5x.padding-left-2x.float-right
@@ -170,7 +169,7 @@ block content
 						| what meeting discussions attendees found 
 						span.text-white.text-h2.text-normal efficient
 	div#team-page.page.padding-top-3p.bg-white.padding-bottom-3p
-		.container-95p.margin-center
+		.container-95p.margin-center.mobile-hidden
 			.row
 				.col-md-12
 					h1.text-big-35x.text-center The minds behind SEAM.
@@ -214,19 +213,19 @@ block content
 			.row
 				.col-md-12
 					h1.text-big-35x.text-center Contact us.
-		form.form-horizontal(action='/contact', method='post', role='form')
-			.form-group.margin-top-3p
-				.col-md-4.col-md-offset-4
-					input.text-h4.text-left.form-control.outline-gray.form-square(name='names', type='text', placeholder='Name', required)
-			.form-group
-				.col-md-4.col-md-offset-4
-					input.text-h4.text-left.form-control.outline-gray.form-square(name='email', type='text', placeholder='Email', required)
-			.form-group
-				.col-md-4.col-md-offset-4
-					textarea.text-h4.text-left.form-control.outline-gray(name='comments', rows='5', placeholder='Message', required)
-			.form-group
-				.col-md-2.col-md-offset-5.margin-top-3p
-					button.btn.btn-primary.bg-pink-orange-hover.btn-lg.btn-block.border-round-5x(type='submit') Send Message
+			form.form-horizontal(action='/contact', method='post', role='form')
+				.form-group.margin-top-3p
+					.col-md-4.col-md-offset-4
+						input.text-h4.text-left.form-control.outline-gray.form-square(name='names', type='text', placeholder='Name', required)
+				.form-group
+					.col-md-4.col-md-offset-4
+						input.text-h4.text-left.form-control.outline-gray.form-square(name='email', type='text', placeholder='Email', required)
+				.form-group
+					.col-md-4.col-md-offset-4
+						textarea.text-h4.text-left.form-control.outline-gray(name='comments', rows='5', placeholder='Message', required)
+				.form-group
+					.col-md-2.col-md-offset-5.margin-top-3p
+						button.btn.btn-primary.bg-pink-orange-hover.btn-lg.btn-block.border-round-5x(type='submit') Send Message
 	div#footer-page.page.bg-drk-gray.padding-top-1p.padding-bottom-1p
 		.row
 			.col-md-12.margin-top-1p
