@@ -97,7 +97,6 @@ socket.on("connection", function (client) {
 			meeting.addPerson(client.id); //also add the person to the room object
 			people[client.id].meeting = meetingId; //update the room key with the ID of the created room
 			people[client.id].owns = meetingId;
- 			socket.sockets.emit("meetingStarted", meetingId);
  			socket.emit("update", "you have started the meeting")
  			if(queue[meetingId] != undefined){
  				queueList = queue[meetingId];
@@ -106,7 +105,9 @@ socket.on("connection", function (client) {
  					meeting.addPerson(queueList[i].id);
  				}
  			}
- 			socket.sockets.in(client.room).emit("joinSuccess", user.name + " has started the meeting.");
+ 			var user = people[client.id];
+ 			delete queue[meetingId];
+ 			socket.sockets.in(client.room).emit("meetingStarted", user.name + " has started the meeting.", meetingId);
 		} else {
 			socket.sockets.emit("update", "you have already started meeting");
 		}
@@ -144,7 +145,7 @@ socket.on("connection", function (client) {
 					client.join(client.room); //add person to the room
 					meeting.addPerson(client.id); //also add the person to the room object
 					var user = people[client.id];
-					client.emit("joinSuccess", "Successfully joined the meeting");
+					client.emit("meetingStarted", "Successfully joined the meeting", meetingId);
 					socket.sockets.in(client.room).emit("update", user.name + " has connected to meeting.");
 				}
 			}
@@ -161,7 +162,6 @@ socket.on("connection", function (client) {
 			if (client.id === meeting.owner) {// only owner can finish meeting
 				client.room = meeting.meetingId;
 				var user = people[client.id];
-				client.broadcast.to(client.room).emit("finish", "The owner (" + user.name + ") finished the meeting.");
 				var i = 0;
 				while(i < clients.length) {
 			  		if(clients[i].id == meeting.people[i]) {
@@ -169,6 +169,7 @@ socket.on("connection", function (client) {
 			  		}
 			  		i++;
 				}
+				client.broadcast.to(client.room).emit("finish", "The owner (" + user.name + ") finished the meeting.");
 				delete meetingsList[meetingId];
 				people[meeting.owner].owns = null; //reset the owns object to null so new meeting can be started
 				socket.sockets.emit("roomList", {meetingsList: meetingsList});
