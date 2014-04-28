@@ -182,11 +182,13 @@ socket.on("connection", function (client) {
 //Landing Page
 app.get('/', landingPage.home);
 app.get('/home', landingPage.home);
+app.get('/about', landingPage.about);
+app.get('/contact', landingPage.contact);
 app.get('/login', landingPage.login);
 app.get('/survey', landingPage.survey);
 app.post('/addSurvey', landingPage.addSurvey);
 app.post('/addEmail', landingPage.addEmail);
-app.post('/contact', landingPage.contact);
+app.post('/contactForm', landingPage.contactForm);
 //Dashboard
 app.get('/dashboard', user.isLoggedIn, dashboard.dashboard);
 // app.post('/dashboard', user.isLoggedIn, dashboard.setWelcome);
