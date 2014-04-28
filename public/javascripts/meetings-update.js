@@ -162,20 +162,20 @@ $(document).ready(function(){
 		socket.emit("finishMeeting", name, userId);
 	});
 
-	$('#oneNote').click(function(){
-		var value = $(this).attr('value');
-		console.log(value);
-		var input = "noteInput" + value;
-		$(this).hide();
-		$('form[name=' + input + ']').show();
-	});
+	// $('#oneNote').click(function(){
+	// 	var value = $(this).attr('value');
+	// 	console.log(value);
+	// 	var input = "noteInput" + value;
+	// 	$(this).hide();
+	// 	$('form[name=' + input + ']').show();
+	// });
 
-	$('#oneTask').click(function(){
-		var value = $(this).attr('value');
-		var input = "taskInput" + value;
-		$(this).hide();
-		$('form[name=' + input + ']').show();
-	});
+	// $('#oneTask').click(function(){
+	// 	var value = $(this).attr('value');
+	// 	var input = "taskInput" + value;
+	// 	$(this).hide();
+	// 	$('form[name=' + input + ']').show();
+	// });
 });
 				
 //FUNCTION: ADD NOTE TO MEETING INTERFACE
