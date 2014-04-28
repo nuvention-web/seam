@@ -2,33 +2,98 @@ extends layout
 
 block content
 	div#home-page.page.full-page
-		.container-95p.margin-center.margin-bottom-10p
+		.container-95p.margin-center.margin-bottom-10p.mobile-margin-top-150x
 			.row.margin-top-10p
-				.col-md-6
+				.col-md-6.text-shadow
 					h1.text-big-35x.line-height-30x.text-white.text-bold.text-left
 						| Say 
 						span.text-big-35x.text-bold.text-left.text-ltblue hello 
 						| to the newest
 					h1.text-big-35x.line-height-30x.text-white.text-bold.text-left member of your meeting
-				.col-md-6.margin-top-3p
+				.col-md-6.margin-top-1p.mobile-margin-top-40x
 					h1.line-height-15x.text-big-25x.text-white.text-bold.text-right Bad meetings suck.
 					h1.line-height-15x.text-big-25x.text-white.text-bold.text-right We feel your pain.
 			.row
-				.col-md-12
-					h1.line-height-12x.text-white.text-normal.text-right That's why we created SEAM.
-					h1.line-height-12x.text-white.text-normal.text-right From meeting prep to run to follow-up,
-					h1.line-height-12x.text-white.text-normal.text-right SEAM covers all the bases in helping you
-					h1.line-height-12x.text-white.text-normal.text-right hold great meetings. Great meetings
-					h1.line-height-12x.text-white.text-normal.text-right down on future meetings. And we believe 
-					h1.line-height-12x.text-white.text-normal.text-right the fewer meetings the better.
-			.row
-				.col-md-12
-					btn.float-right.btn.btn-primary.btn-lg.btn-block.text-center.padding-btn-small.img-40p.border-round-5x.margin-top-3p.bg-blue-transparent(onClick="window.location.href='http://www.getseam.co/signUp'") SIGN UP FOR A FREE SEAM ACCOUNT
+				.col-md-5.col-md-offset-7.text-right.mobile-hidden
+					h3.line-height-12x.text-white.text-normal.text-right That's why we created SEAM.
+					h3.line-height-12x.text-white.text-normal.text-right From meeting prep to run to follow-up,
+					h3.line-height-12x.text-white.text-normal.text-right SEAM covers all the bases in helping you
+					h3.line-height-12x.text-white.text-normal.text-right hold great meetings. Great meetings cut
+					h3.line-height-12x.text-white.text-normal.text-right down on future meetings. And we believe 
+					h3.line-height-12x.text-white.text-normal.text-right the fewer meetings the better.
+			.row.mobile-margin-top-40x
+				.col-md-12.text-center
+					a.float-right.btn.btn-primary.btn-lg.border-round-5x.margin-top-3p.bg-blue-transparent.padding-btn-small.border-shadow-black-small(onClick="window.location.href='http://www.getseam.co/signUp'", role="button") TRY SEAM FOR FREE
 	div#about-page.page.padding-top-3p.bg-white.padding-bottom-5p
 		.container-95p.margin-center
 			.row
 				.col-md-12
 					h1.text-big-35x.text-center SEAM's got your back.
+			.container-100p.margin-top-1p
+					//ul.ch-grid-box
+						li
+							.ch-item-box
+								.ch-info-box
+									.ch-info-front-box.ch-img-1-box
+										.row
+											.col-md-12.margin-top-5p
+												h1.text-white.text-center.text-bold GET READY
+										.row
+											.col-md-12.margin-top-7p.margin-bottom-10p
+												h1
+													i.text-big-35x.text-center-imp.text-black.flaticon-space25
+										.row
+											.col-md-12.padding-bottom-10p
+												h3.text-white.line-height-5x.text-center.text-normal Create a clear,
+												h3.text-white.line-height-5x.text-center.text-normal easy-to-share agenda
+												h3.text-white.line-height-5x.text-center.text-normal using our neat templates.
+									.ch-info-back-box
+										h3 Mouse
+										p
+										| by Alexander Shumihin
+										a(href='http://drbl.in/eAoj') View on Dribbble
+						li
+							.ch-item-box
+								.ch-info-box
+									.ch-info-front-box.ch-img-1-box
+										.row
+											.col-md-12.margin-top-5p
+												h1.text-white.text-center.text-bold GET READY
+										.row
+											.col-md-12.margin-top-7p.margin-bottom-10p
+												h1
+													i.text-big-35x.text-center-imp.text-black.flaticon-space25
+										.row
+											.col-md-12.padding-bottom-10p
+												h3.text-white.line-height-5x.text-center.text-normal Create a clear,
+												h3.text-white.line-height-5x.text-center.text-normal easy-to-share agenda
+												h3.text-white.line-height-5x.text-center.text-normal using our neat templates.
+									.ch-info-back-box
+										h3 Mouse
+										p
+										| by Alexander Shumihin
+										a(href='http://drbl.in/eAoj') View on Dribbble
+						li
+							.ch-item-box
+								.ch-info-box
+									.ch-info-front-box.ch-img-1-box
+										.row
+											.col-md-12.margin-top-5p
+												h1.text-white.text-center.text-bold GET READY
+										.row
+											.col-md-12.margin-top-7p.margin-bottom-10p
+												h1
+													i.text-big-35x.text-center-imp.text-black.flaticon-space25
+										.row
+											.col-md-12.padding-bottom-10p
+												h3.text-white.line-height-5x.text-center.text-normal Create a clear,
+												h3.text-white.line-height-5x.text-center.text-normal easy-to-share agenda
+												h3.text-white.line-height-5x.text-center.text-normal using our neat templates.
+									.ch-info-back-box
+										h3 Mouse
+										p
+										| by Alexander Shumihin
+										a(href='http://drbl.in/eAoj') View on Dribbble
 			.row.margin-top-5p
 				.col-md-4
 					.bg-green.border-round-5x.container-80p.margin-center
@@ -76,72 +141,95 @@ block content
 		.container-95p.margin-center
 			.row
 				.col-md-12
-					h1.text-big-35x.text-white.text-big-35x.text-center Learn more about your meetings.
-					h1.text-big-30x.text-white.text-center Use SEAM to find out:
-			.row.margin-top-5p
-				.col-md-2
-					.container-60p.bg-white-o5.border-round-5x.float-right
+					h1.text-big-35x.text-white.text-big-35x.text-center Learn more to improve your meetings.
+			.row.margin-top-3p
+				.col-md-3
+					.container-50p.bg-white-o5.border-round-5x.padding-left-2x.float-right
 						i.text-drkblue.flaticon-dollar131
-				.col-md-8
-					h2.text-left.text-white.margin-top-3p
+				.col-md-7
+					h2.text-left.text-white.margin-top-20x
 						| how many 
 						span.text-white.text-h2.text-normal dollars 
 						| your meetings are saving
-			.row.margin-top-5p
-				.col-md-8.col-md-offset-2
-					h2.text-right.text-white.margin-top-3p
+			.row.margin-top-3p
+				.col-md-3
+					.container-50p.bg-white-o5.border-round-5x.padding-left-2x.float-right
+						i.text-drkblue.flaticon-time
+				.col-md-7
+					h2.text-left.text-white.margin-top-20x
 						| how much 
 						span.text-white.text-h2.text-normal time 
 						| your meetings are saving
-				.col-md-2
-					.container-60p.bg-white-o5.border-round-5x
-						i.text-drkblue.flaticon-time
-			.row.margin-top-5p
-				.col-md-2
-					.container-60p.bg-white-o5.border-round-5x.padding-left-5p.float-right
+			.row.margin-top-3p
+				.col-md-3
+					.container-50p.bg-white-o5.border-round-5x.padding-left-9x.float-right
 						i.text-drkblue.flaticon-idea2
-				.col-md-8
-					h2.text-left.text-white.margin-top-3p
+				.col-md-7
+					h2.text-left.text-white.margin-top-20x
 						| what meeting discussions attendees found 
 						span.text-white.text-h2.text-normal efficient
-	div#team-page.page.padding-top-3p.bg-white.padding-bottom-5p
-		.container-95p.margin-center
+	div#team-page.page.padding-top-3p.bg-white.padding-bottom-3p
+		.container-95p.margin-center.mobile-hidden
 			.row
 				.col-md-12
 					h1.text-big-35x.text-center The minds behind SEAM.
-			.row.margin-top-5p
-				.col-md-2.col-md-offset-1
-					img.border-round-5x.border-dark-gray-5x.img-responsive.margin-center(src='images/joLee.jpg', alt='Josephine Lee')
-				.col-md-2
-					img.border-round-5x.border-blue-5x.img-responsive.margin-center(src='images/AlexPopelard.jpg', alt='Alexandre Popelard')
-				.col-md-2
-					img.border-round-5x.border-pink-5x.img-responsive.margin-center(src='images/SuzeeHan.jpg', alt='Suzee Han')
-				.col-md-2
-					img.border-round-5x.border-orange-5x.img-responsive.margin-center(src='images/MichaelChen.jpg', alt='Michael Chen')
-				.col-md-2
-					img.border-round-5x.border-green-5x.img-responsive.margin-center(src='images/TommyYu.jpg', alt='Tommy Yu')
+			ul.ch-grid
+				li
+					.ch-item.ch-img-1
+						.ch-info.text-right.bg-gray-t8
+							h3 Josephine Lee
+							h4 Organizational Change Lead
+							a.text-white-orange-hover.text-right.lsf-icon(href="http://twitter.com/leejosephinem", target="_blank" , title="twitter")
+							a.text-white-orange-hover.text-right.lsf-icon(href="https://www.linkedin.com/in/leejosephinem", target="_blank" , title="linkedin")
+				li
+					.ch-item.ch-img-2
+						.ch-info.text-right.bg-blue-t8
+							h3 Alex Popelard
+							h4 Design Innovation MBA
+							a.text-white-orange-hover.text-right.lsf-icon(href="http://twitter.com/alexpopelard", target="_blank" , title="twitter")
+							a.text-white-orange-hover.text-right.lsf-icon(href="https://www.linkedin.com/in/alexpopelard", target="_blank" , title="linkedin")
+				li
+					.ch-item.ch-img-3
+						.ch-info.text-right.bg-pink-t8
+							h3 Suzee Han
+							h4 Designer
+							a.text-white-orange-hover.text-right.lsf-icon(href="http://twitter.com/suzeehan", target="_blank" , title="twitter")
+							a.text-white-orange-hover.text-right.lsf-icon(href="https://www.linkedin.com/in/suzeehan", target="_blank" , title="linkedin")
+				li
+					.ch-item.ch-img-4
+						.ch-info.text-right.bg-orange-t8
+							h3 Michael Chen
+							h4 Developer
+							a.text-white-orange-hover.text-right.lsf-icon(href="http://twitter.com/MikeTYChen", target="_blank", title="twitter")
+							a.text-white-orange-hover.text-right.lsf-icon(href="https://www.linkedin.com/in/miketychen", target="_blank" , title="linkedin")
+				li
+					.ch-item.ch-img-5
+						.ch-info.text-right.bg-green-t8
+							h3 Tommy Yu
+							h4 Developer
+							a.text-white-orange-hover.text-right.lsf-icon(href="https://www.facebook.com/tommy.yu.92754" , title="linkedin")
 	div#contact-page.page.padding-top-3p.bg-white.padding-bottom-5p
 		.container-95p.margin-center
 			.row
 				.col-md-12
 					h1.text-big-35x.text-center Contact us.
-		form.form-horizontal(action='/contact', method='post', role='form')
-			.form-group.margin-top-3p
-				.col-md-4.col-md-offset-4
-					input.text-h4.text-left.form-control.outline-gray.form-square(name='names', type='text', placeholder='Name', required)
-			.form-group
-				.col-md-4.col-md-offset-4
-					input.text-h4.text-left.form-control.outline-gray.form-square(name='email', type='text', placeholder='Email', required)
-			.form-group
-				.col-md-4.col-md-offset-4
-					textarea.text-h4.text-left.form-control.outline-gray(name='comments', rows='5', placeholder='Message', required)
-			.form-group
-				.col-md-2.col-md-offset-5.margin-top-3p
-					button.btn.btn-primary.bg-pink-orange-hover.btn-lg.btn-block.border-round-5x(type='submit') Send Message
+			form.form-horizontal(action='/contact', method='post', role='form')
+				.form-group.margin-top-3p
+					.col-md-4.col-md-offset-4
+						input.text-h4.text-left.form-control.outline-gray.form-square(name='names', type='text', placeholder='Name', required)
+				.form-group
+					.col-md-4.col-md-offset-4
+						input.text-h4.text-left.form-control.outline-gray.form-square(name='email', type='text', placeholder='Email', required)
+				.form-group
+					.col-md-4.col-md-offset-4
+						textarea.text-h4.text-left.form-control.outline-gray(name='comments', rows='5', placeholder='Message', required)
+				.form-group
+					.col-md-2.col-md-offset-5.margin-top-3p
+						button.btn.btn-primary.bg-pink-orange-hover.btn-lg.btn-block.border-round-5x(type='submit') Send Message
 	div#footer-page.page.bg-drk-gray.padding-top-1p.padding-bottom-1p
 		.row
 			.col-md-12.margin-top-1p
-				img.margin-center.img-responsive.img-8p.center-box(src="images/logo-noWord.png" ,alt="SEAM")
+				img.margin-center.img-responsive.img-8p.center-box(src="../../images/logo-noWord.png" ,alt="SEAM")
 		.row
 			.col-md-12.text-center.margin-top-3p
 				a.text-white-orange-hover.text-50x.lsf-icon(href="http://twitter.com/" , title="twitter")

@@ -12,7 +12,9 @@ html(lang='en')
 		link(rel="shortcut icon" href="/images/favicon.ico" type="image/x-icon")
 		link(href='http://fonts.googleapis.com/css?family=Lato:300,400,700', rel='stylesheet', type='text/css')
 		link(rel='stylesheet' href='../../stylesheets/bootstrap.min.css')
+		link(rel='stylesheet' href='../../stylesheets/base-mobile.css')
 		link(rel='stylesheet' href='../../stylesheets/base.css')
+		link(rel='stylesheet' href='../../stylesheets/circle-hover.css')
 		link(rel="stylesheet" href="../../stylesheets/ligatures.css")
 		link(rel="stylesheet" type="text/css" href="../../stylesheets/flaticon.css")
 		title SEAM
@@ -25,7 +27,7 @@ html(lang='en')
 			ga('send', 'pageview');
 	body#home-pg.bg-frontpg-2
 		div.navbar.bg-transparent.navbar-inverse.navbar-fixed-top(role='navigation')
-			.container
+			.container-95p.margin-center
 				.navbar-header
 					button(type='button', class='navbar-toggle', data-toggle='collapse', data-target='.navbar-collapse')
 						span.sr-only Toggle navigation
@@ -57,7 +59,7 @@ html(lang='en')
 									a.text-h5(class='text-bold visible-login', href='/dashboard/meetings/pastMeeting') MINUTES
 								li
 									a.text-h5(class='text-bold visible-login', href='logout') LOG OUT
-					form.navbar-form.navbar-right.hidden-login(role='form' method='POST', action='login', style='display: none;')
+					form.navbar-form.navbar-right.hidden-login.margin-top-1p(role='form' method='POST', action='login', style='display: none;')
 						.form-group.margin-right-5x
 							input.border-black.text-small.form-control.border-square.form-control-smaller(type='text', placeholder='EMAIL', name='email')
 						.form-group.margin-right-5x
@@ -68,4 +70,7 @@ html(lang='en')
 		block content
 		script(src='https://code.jquery.com/jquery.js')
 		script(src='../../javascripts/bootstrap.min.js')
+		script(src='../../javascripts/jquery.backstretch.min.js')
+		script.
+			$.backstretch("../../images/bg-landing.jpg", {speed: 500});
 		script(src='../../javascripts/landingPage.js')
