@@ -99,18 +99,20 @@ block content
 										if(i == 0)
 											.row
 												.col-md-11
-													textarea.text-h5.margin-left-2p.form-control.border-square.border-orange-left.border-orange-top.border-orange-bot.border-orange-right.text-left.bg-white.margin-0.margin-right-1p(rows="2",id='notes#{i}', type='text', name='notes', placeholder= 'Start Typing...', tabindex='#{i+1}', autofocus='autofocus', autocomplete='off', value='#{i}')
+													textarea.text-h5.margin-left-2p.form-control.border-square.border-orange-left.border-orange-top.border-orange-bot.border-orange-right.text-left.bg-white.margin-0.margin-right-1p(rows="2",id='notes#{i}', type='text', name='notes', placeholder= 'Type Notes...', tabindex='#{i+1}', autofocus='autofocus', autocomplete='off', value='#{i}')
 												.col-md-1
 													button.bg-white.text-blue-hoverorange.text-left.margin-0.padding-0(id='noteSubmit#{i+1}' type='submit', value='#{i}')<i class="fa fa-check fa-md"></i> 
 											.row
 												.col-md-3.padding-0-right
 													.input-group
 														span.input-group-addon.border-square.border-orange-bot.border-orange-left @
-														input.noEnterSubmit.text-h5.margin-left-2p.form-control.border-square.border-orange-no-top.border-orange-bot.border-orange-right.border-orange-left.text-left.bg-white.margin-0.margin-right-1p(rows="1",id='taskAssignee#{i}', type='text', name='taskAssignee', placeholder= 'Assignee', tabindex='#{i+1}', autocomplete='off')
+														input.noEnterSubmit.text-h5.margin-left-2p.form-control.border-square.border-orange-no-top.border-orange-bot.border-orange-right.border-orange-left.text-left.bg-white.margin-0.margin-right-1p(rows="1",id='taskAssignee#{i}', type='text', name='taskAssignee', placeholder= 'Type Assignee', tabindex='#{i+1}', autocomplete='off')
 												.col-md-5.padding-0
 													input.text-h5.margin-left-2p.form-control.border-square.border-orange-no-top.border-orange-bot.border-orange-right.border-orange-left.text-left.bg-white.margin-0.margin-right-1p(rows="1",id='taskName#{i}', type='text', name='taskName', placeholder= 'Type Task...', tabindex='#{i+1}', autocomplete='off')
 												.col-md-3.padding-0-left
 													input.text-h5.margin-left-2p.form-control.border-square.border-orange-no-top.border-orange-bot.border-orange-right.border-orange-left.text-left.bg-white.margin-0.margin-right-1p(rows="1",id='taskDueDate#{i}', type='text', name='taskDueDate', placeholder= 'Due Date', tabindex='#{i+1}', autocomplete='off')
+												.col-md-1
+													button.bg-white.text-blue-hoverorange.text-left.margin-0.padding-0(id='noteSubmit#{i+1}' type='submit', value='#{i}')<i class="fa fa-check fa-md"></i> 
 										else
 											.row
 												.col-md-11
