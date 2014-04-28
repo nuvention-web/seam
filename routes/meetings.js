@@ -77,6 +77,8 @@ exports.editMeeting = function(req, res){
 
 exports.updateMeeting = function(req, res){
 	var userId = req.session.userId;
+	var creatorEmail = req.session.email;
+	var creatorName = req.session.creatorName;
 	var meetingId = req.body.meetingId;
 	var conditions = { _id: meetingId};
 	var meetingTitle = req.body.meetingTitle;
@@ -144,6 +146,12 @@ exports.updateMeeting = function(req, res){
 			};
 		}
 	}
+
+
+	newMeeting.attendees.push({
+		attendeeName: creatorName,
+		attendeeEmail: creatorEmail.toLowerCase()
+	});
 
 	if(attendeeNames != undefined){	
 		if(typeof attendeeNames == 'string'){
@@ -539,6 +547,8 @@ exports.addTask = function(req, res){
 exports.addMeeting = function(req, res){
 	var mailBody, smtpConfig;
 	var userId = req.session.userId;
+	var creatorName = req.session.name;
+	var creatorEmail = req.session.email;
 	var meetingTitle = req.body.meetingTitle;
 	var objective = req.body.objective;
 	var location = req.body.location;
@@ -620,6 +630,11 @@ exports.addMeeting = function(req, res){
 			};
 		}
 	}
+
+	newMeeting.attendees.push({
+		attendeeName: creatorName,
+		attendeeEmail: creatorEmail.toLowerCase()
+	});
 
 	if(attendeeNames != undefined){	
 		if(typeof attendeeNames == 'string'){
