@@ -7,6 +7,13 @@
 //FUNCTIONS FOR PROGRESS BAR DURING MEETING
 var intVals=new Array();
 var waitVals=new Array();
+var elapsedVals = new Array();
+elapsedTime = 0;
+
+$('input[name="timeLeft"]').each(function( index ) {
+    elapsedVals[index] = $(this).attr('value');
+    elapsedTime = elapsedTime + (parseInt($(this).attr('value'))/1000);
+});
 
 $(document).ready(function(){ 
     $.notify.defaults({ className: "success" ,globalPosition:"top center" });
@@ -60,7 +67,7 @@ $(document).ready(function(){
         setAgendaDelay(i, strVals.length);
     };
     //ENDING AGENDA ITEM
-    $('#countdownTimer').countdown({until: intVals[0],compact: true,format: 'MS'});
+    $('#countdownTimer').countdown({until: intVals[0]-elapsedTime,compact: true,format: 'MS'});
 });
 function setAgendaDelay(i, total){
     var prev=i-1;
@@ -73,7 +80,13 @@ function setAgendaDelay(i, total){
     var taskPersonID="#taskPersonInput"+prev;
     var taskPersonAddID="#addTask"+prev;
     var timeLimits=intVals[i];
+    var elapsed = 0;
+    if(elapsedVals[i-1] != undefined){
+        elapsed = elapsedVals[i-1];
+    }
     setTimeout(function(){
+        console.log(prev);
+        console.log()
             if(prev>=1){
                 $.notify("AGENDA ITEM "+ prev+ " DONE"); 
                 $('#agendaItem'+i).next('div').slideToggle(true);
@@ -86,7 +99,7 @@ function setAgendaDelay(i, total){
             $(progCir).addClass("bg-green"); 
             $(progID).progressBar({timeLimit: timeLimits,limit:intVals})
         }
-    },waitVals[i]*1000);
+    },waitVals[i] * 1000 - parseInt(elapsed));
 }
 
 
@@ -94,7 +107,8 @@ function setAgendaDelay(i, total){
     $.fn.progressBar = function (options) {
         var settings = $.extend({}, $.fn.progressBar.defaults, options);
 
-        this.each(function () {
+        this.each(function (index) {
+            console.log("more index: " + index);
             $(this).empty();
             var barContainer = $("<div>").addClass("progress progress-striped progress-vertical-line");
             var bar = $("<div>").addClass("progress-bar").addClass(settings.baseStyle)
@@ -107,11 +121,12 @@ function setAgendaDelay(i, total){
 
             bar.appendTo(barContainer);
             barContainer.appendTo($(this));
-            
+            console.log(settings.limit);
             var start = new Date();
             var limit = settings.timeLimit * 1000;
             var interval = window.setInterval(function () {
-            var elapsed = new Date() - start;
+            var elapsed = new Date() - start + 30000;
+            //console.log(elapsed);
             bar.height(((elapsed / limit) * 100) + "%");
             if(elapsed <= settings.limit[1]*1000){
                 bar.removeClass(settings.baseStyle)
@@ -131,7 +146,7 @@ function setAgendaDelay(i, total){
                     settings.onFinish.call(this);
                 }
 
-            }, 250);
+            }, 500);
 
         });
 
