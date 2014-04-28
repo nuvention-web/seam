@@ -20,30 +20,30 @@ $(document).ready(function(){
 		$.notify("MEETING HAS NOT BEEN STARTED YET",
 			{autoHideDelay: 10000, globalPosition: 'top center'}
 		);
+		$(":input").prop("disabled", true);
+		$("textarea").prop("disabled", true);
 	});
 
-	socket.on("joinSuccess", function(msg){
+	socket.on("meetingStarted", function(msg, Id){
 		console.log(msg);
-		$.notify("MEETING HAS BEEN STARTED",
-			{className: "success", autoHideDelay: 5000, globalPosition: 'top center'}
-		);
-		startTimer();
-	});
-
-	socket.on("meetingStarted", function(Id){
-		console.log(Id);
 
 		if(meetingId === Id){
 			$.notify("MEETING HAS BEEN STARTED",
 				{className: "success", autoHideDelay: 5000, globalPosition: 'top center'}
 			);
 			startTimer();
+			$(":input").prop("disabled", false);
+			$("textarea").prop("disabled", false);
 		}
 	});
 
 	socket.on("finish", function(msg){
 		console.log(msg);
+		$('#countdownTimer').countdown('pause');
 		$('button[name="leave"]').show();
+		$(":input").prop("disabled", true);
+		$("textarea").prop("disabled", true);
+		$('button[name="leave"]').prop("disabled", false);
 	})
 
 	socket.on("newNoteOrTask", function(who, msg, value){
@@ -68,11 +68,6 @@ $(document).ready(function(){
 				notesList[value].scrollTop = notesList[value].scrollHeight;
 			}
 		}
-	});
-
-	socket.on("finish", function(msg){
-		console.log(msg);
-		$('div[name="leaveButton"]').show();
 	});
 
 	console.log('name: ' + name + ' user: ' + userId + ' meetingId: ' + meetingId);

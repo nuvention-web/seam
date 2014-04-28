@@ -42,6 +42,7 @@ var app = express();
 
 var people = {};  
 var meetingsList = {};  
+var queue = {};
 var clients = [];
 
 // all environments
@@ -96,9 +97,17 @@ socket.on("connection", function (client) {
 			meeting.addPerson(client.id); //also add the person to the room object
 			people[client.id].meeting = meetingId; //update the room key with the ID of the created room
 			people[client.id].owns = meetingId;
- 			socket.sockets.emit("meetingStarted", meetingId);
  			socket.emit("update", "you have started the meeting")
- 			socket.sockets.in(client.room).emit("joinSucess", user.name + " has started the meeting.");
+ 			if(queue[meetingId] != undefined){
+ 				queueList = queue[meetingId];
+ 				for(var i = 0; i < queueList.length; i++){
+ 					queueList[i].client.join(client.room);
+ 					meeting.addPerson(queueList[i].id);
+ 				}
+ 			}
+ 			var user = people[client.id];
+ 			delete queue[meetingId];
+ 			socket.sockets.in(client.room).emit("meetingStarted", user.name + " has started the meeting.", meetingId);
 		} else {
 			socket.sockets.emit("update", "you have already started meeting");
 		}
@@ -108,6 +117,15 @@ socket.on("connection", function (client) {
 		var meeting = meetingsList[meetingId];
 		if(meeting == undefined){
 			client.emit("joinFailure", "Meeting has not been started yet.");
+			if(queue[meetingId] == undefined){
+				queue[meetingId] = new Array();
+				queue[meetingId].push({"id" : client.id, "client" : client});
+				client.emit("update", "added to waiting queue");
+			}
+			else{
+				queue[meetingId].push({"id" : client.id, "client" : client});
+				client.emit("update", "added to waiting queue");
+			}
 		}
 		else{
 			if (client.id === meeting.owner) {
@@ -127,7 +145,7 @@ socket.on("connection", function (client) {
 					client.join(client.room); //add person to the room
 					meeting.addPerson(client.id); //also add the person to the room object
 					var user = people[client.id];
-					client.emit("joinSuccess", "Successfully joined the meeting");
+					client.emit("meetingStarted", "Successfully joined the meeting", meetingId);
 					socket.sockets.in(client.room).emit("update", user.name + " has connected to meeting.");
 				}
 			}
@@ -144,7 +162,6 @@ socket.on("connection", function (client) {
 			if (client.id === meeting.owner) {// only owner can finish meeting
 				client.room = meeting.meetingId;
 				var user = people[client.id];
-				client.broadcast.to(client.room).emit("finish", "The owner (" + user.name + ") finished the meeting.");
 				var i = 0;
 				while(i < clients.length) {
 			  		if(clients[i].id == meeting.people[i]) {
@@ -152,6 +169,7 @@ socket.on("connection", function (client) {
 			  		}
 			  		i++;
 				}
+				client.broadcast.to(client.room).emit("finish", "The owner (" + user.name + ") finished the meeting.");
 				delete meetingsList[meetingId];
 				people[meeting.owner].owns = null; //reset the owns object to null so new meeting can be started
 				socket.sockets.emit("roomList", {meetingsList: meetingsList});
