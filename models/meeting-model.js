@@ -21,7 +21,8 @@ var topicSchema = new Schema({
 	topic: { type: String },
 	notes: [noteSchema],
 	tasks: [taskSchema],
-	duration: { type: String }
+	duration: { type: String },
+	timeLeft: {type: Number, default: 0}
 });
 
 var meetingSchema = new Schema({

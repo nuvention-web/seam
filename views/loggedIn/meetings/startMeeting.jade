@@ -68,6 +68,7 @@ block content
 						input(type="hidden" id="progressValues" value='#{meeting.timerInfo}')
 					each agenda, i in meeting.agenda
 						.row(id='agendaItem#{i+1}')
+							input(type='hidden', name='timeLeft', value='#{agenda.timeLeft}')
 							.col-md-1.margin-0.padding-0
 								div.height-100p.width-100p
 									.progress.progress-striped.progress-vertical-circle.progress-striped.active.progress-success.margin-top-n1x.margin-bottom-0p(id='progressCircle#{i+1}')
