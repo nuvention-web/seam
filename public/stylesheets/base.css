@@ -1101,6 +1101,7 @@ textarea{
 }
 .navbar{
 	z-index: 59;
+	background-color: none !important;
 	box-shadow: 1px solid rgb(0,0,0) !important;
 }
 .navbar .nav > li > a {
