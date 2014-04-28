@@ -71,6 +71,7 @@ module.exports = function(passport) {
 					console.log("Successfully added new user to database");
 					User.find({'local.email': email}, function(e, docs){console.log(docs);});
 					req.session.userId = email;
+					req.session.email = email.toLowerCase();
 					req.session.name = name;
 					req.session.accountType = accountType;
 					return done(null, newUser);
@@ -109,6 +110,7 @@ module.exports = function(passport) {
 				return done(null, false, req.flash('loginMessage', 'Oops! Wrong password.')); // create the loginMessage and save it to session as flashdata
 
 			req.session.userId = email.toLowerCase();
+			req.session.email = email.toLowerCase();
 			req.session.name = user.local.name;
 			req.session.accountType = user.local.accountType;
 			// all is well, return successful user

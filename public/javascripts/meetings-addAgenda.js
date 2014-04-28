@@ -123,7 +123,6 @@ function addAttendee(){
 	document.getElementById('attendeeList').innerHTML += string;
 	document.getElementById('nameHolder').value = '';
 	document.getElementById('emailHolder').value = '';
-	document.getElementById('addNewAttendee').style.display = 'none';
 	document.getElementById('nameHolder').focus();
 
 };
