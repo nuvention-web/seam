@@ -10,11 +10,7 @@ block content
 							input(type='hidden', name='meetingId', value='#{meeting._id}')
 							input(type='hidden', name='userId', value='#{user}')
 							input(type='hidden', name='name', value='#{name}')
-							h2.text-left.text-black.text-normal.padding-left-1p #{meeting.meetingTitle}
-						.col-md-2.col-sm-3.col-xs-3.margin-top-1p
-
-						.col-md-4.col-sm-3.col-xs-3.margin-top-1p.disp-inline-block
-							h2.text-right.text-black.padding-right-3p.float-right #{meetingDate}					
+							h2.text-left.text-black.text-normal.padding-left-1p #{meeting.meetingTitle}				
 					.row.padding-left-1p
 						.col-md-10.margin-top-1p.padding-left-1p
 							span.text-h3.text-left.text-blue
@@ -42,7 +38,7 @@ block content
 								h4.text-left.text-normal.text-gray.margin-left-1p ATTENDEES
 							.col-md-1.margin-top-2p
 								.answer 
-						.container-95p.margin-center.margin-top-3p.max-height-150x.overflow-scroll-y.overflow-x-hidden
+						.container-95p.margin-center.margin-top-3p.max-height-150x.overflow-scroll-y-auto.overflow-x-hidden
 							each attendee, i in meeting.attendees
 								.row.margin-top-10p
 									.col-md-12.attendeeMember
