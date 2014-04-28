@@ -781,6 +781,33 @@ exports.getJoinMeeting = function(req, res){
 	})	
 }
 
+exports.updateTimer = function(req, res){
+	
+	console.log(req.body);
+	var meetingId = req.body.meetingId;
+	var conditions = { _id: meetingId};
+	var value = req.body.value;
+	var timeLeft = req.body.timeExpired;
+	console.log(timeLeft);
+
+	Meeting.findOne({"_id": meetingId}, function(err, meeting){
+		meeting.agenda[value].timeLeft = timeLeft;
+		meeting.save(function(err){
+			if(err){
+				console.log('Problem adding information to database')
+				console.log(err);
+				res.location('error');
+				res.redirect('error', {user : req.user});
+			}
+			else{
+				console.log('Updated time successfully');
+			}
+		});
+	});
+	
+	res.redirect('back');
+}
+
 
 function addMinutes(date, minutes){
 	return new Date(date.getTime() + minutes*60000);
