@@ -43,7 +43,7 @@ module.exports = function(passport) {
 
 		// find a user whose email is the same as the forms email
 		// we are checking to see if the user trying to login already exists
-		User.findOne({ 'local.email' :  email }, function(err, user) {
+		User.findOne({ 'local.email' :  email.toLowerCase() }, function(err, user) {
 			// if there are any errors, return the error
 			if (err)
 				return done(err);
@@ -61,7 +61,7 @@ module.exports = function(passport) {
 				// set the user's local credentials
 				newUser.local.accountType = accountType;
 				newUser.local.name = name;
-				newUser.local.email = email;
+				newUser.local.email = email.toLowerCase();
 				newUser.local.password = newUser.generateHash(password);
 
 				// save the user
@@ -95,7 +95,7 @@ module.exports = function(passport) {
 
 		// find a user whose email is the same as the forms email
 		// we are checking to see if the user trying to login already exists
-		User.findOne({ 'local.email' :  email }, function(err, user) {
+		User.findOne({ 'local.email' :  email.toLowerCase() }, function(err, user) {
 			// if there are any errors, return the error before anything else
 			if (err)
 				return done(err);
@@ -108,7 +108,7 @@ module.exports = function(passport) {
 			if (!user.validPassword(password))
 				return done(null, false, req.flash('loginMessage', 'Oops! Wrong password.')); // create the loginMessage and save it to session as flashdata
 
-			req.session.userId = email;
+			req.session.userId = email.toLowerCase();
 			req.session.name = user.local.name;
 			req.session.accountType = user.local.accountType;
 			// all is well, return successful user
@@ -131,11 +131,11 @@ module.exports = function(passport) {
 		console.log(profile);
 		User.findOrCreate({ 
 			'google.id': profile.id, 
-			'google.email': profile.emails[0].value,
+			'google.email': profile.emails[0].value.toLowerCase(),
 			'google.name': profile.displayName
 		}, function (err, user) {
 			req.session.userId = user.google.id;
-			req.session.email = user.google.email;
+			req.session.email = user.google.email.toLowerCase();
 			req.session.name = user.google.name; 
 			req.session.accessToken = accessToken;
 			req.session.refreshToken = refreshToken;

@@ -149,7 +149,7 @@ exports.updateMeeting = function(req, res){
 		if(typeof attendeeNames == 'string'){
 			meetingData.attendees.push({
 				attendeeName: attendeeNames,
-				attendeeEmail: attendeeEmails
+				attendeeEmail: attendeeEmails.toLowerCase()
 			});
 		}
 		else{
@@ -157,7 +157,7 @@ exports.updateMeeting = function(req, res){
 				if(attendeeNames[i] != ''){
 					meetingData.attendees.push({
 						attendeeName: attendeeNames[i],
-						attendeeEmail: attendeeEmails[i]
+						attendeeEmail: attendeeEmails[i].toLowerCase()
 					});
 				}
 			};
@@ -627,7 +627,7 @@ exports.addMeeting = function(req, res){
 			icalEmail.push({name:attendeeNames, email:attendeeEmails});
 			newMeeting.attendees.push({
 				attendeeName: attendeeNames,
-				attendeeEmail: attendeeEmails
+				attendeeEmail: attendeeEmails.toLowerCase()
 			});
 		}
 		else{
@@ -637,7 +637,7 @@ exports.addMeeting = function(req, res){
 					icalEmail.push({name:attendeeNames[i], email:attendeeEmails[i]});
 					newMeeting.attendees.push({
 						attendeeName: attendeeNames[i],
-						attendeeEmail: attendeeEmails[i]
+						attendeeEmail: attendeeEmails[i].toLowerCase()
 					});
 				}
 			};
