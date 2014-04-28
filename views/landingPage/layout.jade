@@ -37,20 +37,28 @@ html(lang='en')
 					a.navbar-brand.text-white.text-bold(href='home')
 						img.img-responsive( src="../../images/logo-landing.png")
 				.navbar-collapse.collapse
-					.navbar-right
-						ul.nav.navbar-nav.margin-top-3p
-							if typeof user === 'undefined'
+					if typeof user === 'undefined'
+						.navbar-left
+							ul.nav.navbar-nav.margin-top-5p
 								li
 									a.text-h5(class='text-bold visible-login', href='home#home-page') HOME
 								li
 									a.text-h5(class='text-bold visible-login', href='home#about-page') ABOUT
 								li
-									a.text-h5(class='text-bold visible-login', href='home#team-page') TEAM
+									a.text-h5(class='text-bold visible-login', href='home#team-page') CONTACT
+						.navbar-right
+							ul.nav.navbar-nav.margin-top-5p
 								li
 									a.text-h5(class='text-bold visible-login', href='signUp') SIGN UP
 								li
-									a#admin-btn.text-bold.visible-login.text-h5(href='javascript:void(0)') SIGN IN
-							else
+									a#admin-btn.text-bold.visible-login.text-h5(href='javascript:void(0)') LOGIN
+								li
+									a.text-white-orange-hover.text-h3.lsf-icon.mobile-hidden(href="https://twitter.com/seam_meetings", target="_blank", title="twitter")
+								li
+									a.text-white-pink-hover.text-h3.lsf-icon.mobile-hidden(href="https://www.linkedin.com/groups/Improving-Meeting-Efficiency-6671618", target="_blank", title="linkedin")
+					else
+						.navbar-right
+							ul.nav.navbar-nav.margin-top-3p
 								li
 									a.text-h5(class='text-bold visible-login', href='/dashboard') DASHBOARD
 								li

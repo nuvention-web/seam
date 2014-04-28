@@ -592,6 +592,9 @@ textarea{
 .margin-top-7p{
 	margin-top:7%;
 }
+.margin-top-8p{
+	margin-top:8%;
+}
 .margin-top-10p{
 	margin-top:10%;
 }
@@ -820,9 +823,17 @@ textarea{
 /* ========================================================
    1C.IMAGES-DESKTOP
 =========================================================== */
+.img-5p{
+	width:5%;
+	height:5%;
+}
 .img-8p{
 	width:8%;
 	height:8%;
+}
+.img-18p{
+	width:18%;
+	height:18%;
 }
 .img-10p{
 	width:10%;
