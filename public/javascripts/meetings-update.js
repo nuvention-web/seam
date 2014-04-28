@@ -1,11 +1,11 @@
 
 $(document).ready(function(){
 //FUNCTIONS FOR ASYNC UPDATE OF MEETINGS
-	//var socket = io.connect("127.0.0.1:3000");
-	var socket = io.connect("http://www.getseam.co");
-	var name = $("input[name='name']").attr('value');
-	var userId = $("input[name='userId']").attr('value');
-	var meetingId = $("input[name='meetingId']").attr('value');
+	socket = io.connect("127.0.0.1:3000");
+	// var socket = io.connect("http://www.getseam.co");
+	name = $("input[name='name']").attr('value');
+	userId = $("input[name='userId']").attr('value');
+	meetingId = $("input[name='meetingId']").attr('value');
 
 	socket.emit("join", name, userId);
 
@@ -151,17 +151,27 @@ $(document).ready(function(){
 						$('#notes' + value)[0].focus();
 					}
 
-					socket.emit("send",  '@ ' + taskAssignee + ' ' + task, value);
+					socket.emit("send",  '@ ' + taskAssignee + ' ' + task, value, meetingId);
 				}                
 			}
 		});
 	return false; 
 	});
 
-	$('button[name="finish"]').click(function(){
-		socket.emit("finishMeeting", name, userId);
-	});
+	// $('#oneNote').click(function(){
+	// 	var value = $(this).attr('value');
+	// 	console.log(value);
+	// 	var input = "noteInput" + value;
+	// 	$(this).hide();
+	// 	$('form[name=' + input + ']').show();
+	// });
 
+	// $('#oneTask').click(function(){
+	// 	var value = $(this).attr('value');
+	// 	var input = "taskInput" + value;
+	// 	$(this).hide();
+	// 	$('form[name=' + input + ']').show();
+	// });
 });
 				
 //FUNCTION: ADD NOTE TO MEETING INTERFACE
@@ -206,4 +216,23 @@ function getWeekFromNow(){
 
 	today = mm + '/' + dd + '/' + yyyy;
 	return today;
+}
+
+function finishMeeting(){
+	var url = location.protocol + "//" + location.host + '/dashboard/meetings/end';
+	var data = new Array();
+	data.push({
+	    "name" : "meetingId",
+	    "value" : meetingId
+	});
+
+    $.ajax({
+        type: "POST",
+        url: url,
+        data: data,
+        success: function(data){
+            socket.emit('finishMeeting', name, userId, meetingId);
+            window.location = window.location.origin + "/dashboard"
+        }
+    })
 }

@@ -26,7 +26,7 @@ block content
 								.col-md-7.margin-0.padding-0
 									input.noEnterSubmit.text-h3.height-30x.form-control.border-square.border-none.text-left.text-blue.bg-transparent(id='makeMeeting1', type='text', name='agendaTopic', placeholder= 'ADD AGENDA ITEM', autocomplete='on', required)
 								.col-md-3
-									input.noEnterSubmit.text-h3.height-30x.form-control.border-square.border-none.text-right.bg-transparent(id='makeMeeting1', type='number', name='duration', placeholder= 'TIME', autocomplete='on', required)
+									input.noEnterSubmit.text-h3.height-30x.form-control.border-square.border-none.text-right.bg-transparent(id='makeMeeting1', type='number', name='duration', placeholder= 'MINUTES', autocomplete='on', required)
 							.row
 								.col-md-1.margin-top-1p.padding-bottom-2p.margin-0.padding-0
 									div.height-100p.width-100p
@@ -64,16 +64,13 @@ block content
 						h4.text-center.text-normal.text-gray.margin-left-3p ATTENDEES
 							.container-95p.margin-center.margin-top-5p
 								div#attendeeList
-								.row.margin-top-5p#addNewAttendee(style="display: none")
+								.row.margin-top-5p#addNewAttendee
 									.col-md-8
 										input.noEnterSubmit.form-control.border-square.text-left.border-none(type='text', name='nameHolder', value='', id='nameHolder', placeholder= 'NAME', tabindex='1')
 									.col-md-4
 										button.border-square.btn-blue-hover.padding-btn(type='button' onclick='addAttendee()', tabindex='3') ADD
 									.col-md-12
 										input.noEnterSubmit.form-control.border-square.text-left.border-none(type='text', name='emailHolder', value='', id='emailHolder', placeholder= 'EMAIL', tabindex='2')
-								.row.margin-top-5p
-									.col-md-8.col-md-offset-2.text-center.margin-top-3p
-										button.border-square.btn-blue-hover.padding-btn(type='button' onclick='showAttendeeForm()') NEW ATTENDEE
 				.row.margin-left-1p
 					.col-md-12.col-sm-12.col-xs-12.margin-top-1p.text-left.margin-top-2p.text-center.margin-top-10p
 						button.border-square.btn-blue-hover.text-h3.padding-btn(type='submit') SEND AGENDA
