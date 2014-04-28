@@ -77,6 +77,8 @@ exports.editMeeting = function(req, res){
 
 exports.updateMeeting = function(req, res){
 	var userId = req.session.userId;
+	var creatorEmail = req.session.email;
+	var creatorName = req.session.creatorName;
 	var meetingId = req.body.meetingId;
 	var conditions = { _id: meetingId};
 	var meetingTitle = req.body.meetingTitle;
@@ -145,11 +147,17 @@ exports.updateMeeting = function(req, res){
 		}
 	}
 
+
+	newMeeting.attendees.push({
+		attendeeName: creatorName,
+		attendeeEmail: creatorEmail.toLowerCase()
+	});
+
 	if(attendeeNames != undefined){	
 		if(typeof attendeeNames == 'string'){
 			meetingData.attendees.push({
 				attendeeName: attendeeNames,
-				attendeeEmail: attendeeEmails
+				attendeeEmail: attendeeEmails.toLowerCase()
 			});
 		}
 		else{
@@ -157,7 +165,7 @@ exports.updateMeeting = function(req, res){
 				if(attendeeNames[i] != ''){
 					meetingData.attendees.push({
 						attendeeName: attendeeNames[i],
-						attendeeEmail: attendeeEmails[i]
+						attendeeEmail: attendeeEmails[i].toLowerCase()
 					});
 				}
 			};
@@ -215,7 +223,7 @@ exports.postMeeting = function(req, res){
 	
 	console.log(meetingId);
 	Meeting.findOne({'_id': meetingId}, function(e, doc){
-		console.log(doc);
+		// console.log(doc);
 
 		var meetingDate = '';
 
@@ -273,7 +281,7 @@ exports.getMeeting = function(req, res){
 	
 	console.log(meetingId);
 	Meeting.findOne({'_id': meetingId}, function(e, doc){
-		console.log(doc);
+		// console.log(doc);
 
 		var meetingDate = '';
 
@@ -319,7 +327,7 @@ exports.getMeeting = function(req, res){
 };
 
 exports.endMeeting = function(req, res){
-	var meetingId = req.session.meetingId;
+	var meetingId = req.body.meetingId;
 	var mailBody, smtpConfig;
 	var emailAgenda='';
 	var emailTask='';
@@ -539,6 +547,8 @@ exports.addTask = function(req, res){
 exports.addMeeting = function(req, res){
 	var mailBody, smtpConfig;
 	var userId = req.session.userId;
+	var creatorName = req.session.name;
+	var creatorEmail = req.session.email;
 	var meetingTitle = req.body.meetingTitle;
 	var objective = req.body.objective;
 	var location = req.body.location;
@@ -621,13 +631,18 @@ exports.addMeeting = function(req, res){
 		}
 	}
 
+	newMeeting.attendees.push({
+		attendeeName: creatorName,
+		attendeeEmail: creatorEmail.toLowerCase()
+	});
+
 	if(attendeeNames != undefined){	
 		if(typeof attendeeNames == 'string'){
 			emailList+=attendeeEmails;
 			icalEmail.push({name:attendeeNames, email:attendeeEmails});
 			newMeeting.attendees.push({
 				attendeeName: attendeeNames,
-				attendeeEmail: attendeeEmails
+				attendeeEmail: attendeeEmails.toLowerCase()
 			});
 		}
 		else{
@@ -637,7 +652,7 @@ exports.addMeeting = function(req, res){
 					icalEmail.push({name:attendeeNames[i], email:attendeeEmails[i]});
 					newMeeting.attendees.push({
 						attendeeName: attendeeNames[i],
-						attendeeEmail: attendeeEmails[i]
+						attendeeEmail: attendeeEmails[i].toLowerCase()
 					});
 				}
 			};
@@ -779,6 +794,33 @@ exports.getJoinMeeting = function(req, res){
 			past : 0
 		});
 	})	
+}
+
+exports.updateTimer = function(req, res){
+	
+	console.log(req.body);
+	var meetingId = req.body.meetingId;
+	var conditions = { _id: meetingId};
+	var value = req.body.value;
+	var timeLeft = req.body.timeExpired;
+	console.log(timeLeft);
+
+	Meeting.findOne({"_id": meetingId}, function(err, meeting){
+		meeting.agenda[value].timeLeft = timeLeft;
+		meeting.save(function(err){
+			if(err){
+				console.log('Problem adding information to database')
+				console.log(err);
+				res.location('error');
+				res.redirect('error', {user : req.user});
+			}
+			else{
+				console.log('Updated time successfully');
+			}
+		});
+	});
+	
+	res.redirect('back');
 }
 
 
