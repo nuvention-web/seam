@@ -42,6 +42,7 @@ var app = express();
 
 var people = {};  
 var meetingsList = {};  
+var queue = {};
 var clients = [];
 
 // all environments
@@ -98,7 +99,14 @@ socket.on("connection", function (client) {
 			people[client.id].owns = meetingId;
  			socket.sockets.emit("meetingStarted", meetingId);
  			socket.emit("update", "you have started the meeting")
- 			socket.sockets.in(client.room).emit("joinSucess", user.name + " has started the meeting.");
+ 			if(queue[meetingId] != undefined){
+ 				queueList = queue[meetingId];
+ 				for(var i = 0; i < queueList.length; i++){
+ 					queueList[i].client.join(client.room);
+ 					meeting.addPerson(queueList[i].id);
+ 				}
+ 			}
+ 			socket.sockets.in(client.room).emit("joinSuccess", user.name + " has started the meeting.");
 		} else {
 			socket.sockets.emit("update", "you have already started meeting");
 		}
@@ -108,6 +116,15 @@ socket.on("connection", function (client) {
 		var meeting = meetingsList[meetingId];
 		if(meeting == undefined){
 			client.emit("joinFailure", "Meeting has not been started yet.");
+			if(queue[meetingId] == undefined){
+				queue[meetingId] = new Array();
+				queue[meetingId].push({"id" : client.id, "client" : client});
+				client.emit("update", "added to waiting queue");
+			}
+			else{
+				queue[meetingId].push({"id" : client.id, "client" : client});
+				client.emit("update", "added to waiting queue");
+			}
 		}
 		else{
 			if (client.id === meeting.owner) {
