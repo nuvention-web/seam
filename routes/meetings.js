@@ -223,7 +223,7 @@ exports.postMeeting = function(req, res){
 	
 	console.log(meetingId);
 	Meeting.findOne({'_id': meetingId}, function(e, doc){
-		console.log(doc);
+		// console.log(doc);
 
 		var meetingDate = '';
 
@@ -281,7 +281,7 @@ exports.getMeeting = function(req, res){
 	
 	console.log(meetingId);
 	Meeting.findOne({'_id': meetingId}, function(e, doc){
-		console.log(doc);
+		// console.log(doc);
 
 		var meetingDate = '';
 
@@ -327,7 +327,7 @@ exports.getMeeting = function(req, res){
 };
 
 exports.endMeeting = function(req, res){
-	var meetingId = req.session.meetingId;
+	var meetingId = req.body.meetingId;
 	var mailBody, smtpConfig;
 	var emailAgenda='';
 	var emailTask='';

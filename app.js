@@ -96,8 +96,9 @@ socket.on("connection", function (client) {
 			meeting.addPerson(client.id); //also add the person to the room object
 			people[client.id].meeting = meetingId; //update the room key with the ID of the created room
 			people[client.id].owns = meetingId;
- 			socket.sockets.emit("meetingStarted", "meetingId");
+ 			socket.sockets.emit("meetingStarted", meetingId);
  			socket.emit("update", "you have started the meeting")
+ 			socket.sockets.in(client.room).emit("joinSucess", user.name + " has started the meeting.");
 		} else {
 			socket.sockets.emit("update", "you have already started meeting");
 		}
@@ -106,7 +107,7 @@ socket.on("connection", function (client) {
 	client.on("joinMeeting", function(name, userId, meetingId) {  
 		var meeting = meetingsList[meetingId];
 		if(meeting == undefined){
-			client.emit("joinFailure", "Meeting has not been started yet. Redirecting to dashboard.");
+			client.emit("joinFailure", "Meeting has not been started yet.");
 		}
 		else{
 			if (client.id === meeting.owner) {
@@ -125,21 +126,25 @@ socket.on("connection", function (client) {
 					client.room = meeting.meetingId;
 					client.join(client.room); //add person to the room
 					meeting.addPerson(client.id); //also add the person to the room object
-					user = people[client.id];
+					var user = people[client.id];
+					client.emit("joinSuccess", "Successfully joined the meeting");
 					socket.sockets.in(client.room).emit("update", user.name + " has connected to meeting.");
 				}
 			}
 		}
 	});
  
-	client.on("send", function(msg, value) {
+	client.on("send", function(msg, value, meetingId) {
 		client.broadcast.to(client.room).emit("newNoteOrTask", people[client.id], msg, value);
 	});
 
-	client.on("finishMeeting", function(name, userId) {  
-		var meeting = meetingsList[client.id];
+	client.on("finishMeeting", function(name, userId, meetingId) {  
+		var meeting = meetingsList[meetingId];
 		if(meeting){
 			if (client.id === meeting.owner) {// only owner can finish meeting
+				client.room = meeting.meetingId;
+				var user = people[client.id];
+				client.broadcast.to(client.room).emit("finish", "The owner (" + user.name + ") finished the meeting.");
 				var i = 0;
 				while(i < clients.length) {
 			  		if(clients[i].id == meeting.people[i]) {
@@ -147,11 +152,10 @@ socket.on("connection", function (client) {
 			  		}
 			  		i++;
 				}
-				delete meeting[client.id];
+				delete meetingsList[meetingId];
 				people[meeting.owner].owns = null; //reset the owns object to null so new meeting can be started
 				socket.sockets.emit("roomList", {meetingsList: meetingsList});
 				client.emit("update", "you have finished the meeting")
-				client.broadcast.to(client.room).emit("finish", "The owner (" + user.name + ") finished the meeting.");
 			}
 		}
 	});
@@ -191,7 +195,7 @@ app.post('/dashboard/meetings/join', user.isLoggedIn, meetings.postJoinMeeting);
 app.get('/dashboard/meetings/join', user.isLoggedIn, meetings.getJoinMeeting);
 app.post('/dashboard/meetings/start/addNote', user.isLoggedIn, meetings.addNote);
 app.post('/dashboard/meetings/start/addTask', user.isLoggedIn, meetings.addTask);
-app.get('/dashboard/meetings/end', user.isLoggedIn, meetings.endMeeting);
+app.post('/dashboard/meetings/end', user.isLoggedIn, meetings.endMeeting);
 
 app.post('/dashboard/meetings/start/updateTime', user.isLoggedIn, meetings.updateTimer);
 //Tasks

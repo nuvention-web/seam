@@ -72,6 +72,8 @@ $(document).ready(function(){
     //ENDING AGENDA ITEM
     $('#countdownTimer').countdown({until: intVals[0]-elapsedTime,compact: true,format: 'MS'});
 });
+
+
 function setAgendaDelay(i, total){
     var prev=i-1;
     var progID="#progressBar"+i;
@@ -93,7 +95,7 @@ function setAgendaDelay(i, total){
         // var waitTime = waitVals[i] * 1000 - parseInt(elapsed);
         // console.log("wait: " + waitTime);
             if(prev>=1){
-                $.notify("AGENDA ITEM "+ prev+ " DONE"); 
+                $.notify("AGENDA ITEM "+ prev+ " DONE", { className: "success" ,globalPosition:"top center" }); 
                 $('#agendaItem'+i).next('div').slideToggle(true);
                 document.getElementById('alertSound').play();
             };
