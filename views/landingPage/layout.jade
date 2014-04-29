@@ -56,7 +56,7 @@ html(lang='en')
 								li
 									a.text-white-orange-hover.visible-login.text-h3.lsf-icon.mobile-hidden(href="https://twitter.com/seam_meetings", target="_blank", title="twitter")
 								li
-									a.text-white-pink-hover.visible-login.text-h3.lsf-icon.mobile-hidden(href="https://www.linkedin.com/groups/Improving-Meeting-Efficiency-6671618", target="_blank", title="linkedin")
+									a.text-blue-pink-hover.visible-login.text-h3.lsf-icon.mobile-hidden(href="https://www.linkedin.com/groups/Improving-Meeting-Efficiency-6671618", target="_blank", title="linkedin")
 					else
 						.navbar-right
 							ul.nav.navbar-nav.margin-top-3p
@@ -70,11 +70,11 @@ html(lang='en')
 									a.text-h5(class='text-bold visible-login', href='logout') LOG OUT
 					form.navbar-form.navbar-right.hidden-login.margin-top-1p(role='form' method='POST', action='login', style='display: none;')
 						.form-group.margin-right-5x
-							input.border-black.text-small.form-control.border-square.form-control-smaller(type='text', placeholder='EMAIL', name='email')
+							input.border-black.text-small.form-control.form-control-smaller.border-round-5x(type='text', placeholder='EMAIL', name='email')
 						.form-group.margin-right-5x
-							input.border-black.text-small.form-control.border-square.form-control-smaller(type='password', placeholder='PASSWORD' , name='password')
-						button.btn.btn-success.bg-red-border.border-square.text-small.margin-right-5x(type='submit') LOGIN
-						button.btn.btn-success.bg-red-border.border-square.text-small.margin-right-5x(type='button', onClick="parent.location='/google/login'") GOOGLE LOGIN
+							input.border-black.text-small.form-control.form-control-smaller.border-round-5x(type='password', placeholder='PASSWORD' , name='password')
+						button.btn.btn-success.bg-pink-orange-hover.text-small.margin-right-5x.border-round-5x(type='submit') LOGIN
+						button.btn.btn-success.bg-pink-orange-hover.text-small.margin-right-5x.border-round-5x(type='button', onClick="parent.location='/google/login'") GOOGLE LOGIN
 						a#admin-btn-2.text-bold.hidden-login.text-white(href='javascript:void(0)') X
 		block content
 		script(src='https://code.jquery.com/jquery.js')

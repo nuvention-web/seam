@@ -12,6 +12,7 @@ html(lang='en')
 		link(rel="shortcut icon" href="/images/favicon.ico" type="image/x-icon")
 		link(href='http://fonts.googleapis.com/css?family=Lato:300,400,700', rel='stylesheet', type='text/css')
 		link(rel='stylesheet' href='../../stylesheets/bootstrap.min.css')
+		link(rel="stylesheet" href="../../big-video/css/bigvideo.css")
 		link(rel='stylesheet' href='../../stylesheets/base-mobile.css')
 		link(rel='stylesheet' href='../../stylesheets/base.css')
 		link(rel='stylesheet' href='../../stylesheets/circle-hover.css')
@@ -25,7 +26,7 @@ html(lang='en')
 			})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 			ga('create', 'UA-50079131-1', 'seam.co');
 			ga('send', 'pageview');
-	body#home-pg
+	body#home-pg.bg-frontpg-blur2
 		div.navbar.bg-drk-gray.navbar-inverse.navbar-fixed-top(role='navigation')
 			.container-95p.margin-center
 				.navbar-header
@@ -41,7 +42,7 @@ html(lang='en')
 						.navbar-left
 							ul.nav.navbar-nav.margin-top-5p
 								li
-									a.text-h5(class='text-bold visible-login', href='home') HOME
+									a.text-h5(class='text-bold visible-login', href='home#home-page') HOME
 								li
 									a.text-h5(class='text-bold visible-login', href='about') ABOUT
 								li
@@ -53,9 +54,9 @@ html(lang='en')
 								li
 									a#admin-btn.text-bold.visible-login.text-h5(href='javascript:void(0)') LOGIN
 								li
-									a.text-white-orange-hover.text-h3.lsf-icon.mobile-hidden(href="https://twitter.com/seam_meetings", target="_blank", title="twitter")
+									a.text-white-orange-hover.visible-login.text-h3.lsf-icon.mobile-hidden(href="https://twitter.com/seam_meetings", target="_blank", title="twitter")
 								li
-									a.text-white-pink-hover.text-h3.lsf-icon.mobile-hidden(href="https://www.linkedin.com/groups/Improving-Meeting-Efficiency-6671618", target="_blank", title="linkedin")
+									a.text-blue-pink-hover.visible-login.text-h3.lsf-icon.mobile-hidden(href="https://www.linkedin.com/groups/Improving-Meeting-Efficiency-6671618", target="_blank", title="linkedin")
 					else
 						.navbar-right
 							ul.nav.navbar-nav.margin-top-3p
@@ -69,12 +70,22 @@ html(lang='en')
 									a.text-h5(class='text-bold visible-login', href='logout') LOG OUT
 					form.navbar-form.navbar-right.hidden-login.margin-top-1p(role='form' method='POST', action='login', style='display: none;')
 						.form-group.margin-right-5x
-							input.border-black.text-small.form-control.border-square.form-control-smaller(type='text', placeholder='EMAIL', name='email')
+							input.border-black.text-small.form-control.form-control-smaller.border-round-5x(type='text', placeholder='EMAIL', name='email')
 						.form-group.margin-right-5x
-							input.border-black.text-small.form-control.border-square.form-control-smaller(type='password', placeholder='PASSWORD' , name='password')
-						button.btn.btn-success.bg-red-border.border-square.text-small.margin-right-5x(type='submit') LOGIN
-						button.btn.btn-success.bg-red-border.border-square.text-small.margin-right-5x(type='button', onClick="parent.location='/google/login'") GOOGLE LOGIN
+							input.border-black.text-small.form-control.form-control-smaller.border-round-5x(type='password', placeholder='PASSWORD' , name='password')
+						button.btn.btn-success.bg-pink-orange-hover.text-small.margin-right-5x.border-round-5x(type='submit') LOGIN
+						button.btn.btn-success.bg-pink-orange-hover.text-small.margin-right-5x.border-round-5x(type='button', onClick="parent.location='/google/login'") GOOGLE LOGIN
 						a#admin-btn-2.text-bold.hidden-login.text-white(href='javascript:void(0)') X
 		block content
 		script(src='https://code.jquery.com/jquery.js')
 		script(src='../../javascripts/bootstrap.min.js')
+		script(src='../../javascripts/jquery.backstretch.min.js')
+		script(src='../../javascripts/landingPage.js')
+		script(src="../../big-video/js/modernizr-2.5.3.min.js")
+		script(src="//ajax.googleapis.com/ajax/libs/jquery/1.8.1/jquery.min.js")
+		script(src="../../big-video/js/jquery-ui-1.8.22.custom.min.js")
+		script(src="../../big-video/js/jquery.imagesloaded.min.js")
+		script(src="../../big-video/js/video.js")
+		script(src="../../big-video/js/bigvideo.js")
+		script(src="../../big-video/js/jquery.transit.min.js")
+		script(src="../../big-video/video-play.js")

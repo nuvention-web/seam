@@ -14,6 +14,8 @@ html, body {
 /*this is my css to remove bullets from the autocomplete*/
 ul.ui-autocomplete {
     list-style: none;
+	background-color: rgb(200,200,200);
+	width:50px;
 }
 
 /*this is my css to remove bullets from the autocomplete*/
@@ -235,6 +237,9 @@ textarea{
 .text-blue{
 	color:rgb(0,114,188);
 }
+.text-blue-imp{
+	color:rgb(0,114,188) !important;
+}
 .text-blue-hoverorange{
 	color:rgb(0,114,188);
 }
@@ -300,6 +305,9 @@ textarea{
 .text-50x{
 	font-size:50px;
 }
+.text-35x{
+	font-size:35px;
+}
 .text-h2{
 	font-size:24px;
 }
@@ -350,7 +358,14 @@ textarea{
 	background-size: cover;
 }
 .bg-frontpg-blur{
-	background: url(../images/bg-blur.jpg) no-repeat center center fixed;
+	background: url(../images/bg-video-trans.jpg) no-repeat center center fixed;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+}
+.bg-frontpg-blur2{
+	background: url(../images/bg-video-trans2.jpg) no-repeat center center fixed;
 	-webkit-background-size: cover;
 	-moz-background-size: cover;
 	-o-background-size: cover;
@@ -634,6 +649,9 @@ textarea{
 .margin-left-35p{
 	margin-left: 63.5%;
 }
+.margin-right-5x{
+	margin-right: 5px;
+}
 .margin-right-15x{
 	margin-right:15px;
 }
@@ -704,6 +722,9 @@ textarea{
 .padding-top-7p{
 	padding-top: 7%;
 }
+.padding-top-15p{
+	padding-top: 10%;
+}
 .padding-bottom-20x{
 	padding-bottom:20px;
 }
@@ -719,11 +740,14 @@ textarea{
 .padding-bottom-5p{
 	padding-bottom: 5%;
 }
+.padding-bottom-8p{
+	padding-bottom: 5%;
+}
 .padding-bottom-10p{
 	padding-bottom: 10%;
 }
 .padding-bottom-15p{
-	padding-bottom: 15%;
+	padding-bottom: 10%;
 }
 .padding-right-1p{
 	padding-right:1%;
@@ -826,6 +850,10 @@ textarea{
 /* ========================================================
    1C.IMAGES-DESKTOP
 =========================================================== */
+.img-50x{
+	width:500px;
+	height:250px;
+}
 .img-5p{
 	width:5%;
 	height:5%;
