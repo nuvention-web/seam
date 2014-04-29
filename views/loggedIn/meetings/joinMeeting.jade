@@ -57,7 +57,7 @@ block content
 										a.text-h5.text-left.margin-top-5p.text-light-blue-nohover.text-normal(id="attendance#{i}" href="#" onclick="changeAttendance('attendance#{i}');return false;") PRESENT
 				.row.margin-left-1p(style="display: block" name="leaveButton")
 						.col-md-12.col-sm-12.col-xs-12.margin-top-1p.text-left.margin-top-2p.text-center.margin-top-10p
-							button.border-square.btn-blue-hover.text-h3.padding-btn(name='leave', type='button', onClick="parent.location='/dashboard'", style='display: none') LEAVE MEETING
+							button.border-square.btn-blue-hover.text-h3.padding-btn(name='leave', type='button', onClick="leaveMeeting()", style='display: none') LEAVE MEETING
 	.row.margin-top-2p.margin-bottom-3p
 		.col-md-9
 			.row.bg-white.border-gray.border-shadow-1x.margin-right-1p.margin-left.height-auto.padding-bottom-3p.border-round
