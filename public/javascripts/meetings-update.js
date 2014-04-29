@@ -1,11 +1,20 @@
 
 $(document).ready(function(){
 //FUNCTIONS FOR ASYNC UPDATE OF MEETINGS
-	// socket = io.connect("127.0.0.1:3000");
-	socket = io.connect("http://www.getseam.co");
+	socket = io.connect("127.0.0.1:3000");
+	// socket = io.connect("http://www.getseam.co");
 	name = $("input[name='name']").attr('value');
 	userId = $("input[name='userId']").attr('value');
 	meetingId = $("input[name='meetingId']").attr('value');
+
+	window.onbeforeunload = function(){
+		return "Leaving meeting, attendees still in meeting will not be able to edit the agenda.";
+	};
+
+	window.onunload = function(){
+		socket.emit("leaveMeetingCreator", name, userId, meetingId);
+		console.log("you just left the meeting");
+	}
 
 	socket.emit("join", name, userId);
 
@@ -219,6 +228,8 @@ function getWeekFromNow(){
 }
 
 function finishMeeting(){
+	window.onbeforeunload = function(){};
+	window.onunload = function(){};
 	var url = location.protocol + "//" + location.host + '/dashboard/meetings/end';
 	var data = new Array();
 	data.push({

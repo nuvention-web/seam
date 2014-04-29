@@ -1,11 +1,20 @@
 //FUNCTIONS FOR ASYNC UPDATE OF MEETINGS
 $(document).ready(function(){
 
-	// socket = io.connect("127.0.0.1:3000");
-	socket = io.connect("http://www.getseam.co");
+	socket = io.connect("127.0.0.1:3000");
+	// socket = io.connect("http://www.getseam.co");
 	name = $("input[name='name']").attr('value');
 	userId = $("input[name='userId']").attr('value');
 	meetingId = $("input[name='meetingId']").attr('value');
+
+	window.onbeforeunload = function(){
+		return;
+	};
+
+	window.onunload = function(){
+		socket.emit("leaveMeetingAttendee", name, userId, meetingId);
+		console.log("you just left the meeting");
+	}
 
 	socket.emit("join", name, userId);
 
@@ -28,7 +37,7 @@ $(document).ready(function(){
 		console.log(msg);
 
 		if(meetingId === Id){
-			$.notify("MEETING HAS BEEN STARTED",
+			$.notify(msg.toUpperCase(),
 				{className: "success", autoHideDelay: 5000, globalPosition: 'top center'}
 			);
 			startTimer();
@@ -37,14 +46,33 @@ $(document).ready(function(){
 		}
 	});
 
-	socket.on("finish", function(msg){
-		console.log(msg);
-		$('#countdownTimer').countdown('pause');
-		$('button[name="leave"]').show();
-		$(":input").prop("disabled", true);
-		$("textarea").prop("disabled", true);
-		$('button[name="leave"]').prop("disabled", false);
-	})
+	socket.on("creatorLeft", fucntion(msg, Id){
+		if(meetingId === Id){
+			console.log(msg);
+			$.notify("CREATOR HAS LEFT THE MEETING",
+				{className: "warning", autoHideDelay: 10000, globalPosition: 'top center'}
+			);
+			$('#countdownTimer').countdown('pause');
+			window.clearInterval(timerInterval);
+			window.clearTimeout(timerTimeout);
+			$('button[name="leave"]').show();
+			$(":input").prop("disabled", true);
+			$("textarea").prop("disabled", true);
+			$('button[name="leave"]').prop("disabled", false);
+		}
+	});
+
+	socket.on("finish", function(msg, Id){
+		if(meetingId === Id){
+			console.log(msg);
+			$('#countdownTimer').countdown('pause');
+			window.clearInterval(timerInterval);
+			$('button[name="leave"]').show();
+			$(":input").prop("disabled", true);
+			$("textarea").prop("disabled", true);
+			$('button[name="leave"]').prop("disabled", false);
+		}
+	});
 
 	socket.on("newNoteOrTask", function(who, msg, value){
 		console.log(msg);
@@ -134,7 +162,7 @@ $(document).ready(function(){
 	$('form[name="TNForm"]').submit(function(event){
 		var value = $(this).attr('value');
 		var formData = $("#TNForm" + value).serializeArray();
-		console.log(formData);
+		// console.log(formData);
 		var notes = formData[1].value;
 		var taskAssignee = formData[2].value;
 		var task = formData[3].value;
@@ -234,7 +262,14 @@ function getWeekFromNow(){
 	return today;
 }
 
-function startTimer(){
+function leaveMeeting(){
+	window.onbeforeunload = function(){
+	};
+	var url = location.protocol + "//" + location.host + '/dashboard';
+	socket.emit('leaveMeetingAttendee', name, userId, meetingId);
+}
+
+function startTimer(elapsed){
 	//FUNCTIONS FOR PROGRESS BAR DURING MEETING
 	intVals=new Array();
 	waitVals=new Array();
@@ -246,7 +281,7 @@ function startTimer(){
 	    elapsedTime = elapsedTime + (parseInt($(this).attr('value'))/1000);
 	});
 
-	console.log(elapsedVals);
+	// console.log(elapsedVals);
 
 	$(document).ready(function(){ 
 	    meetingId = $("input[name='meetingId']").attr('value');
@@ -321,7 +356,7 @@ function setAgendaDelay(i, total){
         elapsed =  elapsedVals[i-1];
     }
     var value =  $(progID).attr('value');
-    setTimeout(function(){
+    timerTimeout = setTimeout(function(){
         // console.log("this is the elapsed time: " + parseInt(elapsed));
         // var waitTime = waitVals[i] * 1000 - parseInt(elapsed);
         // console.log("wait: " + waitTime);
@@ -359,7 +394,7 @@ function setAgendaDelay(i, total){
 
             bar.appendTo(barContainer);
             barContainer.appendTo($(this));
-            console.log("the value: " + settings.value);
+            // console.log("the value: " + settings.value);
             var start = new Date();
             var limit = settings.timeLimit * 1000;
             var elapsed = new Date() - start + parseInt(settings.elapsed);
@@ -374,14 +409,14 @@ function setAgendaDelay(i, total){
                 .addClass(settings.style3);
             }
             if (elapsed >= limit) {
-                    window.clearInterval(interval);
+                    window.clearInterval(timerInterval);
                     bar.removeClass(settings.baseStyle)
                        .removeClass(settings.warningStyle)
                        .addClass(settings.completeStyle);
 
                     settings.onFinish.call(this);
             }
-            var interval = window.setInterval(function () {
+            timerInterval = window.setInterval(function () {
             elapsed = new Date() - start + parseInt(settings.elapsed);
             // console.log(elapsed);
             bar.height(((elapsed / limit) * 100) + "%");
@@ -395,7 +430,7 @@ function setAgendaDelay(i, total){
                 .addClass(settings.style3);
             }
                 if (elapsed >= limit) {
-                    window.clearInterval(interval);
+                    window.clearInterval(timerInterval);
                     bar.removeClass(settings.baseStyle)
                        .removeClass(settings.warningStyle)
                        .addClass(settings.completeStyle);

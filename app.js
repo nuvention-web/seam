@@ -43,7 +43,7 @@ var app = express();
 var people = {};  
 var meetingsList = {};  
 var queue = {};
-var clients = [];
+var clients = {};
 
 // all environments
 app.configure(function(){
@@ -84,11 +84,12 @@ socket.on("connection", function (client) {
 	    client.emit("update", "You have connected to the server.");
 	    client.emit("update", people[client.id].name + " has logged in.")
 	    client.emit("meetingList", {meetingsList: meetingsList});
-	    clients.push(client); //populate the clients array with the client object
+	    clients[client.id] = {"clientObject" : client}; //populate the clients object array with the client object
 	});
 
-	client.on("startMeeting", function(name, userId, meetingId) {  
-		if (people[client.id].meeting === null) {
+	client.on("startMeeting", function(name, userId, meetingId) {
+		var meeting = meetingsList[meetingId];
+		if (meetingsList[meetingId] === undefined) {
 			var meeting = new meetingStruct(name, userId, meetingId, client.id);
 			meetingsList[meetingId] = meeting;
 			socket.sockets.emit("meetingList", {meetingsList: meetingsList}); //update the list of rooms on the frontend
@@ -107,9 +108,22 @@ socket.on("connection", function (client) {
  			}
  			var user = people[client.id];
  			delete queue[meetingId];
- 			socket.sockets.in(client.room).emit("meetingStarted", user.name + " has started the meeting.", meetingId);
-		} else {
-			socket.sockets.emit("update", "you have already started meeting");
+ 			socket.sockets.in(client.room).emit("meetingStarted", "meeting has started", meetingId);
+		} else {// meeting has already been made, user most likely accidentally left the room
+			var meeting = meetingsList[meetingId];
+			meeting.owner = client.id;
+			client.room = meetingId; //name the room
+			client.join(client.room); //auto-join the creator to the room
+			meeting.addPerson(client.id); //also add the person to the room object
+			people[client.id].meeting = meetingId; //update the room key with the ID of the created room
+			people[client.id].owns = meetingId;
+			var members = meeting.people;
+			socket.sockets.emit("update", "restarted your meeting");
+			for(var i = 0; i < members.length; i++){
+				var clientId = members[i];
+				clients[members[i]].clientObject.join(client.room);
+			}
+			socket.sockets.in(client.room).emit("meetingRestarted", "meeting has been restarted", meetingId);
 		}
 	});
 
@@ -156,24 +170,59 @@ socket.on("connection", function (client) {
 		client.broadcast.to(client.room).emit("newNoteOrTask", people[client.id], msg, value);
 	});
 
+	client.on("leaveMeetingCreator", function(name, userId, meetingId){
+		var meeting = meetingsList[meetingId];
+		if(meeting){
+			if (client.id === meeting.owner) {// only owner can finish meeting
+				client.room = meeting.meetingId;
+				var user = people[client.id];
+				client.broadcast.to(client.room).emit("creatorLeft", "The owner (" + user.name + ") left the meeting.", meetingId);
+				people[meeting.owner].owns = null; //reset the owns object to null so new meeting can be started
+				socket.sockets.emit("roomList", {meetingsList: meetingsList});
+				meeting.removePerson(client.id);
+				client.emit("update", "you have left the meeting")
+				client.leave(client.room)
+				for(var i = 0; i < meeting.people.length; i++){
+					var clientId = meeting.people[i]
+					var clientObject = clients[clientId].clientObject;
+					clientObject.emit("update", "the owner has left the meeting");
+				}
+			}
+		}
+	});
+
+	client.on("leaveMeetingAttendee", function(name, userId, meetingId){
+		var meeting = meetingsList[meetingId];
+		if(meeting){
+			client.room = meeting.meetingId;
+			var user = people[client.id];
+			client.broadcast.to(client.room).emit("update", user.name + " has left the meeting.", meetingId);
+			socket.sockets.emit("roomList", {meetingsList: meetingsList});
+			meeting.removePerson(client.id);
+			client.emit("update", "you have left the meeting")
+			client.leave(client.room)
+			delete clients[client.id];
+		}
+	});
+
 	client.on("finishMeeting", function(name, userId, meetingId) {  
 		var meeting = meetingsList[meetingId];
 		if(meeting){
 			if (client.id === meeting.owner) {// only owner can finish meeting
 				client.room = meeting.meetingId;
 				var user = people[client.id];
-				var i = 0;
-				while(i < clients.length) {
-			  		if(clients[i].id == meeting.people[i]) {
-			   			clients[i].leave(meeting.meetingId);
-			  		}
-			  		i++;
-				}
-				client.broadcast.to(client.room).emit("finish", "The owner (" + user.name + ") finished the meeting.");
+				client.broadcast.to(client.room).emit("finish", "The owner (" + user.name + ") finished the meeting.", meetingId);
 				delete meetingsList[meetingId];
-				people[meeting.owner].owns = null; //reset the owns object to null so new meeting can be started
+				people[client.id].owns = null; //reset the owns object to null so new meeting can be started
 				socket.sockets.emit("roomList", {meetingsList: meetingsList});
 				client.emit("update", "you have finished the meeting")
+				for(var i = 0; i < meeting.people.length; i++){
+					var clientId = meeting.people[i]
+					var clientObject = clients[clientId].clientObject;
+					clientObject.emit("update", "meeting has been finished, you have left the meeting");
+					clientObject.leave(meeting.meetingId);
+					delete clients[clientId];
+				}
 			}
 		}
 	});

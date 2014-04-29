@@ -15,7 +15,7 @@ $('input[name="timeLeft"]').each(function( index ) {
     elapsedTime = elapsedTime + (parseInt($(this).attr('value'))/1000);
 });
 
-console.log(elapsedVals);
+// console.log(elapsedVals);
 
 $(document).ready(function(){ 
     meetingId = $("input[name='meetingId']").attr('value');
@@ -138,7 +138,7 @@ function setAgendaDelay(i, total){
 
             bar.appendTo(barContainer);
             barContainer.appendTo($(this));
-            console.log("the value: " + settings.value);
+            // console.log("the value: " + settings.value);
             var start = new Date();
             var limit = settings.timeLimit * 1000;
             var elapsed = new Date() - start + parseInt(settings.elapsed);
