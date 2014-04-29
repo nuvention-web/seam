@@ -14,4 +14,11 @@ meetingStruct.prototype.addPerson = function(personID) {
   }
 };
 
+meetingStruct.prototype.removePerson = function(personID) {  
+  var index = this.people.indexOf(personID);
+  if(index > -1){
+    this.people.splice(index, 1);
+  }
+};
+
 module.exports = meetingStruct;
