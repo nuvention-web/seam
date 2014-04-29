@@ -181,7 +181,7 @@ $(document).ready(function(){
 						$('#taskName' + value)[0].value = '';
 						$('#notes' + value)[0].focus();
 					}
-					socket.emit("send", taskAssignee, task, value, meetingId);
+					socket.emit("sendTask", taskAssignee, task, value, meetingId);
 				}                
 			}
 		});
