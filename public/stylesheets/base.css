@@ -83,6 +83,12 @@ i{
 a{
 	font-size:12px;
 }
+.text-open-sans{
+	font-family: 'Open Sans', 'sans-serif' !important;
+}
+.text-merriweather{
+	font-family: 'Merriweather', 'serif';
+}
 a:hover{
 	color:rgb(204,51,51);
 	text-decoration:none;
@@ -305,6 +311,9 @@ textarea{
 .text-50x{
 	font-size:50px;
 }
+.text-40x{
+	font-size:40px;
+}
 .text-35x{
 	font-size:35px;
 }
@@ -375,12 +384,12 @@ textarea{
 	position:absolute;
 	top:0;
 	height:100%;
-	width:40%;
+	width:100%;
 	z-index: 99;
 	background: -webkit-linear-gradient(right, rgba(255,255,255,0), rgba(50,50,50bg,1)); /* For Safari 5.1 to 6.0 */
 	background: -o-linear-gradient(left, rgba(255,255,255,0), rgba(50,50,50,1)); /* For Opera 11.1 to 12.0 */
 	background: -moz-linear-gradient(left, rgba(255,255,255,0), rgba(50,50,50,1)); /* For Firefox 3.6 to 15 */
-	background: linear-gradient(to left, rgba(255,255,255,0), rgba(80,80,80,1)); /* Standard syntax (must be last) */
+	background: linear-gradient(to left, rgba(255,255,255,0), rgba(50,50,50,1)); /* Standard syntax (must be last) */
 }
 .bg-jo{
 	background: url(../images/joLee.jpg) no-repeat;
@@ -623,6 +632,9 @@ textarea{
 }
 .margin-top-10p{
 	margin-top:10%;
+}
+.margin-top-12p{
+	margin-top:12%;
 }
 .margin-top-15p{
 	margin-top:15%;
