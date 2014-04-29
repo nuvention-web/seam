@@ -147,12 +147,6 @@ exports.updateMeeting = function(req, res){
 		}
 	}
 
-
-	newMeeting.attendees.push({
-		attendeeName: creatorName,
-		attendeeEmail: creatorEmail.toLowerCase()
-	});
-
 	if(attendeeNames != undefined){	
 		if(typeof attendeeNames == 'string'){
 			meetingData.attendees.push({
@@ -171,7 +165,7 @@ exports.updateMeeting = function(req, res){
 			};
 		}
 	}
-
+	
 	var update = { $set: meetingData };
 	var options = { upsert: true };	
 
