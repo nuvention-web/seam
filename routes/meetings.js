@@ -129,7 +129,8 @@ exports.updateMeeting = function(req, res){
 			meetingData.agenda.push({
 				topic: agenda,
 				duration: duration,
-				notes: [{notes: notes}]
+				notes: [{notes: notes}],
+				timeLeft: 0
 			});
 		}
 		else{
@@ -140,7 +141,8 @@ exports.updateMeeting = function(req, res){
 					meetingData.agenda.push({
 						topic: agenda[i],
 						duration: duration[i],
-						notes: [{notes: notes[i]}]
+						notes: [{notes: notes[i]}],
+						timeLeft: 0
 					});
 				}
 			};
