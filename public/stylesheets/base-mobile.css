@@ -497,7 +497,7 @@ textarea{
 	bottom: 0px;
 }
 .float-left{
-	float: left;
+	float: none;
 	margin: auto;
 }
 .float-right{
@@ -805,6 +805,10 @@ textarea{
 /* ========================================================
    1C.IMAGES-DESKTOP
 =========================================================== */
+.img-18p{
+	width:20px;
+	height:20px;
+}
 .img-8p{
 	width:8%;
 	height:8%;
