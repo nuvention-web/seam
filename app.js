@@ -189,6 +189,7 @@ app.get('/survey', landingPage.survey);
 app.post('/addSurvey', landingPage.addSurvey);
 app.post('/addEmail', landingPage.addEmail);
 app.post('/contactForm', landingPage.contactForm);
+app.post('/feedbackForm', dashboard.feedbackForm);
 //Dashboard
 app.get('/dashboard', user.isLoggedIn, dashboard.dashboard);
 app.get('/dashboard/contact', user.isLoggedIn, dashboard.contact);

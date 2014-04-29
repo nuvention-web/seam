@@ -1,7 +1,7 @@
 var mongoose = require('mongoose');
 var Meeting = require('../models/meeting-model');
 var Project = require('../models/project-model');
-
+var nodemailer = require('nodemailer');
 // exports.dashboard = function(req, res){
 // 	res.render('loggedIn/dashboard/welcome', { 
 // 		title: 'SEAM',
@@ -25,6 +25,41 @@ exports.contact = function(req, res){
 	res.render('loggedIn/dashboard/contact', { title: 'SEAM',
 		name: req.session.name,
 		user : req.session.userId});
+};
+exports.feedbackForm = function(req, res){
+	console.log("hi");
+	var names = req.body.names;
+	var emails = req.body.email;
+	var comments = req.body.comments;
+	var smptpConfig;
+	//email function
+	smtpConfig = nodemailer.createTransport('SMTP', {
+	service: 'Gmail',
+	auth: {
+		user: "seammeetingscontact@gmail.com",
+	 	pass: "123456789a!"
+	}
+	 });
+	emailBody = {
+		 	from: "SEAM Meetings <seammeetingscontact@gmail.com>",
+			to: 'miketychen@gmail.com',
+		 	subject: '[SEAM] Feedback: '+names,
+		 	text: 'Name: '+names+'\nEmail: '+ emails+'\nComments: '+comments
+	 };
+	//send Email
+	 smtpConfig.sendMail(emailBody, function (error, response) {
+	//Email not sent
+ 	if (error) {
+		res.end("Email Failed");
+ 	}
+ 	//email send sucessfully
+	else {
+		res.end("Email Successfully");
+ 	}
+
+ });
+
+	res.redirect('/dashboard');
 };
 exports.dashboard = function(req, res){
 
