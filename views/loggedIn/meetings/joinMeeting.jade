@@ -93,7 +93,9 @@ block content
 												h5.text-black.text-left #{note.notes}
 									div#allTasks
 										each task, i in agenda.tasks
-											h5.text-black.text-left @#{task.assigneeName}#{task.task}
+											h5.text-left.text-blue.margin-right-2p
+												span.text-h5.text-normal.text-blue @#{task.assigneeName}
+												| ----- #{task.task}
 								form(role='form', method='POST', name='TNForm', action='/dashboard/meetings/start/addNote', value='#{i}', id='TNForm#{i}')
 									input(type='hidden', name='noteOrder', value='#{i}')
 									div.container-95p.margin-top-2p

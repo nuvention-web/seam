@@ -38,28 +38,30 @@ $(document).ready(function(){
 		// socket.emit("updateTimer", elapsedTimeArray, meetingId);
 	});
 
-	socket.on("newNoteOrTask", function(msg, value, Id){
+	socket.on("newNote", function(note, value, Id){
 		if(meetingId === Id){
-			console.log(msg);
-			if(msg[0] == '@'){
-				if(notesList[value] == undefined){
-					allTasks.innerHTML += '<h5 class="text-left text-blue margin-right-2p">' + msg + '</h5>';
-					notesList.scrollTop = notesList.scrollHeight;
-				}
-				else{
-					allTasks[value].innerHTML += '<h5 class="text-left text-blue margin-right-2p">' + msg + '</h5>';
-					notesList[value].scrollTop = notesList[value].scrollHeight;
-				}
+			console.log(note);
+			if(notesList[value] == undefined){
+				allNotes.innerHTML += '<h5 class="text-left margin-right-2p ">' + note + '</h5>';
+				notesList.scrollTop = notesList.scrollHeight;
 			}
 			else{
-				if(notesList[value] == undefined){
-					allNotes.innerHTML += '<h5 class="text-left margin-right-2p ">' + msg + '</h5>';
-					notesList.scrollTop = notesList.scrollHeight;
-				}
-				else{
-					allNotes[value].innerHTML += '<h5 class="text-left margin-right-2p">' + msg + '</h5>';
-					notesList[value].scrollTop = notesList[value].scrollHeight;
-				}
+				allNotes[value].innerHTML += '<h5 class="text-left margin-right-2p">' + note + '</h5>';
+				notesList[value].scrollTop = notesList[value].scrollHeight;
+			}
+		}
+	});
+
+	socket.on("newTask", function(taskAssignee, task, value, Id){
+		if(meetingId === Id){
+			console.log(taskAssignee + task);
+			if(notesList[value] == undefined){
+				allTasks.innerHTML += '<h5 class="text-left text-blue margin-right-2p"> <span class="text-h5 text-normal text-blue">@ ' + taskAssignee + '</span> ----- '+task + ' </h5>';
+				notesList.scrollTop = notesList.scrollHeight;
+			}
+			else{
+				allTasks[value].innerHTML += '<h5 class="text-left text-blue margin-right-2p"> <span class="text-h5 text-normal text-blue">@ ' + taskAssignee + '</span> ----- '+task + ' </h5>';
+				notesList[value].scrollTop = notesList[value].scrollHeight;
 			}
 		}
 	});
@@ -162,7 +164,7 @@ $(document).ready(function(){
 						notesList[value].scrollTop = notesList[value].scrollHeight;
 						$('#notes' + value)[0].value = '';
 					}
-					socket.emit("send",  notes, value, meetingId);
+					socket.emit("sendNote", notes, value, meetingId);
 				}
 				else{
 					if(notesList[value] == undefined){
@@ -173,13 +175,13 @@ $(document).ready(function(){
 						$('#notes' + value)[0].focus();
 					}
 					else{
-						allTasks[value].innerHTML += '<h5 class="text-left text-blue margin-right-2p"> @ ' + taskAssignee +' '+task + ' </h5>';
+						allTasks[value].innerHTML += '<h5 class="text-left text-blue margin-right-2p"> <span class="text-h5 text-normal text-blue">@ ' + taskAssignee + '</span> ----- '+task + ' </h5>';
 						notesList[value].scrollTop = notesList[value].scrollHeight;
 						$('#taskAssignee' + value)[0].value = '';
 						$('#taskName' + value)[0].value = '';
 						$('#notes' + value)[0].focus();
 					}
-					socket.emit("send",  '@ ' + taskAssignee + ' ' + task, value, meetingId);
+					socket.emit("send", taskAssignee, task, value, meetingId);
 				}                
 			}
 		});
