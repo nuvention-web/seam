@@ -118,12 +118,12 @@ socket.on("connection", function (client) {
 			people[client.id].meeting = meetingId; //update the room key with the ID of the created room
 			people[client.id].owns = meetingId;
 			var members = meeting.people;
-			socket.sockets.emit("update", "restarted your meeting");
+			client.emit('meetingRestarted', 'you have restarted your meeting', meetingId);
 			for(var i = 0; i < members.length; i++){
 				var clientId = members[i];
 				clients[members[i]].clientObject.join(client.room);
 			}
-			socket.sockets.in(client.room).emit("meetingRestarted", "meeting has been restarted", meetingId);
+			socket.sockets.in(client.room).emit("meetingRestarted", "meeting has been restarted by creator", meetingId);
 		}
 	});
 

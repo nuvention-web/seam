@@ -8,13 +8,13 @@ $(document).ready(function(){
 	meetingId = $("input[name='meetingId']").attr('value');
 
 	window.onbeforeunload = function(){
-		return;
+		return "Navigating away from meeting";
 	};
 
 	window.onunload = function(){
 		socket.emit("leaveMeetingAttendee", name, userId, meetingId);
 		console.log("you just left the meeting");
-	}
+	};
 
 	socket.emit("join", name, userId);
 
@@ -33,7 +33,7 @@ $(document).ready(function(){
 		$("textarea").prop("disabled", true);
 	});
 
-	socket.on("meetingStarted", function(msg, Id){
+	socket.on("meetingStarted", function(msg, Id, elapsed){
 		console.log(msg);
 
 		if(meetingId === Id){
@@ -41,12 +41,27 @@ $(document).ready(function(){
 				{className: "success", autoHideDelay: 5000, globalPosition: 'top center'}
 			);
 			startTimer();
+			$('button[name="leave"]').hide();
 			$(":input").prop("disabled", false);
 			$("textarea").prop("disabled", false);
 		}
 	});
 
-	socket.on("creatorLeft", fucntion(msg, Id){
+	socket.on("meetingRestarted", function(msg, Id){
+		console.log(msg);
+
+		if(meetingId === Id){
+			$.notify(msg.toUpperCase(),
+				{className: "success", autoHideDelay: 5000, globalPosition: 'top center'}
+			);
+			startTimer();
+			$('button[name="leave"]').hide();
+			$(":input").prop("disabled", false);
+			$("textarea").prop("disabled", false);
+		}
+	});
+
+	socket.on("creatorLeft", function(msg, Id){
 		if(meetingId === Id){
 			console.log(msg);
 			$.notify("CREATOR HAS LEFT THE MEETING",
@@ -65,6 +80,9 @@ $(document).ready(function(){
 	socket.on("finish", function(msg, Id){
 		if(meetingId === Id){
 			console.log(msg);
+			$.notify("CREATOR HAS FINISHED THE MEETING",
+				{className: "success", autoHideDelay: 10000, globalPosition: 'top center'}
+			);
 			$('#countdownTimer').countdown('pause');
 			window.clearInterval(timerInterval);
 			$('button[name="leave"]').show();
@@ -260,22 +278,24 @@ function getWeekFromNow(){
 
 	today = mm + '/' + dd + '/' + yyyy;
 	return today;
-}
+};
 
 function leaveMeeting(){
-	window.onbeforeunload = function(){
-	};
-	var url = location.protocol + "//" + location.host + '/dashboard';
-	socket.emit('leaveMeetingAttendee', name, userId, meetingId);
-}
+	window.onbeforeunload = function(){};
+	window.location = window.location.origin + "/dashboard"
+};
 
-function startTimer(elapsed){
+function startTimer(){
 	//FUNCTIONS FOR PROGRESS BAR DURING MEETING
 	intVals=new Array();
 	waitVals=new Array();
 	elapsedVals = new Array(); //in milliseconds
 	elapsedTime = 0; //in seconds
-	// elapsedVals[0] = 0;
+	elapsedVals[0] = 0;
+
+	// for(var i = 0; i < elapsedVals.length; i++){
+	// 	elapsedTime = elapsedTime + elapsedVals[i];
+	// }
 	$('input[name="timeLeft"]').each(function( index ) {
 	    elapsedVals[index] = $(this).attr('value');
 	    elapsedTime = elapsedTime + (parseInt($(this).attr('value'))/1000);
@@ -338,7 +358,7 @@ function startTimer(elapsed){
 	    //ENDING AGENDA ITEM
 	    $('#countdownTimer').countdown({until: intVals[0]-elapsedTime,compact: true,format: 'MS'});
 	});
-}
+};
 
 function setAgendaDelay(i, total){
     var prev=i-1;
@@ -373,7 +393,7 @@ function setAgendaDelay(i, total){
             $(progID).progressBar({timeLimit: timeLimits,limit:intVals, elapsed: elapsed, value: value})
         }
     }, (waitVals[i]-elapsedTime) * 1000 );
-}
+};
 
 
 (function ($) {
