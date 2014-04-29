@@ -169,7 +169,7 @@ textarea{
 	text-justify:inter-word;
 }
 .text-shadow{
-	text-shadow: 2px 2px rgb(100,100,100);
+	text-shadow: 1px 1px rgb(0,0,0);
 }
 .text-white{
 	color:rgb(255,255,255) !important;
@@ -343,7 +343,7 @@ textarea{
 	background-size: cover;
 }
 .bg-frontpg-2{
-	background: url(../images/bg-landing.jpg) no-repeat center center fixed;
+	background: url(../images/bg-video.jpg) no-repeat center center fixed;
 	-webkit-background-size: cover;
 	-moz-background-size: cover;
 	-o-background-size: cover;
@@ -835,8 +835,8 @@ textarea{
 	height:8%;
 }
 .img-18p{
-	width:18%;
-	height:18%;
+	width:50px;
+	height:50px;
 }
 .img-10p{
 	width:10%;
@@ -1116,6 +1116,7 @@ textarea{
 .navbar{
 	z-index: 59;
 	background-color: none !important;
+	border:none;
 	box-shadow: 1px solid rgb(0,0,0) !important;
 }
 .navbar .nav > li > a {
