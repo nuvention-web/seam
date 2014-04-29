@@ -38,6 +38,7 @@ exports.addEmail = function(req, res){
 	);
 };
 exports.contactForm = function(req, res){
+	console.log("hi");
 	var names = req.body.names;
 	var emails = req.body.email;
 	var comments = req.body.comments;
