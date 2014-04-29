@@ -147,14 +147,13 @@ exports.updateMeeting = function(req, res){
 		}
 	}
 
-
-	newMeeting.attendees.push({
-		attendeeName: creatorName,
-		attendeeEmail: creatorEmail.toLowerCase()
-	});
+	var creatorNotIn = true;
 
 	if(attendeeNames != undefined){	
 		if(typeof attendeeNames == 'string'){
+			if(attendeeNames == creatorName){
+				creatorNotIn = false;
+			}
 			meetingData.attendees.push({
 				attendeeName: attendeeNames,
 				attendeeEmail: attendeeEmails.toLowerCase()
@@ -163,6 +162,9 @@ exports.updateMeeting = function(req, res){
 		else{
 			for(var i=0; i<attendeeNames.length; i++){
 				if(attendeeNames[i] != ''){
+					if(attendeeNames[i] == creatorName){
+						creatorNotIn = false;
+					}
 					meetingData.attendees.push({
 						attendeeName: attendeeNames[i],
 						attendeeEmail: attendeeEmails[i].toLowerCase()
@@ -170,6 +172,13 @@ exports.updateMeeting = function(req, res){
 				}
 			};
 		}
+	}
+
+	if(creatorNotIn){
+		meetingData.attendees.push({
+			attendeeName: creatorName,
+			attendeeEmail: creatorEmail.toLowerCase()
+		});
 	}
 
 	var update = { $set: meetingData };
