@@ -1,9 +1,9 @@
- $(document).ready(function(){ 
-    $('body').on('keypress', '.noEnterSubmit', function(e){ 
-           if ( e.which == 13 ) {e.preventDefault();}
+//  $(document).ready(function(){ 
+//     $('body').on('keypress', '.noEnterSubmit', function(e){ 
+//            if ( e.which == 13 ) {e.preventDefault();}
 
-    });
-});
+//     });
+// });
 //FUNCTIONS FOR PROGRESS BAR DURING MEETING
 // var intVals=new Array();
 // var waitVals=new Array();

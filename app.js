@@ -123,7 +123,7 @@ socket.on("connection", function (client) {
 				var clientId = members[i];
 				clients[members[i]].clientObject.join(client.room);
 			}
-			socket.sockets.in(client.room).emit("meetingRestarted", "meeting has been restarted by creator", meetingId);
+			socket.sockets.to(client.room).emit("meetingRestarted", "meeting has been restarted by creator", meetingId);
 		}
 	});
 
@@ -167,8 +167,14 @@ socket.on("connection", function (client) {
 	});
  
 	client.on("send", function(msg, value, meetingId) {
-		client.broadcast.to(client.room).emit("newNoteOrTask", people[client.id], msg, value);
+		client.room = meetingId;
+		client.broadcast.to(client.room).emit("newNoteOrTask", msg, value, meetingId);
 	});
+
+	// client.on("updateTimer", function(elapsedTimeArray, meetingId){
+	// 	client.room = meetingId;
+	// 	client.broadcast.to(client.room).emit("newTime", elapsedTimeArray, "syncing time with creator time", meetingId);
+	// });
 
 	client.on("leaveMeetingCreator", function(name, userId, meetingId){
 		var meeting = meetingsList[meetingId];

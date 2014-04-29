@@ -1,6 +1,11 @@
 
 $(document).ready(function(){
 //FUNCTIONS FOR ASYNC UPDATE OF MEETINGS
+	
+	$('body').on('keypress', '.noEnterSubmit', function(e){ 
+           if ( e.which == 13 ) {e.preventDefault();}
+    });
+
 	socket = io.connect("127.0.0.1:3000");
 	// socket = io.connect("http://www.getseam.co");
 	name = $("input[name='name']").attr('value');
@@ -9,10 +14,10 @@ $(document).ready(function(){
 
 	startTimer();
 
-	elapsed = new Array;
+	// elapsedTimeArray;
 
 	window.onbeforeunload = function(){
-		return "Leaving meeting, attendees still in meeting will not be able to edit the agenda.";
+		return "You are about to leave an unfinished meeting. Attendees still in meeting will not be able to edit the agenda.";
 	};
 
 	window.onunload = function(){
@@ -22,43 +27,48 @@ $(document).ready(function(){
 
 	socket.emit("join", name, userId);
 
-	socket.emit("startMeeting", name, userId, meetingId);
-
-	socket.on("meetingRestarted", function(msg, Id, meetingId){
-		console.log(msg);
-		socket.emit("timeUpdate", elapsed);
-	});
-
-
 	socket.on("update", function(msg){
 		console.log(msg);
 	});
 
-	socket.on("newNoteOrTask", function(who, msg, value){
+	socket.emit("startMeeting", name, userId, meetingId);
+
+	socket.on("meetingRestarted", function(msg, Id, meetingId){
 		console.log(msg);
-		if(msg[0] == '@'){
-			if(notesList[value] == undefined){
-				allTasks.innerHTML += '<h5 class="text-left text-blue margin-right-2p">' + msg + '</h5>';
-				notesList.scrollTop = notesList.scrollHeight;
+		// socket.emit("updateTimer", elapsedTimeArray, meetingId);
+	});
+
+	socket.on("newNoteOrTask", function(msg, value, Id){
+		if(meetingId === Id){
+			console.log(msg);
+			if(msg[0] == '@'){
+				if(notesList[value] == undefined){
+					allTasks.innerHTML += '<h5 class="text-left text-blue margin-right-2p">' + msg + '</h5>';
+					notesList.scrollTop = notesList.scrollHeight;
+				}
+				else{
+					allTasks[value].innerHTML += '<h5 class="text-left text-blue margin-right-2p">' + msg + '</h5>';
+					notesList[value].scrollTop = notesList[value].scrollHeight;
+				}
 			}
 			else{
-				allTasks[value].innerHTML += '<h5 class="text-left text-blue margin-right-2p">' + msg + '</h5>';
-				notesList[value].scrollTop = notesList[value].scrollHeight;
-			}
-		}
-		else{
-			if(notesList[value] == undefined){
-				allNotes.innerHTML += '<h5 class="text-left margin-right-2p ">' + msg + '</h5>';
-				notesList.scrollTop = notesList.scrollHeight;
-			}
-			else{
-				allNotes[value].innerHTML += '<h5 class="text-left margin-right-2p">' + msg + '</h5>';
-				notesList[value].scrollTop = notesList[value].scrollHeight;
+				if(notesList[value] == undefined){
+					allNotes.innerHTML += '<h5 class="text-left margin-right-2p ">' + msg + '</h5>';
+					notesList.scrollTop = notesList.scrollHeight;
+				}
+				else{
+					allNotes[value].innerHTML += '<h5 class="text-left margin-right-2p">' + msg + '</h5>';
+					notesList[value].scrollTop = notesList[value].scrollHeight;
+				}
 			}
 		}
 	});
 
-	console.log('name: ' + name + ' user: ' + userId + ' meetingId: ' + meetingId);
+	// var updateTimerAsync = setInterval(function(){
+	// 	socket.emit("updateTimer", elapsedTimeArray, meetingId);
+	// }, 30000);
+
+	// console.log('name: ' + name + ' user: ' + userId + ' meetingId: ' + meetingId);
 
 	// array used for autocomplete
 	var attendeeTags = new Array();
@@ -122,7 +132,7 @@ $(document).ready(function(){
 	$('form[name="TNForm"]').submit(function(event){
 		var value = $(this).attr('value');
 		var formData = $("#TNForm" + value).serializeArray();
-		console.log(formData);
+		// console.log(formData);
 		var notes = formData[1].value;
 		var taskAssignee = formData[2].value;
 		var task = formData[3].value;
@@ -152,7 +162,7 @@ $(document).ready(function(){
 						notesList[value].scrollTop = notesList[value].scrollHeight;
 						$('#notes' + value)[0].value = '';
 					}
-					socket.emit("send",  notes, value);
+					socket.emit("send",  notes, value, meetingId);
 				}
 				else{
 					if(notesList[value] == undefined){
@@ -169,7 +179,6 @@ $(document).ready(function(){
 						$('#taskName' + value)[0].value = '';
 						$('#notes' + value)[0].focus();
 					}
-
 					socket.emit("send",  '@ ' + taskAssignee + ' ' + task, value, meetingId);
 				}                
 			}
@@ -269,63 +278,62 @@ function startTimer(){
 	    elapsedTime = elapsedTime + (parseInt($(this).attr('value'))/1000);
 	});
 
-	elapsed = elapsedVals;
+	// elapsedTimeArray = elapsedVals;
 
-	$(document).ready(function(){ 
-	    meetingId = $("input[name='meetingId']").attr('value');
-	    $.notify.defaults({ className: "success" ,globalPosition:"top center" });
-	    var timer= $('#progressValues').val();
-	    var strVals=timer.split(',');
-	    
-	    for(var i = 0; i < strVals.length; i++){
-	        intVals[i] =parseInt(strVals[i]);
-	        waitVals[i]=0;
-	        intVals[i] *=60;
-	         if(i>1){
-	            intVals[i] =parseInt(strVals[i])*60;
-	            waitVals[i]=intVals[i-1]+waitVals[i-1];
-	         }
-	    };
-	   waitVals[strVals.length]=intVals[0];
-	   //SET AGENDA ITEM TIMEOUTSattendeeMinimize
+	// console.log("This is elapsed time:" + elapsedTimeArray);
 
-	     $('#attendeeMinimize').each(function() {
-	                var tis = $(this);
-	                var state = false;
-	                var hiddenBox= tis.next('div');
-	                if(i>1)
-	                    hiddenBox.hide().css('height','auto').slideUp();
-	            tis.click(function() {
-	              state = !state;
-	              toggleID=tis.next('.answer');
-	              toggleID.slideToggle(state);
-	              hiddenBox.slideToggle(state);
-	              tis.toggleClass('active',state);
-	            });
-	          });
+    $.notify.defaults({ className: "success" ,globalPosition:"top center" });
+    var timer= $('#progressValues').val();
+    var strVals=timer.split(',');
+    
+    for(var i = 0; i < strVals.length; i++){
+        intVals[i] =parseInt(strVals[i]);
+        waitVals[i]=0;
+        intVals[i] *=60;
+         if(i>1){
+            intVals[i] =parseInt(strVals[i])*60;
+            waitVals[i]=intVals[i-1]+waitVals[i-1];
+         }
+    };
+   waitVals[strVals.length]=intVals[0];
+   //SET AGENDA ITEM TIMEOUTSattendeeMinimize
+
+     $('#attendeeMinimize').each(function() {
+                var tis = $(this);
+                var state = false;
+                var hiddenBox= tis.next('div');
+                if(i>1)
+                    hiddenBox.hide().css('height','auto').slideUp();
+            tis.click(function() {
+              state = !state;
+              toggleID=tis.next('.answer');
+              toggleID.slideToggle(state);
+              hiddenBox.slideToggle(state);
+              tis.toggleClass('active',state);
+            });
+          });
 
 
 
-	    for(var i=1; i<=strVals.length;i++){
-	       $('#agendaItem'+i).each(function() {
-	                var tis = $(this);
-	                var state = false;
-	                var hiddenBox= tis.next('div');
-	                if(i>1)
-	                    hiddenBox.hide().css('height','auto').slideUp();
-	            tis.click(function() {
-	              state = !state;
-	              toggleID=tis.next('.answer');
-	              toggleID.slideToggle(state);
-	              hiddenBox.slideToggle(state);
-	              tis.toggleClass('active',state);
-	            });
-	          });
-	        setAgendaDelay(i, strVals.length);
-	    };
-	    //ENDING AGENDA ITEM
-	    $('#countdownTimer').countdown({until: intVals[0]-elapsedTime,compact: true,format: 'MS'});
-	});
+    for(var i=1; i<=strVals.length;i++){
+       $('#agendaItem'+i).each(function() {
+                var tis = $(this);
+                var state = false;
+                var hiddenBox= tis.next('div');
+                if(i>1)
+                    hiddenBox.hide().css('height','auto').slideUp();
+            tis.click(function() {
+              state = !state;
+              toggleID=tis.next('.answer');
+              toggleID.slideToggle(state);
+              hiddenBox.slideToggle(state);
+              tis.toggleClass('active',state);
+            });
+          });
+        setAgendaDelay(i, strVals.length);
+    };
+    //ENDING AGENDA ITEM
+    $('#countdownTimer').countdown({until: intVals[0]-elapsedTime,compact: true,format: 'MS'});
 };
 
 
@@ -439,14 +447,19 @@ function setAgendaDelay(i, total){
 
                     settings.onFinish.call(this);
                 }
+           
+            // elapsedTimeArray[parseInt(settings.value) + 1] = elapsed;
+
+            // console.log("Inside timeout function of elapsed: " + elapsedTimeArray);
+
             $.ajax({
                 type: "POST",
                 url: url,
                 data: data,
                 success: function(data){
-                    console.log("updated the time");
+                    // console.log("updated the time");
                 }
-            })
+            });
             }, 6000);
 
         });

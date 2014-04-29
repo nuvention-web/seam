@@ -1,11 +1,24 @@
 //FUNCTIONS FOR ASYNC UPDATE OF MEETINGS
 $(document).ready(function(){
 
+	$('body').on('keypress', '.noEnterSubmit', function(e){ 
+           if ( e.which == 13 ) {e.preventDefault();}
+    });
+
 	socket = io.connect("127.0.0.1:3000");
 	// socket = io.connect("http://www.getseam.co");
 	name = $("input[name='name']").attr('value');
 	userId = $("input[name='userId']").attr('value');
 	meetingId = $("input[name='meetingId']").attr('value');
+
+	elapsedVals = new Array(); //in milliseconds
+	elapsedTime = 0; //in seconds
+	elapsedVals[0] = 0;
+
+	$('input[name="timeLeft"]').each(function( index ) {
+	    elapsedVals[index] = $(this).attr('value');
+	    elapsedTime = elapsedTime + (parseInt($(this).attr('value'))/1000);
+	});
 
 	window.onbeforeunload = function(){
 		return "Navigating away from meeting";
@@ -24,6 +37,24 @@ $(document).ready(function(){
 		console.log(msg);
 	});
 
+	// socket.on("newTime", function(newTimerArray, msg, Id){
+	// 	if(meetingId === Id){
+	// 		console.log("new time array: " + newTimerArray);
+	// 		console.log(msg);
+	// 		window.clearInterval(timerInterval);
+	// 		window.clearTimeout(timerTimeout);
+	// 		elapsedVals[0] = 0 
+	// 		for(var i = 0; 1 < newTimerArray.length; i++){
+	// 			elapsedVals[i+1] = newTimerArray[i];
+	// 		}
+	// 		elapsedTime = 0;
+	// 		for(var i = 1; i < elapsedVals.length; i++){
+	// 			elapsedTime = elapsedTime + elapsedVals[i];
+	// 		}
+	// 		startTimer();
+	// 	}
+	// });
+
 	socket.on("joinFailure", function(msg){
 		console.log(msg);
 		$.notify("MEETING HAS NOT BEEN STARTED YET",
@@ -33,7 +64,7 @@ $(document).ready(function(){
 		$("textarea").prop("disabled", true);
 	});
 
-	socket.on("meetingStarted", function(msg, Id, elapsed){
+	socket.on("meetingStarted", function(msg, Id){
 		console.log(msg);
 
 		if(meetingId === Id){
@@ -54,10 +85,14 @@ $(document).ready(function(){
 			$.notify(msg.toUpperCase(),
 				{className: "success", autoHideDelay: 5000, globalPosition: 'top center'}
 			);
-			startTimer();
-			$('button[name="leave"]').hide();
-			$(":input").prop("disabled", false);
-			$("textarea").prop("disabled", false);
+			
+			window.onbeforeunload = function(){
+				return "Meeting creator restarted meeting. Must confirm and reload page to rejoin meeting.";
+			};
+			location.reload(true);
+			// $('button[name="leave"]').hide();
+			// $(":input").prop("disabled", false);
+			// $("textarea").prop("disabled", false);
 		}
 	});
 
@@ -92,26 +127,30 @@ $(document).ready(function(){
 		}
 	});
 
-	socket.on("newNoteOrTask", function(who, msg, value){
-		console.log(msg);
-		if(msg[0] == '@'){
-			if(notesList[value] == undefined){
-				allTasks.innerHTML += '<h5 class="text-left text-blue margin-right-2p">' + msg + '</h5>';
-				notesList.scrollTop = notesList.scrollHeight;
+	socket.on("newNoteOrTask", function(msg, value, Id){
+		console.log("received new note or task");
+		console.log("meetingId: " + meetingId + " Id: " + Id);
+		if(meetingId === Id){
+			console.log(msg);
+			if(msg[0] == '@'){
+				if(notesList[value] == undefined){
+					allTasks.innerHTML += '<h5 class="text-left text-blue margin-right-2p">' + msg + '</h5>';
+					notesList.scrollTop = notesList.scrollHeight;
+				}
+				else{
+					allTasks[value].innerHTML += '<h5 class="text-left text-blue margin-right-2p">' + msg + '</h5>';
+					notesList[value].scrollTop = notesList[value].scrollHeight;
+				}
 			}
 			else{
-				allTasks[value].innerHTML += '<h5 class="text-left text-blue margin-right-2p">' + msg + '</h5>';
-				notesList[value].scrollTop = notesList[value].scrollHeight;
-			}
-		}
-		else{
-			if(notesList[value] == undefined){
-				allNotes.innerHTML += '<h5 class="text-left margin-right-2p ">' + msg + '</h5>';
-				notesList.scrollTop = notesList.scrollHeight;
-			}
-			else{
-				allNotes[value].innerHTML += '<h5 class="text-left margin-right-2p">' + msg + '</h5>';
-				notesList[value].scrollTop = notesList[value].scrollHeight;
+				if(notesList[value] == undefined){
+					allNotes.innerHTML += '<h5 class="text-left margin-right-2p ">' + msg + '</h5>';
+					notesList.scrollTop = notesList.scrollHeight;
+				}
+				else{
+					allNotes[value].innerHTML += '<h5 class="text-left margin-right-2p">' + msg + '</h5>';
+					notesList[value].scrollTop = notesList[value].scrollHeight;
+				}
 			}
 		}
 	});
@@ -210,7 +249,7 @@ $(document).ready(function(){
 						notesList[value].scrollTop = notesList[value].scrollHeight;
 						$('#notes' + value)[0].value = '';
 					}
-					socket.emit("send",  notes, value);
+					socket.emit("send",  notes, value, meetingId);
 				}
 				else{
 					if(notesList[value] == undefined){
@@ -289,75 +328,60 @@ function startTimer(){
 	//FUNCTIONS FOR PROGRESS BAR DURING MEETING
 	intVals=new Array();
 	waitVals=new Array();
-	elapsedVals = new Array(); //in milliseconds
-	elapsedTime = 0; //in seconds
-	elapsedVals[0] = 0;
-
-	// for(var i = 0; i < elapsedVals.length; i++){
-	// 	elapsedTime = elapsedTime + elapsedVals[i];
-	// }
-	$('input[name="timeLeft"]').each(function( index ) {
-	    elapsedVals[index] = $(this).attr('value');
-	    elapsedTime = elapsedTime + (parseInt($(this).attr('value'))/1000);
-	});
 
 	// console.log(elapsedVals);
+    $.notify.defaults({ className: "success" ,globalPosition:"top center" });
+    var timer= $('#progressValues').val();
+    var strVals=timer.split(',');
+    
+    for(var i = 0; i < strVals.length; i++){
+        intVals[i] =parseInt(strVals[i]);
+        waitVals[i]=0;
+        intVals[i] *=60;
+         if(i>1){
+            intVals[i] =parseInt(strVals[i])*60;
+            waitVals[i]=intVals[i-1]+waitVals[i-1];
+         }
+    };
+   waitVals[strVals.length]=intVals[0];
+   //SET AGENDA ITEM TIMEOUTSattendeeMinimize
 
-	$(document).ready(function(){ 
-	    meetingId = $("input[name='meetingId']").attr('value');
-	    $.notify.defaults({ className: "success" ,globalPosition:"top center" });
-	    var timer= $('#progressValues').val();
-	    var strVals=timer.split(',');
-	    
-	    for(var i = 0; i < strVals.length; i++){
-	        intVals[i] =parseInt(strVals[i]);
-	        waitVals[i]=0;
-	        intVals[i] *=60;
-	         if(i>1){
-	            intVals[i] =parseInt(strVals[i])*60;
-	            waitVals[i]=intVals[i-1]+waitVals[i-1];
-	         }
-	    };
-	   waitVals[strVals.length]=intVals[0];
-	   //SET AGENDA ITEM TIMEOUTSattendeeMinimize
-
-	     $('#attendeeMinimize').each(function() {
-	                var tis = $(this);
-	                var state = false;
-	                var hiddenBox= tis.next('div');
-	                if(i>1)
-	                    hiddenBox.hide().css('height','auto').slideUp();
-	            tis.click(function() {
-	              state = !state;
-	              toggleID=tis.next('.answer');
-	              toggleID.slideToggle(state);
-	              hiddenBox.slideToggle(state);
-	              tis.toggleClass('active',state);
-	            });
-	          });
+     $('#attendeeMinimize').each(function() {
+                var tis = $(this);
+                var state = false;
+                var hiddenBox= tis.next('div');
+                if(i>1)
+                    hiddenBox.hide().css('height','auto').slideUp();
+            tis.click(function() {
+              state = !state;
+              toggleID=tis.next('.answer');
+              toggleID.slideToggle(state);
+              hiddenBox.slideToggle(state);
+              tis.toggleClass('active',state);
+            });
+          });
 
 
 
-	    for(var i=1; i<=strVals.length;i++){
-	       $('#agendaItem'+i).each(function() {
-	                var tis = $(this);
-	                var state = false;
-	                var hiddenBox= tis.next('div');
-	                if(i>1)
-	                    hiddenBox.hide().css('height','auto').slideUp();
-	            tis.click(function() {
-	              state = !state;
-	              toggleID=tis.next('.answer');
-	              toggleID.slideToggle(state);
-	              hiddenBox.slideToggle(state);
-	              tis.toggleClass('active',state);
-	            });
-	          });
-	        setAgendaDelay(i, strVals.length);
-	    };
-	    //ENDING AGENDA ITEM
-	    $('#countdownTimer').countdown({until: intVals[0]-elapsedTime,compact: true,format: 'MS'});
-	});
+    for(var i=1; i<=strVals.length;i++){
+       $('#agendaItem'+i).each(function() {
+                var tis = $(this);
+                var state = false;
+                var hiddenBox= tis.next('div');
+                if(i>1)
+                    hiddenBox.hide().css('height','auto').slideUp();
+            tis.click(function() {
+              state = !state;
+              toggleID=tis.next('.answer');
+              toggleID.slideToggle(state);
+              hiddenBox.slideToggle(state);
+              tis.toggleClass('active',state);
+            });
+          });
+        setAgendaDelay(i, strVals.length);
+    };
+    //ENDING AGENDA ITEM
+    $('#countdownTimer').countdown({until: intVals[0]-elapsedTime,compact: true,format: 'MS'});
 };
 
 function setAgendaDelay(i, total){
