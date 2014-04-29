@@ -166,9 +166,14 @@ socket.on("connection", function (client) {
 		}
 	});
  
-	client.on("send", function(msg, value, meetingId) {
+	client.on("sendNote", function(note, value, meetingId) {
 		client.room = meetingId;
-		client.broadcast.to(client.room).emit("newNoteOrTask", msg, value, meetingId);
+		client.broadcast.to(client.room).emit("newNote", note, value, meetingId);
+	});
+
+	client.on("sendTask", function(taskAssignee, task, value, meetingId) {
+		client.room = meetingId;
+		client.broadcast.to(client.room).emit("newTask", taskAssignee, task, value, meetingId);
 	});
 
 	// client.on("updateTimer", function(elapsedTimeArray, meetingId){
