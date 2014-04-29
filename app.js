@@ -251,6 +251,7 @@ app.post('/addEmail', landingPage.addEmail);
 app.post('/contactForm', landingPage.contactForm);
 //Dashboard
 app.get('/dashboard', user.isLoggedIn, dashboard.dashboard);
+app.get('/dashboard/contact', user.isLoggedIn, dashboard.contact);
 // app.post('/dashboard', user.isLoggedIn, dashboard.setWelcome);
 // app.get('/dashboard/meetings', user.isLoggedIn, dashboard.meetings);
 

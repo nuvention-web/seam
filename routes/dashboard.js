@@ -21,7 +21,11 @@ var Project = require('../models/project-model');
 // 		});
 // 	})
 // };
-
+exports.contact = function(req, res){
+	res.render('loggedIn/dashboard/contact', { title: 'SEAM',
+		name: req.session.name,
+		user : req.session.userId});
+};
 exports.dashboard = function(req, res){
 
 	var userId = req.session.userId;
