@@ -1,5 +1,6 @@
  $(document).ready(function(){ 
 
+    if(window.innerWidth >= 800 && window.innerHeight >= 600) {
     //Navbar Color Change Function
     var scroll = 0;            
     $(document).scroll(function() { 
@@ -17,7 +18,7 @@
             $(".navbar").css('background-color', 'transparent');
         }
     });
-
+}
     //Navbar Login Fade-In-Out Function
     $('#admin-btn').click(function(){
         $('.visible-login').fadeOut(300);
