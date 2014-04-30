@@ -6,8 +6,8 @@ $(document).ready(function(){
            if ( e.which == 13 ) {e.preventDefault();}
     });
 
-	// socket = io.connect("127.0.0.1:3000");
-	socket = io.connect("http://www.getseam.co");
+	socket = io.connect("127.0.0.1:3000");
+	// socket = io.connect("http://www.getseam.co");
 	name = $("input[name='name']").attr('value');
 	userId = $("input[name='userId']").attr('value');
 	meetingId = $("input[name='meetingId']").attr('value');
@@ -25,11 +25,25 @@ $(document).ready(function(){
 		console.log("you just left the meeting");
 	};
 
-	socket.emit("join", name, userId);
+	socket.emit("join", name, userId, meetingId);
 
 	socket.on("update", function(msg){
 		console.log(msg);
 	});
+
+    socket.on("userJoined", function(msg){
+        console.log(msg);
+        $.notify(msg.toUpperCase(),
+            {className: "info", autoHideDelay: 10000, globalPosition: 'top center'}
+        );
+    });
+
+    socket.on("userLeft", function(msg){
+        console.log(msg);
+        $.notify(msg.toUpperCase(),
+            {className: "info", autoHideDelay: 10000, globalPosition: 'top center'}
+        );
+    });
 
 	socket.emit("startMeeting", name, userId, meetingId);
 

@@ -5,8 +5,8 @@ $(document).ready(function(){
            if ( e.which == 13 ) {e.preventDefault();}
     });
 
-	// socket = io.connect("127.0.0.1:3000");
-	socket = io.connect("http://www.getseam.co");
+	socket = io.connect("127.0.0.1:3000");
+	// socket = io.connect("http://www.getseam.co");
 	name = $("input[name='name']").attr('value');
 	userId = $("input[name='userId']").attr('value');
 	meetingId = $("input[name='meetingId']").attr('value');
@@ -29,7 +29,7 @@ $(document).ready(function(){
 		console.log("you just left the meeting");
 	};
 
-	socket.emit("join", name, userId);
+	socket.emit("join", name, userId, meetingId);
 
 	socket.emit("joinMeeting", name, userId, meetingId);
 
@@ -78,6 +78,20 @@ $(document).ready(function(){
 		}
 	});
 
+	socket.on("userJoined", function(msg){
+		console.log(msg);
+        $.notify(msg.toUpperCase(),
+            {className: "info", autoHideDelay: 10000, globalPosition: 'top center'}
+        );
+    });
+
+    socket.on("userLeft", function(msg){
+    	console.log(msg);
+        $.notify(msg.toUpperCase(),
+            {className: "info", autoHideDelay: 10000, globalPosition: 'top center'}
+        );
+    });
+
 	socket.on("meetingRestarted", function(msg, Id){
 		console.log(msg);
 
@@ -99,7 +113,7 @@ $(document).ready(function(){
 	socket.on("creatorLeft", function(msg, Id){
 		if(meetingId === Id){
 			console.log(msg);
-			$.notify("MEETING STARTER HAS LEFT THE MEETING",
+			$.notify(msg.toUpperCase(),
 				{className: "warning", autoHideDelay: 10000, globalPosition: 'top center'}
 			);
 			$('#countdownTimer').countdown('pause');
