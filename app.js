@@ -91,8 +91,7 @@ socket.on("connection", function (client) {
 	});
 
 	client.on("startMeeting", function(name, userId, meetingId) {
-		var meeting = meetingsList[meetingId];
-		if (meetingsList[meetingId] === undefined) {
+		if (meetingsList[meetingId] === undefined) {//meeting has not been started yet create new meeting
 			var meeting = new meetingStruct(name, userId, meetingId, client.id);
 			meetingsList[meetingId] = meeting;
 			socket.sockets.emit("meetingList", {meetingsList: meetingsList}); //update the list of rooms on the frontend
@@ -108,6 +107,7 @@ socket.on("connection", function (client) {
  					meeting.addPerson(queueList[i].userId);
  				}
  			}
+ 			console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@------" + meeting.people + "------------@@@@@@@@@@@@@@@@@@@@@@@@@");
  			var user = people[client.id];
  			delete queue[meetingId];
  			socket.sockets.in(client.room).emit("meetingStarted", "meeting has been started by " + user.name , meetingId);
@@ -117,10 +117,9 @@ socket.on("connection", function (client) {
 			client.room = meetingId; //name the room
 			client.join(client.room); //auto-join the creator to the room
 			meeting.addPerson(client.id, userId); //also add the person to the room object
-			var members = meeting.people;
 			client.emit('meetingRestarted', 'you have restarted your meeting', meetingId);
+			var members = meeting.people;
 			for(var i = 0; i < members.length; i++){
-				console.log('@@@@@@@@@@@@@@@@@@@@@@' + members[i].userId);
 				var clientId = members[i].clientId;
 				clients[clientId].clientObject.join(client.room);
 			}
@@ -146,7 +145,7 @@ socket.on("connection", function (client) {
 				client.emit("update", "added to waiting queue");
 			}
 			else{
-				queue[meetingId].push({"id" : client.id, "client" : client});
+				queue[meetingId].push({"id" : client.id, "client" : client, "userId": userId});
 				client.emit("update", "added to waiting queue");
 			}
 		}
@@ -176,7 +175,7 @@ socket.on("connection", function (client) {
 					}
 					else{
 						meeting.addPerson(client.id, userId);
-						queue[meetingId].push({"id" : client.id, "client" : client});
+						queue[meetingId].push({"id" : client.id, "client" : client, "userId": userId});
 						client.emit("joinFailure", "added to waiting queue on rejoin");
 					}
 				}
@@ -237,7 +236,7 @@ socket.on("connection", function (client) {
 			client.leave(client.room)
 			var queueList = queue[meetingId];
 			if(queueList){
-				var i  = queueList.length;
+				var i = queueList.length;
 				while(i--){
 					if(queueList[i].userId === userId){
 					      break;
