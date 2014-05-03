@@ -285,6 +285,30 @@ function startTimer(){
 	// console.log("This is elapsed time:" + elapsedTimeArray);
 
     $.notify.defaults({ className: "success" ,globalPosition:"top center" });
+    $.notify.addStyle('happyblue', {
+  html: "<div>☺<span data-notify-text/>☺</div>",
+  classes: {
+    base: {
+      "white-space": "nowrap",
+      "background-color": "lightblue",
+      "padding": "5px",
+      "z-index":"99 !important"
+    },
+    superblue: {
+      "color": "white",
+      "background-color": "blue",
+      "z-index":"99",
+      "position":"absolute"
+    }
+  }
+});
+    $.notify('hello !!', {
+  style: 'happyblue'
+});
+    $("#progressCircle1").notify(
+  "I'm left of the box", 
+  { position:"top center",style: 'happyblue' }
+);
     var timer= $('#progressValues').val();
     var strVals=timer.split(',');
     
