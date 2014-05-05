@@ -6,8 +6,8 @@ $(document).ready(function(){
            if ( e.which == 13 ) {e.preventDefault();}
     });
 
-	// socket = io.connect("127.0.0.1:3000");
-	socket = io.connect("http://www.getseam.co");
+	socket = io.connect("127.0.0.1:3000");
+	// socket = io.connect("http://www.getseam.co");
 	name = $("input[name='name']").attr('value');
 	userId = $("input[name='userId']").attr('value');
 	meetingId = $("input[name='meetingId']").attr('value');
@@ -25,11 +25,25 @@ $(document).ready(function(){
 		console.log("you just left the meeting");
 	};
 
-	socket.emit("join", name, userId);
+	socket.emit("join", name, userId, meetingId);
 
 	socket.on("update", function(msg){
 		console.log(msg);
 	});
+
+    socket.on("userJoined", function(msg){
+        console.log(msg);
+        $.notify(msg.toUpperCase(),
+            {className: "info", autoHideDelay: 10000, globalPosition: 'top center'}
+        );
+    });
+
+    socket.on("userLeft", function(msg){
+        console.log(msg);
+        $.notify(msg.toUpperCase(),
+            {className: "info", autoHideDelay: 10000, globalPosition: 'top center'}
+        );
+    });
 
 	socket.emit("startMeeting", name, userId, meetingId);
 
@@ -285,6 +299,30 @@ function startTimer(){
 	// console.log("This is elapsed time:" + elapsedTimeArray);
 
     $.notify.defaults({ className: "success" ,globalPosition:"top center" });
+    $.notify.addStyle('happyblue', {
+  html: "<div>☺<span data-notify-text/>☺</div>",
+  classes: {
+    base: {
+      "white-space": "nowrap",
+      "background-color": "lightblue",
+      "padding": "5px",
+      "z-index":"99 !important"
+    },
+    superblue: {
+      "color": "white",
+      "background-color": "blue",
+      "z-index":"99",
+      "position":"absolute"
+    }
+  }
+});
+    $.notify('hello !!', {
+  style: 'happyblue'
+});
+    $("#progressCircle1").notify(
+  "I'm left of the box", 
+  { position:"top center",style: 'happyblue' }
+);
     var timer= $('#progressValues').val();
     var strVals=timer.split(',');
     

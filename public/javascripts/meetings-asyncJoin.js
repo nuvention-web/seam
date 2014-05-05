@@ -5,20 +5,11 @@ $(document).ready(function(){
            if ( e.which == 13 ) {e.preventDefault();}
     });
 
-	// socket = io.connect("127.0.0.1:3000");
-	socket = io.connect("http://www.getseam.co");
+	socket = io.connect("127.0.0.1:3000");
+	// socket = io.connect("http://www.getseam.co");
 	name = $("input[name='name']").attr('value');
 	userId = $("input[name='userId']").attr('value');
 	meetingId = $("input[name='meetingId']").attr('value');
-
-	elapsedVals = new Array(); //in milliseconds
-	elapsedTime = 0; //in seconds
-	elapsedVals[0] = 0;
-
-	$('input[name="timeLeft"]').each(function( index ) {
-	    elapsedVals[index] = $(this).attr('value');
-	    elapsedTime = elapsedTime + (parseInt($(this).attr('value'))/1000);
-	});
 
 	window.onbeforeunload = function(){
 		return "Navigating away from meeting";
@@ -29,7 +20,7 @@ $(document).ready(function(){
 		console.log("you just left the meeting");
 	};
 
-	socket.emit("join", name, userId);
+	socket.emit("join", name, userId, meetingId);
 
 	socket.emit("joinMeeting", name, userId, meetingId);
 
@@ -78,6 +69,20 @@ $(document).ready(function(){
 		}
 	});
 
+	socket.on("userJoined", function(msg){
+		console.log(msg);
+        $.notify(msg.toUpperCase(),
+            {className: "info", autoHideDelay: 10000, globalPosition: 'top center'}
+        );
+    });
+
+    socket.on("userLeft", function(msg){
+    	console.log(msg);
+        $.notify(msg.toUpperCase(),
+            {className: "info", autoHideDelay: 10000, globalPosition: 'top center'}
+        );
+    });
+
 	socket.on("meetingRestarted", function(msg, Id){
 		console.log(msg);
 
@@ -99,12 +104,11 @@ $(document).ready(function(){
 	socket.on("creatorLeft", function(msg, Id){
 		if(meetingId === Id){
 			console.log(msg);
-			$.notify("MEETING STARTER HAS LEFT THE MEETING",
+			$.notify(msg.toUpperCase(),
 				{className: "warning", autoHideDelay: 10000, globalPosition: 'top center'}
 			);
 			$('#countdownTimer').countdown('pause');
-			window.clearInterval(timerInterval);
-			window.clearTimeout(timerTimeout);
+			window.clearInterval(interval);
 			$('button[name="leave"]').show();
 			$(":input").prop("disabled", true);
 			$("textarea").prop("disabled", true);
@@ -324,11 +328,20 @@ function leaveMeeting(){
 };
 
 function startTimer(){
-	//FUNCTIONS FOR PROGRESS BAR DURING MEETING
 	intVals=new Array();
 	waitVals=new Array();
+	elapsedVals = new Array(); //in milliseconds
+	elapsedTime = 0; //in seconds
+	// elapsedVals[0] = 0;
+	$('input[name="timeLeft"]').each(function( index ) {
+	    elapsedVals[index] = $(this).attr('value');
+	    elapsedTime = elapsedTime + (parseInt($(this).attr('value'))/1000);
+	});
 
-	// console.log(elapsedVals);
+	// elapsedTimeArray = elapsedVals;
+
+	// console.log("This is elapsed time:" + elapsedTimeArray);
+
     $.notify.defaults({ className: "success" ,globalPosition:"top center" });
     var timer= $('#progressValues').val();
     var strVals=timer.split(',');
@@ -383,6 +396,7 @@ function startTimer(){
     $('#countdownTimer').countdown({until: intVals[0]-elapsedTime,compact: true,format: 'MS'});
 };
 
+
 function setAgendaDelay(i, total){
     var prev=i-1;
     var progID="#progressBar"+i;
@@ -399,12 +413,12 @@ function setAgendaDelay(i, total){
         elapsed =  elapsedVals[i-1];
     }
     var value =  $(progID).attr('value');
-    timerTimeout = setTimeout(function(){
+    setTimeout(function(){
         // console.log("this is the elapsed time: " + parseInt(elapsed));
         // var waitTime = waitVals[i] * 1000 - parseInt(elapsed);
         // console.log("wait: " + waitTime);
             if(prev>=1){
-                $.notify("AGENDA ITEM "+ prev+ " DONE"); 
+                $.notify("AGENDA ITEM "+ prev+ " DONE", { className: "success" ,globalPosition:"top center" }); 
                 $('#agendaItem'+i).next('div').slideToggle(true);
                 document.getElementById('alertSound').play();
             };
@@ -418,12 +432,21 @@ function setAgendaDelay(i, total){
     }, (waitVals[i]-elapsedTime) * 1000 );
 };
 
-
 (function ($) {
     $.fn.progressBar = function (options) {
         var settings = $.extend({}, $.fn.progressBar.defaults, options);
 
         this.each(function (index) {
+            var url = location.protocol + "//" + location.host + '/dashboard/meetings/start/updateTime';
+            var data = new Array();
+            data.push({
+                "name" : "meetingId",
+                "value" : meetingId
+            });
+            data.push({
+                "name" : "value",
+                "value" : settings.value
+            });
             //console.log("more elapsed: " + settings.elapsed);
             $(this).empty();
             var barContainer = $("<div>").addClass("progress progress-striped progress-vertical-line");
@@ -452,16 +475,20 @@ function setAgendaDelay(i, total){
                 .addClass(settings.style3);
             }
             if (elapsed >= limit) {
-                    window.clearInterval(timerInterval);
+                    window.clearInterval(interval);
                     bar.removeClass(settings.baseStyle)
                        .removeClass(settings.warningStyle)
                        .addClass(settings.completeStyle);
 
                     settings.onFinish.call(this);
             }
-            timerInterval = window.setInterval(function () {
+            interval = window.setInterval(function () {
             elapsed = new Date() - start + parseInt(settings.elapsed);
             // console.log(elapsed);
+            data[2] = {
+                "name" : "timeExpired",
+                "value" : elapsed 
+            };
             bar.height(((elapsed / limit) * 100) + "%");
             if(elapsed <= settings.limit[1]*1000){
                 bar.removeClass(settings.baseStyle)
@@ -473,13 +500,17 @@ function setAgendaDelay(i, total){
                 .addClass(settings.style3);
             }
                 if (elapsed >= limit) {
-                    window.clearInterval(timerInterval);
+                    window.clearInterval(interval);
                     bar.removeClass(settings.baseStyle)
                        .removeClass(settings.warningStyle)
                        .addClass(settings.completeStyle);
 
                     settings.onFinish.call(this);
                 }
+           
+            // elapsedTimeArray[parseInt(settings.value) + 1] = elapsed;
+
+            // console.log("Inside timeout function of elapsed: " + elapsedTimeArray);
             }, 6000);
 
         });
