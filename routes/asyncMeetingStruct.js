@@ -1,9 +1,9 @@
-function meetingStruct(name, userId, meetingId) {  
+function meetingStruct(name, userId, meetingId, clientId) {  
   this.name = name;
   this.userId = userId;
   this.meetingId = meetingId;
-  this.owner = userId;
-  this.people = [];
+  this.owner = clientId;
+  this.people = new Array();
   this.status = "available";
 };
 
@@ -16,7 +16,7 @@ meetingStruct.prototype.addPerson = function(clientId, userId) {
 meetingStruct.prototype.removePerson = function(clientId, userId) {
   var i = this.people.length;
   while(i--){
-    if(this.people[i].clientId === clientId){
+    if(this.people[i].clientId === clientId && this.people[i].userId === userId){
       break;
     }
   }
