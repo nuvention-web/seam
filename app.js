@@ -76,54 +76,63 @@ var server = app.listen(app.get('port'), function(){
 
 var socket = require('socket.io').listen(server);
 
+
+// socket.io stuff
 socket.on("connection", function (client) {  
-	
-	client.on("join", function(name, userId) {
+
+	client.on("join", function(name, userId, meetingId) {
 		var meetingId = null;
 	    people[client.id] = {"name" : name, "userId": userId, "meeting" : meetingId};
 	    client.emit("update", "You have connected to the server.");
 	    client.emit("update", people[client.id].name + " has logged in.")
 	    client.emit("meetingList", {meetingsList: meetingsList});
-	    clients[client.id] = {"clientObject" : client}; //populate the clients object array with the client object
+	    clients[client.id] = {"clientObject" : client, "userId" : userId, "name" : name}; //populate the clients object array with the client object
 	});
 
 	client.on("startMeeting", function(name, userId, meetingId) {
-		var meeting = meetingsList[meetingId];
-		if (meetingsList[meetingId] === undefined) {
+		if (meetingsList[meetingId] === undefined) {//meeting has not been started yet create new meeting
 			var meeting = new meetingStruct(name, userId, meetingId, client.id);
 			meetingsList[meetingId] = meeting;
 			socket.sockets.emit("meetingList", {meetingsList: meetingsList}); //update the list of rooms on the frontend
 			client.room = meetingId; //name the room
 			client.join(client.room); //auto-join the creator to the room
-			meeting.addPerson(client.id); //also add the person to the room object
-			people[client.id].meeting = meetingId; //update the room key with the ID of the created room
-			people[client.id].owns = meetingId;
+			meeting.addPerson(client.id, userId); //also add the person to the room object
  			socket.emit("update", "you have started the meeting")
  			if(queue[meetingId] != undefined){
  				queueList = queue[meetingId];
  				for(var i = 0; i < queueList.length; i++){
- 					queueList[i].client.join(client.room);
- 					meeting.addPerson(queueList[i].id);
+ 					clients[queueList[i].clientId].clientObject.join(client.room);
+ 					meeting.addPerson(queueList[i].clientId, queueList[i].userId);
  				}
  			}
  			var user = people[client.id];
  			delete queue[meetingId];
- 			socket.sockets.in(client.room).emit("meetingStarted", "meeting has started", meetingId);
+ 			socket.sockets.in(client.room).emit("meetingStarted", "meeting has been started by " + user.name , meetingId);
 		} else {// meeting has already been made, user most likely accidentally left the room
 			var meeting = meetingsList[meetingId];
+			meeting.status = "available";
 			meeting.owner = client.id;
 			client.room = meetingId; //name the room
 			client.join(client.room); //auto-join the creator to the room
-			meeting.addPerson(client.id); //also add the person to the room object
-			people[client.id].meeting = meetingId; //update the room key with the ID of the created room
-			people[client.id].owns = meetingId;
-			var members = meeting.people;
+			meeting.addPerson(client.id, userId); //also add the person to the room object
 			client.emit('meetingRestarted', 'you have restarted your meeting', meetingId);
-			for(var i = 0; i < members.length; i++){
-				var clientId = members[i];
-				clients[members[i]].clientObject.join(client.room);
+			var members = meeting.people;
+			var user = people[client.id];
+			for(var i = 0; i < members.length; i++){// people who stayed in the room after you left will still be in the meeting list
+				var clientId = members[i].clientId;
+				if(clientId != meeting.owner){
+					clients[clientId].clientObject.join(client.room);
+					clients[clientId].clientObject.emit("meetingRestarted", "meeting has been restarted by " + user.name, meetingId)
+				}
 			}
-			socket.sockets.to(client.room).emit("meetingRestarted", "meeting has been restarted by creator", meetingId);
+			if(queue[meetingId] != undefined){
+ 				queueList = queue[meetingId];
+ 				for(var i = 0; i < queueList.length; i++){
+ 					clients[queueList[i].clientId].clientObject.join(client.room);
+ 					meeting.addPerson(queueList[i].clientId, queueList[i].userId);
+ 					clients[queueList[i].clientId].clientObject.emit("meetingStarted", "meeting has been restarted by " + user.name, meetingId)
+ 				}
+ 			}
 		}
 	});
 
@@ -133,35 +142,34 @@ socket.on("connection", function (client) {
 			client.emit("joinFailure", "Meeting has not been started yet.");
 			if(queue[meetingId] == undefined){
 				queue[meetingId] = new Array();
-				queue[meetingId].push({"id" : client.id, "client" : client});
+				queue[meetingId].push({"clientId" : client.id, "userId": userId});
 				client.emit("update", "added to waiting queue");
 			}
 			else{
-				queue[meetingId].push({"id" : client.id, "client" : client});
+				queue[meetingId].push({"clientId" : client.id, "userId": userId});
 				client.emit("update", "added to waiting queue");
 			}
 		}
 		else{
-			if (client.id === meeting.owner) {
-				client.emit("update", "You are the starter of this meeting and you have already joined.");
-			} 
-			else {
-				var peopleInMeeting = meeting.people
-				var isInMeeting = false;
-				for(var i = 0; i < peopleInMeeting.length; i++){
-					if(peopleInMeeting[i] === client.id){
-						client.emit("update", "You are already in this meeting.");
-						isInMeeting = true;
-					}
+			if(meeting.status === "closed"){
+				client.emit("joinFailure", "Meeting has not been started yet.");
+				if(queue[meetingId] == undefined){
+					queue[meetingId] = new Array();
+					queue[meetingId].push({"clientId" : client.id, "userId": userId});
+					client.emit("update", "added to waiting queue");
 				}
-				if(!isInMeeting){
-					client.room = meeting.meetingId;
-					client.join(client.room); //add person to the room
-					meeting.addPerson(client.id); //also add the person to the room object
-					var user = people[client.id];
-					client.emit("meetingStarted", "Successfully joined the meeting", meetingId);
-					socket.sockets.in(client.room).emit("update", user.name + " has connected to meeting.");
+				else{
+					queue[meetingId].push({"clientId" : client.id, "userId": userId});
+					client.emit("update", "added to waiting queue");
 				}
+			}
+			else{
+				client.room = meeting.meetingId;
+				client.join(client.room); //add person to the room
+				meeting.addPerson(client.id, userId); //also add the person to the room object
+				var user = people[client.id];
+				client.emit("meetingStarted", "Successfully joined the meeting", meetingId);
+				client.broadcast.to(client.room).emit("userJoined", user.name + " has joined the meeting.");
 			}
 		}
 	});
@@ -184,20 +192,17 @@ socket.on("connection", function (client) {
 	client.on("leaveMeetingCreator", function(name, userId, meetingId){
 		var meeting = meetingsList[meetingId];
 		if(meeting){
-			if (client.id === meeting.owner) {// only owner can finish meeting
+			if (client.id === meeting.owner) {// only owner can leave meeting
+				meeting.status = "closed";
 				client.room = meeting.meetingId;
 				var user = people[client.id];
-				client.broadcast.to(client.room).emit("creatorLeft", "The owner (" + user.name + ") left the meeting.", meetingId);
-				people[meeting.owner].owns = null; //reset the owns object to null so new meeting can be started
+				client.broadcast.to(client.room).emit("creatorLeft", "The meeting starter(" + user.name + ") left the meeting.", meetingId);
 				socket.sockets.emit("roomList", {meetingsList: meetingsList});
-				meeting.removePerson(client.id);
+				meeting.removePerson(client.id, userId);
 				client.emit("update", "you have left the meeting")
 				client.leave(client.room)
-				for(var i = 0; i < meeting.people.length; i++){
-					var clientId = meeting.people[i]
-					var clientObject = clients[clientId].clientObject;
-					clientObject.emit("update", "the owner has left the meeting");
-				}
+				delete people[client.id];
+				delete clients[client.id];
 			}
 		}
 	});
@@ -207,11 +212,24 @@ socket.on("connection", function (client) {
 		if(meeting){
 			client.room = meeting.meetingId;
 			var user = people[client.id];
-			client.broadcast.to(client.room).emit("update", user.name + " has left the meeting.", meetingId);
+			client.broadcast.to(client.room).emit("userLeft", user.name + " has left the meeting.", meetingId);
 			socket.sockets.emit("roomList", {meetingsList: meetingsList});
-			meeting.removePerson(client.id);
+			meeting.removePerson(client.id, userId);
 			client.emit("update", "you have left the meeting")
-			client.leave(client.room)
+			client.leave(client.room);
+			var queueList = queue[meetingId];
+			if(queueList){// if you are waiting to start but leave need to remove yourself from the queue
+				var i = queueList.length;
+				while(i--){
+					if(queueList[i].userId === userId){
+					      break;
+					}
+				}
+				if(i >= 0){
+					queueList.splice(i , 1);
+				}
+			}
+			delete people[client.id];
 			delete clients[client.id];
 		}
 	});
@@ -228,10 +246,12 @@ socket.on("connection", function (client) {
 				socket.sockets.emit("roomList", {meetingsList: meetingsList});
 				client.emit("update", "you have finished the meeting")
 				for(var i = 0; i < meeting.people.length; i++){
-					var clientId = meeting.people[i]
+					var attedeeId = meeting.people[i].userId;
+					var clientId = meeting.people[i].clientId
 					var clientObject = clients[clientId].clientObject;
 					clientObject.emit("update", "meeting has been finished, you have left the meeting");
 					clientObject.leave(meeting.meetingId);
+					delete people[clientId];
 					delete clients[clientId];
 				}
 			}
