@@ -11,15 +11,6 @@ $(document).ready(function(){
 	userId = $("input[name='userId']").attr('value');
 	meetingId = $("input[name='meetingId']").attr('value');
 
-	elapsedVals = new Array(); //in milliseconds
-	elapsedTime = 0; //in seconds
-	elapsedVals[0] = 0;
-
-	$('input[name="timeLeft"]').each(function( index ) {
-	    elapsedVals[index] = $(this).attr('value');
-	    elapsedTime = elapsedTime + (parseInt($(this).attr('value'))/1000);
-	});
-
 	window.onbeforeunload = function(){
 		return "Navigating away from meeting";
 	};
@@ -341,6 +332,13 @@ function startTimer(){
 	//FUNCTIONS FOR PROGRESS BAR DURING MEETING
 	intVals=new Array();
 	waitVals=new Array();
+	elapsedVals = new Array(); //in milliseconds
+	elapsedTime = 0; //in seconds
+	// elapsedVals[0] = 0;
+	$('input[name="timeLeft"]').each(function( index ) {
+	    elapsedVals[index] = $(this).attr('value');
+	    elapsedTime = elapsedTime + (parseInt($(this).attr('value'))/1000);
+	});
 
 	// console.log(elapsedVals);
     $.notify.defaults({ className: "success" ,globalPosition:"top center" });
