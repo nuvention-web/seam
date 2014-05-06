@@ -510,7 +510,7 @@ exports.addNote = function(req, res){
 			}
 		});	
 		res.redirect('back');
-	})
+	});
 };
 
 exports.addTask = function(req, res){
@@ -537,7 +537,7 @@ exports.addTask = function(req, res){
 			}
 		});
 		res.redirect('back');
-	})
+	});
 };
 
 exports.addMeeting = function(req, res){

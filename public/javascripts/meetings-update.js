@@ -316,13 +316,13 @@ function startTimer(){
     }
   }
 });
-    $.notify('hello !!', {
-  style: 'happyblue'
-});
-    $("#progressCircle1").notify(
-  "I'm left of the box", 
-  { position:"top center",style: 'happyblue' }
-);
+//     $.notify('hello !!', {
+//   style: 'happyblue'
+// });
+//     $("#progressCircle1").notify(
+//   "I'm left of the box", 
+//   { position:"top center",style: 'happyblue' }
+// );
     var timer= $('#progressValues').val();
     var strVals=timer.split(',');
     
