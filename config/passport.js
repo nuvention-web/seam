@@ -64,6 +64,33 @@ module.exports = function(passport) {
 				newUser.local.email = email.toLowerCase();
 				newUser.local.password = newUser.generateHash(password);
 
+				//email function
+				smtpConfig = nodemailer.createTransport('SMTP', {
+				service: 'Gmail',
+				auth: {
+					user: "seammeetingscontact@gmail.com",
+				 	pass: "123456789a!"
+				}
+				 });
+				emailBody = {
+					 	from: "Josephine Lee <leejosephinem@gmail.com>",
+						to: newUser.local.email,
+					 	subject: '[SEAM] Welcome: '+newUser.local.name,
+					 	text: 'Thank you for signing up for SEAM'
+				 };
+				//send Email
+				 smtpConfig.sendMail(emailBody, function (error, res) {
+				//Email not sent
+			 	if (error) {
+					res.end("Email Failed");
+			 	}
+			 	//email send sucessfully
+				else {
+					res.end("Email Successfully");
+			 	}
+
+			 	});
+
 				// save the user
 				newUser.save(function(err) {
 					if (err)
