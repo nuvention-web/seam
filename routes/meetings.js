@@ -501,15 +501,14 @@ exports.addNote = function(req, res){
 			if(err){
 				console.log('Problem adding notes to database')
 				console.log(err);
-				res.location('error');
-				res.redirect('error', {user : req.user});
+				res.send('failed to save note');
 			}
 			else{
 				console.log('Added notes successfully');
+				res.send('success');
 				// Meeting.find({}, function(e, docs){console.log(docs);});
 			}
 		});	
-		res.redirect('back');
 	});
 };
 
@@ -528,11 +527,11 @@ exports.addTask = function(req, res){
 			if(err){
 				console.log('Problem adding task to database')
 				console.log(err);
-				res.location('error');
-				res.redirect('error', {user : req.user});
+				res.send('failed to save task');
 			}
 			else{
 				console.log('Added task successfully');
+				res.send('success');
 				// Meeting.find({}, function(e, docs){console.log(docs);});
 			}
 		});
