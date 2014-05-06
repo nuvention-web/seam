@@ -873,7 +873,7 @@ function createAgendaBody(emailCreator,emailList,emailDate,meetingTitle,objectiv
         "<table border='0' cellpadding='0' cellspacing='0' style='background-color:#505050; border:1px solid #353535; border-radius:5px;'>"+
     	"<tr>"+
         "<td align='center' valign='middle' style='color:#FFFFFF; font-family:Helvetica, Arial, sans-serif; font-size:16px; font-weight:bold; letter-spacing:-.5px; line-height:150%; padding-top:15px; padding-right:30px; padding-bottom:15px; padding-left:30px;'>"+
-            "<a href='http://www.getseam.co/login?utm_source=agenda&utm_medium=email&utm_campaign=agenda' target='_blank' style='color:#FFFFFF; text-decoration:none;'>Login to SEAM</a></td></tr></table>"+
+            "<a href='http://www.getseam.co/login/?utm_source=email&utm_medium=email&utm_campaign=agenda' target='_blank' style='color:#FFFFFF; text-decoration:none;'>Login to SEAM</a></td></tr></table>"+
         "</body>",
         attachments:[
          // Logo img
