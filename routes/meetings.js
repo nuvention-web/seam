@@ -535,7 +535,6 @@ exports.addTask = function(req, res){
 				// Meeting.find({}, function(e, docs){console.log(docs);});
 			}
 		});
-		res.redirect('back');
 	});
 };
 
@@ -806,16 +805,14 @@ exports.updateTimer = function(req, res){
 			if(err){
 				console.log('Problem adding information to database')
 				console.log(err);
-				res.location('error');
-				res.redirect('error', {user : req.user});
+				res.send('failed to update time');
 			}
 			else{
 				console.log('Updated time successfully');
+				res.send('success');
 			}
 		});
 	});
-	
-	res.redirect('back');
 }
 
 
