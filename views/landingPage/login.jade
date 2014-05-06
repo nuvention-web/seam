@@ -1,45 +1,40 @@
-doctype html
-html(lang='en')
-	head
-		meta(charset='utf-8')
-		meta(http-equiv='X-UA-Compatible', content='IE=edge')
-		meta(name='viewport', content='width=device-width, initial-scale=1.0')
-		meta(name='description', content='')
-		meta(name='author', content='')			
-		link(rel="icon" type="image/png" sizes="64x64" href="/images/favicon-64.png")
-		link(rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32.png")
-		link(rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16.png")
-		link(rel="shortcut icon" href="/images/favicon.ico" type="image/x-icon")
-		link(href='http://fonts.googleapis.com/css?family=Lato:300,400,700', rel='stylesheet', type='text/css')
-		link(rel='stylesheet', href='../../stylesheets/bootstrap.min.css')
-		link(rel='stylesheet', href='../../stylesheets/base.css')
-		title SEAM
-		script.
-			(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-			(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-			m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-			})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-			ga('create', 'UA-50079131-1', 'seam.co');
-			ga('send', 'pageview');
-	body.full-page.bg-frontpg-blur.overflow-x-hidden.margin-top-5p
+extends layout2
+
+block content
+	.container-75p.margin-center.min-height-100p
+		.row.margin-top-8p.mobile-margin-top-150x
+			.col-md-12
+				img.img-responsive.margin-center.img-10p(src="images/logo.png")
+		.row
+			.col-md-12
+				h2.text-upper.text-normal Welcome, Please Login.
+		.row
+			.col-md-6.col-md-offset-3.margin-top-3p
+				form.navbar-form(role='form' method='POST', action='login')
+					.row
+						.col-md-8.col-md-offset-2
+							input.form-control.border-round-5x(type='text', placeholder='EMAIL', name='email')
+					.row
+						.col-md-8.col-md-offset-2.margin-top-3p
+							input.form-control.border-round-5x(type='password', placeholder='PASSWORD' , name='password')
+					.row
+						.col-md-6.col-md-offset-3.margin-top-3p
+							button.btn.btn-primary.bg-pink-orange-hover.btn-lg.btn-block.border-round-5x(type='submit') LOGIN
+					.row
+						.col-md-6.col-md-offset-3.margin-top-3p
+							button.btn.btn-primary.bg-pink-orange-hover.btn-lg.btn-block.border-round-5x(type='button', onClick="parent.location='/google/login'") GOOGLE LOGIN
+	div#footer-page.page.bg-drk-gray.padding-top-1p.padding-bottom-1p
+		.row
+			.col-md-6
 				.row
-					.col-md-12
-						img.img-responsive.margin-center.img-10p(src="images/logo.png")
+					.col-md-11.col-md-offset-1.text-left.margin-top-1p
+						span.text-left
+							a.text-white-orange-hover.text-h2.lsf-icon(href="https://twitter.com/seam_meetings", target="_blank", title="twitter")
+							a.text-white-pink-hover.text-h2.lsf-icon(href="https://www.linkedin.com/groups/Improving-Meeting-Efficiency-6671618", target="_blank", title="linkedin")
 				.row
-					.col-md-12
-						h2.text-upper.text-normal Welcome, Please Login. 
+					.col-md-11.col-md-offset-1
+						h4.text-left.text-white &copy; Powered by SEAM 2014.
+			.col-md-6
 				.row
-					.col-md-6.col-md-offset-3.margin-top-3p
-						form.navbar-form(role='form' method='POST', action='login')
-							.row
-								.col-md-8.col-md-offset-2
-									input.border-black.text-small.form-control.border-square.form-control-smaller(type='text', placeholder='EMAIL', name='email')
-							.row
-								.col-md-8.col-md-offset-2.margin-top-3p
-									input.border-black.text-small.form-control.border-square.form-control-smaller(type='password', placeholder='PASSWORD' , name='password')
-							.row
-								.col-md-6.col-md-offset-3.margin-top-3p
-									button.btn.btn-success.btn-block.bg-red-border.border-square.text-small.margin-right-5x(type='submit') LOGIN
-							.row
-								.col-md-6.col-md-offset-3.margin-top-3p
-									button.btn.btn-success.btn-block.bg-red-border.border-square.text-small.margin-right-5x(type='button', onClick="parent.location='/google/login'") GOOGLE LOGIN
+					.col-md-offset-8.col-md-4.margin-top-1p
+						img.margin-center.img-responsive.img-18p.center-box(src="../../images/logo-noWord.png" ,alt="SEAM")
