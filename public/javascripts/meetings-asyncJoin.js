@@ -123,7 +123,7 @@ $(document).ready(function(){
 				{className: "success", autoHideDelay: 10000, globalPosition: 'top center'}
 			);
 			$('#countdownTimer').countdown('pause');
-			window.clearInterval(timerInterval);
+			window.clearInterval(interval);
 			$('button[name="leave"]').show();
 			$(":input").prop("disabled", true);
 			$("textarea").prop("disabled", true);
