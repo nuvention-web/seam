@@ -509,8 +509,7 @@ exports.addNote = function(req, res){
 				// Meeting.find({}, function(e, docs){console.log(docs);});
 			}
 		});	
-		res.redirect('back');
-	})
+	});
 };
 
 exports.addTask = function(req, res){
@@ -536,8 +535,7 @@ exports.addTask = function(req, res){
 				// Meeting.find({}, function(e, docs){console.log(docs);});
 			}
 		});
-		res.redirect('back');
-	})
+	});
 };
 
 exports.addMeeting = function(req, res){
