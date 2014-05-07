@@ -4,11 +4,16 @@ var Email = require('../models/email-model');
 var Survey = require('../models/survey-model');
 var nodemailer = require('nodemailer');
 exports.home = function(req, res){
-	res.render('landingPage/home', { title: 'MeetingBuddy!', user : req.user});
+	res.render('landingPage/home', { title: 'SEAM', user : req.user});
 };
-
+exports.about = function(req, res){
+	res.render('landingPage/about', { title: 'SEAM', user : req.user});
+};
+exports.contact = function(req, res){
+	res.render('landingPage/contact', { title: 'SEAM', user : req.user});
+};
 exports.login = function(req, res){
-	res.render('landingPage/login', { title: 'MeetingBuddy!', user : req.user});
+	res.render('landingPage/login', { title: 'SEAM', user : req.user});
 };
 
 exports.survey = function(req, res){
@@ -32,7 +37,8 @@ exports.addEmail = function(req, res){
 		}
 	);
 };
-exports.contact = function(req, res){
+exports.contactForm = function(req, res){
+	console.log("hi");
 	var names = req.body.names;
 	var emails = req.body.email;
 	var comments = req.body.comments;

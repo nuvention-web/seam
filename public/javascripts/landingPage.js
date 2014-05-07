@@ -1,22 +1,5 @@
  $(document).ready(function(){ 
 
-    //Navbar Color Change Function
-    var scroll = 0;            
-    $(document).scroll(function() { 
-        var changePos=$("#home-page").height()-100;
-        scroll = $(this).scrollTop();
-        if(scroll > changePos) {
-            var progress= $('.progress').css('width');
-            var progressFrustration = $('.progress-bar-success').css('width')
-            $(".navbar").css('background-color', 'rgba(0,0,0,.8)');
-            $(".navbar").css('background-color', 'rgba(0,0,0,.8)');
-            $(".navbar").css('transition', 'background-color 1.5s ease-in-out');
-        } 
-        else {
-            $(".navbar").css('background-color', 'transparent');
-        }
-    });
-
     //Navbar Login Fade-In-Out Function
     $('#admin-btn').click(function(){
         $('.visible-login').fadeOut(300);

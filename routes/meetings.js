@@ -77,6 +77,8 @@ exports.editMeeting = function(req, res){
 
 exports.updateMeeting = function(req, res){
 	var userId = req.session.userId;
+	var creatorEmail = req.session.email;
+	var creatorName = req.session.creatorName;
 	var meetingId = req.body.meetingId;
 	var conditions = { _id: meetingId};
 	var meetingTitle = req.body.meetingTitle;
@@ -127,7 +129,8 @@ exports.updateMeeting = function(req, res){
 			meetingData.agenda.push({
 				topic: agenda,
 				duration: duration,
-				notes: [{notes: notes}]
+				notes: [{notes: notes}],
+				timeLeft: 0
 			});
 		}
 		else{
@@ -138,7 +141,8 @@ exports.updateMeeting = function(req, res){
 					meetingData.agenda.push({
 						topic: agenda[i],
 						duration: duration[i],
-						notes: [{notes: notes[i]}]
+						notes: [{notes: notes[i]}],
+						timeLeft: 0
 					});
 				}
 			};
@@ -149,7 +153,7 @@ exports.updateMeeting = function(req, res){
 		if(typeof attendeeNames == 'string'){
 			meetingData.attendees.push({
 				attendeeName: attendeeNames,
-				attendeeEmail: attendeeEmails
+				attendeeEmail: attendeeEmails.toLowerCase()
 			});
 		}
 		else{
@@ -157,13 +161,13 @@ exports.updateMeeting = function(req, res){
 				if(attendeeNames[i] != ''){
 					meetingData.attendees.push({
 						attendeeName: attendeeNames[i],
-						attendeeEmail: attendeeEmails[i]
+						attendeeEmail: attendeeEmails[i].toLowerCase()
 					});
 				}
 			};
 		}
 	}
-
+	
 	var update = { $set: meetingData };
 	var options = { upsert: true };	
 
@@ -215,7 +219,7 @@ exports.postMeeting = function(req, res){
 	
 	console.log(meetingId);
 	Meeting.findOne({'_id': meetingId}, function(e, doc){
-		console.log(doc);
+		// console.log(doc);
 
 		var meetingDate = '';
 
@@ -273,7 +277,7 @@ exports.getMeeting = function(req, res){
 	
 	console.log(meetingId);
 	Meeting.findOne({'_id': meetingId}, function(e, doc){
-		console.log(doc);
+		// console.log(doc);
 
 		var meetingDate = '';
 
@@ -319,7 +323,7 @@ exports.getMeeting = function(req, res){
 };
 
 exports.endMeeting = function(req, res){
-	var meetingId = req.session.meetingId;
+	var meetingId = req.body.meetingId;
 	var mailBody, smtpConfig;
 	var emailAgenda='';
 	var emailTask='';
@@ -349,6 +353,7 @@ exports.endMeeting = function(req, res){
 			var meetingDay = meetingDate.getDate(); 
 			emailDate= meetingMonth +"/"+meetingDay+"/"+meetingYear ;
 			emailTime=doc.meetingTime;
+			var taskLists= getTaskList(doc);
 			if(typeof agenda == 'string'){
 				emailAgenda+="<p style='text-align:left; text-transform:capitalize'> 1: "+agenda.topic+"<br/></p>";
 			}
@@ -382,7 +387,7 @@ exports.endMeeting = function(req, res){
 					emailList+=meetingAttendees[i].attendeeEmail+',';
 				}
 			}
-			mailBody=createMinutesBody(creatorEmail,emailDate,meetingTitle,emailList,objective,emailAgenda,emailTask,emailTime,objective,emailAgenda);
+			mailBody=createMinutesBody(creatorEmail,emailDate,meetingTitle,emailList,objective,emailAgenda,emailTask,emailTime,objective,emailAgenda,taskLists);
 			emailFunction(mailBody,res);
 
 		});
@@ -496,16 +501,15 @@ exports.addNote = function(req, res){
 			if(err){
 				console.log('Problem adding notes to database')
 				console.log(err);
-				res.location('error');
-				res.redirect('error', {user : req.user});
+				res.send('failed to save note');
 			}
 			else{
 				console.log('Added notes successfully');
+				res.send('success');
 				// Meeting.find({}, function(e, docs){console.log(docs);});
 			}
 		});	
-		res.redirect('back');
-	})
+	});
 };
 
 exports.addTask = function(req, res){
@@ -523,21 +527,22 @@ exports.addTask = function(req, res){
 			if(err){
 				console.log('Problem adding task to database')
 				console.log(err);
-				res.location('error');
-				res.redirect('error', {user : req.user});
+				res.send('failed to save task');
 			}
 			else{
 				console.log('Added task successfully');
+				res.send('success');
 				// Meeting.find({}, function(e, docs){console.log(docs);});
 			}
 		});
-		res.redirect('back');
-	})
+	});
 };
 
 exports.addMeeting = function(req, res){
 	var mailBody, smtpConfig;
 	var userId = req.session.userId;
+	var creatorName = req.session.name;
+	var creatorEmail = req.session.email;
 	var meetingTitle = req.body.meetingTitle;
 	var objective = req.body.objective;
 	var location = req.body.location;
@@ -620,13 +625,18 @@ exports.addMeeting = function(req, res){
 		}
 	}
 
+	newMeeting.attendees.push({
+		attendeeName: creatorName,
+		attendeeEmail: creatorEmail.toLowerCase()
+	});
+
 	if(attendeeNames != undefined){	
 		if(typeof attendeeNames == 'string'){
 			emailList+=attendeeEmails;
 			icalEmail.push({name:attendeeNames, email:attendeeEmails});
 			newMeeting.attendees.push({
 				attendeeName: attendeeNames,
-				attendeeEmail: attendeeEmails
+				attendeeEmail: attendeeEmails.toLowerCase()
 			});
 		}
 		else{
@@ -636,7 +646,7 @@ exports.addMeeting = function(req, res){
 					icalEmail.push({name:attendeeNames[i], email:attendeeEmails[i]});
 					newMeeting.attendees.push({
 						attendeeName: attendeeNames[i],
-						attendeeEmail: attendeeEmails[i]
+						attendeeEmail: attendeeEmails[i].toLowerCase()
 					});
 				}
 			};
@@ -780,6 +790,31 @@ exports.getJoinMeeting = function(req, res){
 	})	
 }
 
+exports.updateTimer = function(req, res){
+	
+	console.log(req.body);
+	var meetingId = req.body.meetingId;
+	var conditions = { _id: meetingId};
+	var value = req.body.value;
+	var timeLeft = req.body.timeExpired;
+	console.log(timeLeft);
+
+	Meeting.findOne({"_id": meetingId}, function(err, meeting){
+		meeting.agenda[value].timeLeft = timeLeft;
+		meeting.save(function(err){
+			if(err){
+				console.log('Problem adding information to database')
+				console.log(err);
+				res.send('failed to update time');
+			}
+			else{
+				console.log('Updated time successfully');
+				res.send('success');
+			}
+		});
+	});
+}
+
 
 function addMinutes(date, minutes){
 	return new Date(date.getTime() + minutes*60000);
@@ -818,7 +853,6 @@ function createAgendaBody(emailCreator,emailList,emailDate,meetingTitle,objectiv
 	var mailBody;
 	console.log(emailList+' '+emailDate+' '+meetingTitle+' '+objective+' '+emailAgenda+' '+location+' '+meetingTime+' '+icsFilePath);
 	var htmlEmail=emailHTMLCSS();
-	htmlEmail+="<body leftmargin='0' marginwidth='0' topmargin='0' marginheight='0' offset='0'> <center> <table border='0' cellpadding='0' cellspacing='0' height='100%' width='100%' id='backgroundTable'> <tr> <td align='center' valign='top'> <!-- // Begin Template Preheader \\ --> <table border='0' cellpadding='10' cellspacing='0' width='600' id='templatePreheader'> <tr> <td valign='top' class='preheaderContent'> <!-- // Begin Module: Standard Preheader \ --> <table border='0' cellpadding='10' cellspacing='0' width='100%'> <tr> <td valign='top'> <div mc:edit='std_preheader_content'> SEAM - Tackling Meeting Inefficiency </div> </td> </tr> </table> <!-- // End Module: Standard Preheader \ --> </td> </tr> </table> <!-- // End Template Preheader \\ --> <table border='0' cellpadding='0' cellspacing='0' width='600' id='templateContainer'> <tr> <td align='center' valign='top'> <!-- // Begin Template Header \\ --> <table border='0' cellpadding='0' cellspacing='0' width='600' id='templateHeader'> <tr> <td class='headerContent'> <!-- // Begin Module: Standard Header Image \\ --> <img src='http://www.miketychen.com/images/SEAMBANNER.jpg' style='max-width:600px;' id='headerImage campaign-icon' mc:label='header_image' mc:edit='header_image' mc:allowdesigner mc:allowtext /> <!-- // End Module: Standard Header Image \\ --> </td> </tr> </table> <!-- // End Template Header \\ --> </td> </tr> <tr> <td align='center' valign='top'> <!-- // Begin Template Body \\ --> <table border='0' cellpadding='0' cellspacing='0' width='600' id='templateBody'> <tr> <td valign='top' class='bodyContent'> <!-- // Begin Module: Standard Content \\ --> <table border='0' cellpadding='20' cellspacing='0' width='100%'> <tr> <td valign='top'> <div mc:edit='std_content00'> <div class='mtg-title-box'> <h1 class='h1 text-center'>"+meetingTitle+" Minutes</h1> </div> <h2 class='h2'>Heading 2</h2> <h3 class='h3'>Heading 3</h3> <table> <tr> <td>Cell A</td> <td>Cell B</td> <td>Cell B</td> </tr> </table><h4 class='h4'>Heading 4</h4> <strong>This would be where the notes are </div> </td> </tr> </table> <table border='0' cellpadding='20' cellspacing='0' width='100%'><tr> <td>Michael Chen</td> <td>Suzee Han</td> <td>Josephine Lee</td> </tr><tr> <td>Email out 50 speakers</td> <td>Get pitch this ingredients</td> <td>Get as many students to sign up to SEAM as possible</td> </tr></table><!-- // End Module: Standard Content \\ --> </td> </tr> </table> <!-- // End Template Body \\ --> </td> </tr> </table> <br /> </td> </tr> </table> </center> </body> </html>";
 	//construct the email sending module
 	mailBody = {
 	 	forceEmbeddedImages: true,
@@ -828,7 +862,19 @@ function createAgendaBody(emailCreator,emailList,emailDate,meetingTitle,objectiv
 	 	text: 'Date: '+ emailDate +'\n\n'+ 'Objectives: '+objective+'\n\n'+ 'Agenda: \n\n'+ emailAgenda,
 
 	// HTML body
-     	html:htmlEmail,
+     	html:"<body>"+
+     	"<p style='text-align:center; margin:0 auto;  width:50px; height:50px;'><img src='cid:logo@seam'/></p>"+     	
+        "<p style='text-align:left;'> Creator: "+emailCreator+"<br/></p>" +
+        "<p style='text-align:left;'> Date: "+emailDate+"<br/></p>" +
+        "<p style='text-align:left;'> Location: "+location+"<br/></p>" +
+        "<p style='text-align:left;'> Duration: "+meetingTime+" Minutes <br/></p>" +
+        "<p style='text-align:left;'> Objectives: "+objective+"<br/></p>" +
+        "<p style='text-align:left;'> Agenda: <br/>"+emailAgenda+"<br/></p>"+ 
+        "<table border='0' cellpadding='0' cellspacing='0' style='background-color:#505050; border:1px solid #353535; border-radius:5px;'>"+
+    	"<tr>"+
+        "<td align='center' valign='middle' style='color:#FFFFFF; font-family:Helvetica, Arial, sans-serif; font-size:16px; font-weight:bold; letter-spacing:-.5px; line-height:150%; padding-top:15px; padding-right:30px; padding-bottom:15px; padding-left:30px;'>"+
+            "<a href='http://www.getseam.co/login/?utm_source=email&utm_medium=email&utm_campaign=agenda' target='_blank' style='color:#FFFFFF; text-decoration:none;'>Login to SEAM</a></td></tr></table>"+
+        "</body>",
         attachments:[
          // Logo img
 	        {
@@ -844,10 +890,26 @@ function createAgendaBody(emailCreator,emailList,emailDate,meetingTitle,objectiv
  };
  return mailBody;
 }
-function createMinutesBody(emailCreator,emailDate,meetingTitle,emailList,objective,emailAgenda,emailTask,emailTime,objective,emailAgenda){
+function createMinutesBody(emailCreator,emailDate,meetingTitle,emailList,objective,emailAgenda,emailTask,emailTime,objective,emailAgenda,taskLists){
 	var mailBody;
 	var htmlEmail=emailHTMLCSS();
-	htmlEmail+="<body leftmargin='0' marginwidth='0' topmargin='0' marginheight='0' offset='0'> <center> <table border='0' cellpadding='0' cellspacing='0' height='100%' width='100%' id='backgroundTable'> <tr> <td align='center' valign='top'> <!-- // Begin Template Preheader \\ --> <table border='0' cellpadding='10' cellspacing='0' width='600' id='templatePreheader'> <tr> <td valign='top' class='preheaderContent'> <!-- // Begin Module: Standard Preheader \ --> <table border='0' cellpadding='10' cellspacing='0' width='100%'> <tr> <td valign='top'> <div mc:edit='std_preheader_content'> SEAM - Tackling Meeting Inefficiency </div> </td> </tr> </table> <!-- // End Module: Standard Preheader \ --> </td> </tr> </table> <!-- // End Template Preheader \\ --> <table border='0' cellpadding='0' cellspacing='0' width='600' id='templateContainer'> <tr> <td align='center' valign='top'> <!-- // Begin Template Header \\ --> <table border='0' cellpadding='0' cellspacing='0' width='600' id='templateHeader'> <tr> <td class='headerContent'> <!-- // Begin Module: Standard Header Image \\ --> <img src='http://www.miketychen.com/images/SEAMBANNER.jpg' style='max-width:600px;' id='headerImage campaign-icon' mc:label='header_image' mc:edit='header_image' mc:allowdesigner mc:allowtext /> <!-- // End Module: Standard Header Image \\ --> </td> </tr> </table> <!-- // End Template Header \\ --> </td> </tr> <tr> <td align='center' valign='top'> <!-- // Begin Template Body \\ --> <table border='0' cellpadding='0' cellspacing='0' width='600' id='templateBody'> <tr> <td valign='top' class='bodyContent'> <!-- // Begin Module: Standard Content \\ --> <table border='0' cellpadding='20' cellspacing='0' width='100%'> <tr> <td valign='top'> <div mc:edit='std_content00'> <div class='mtg-title-box'> <h1 class='h1 text-center'>"+meetingTitle+" Minutes</h1> </div> <h2 class='h2'>Heading 2</h2> <h3 class='h3'>Heading 3</h3> <table> <tr> <td>Cell A</td> <td>Cell B</td> <td>Cell B</td> <td>Cell B</td> <td>Cell B</td> <td>Cell B</td><td>Cell B</td><td>Cell B</td><td>Cell B</td><td>Cell B</td><td>Cell B</td><td>Cell B</td><td>Cell B</td><td>Cell B</td><td>Cell B</td> </tr> </table> <table> <tr> <td>Cell A</td> <td>Cell B</td> </tr> </table><h4 class='h4'>Heading 4</h4> <strong>Getting started:</strong> Customize your template by clicking on the style editor tabs up above. Set your fonts, colors, and styles. After setting your styling is all done you can click here in this area, delete the text, and start adding your own awesome content! <br /> <br /> After you enter your content, highlight the text you want to style and select the options you set in the style editor in the 'styles' drop down box. Want to <a href='http://www.mailchimp.com/kb/article/im-using-the-style-designer-and-i-cant-get-my-formatting-to-change' target='_blank'>get rid of styling on a bit of text</a>, but having trouble doing it? Just use the 'remove formatting' button to strip the text of any formatting and reset your style. </div> </td> </tr> </table> <!-- // End Module: Standard Content \\ --> </td> </tr> </table> <!-- // End Template Body \\ --> </td> </tr> </table> <br /> </td> </tr> </table> </center> </body> </html>";
+	htmlEmail+="<body leftmargin='0' marginwidth='0' topmargin='0' marginheight='0' offset='0'> <center> <table border='0' cellpadding='0' cellspacing='0' height='100%' width='100%' id='backgroundTable'> <tr> <td align='center' valign='top'> <!-- // Begin Template Preheader \\ --> <table border='0' cellpadding='10' cellspacing='0' width='600' id='templatePreheader'> <tr> <td valign='top' class='preheaderContent'> <!-- // Begin Module: Standard Preheader \ --> <table border='0' cellpadding='10' cellspacing='0' width='100%'> <tr> <td valign='top'> <div mc:edit='std_preheader_content'> SEAM - Tackling Meeting Inefficiency </div> </td> </tr> </table> <!-- // End Module: Standard Preheader \ --> </td> </tr> </table> <!-- // End Template Preheader \\ --> <table border='0' cellpadding='0' cellspacing='0' width='600' id='templateContainer'> <tr> <td align='center' valign='top'> <!-- // Begin Template Header \\ --> <table border='0' cellpadding='0' cellspacing='0' width='600' id='templateHeader'> <tr> <td class='headerContent'> <!-- // Begin Module: Standard Header Image \\ --> <img src='http://www.miketychen.com/images/SEAMBANNER.jpg' style='max-width:600px;' id='headerImage campaign-icon' mc:label='header_image' mc:edit='header_image' mc:allowdesigner mc:allowtext /> <!-- // End Module: Standard Header Image \\ --> </td> </tr> </table> <!-- // End Template Header \\ --> </td> </tr> <tr> <td align='center' valign='top'> <!-- // Begin Template Body \\ --> <table border='0' cellpadding='0' cellspacing='0' width='600' id='templateBody'> <tr> <td valign='top' class='bodyContent'> <!-- // Begin Module: Standard Content \\ --> <table border='0' cellpadding='20' cellspacing='0' width='100%'> <tr> <td valign='top'> <div mc:edit='std_content00'> <div class='mtg-title-box'> <h1 class='h1 text-center'>"+meetingTitle+" Minutes</h1> </div>";
+
+	htmlEmail+="<h3 class='h3'>Tasks</h3><table>";
+	for (var taskAssignee in taskLists) {
+		if (taskLists.hasOwnProperty(taskAssignee)) {
+
+			htmlEmail+="<tr> <td>"+taskAssignee+"</td>";
+			tasks = taskLists[taskAssignee];
+			for (var i = 0; i < tasks.length; i++){
+				htmlEmail+="<td>"+tasks[i].task+"("+tasks[i].dueDate+")</td>";   
+			}
+			htmlEmail+="</tr>";
+		}
+	}
+	htmlEmail+="</table>";
+	htmlEmail+="<p style='text-align:left;'> Objectives: "+objective+"<br/></p>" +
+		        "<p style='text-align:left;'> Agenda: <br/>"+emailAgenda+"<br/></p></center> </body> </html>";
 	//construct the email sending module
 			mailBody = {
 			 	forceEmbeddedImages: true,

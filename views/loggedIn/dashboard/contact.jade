@@ -1,0 +1,21 @@
+extends baseLayout
+
+block content		
+	div#home-page.page.min-height-100p
+		.container-100p
+				.row.margin-top-3p.mobile-margin-top-150x
+					.col-md-12
+						h1.text-black.text-normal Problems? Feedback? We'd love to hear it.
+				form.form-horizontal(action='/feedbackForm', method='post', role='form')
+					.form-group.margin-top-1p
+						.col-md-4.col-md-offset-4
+							input.text-h4.text-left.form-control.outline-gray.form-square(name='names', type='text', placeholder='Name', required)
+					.form-group.margin-top-1p
+						.col-md-4.col-md-offset-4
+							input.text-h4.text-left.form-control.outline-gray.form-square(name='email', type='text', placeholder='Email', required)
+					.form-group.margin-top-1p
+						.col-md-4.col-md-offset-4
+							textarea.text-h4.text-left.form-control.outline-gray(name='comments', rows='5', placeholder='Message', required)
+					.form-group
+						.col-md-2.col-md-offset-5.margin-top-3p
+							button.btn.btn-primary.bg-pink-orange-hover.btn-lg.btn-block.border-round-5x(type='submit') Send Message

@@ -72,10 +72,10 @@ function addAgendaItem(){
         			'<div style="width:40px" class="bar"></div>'+
       					'</div></div></div>'+
 		'<div class="col-md-7 margin-0 padding-0">'+
-    		'<input id="makeMeeting'+i+'" type="text" name="agendaTopic" placeholder="ADD AGENDA ITEM" autocomplete="off" class="text-h3 noEnterSubmit height-30x form-control border-square border-none text-left text-blue bg-transparent"/>'+
+    		'<input id="makeMeeting'+i+'" type="text" name="agendaTopic" placeholder="ADD AGENDA ITEM" autocomplete="off" class="text-h3 noEnterSubmit height-30x form-control border-square border-none text-left text-blue bg-transparent cursor-pointer"/>'+
   				'</div>'+
   		'<div class="col-md-3">'+
-  				'<input id="duration'+i+'" type="number" name="duration" class=" text-h3 noEnterSubmit height-30x form-control border-square border-none text-right bg-transparent" placeholder= "TIME" autocomplete="off" value="0" required/>'+
+  				'<input id="duration'+i+'" type="number" name="duration" class=" text-h3 noEnterSubmit height-30x form-control border-square border-none text-right bg-transparent cursor-pointer" placeholder= "MINUTES" autocomplete="off" value="0" required/>'+
   				'</div>'+
   		'<div class="col-md-1 padding-0 text-center" style="margin-top:0.5%;">'+
   			'<a class="text-h2 text-normal text-gray-hover" href="#" onclick="removeAgenda(agendaItem'+ i + ');return false;"><i class="fa fa-times fa-md"></i> </a>'+
@@ -88,7 +88,7 @@ function addAgendaItem(){
        				'</div></div></div></div>'+
   		'<div class="col-md-9 margin-0 padding-0">'+
     		'<div class="width-95p margin-top-1p overflow-scroll-y-auto max-height-150x">'+
-     			'<textarea id="makeMeeting'+i+'" type="text" name="notes" rows="6" placeholder="INSERT NOTES HERE" autocomplete="off" class="text-h4 height-30x form-control border-square border-none text-left bg-transparent"/>'+
+     			'<textarea id="makeMeeting'+i+'" type="text" name="notes" rows="6" placeholder="INSERT NOTES HERE" autocomplete="off" class="text-h4 height-30x form-control border-square border-none text-left bg-transparent cursor-pointer"/>'+
      			'</div></div></div></div>').appendTo(agendaBox);
 	i++;
 };
@@ -116,18 +116,18 @@ function showAttendeeForm(){
 };
 
 function addAttendee(){
+	var i = $('#attendeeList div').size();
 	var attendeeName = document.getElementById('nameHolder').value;
 	var attendeeEmail = document.getElementById('emailHolder').value;
-	var string = '<div class="row"><input type="hidden" name="attendeeName" value="' + attendeeName + '"><input type="hidden" name="attendeeEmail" value="' + attendeeEmail + '"><div class="col-md-4 margin-top-5p"><img src="../../../images/member.png" class="width-50x height-50x border-50p float-right"></div><div class="col-md-8"><h4 class="text-black text-left margin-top-5p">' + attendeeName +'</h4></div></div>';
+	var string = '<div class="row" id="attendee'+i+'"><input type="hidden" name="attendeeName" value="' + attendeeName + '"><input type="hidden" name="attendeeEmail" value="' + attendeeEmail + '"><div class="col-md-3 margin-top-5p"><img src="../../../images/member.png" class="width-50x height-50x border-50p float-right"></div><div class="col-md-8"><h4 class="text-black text-left margin-top-5p">' + attendeeName +'</h4></div><div class="col-md-1"><a class="text-h2 text-normal text-gray-hover" href="#" onclick="deleteAttendee(attendee'+ i + ');return false;"><i class="fa fa-times fa-md"></i> </a></div></div>';
 
 	document.getElementById('attendeeList').innerHTML += string;
 	document.getElementById('nameHolder').value = '';
 	document.getElementById('emailHolder').value = '';
-	document.getElementById('addNewAttendee').style.display = 'none';
 	document.getElementById('nameHolder').focus();
 
 };
 
-function deleteAttendee(){
-
+function deleteAttendee(tabId){
+	$(tabId).remove();
 };

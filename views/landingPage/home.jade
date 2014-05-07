@@ -1,29 +1,22 @@
 extends layout
 
 block content
+	.wrapper
+		.screen#screen-1(data-video="../../video/meeting.mp4")
+			.img.big-image(src="../../images/bg-video.jpg")
+		.bg-white-trans-abs
 	div#home-page.page.full-page
-		.container-95p.margin-center.margin-bottom-10p
-			.row.margin-top-10p
-				.col-md-6.text-shadow
-					h1.text-big-35x.line-height-30x.text-white.text-bold.text-left
-						| Say 
-						span.text-big-35x.text-bold.text-left.text-ltblue hello 
-						| to the newest
-					h1.text-big-35x.line-height-30x.text-white.text-bold.text-left member of your meeting
-				.col-md-6.margin-top-1p
-					h1.line-height-15x.text-big-25x.text-white.text-bold.text-right Bad meetings suck.
-					h1.line-height-15x.text-big-25x.text-white.text-bold.text-right We feel your pain.
+		.container-95p.margin-center.margin-bottom-10p.mobile-margin-top-150x
+			.row.margin-top-12p
+				.col-md-12.margin-top-3p.text-shadow
+					h1.line-height-15x.text-40x.text-white.text-bold.text-center.line-height-30x.text-upper.text-open-sans Bad meetings suck. We feel your pain.
 			.row
-				.col-md-5.col-md-offset-7.text-right
-					h3.line-height-12x.text-white.text-normal.text-right That's why we created SEAM.
-					h3.line-height-12x.text-white.text-normal.text-right From meeting prep to run to follow-up,
-					h3.line-height-12x.text-white.text-normal.text-right SEAM covers all the bases in helping you
-					h3.line-height-12x.text-white.text-normal.text-right hold great meetings. Great meetings
-					h3.line-height-12x.text-white.text-normal.text-right down on future meetings. And we believe 
-					h3.line-height-12x.text-white.text-normal.text-right the fewer meetings the better.
-			.row
-				.col-md-12
-					a.float-right.btn.btn-primary.btn-lg.border-round-5x.margin-top-3p.bg-blue-transparent.padding-btn-small.border-shadow-black-small(onClick="window.location.href='http://www.getseam.co/signUp'", role="button") SIGN UP FOR A FREE SEAM ACCOUNT
+				.col-md-12.text-left.mobile-hidden.text-shadow.mobile-margin-top-40x.text-center.margin-top-2p.text-merriweather
+					h3.line-height-12x.text-white.text-normal.text-center.line-height-15x.text-merriweather SEAM covers all the bases in helping you hold great meetings. 
+					h3.line-height-12x.text-white.text-normal.text-center.line-height-15x.text-merriweather Great meetings cut down on future meetings. And we believe the fewer meetings the better.
+			.row.mobile-margin-top-40x
+				.col-md-12.text-center
+					a.float-center.btn.btn-primary.btn-lg.border-round-5x.margin-top-3p.bg-blue-transparent.padding-btn-small.text-open-sans.text-normal(onClick="window.location.href='http://www.getseam.co/signUp'", role="button") TRY SEAM FOR FREE
 	div#about-page.page.padding-top-3p.bg-white.padding-bottom-5p
 		.container-95p.margin-center
 			.row
@@ -44,9 +37,7 @@ block content
 													i.text-big-35x.text-center-imp.text-black.flaticon-space25
 										.row
 											.col-md-12.padding-bottom-10p
-												h3.text-white.line-height-5x.text-center.text-normal Create a clear,
-												h3.text-white.line-height-5x.text-center.text-normal easy-to-share agenda
-												h3.text-white.line-height-5x.text-center.text-normal using our neat templates.
+												h3.text-white.line-height-5x.text-center.text-normal Focus your meetings
 									.ch-info-back-box
 										h3 Mouse
 										p
@@ -65,9 +56,7 @@ block content
 													i.text-big-35x.text-center-imp.text-black.flaticon-space25
 										.row
 											.col-md-12.padding-bottom-10p
-												h3.text-white.line-height-5x.text-center.text-normal Create a clear,
-												h3.text-white.line-height-5x.text-center.text-normal easy-to-share agenda
-												h3.text-white.line-height-5x.text-center.text-normal using our neat templates.
+												h3.text-white.line-height-5x.text-center.text-normal Control your meetings
 									.ch-info-back-box
 										h3 Mouse
 										p
@@ -86,9 +75,7 @@ block content
 													i.text-big-35x.text-center-imp.text-black.flaticon-space25
 										.row
 											.col-md-12.padding-bottom-10p
-												h3.text-white.line-height-5x.text-center.text-normal Create a clear,
-												h3.text-white.line-height-5x.text-center.text-normal easy-to-share agenda
-												h3.text-white.line-height-5x.text-center.text-normal using our neat templates.
+												h3.text-white.line-height-5x.text-center.text-normal Never forget your discussions 
 									.ch-info-back-box
 										h3 Mouse
 										p
@@ -106,9 +93,7 @@ block content
 									i.text-big-35x.text-center-imp.text-black.flaticon-space25
 						.row
 							.col-md-12.padding-bottom-10p
-								h3.text-white.line-height-5x.text-center.text-normal Create a clear,
-								h3.text-white.line-height-5x.text-center.text-normal easy-to-share agenda
-								h3.text-white.line-height-5x.text-center.text-normal using our neat templates.
+								h3.text-white.line-height-5x.text-center.text-normal Focus your meetings
 				.col-md-4
 					.bg-pink.border-round-5x.container-80p.margin-center
 						.row
@@ -120,9 +105,7 @@ block content
 									i.text-big-35x.text-center-imp.text-black.flaticon-launching1
 						.row
 							.col-md-12.padding-bottom-10p
-								h3.text-white.line-height-5x.text-center.text-normal Start the agenda during the
-								h3.text-white.line-height-5x.text-center.text-normal meeting to time discussions,
-								h3.text-white.line-height-5x.text-center.text-normal take notes and tag tasks.
+								h3.text-white.line-height-5x.text-center.text-normal Control your meetings
 				.col-md-4
 					.bg-orange.border-round-5x.container-80p.margin-center
 						.row
@@ -134,15 +117,12 @@ block content
 									i.text-big-35x.text-center-imp.text-black.flaticon-rocket1
 						.row
 							.col-md-12.padding-bottom-10p
-								h3.text-white.line-height-5x.text-center.text-normal Get an email recap with
-								h3.text-white.line-height-5x.text-center.text-normal notes and tasks after
-								h3.text-white.line-height-5x.text-center.text-normal the meeting.
+								h3.text-white.line-height-5x.text-center.text-normal Never forget your discussions
 	div#about-page.page.padding-top-3p.bg-drkblue.padding-bottom-5p
 		.container-95p.margin-center
 			.row
 				.col-md-12
-					h1.text-big-35x.text-white.text-big-35x.text-center Learn more about your meetings.
-					h1.text-big-30x.text-white.text-center Use SEAM to find out:
+					h1.text-big-35x.text-white.text-big-35x.text-center Learn more to improve your meetings.
 			.row.margin-top-3p
 				.col-md-3
 					.container-50p.bg-white-o5.border-round-5x.padding-left-2x.float-right
@@ -158,84 +138,36 @@ block content
 						i.text-drkblue.flaticon-time
 				.col-md-7
 					h2.text-left.text-white.margin-top-20x
-						| how much 
-						span.text-white.text-h2.text-normal time 
-						| your meetings are saving
+						| understand where you can save 
+						span.text-white.text-h2.text-normal time
 			.row.margin-top-3p
 				.col-md-3
 					.container-50p.bg-white-o5.border-round-5x.padding-left-9x.float-right
 						i.text-drkblue.flaticon-idea2
 				.col-md-7
 					h2.text-left.text-white.margin-top-20x
-						| what meeting discussions attendees found 
-						span.text-white.text-h2.text-normal efficient
-	div#team-page.page.padding-top-3p.bg-white.padding-bottom-3p
-		.container-95p.margin-center
-			.row
-				.col-md-12
-					h1.text-big-35x.text-center The minds behind SEAM.
-			ul.ch-grid
-				li
-					.ch-item.ch-img-1
-						.ch-info.text-right.bg-gray-t8
-							h3 Josephine Lee
-							h4 Organizational Change Lead
-							a.text-white-orange-hover.text-right.lsf-icon(href="http://twitter.com/leejosephinem", target="_blank" , title="twitter")
-							a.text-white-orange-hover.text-right.lsf-icon(href="https://www.linkedin.com/in/leejosephinem", target="_blank" , title="linkedin")
-				li
-					.ch-item.ch-img-2
-						.ch-info.text-right.bg-blue-t8
-							h3 Alex Popelard
-							h4 Design Innovation MBA
-							a.text-white-orange-hover.text-right.lsf-icon(href="http://twitter.com/alexpopelard", target="_blank" , title="twitter")
-							a.text-white-orange-hover.text-right.lsf-icon(href="https://www.linkedin.com/in/alexpopelard", target="_blank" , title="linkedin")
-				li
-					.ch-item.ch-img-3
-						.ch-info.text-right.bg-pink-t8
-							h3 Suzee Han
-							h4 Designer
-							a.text-white-orange-hover.text-right.lsf-icon(href="http://twitter.com/suzeehan", target="_blank" , title="twitter")
-							a.text-white-orange-hover.text-right.lsf-icon(href="https://www.linkedin.com/in/suzeehan", target="_blank" , title="linkedin")
-				li
-					.ch-item.ch-img-4
-						.ch-info.text-right.bg-orange-t8
-							h3 Michael Chen
-							h4 Developer
-							a.text-white-orange-hover.text-right.lsf-icon(href="http://twitter.com/MikeTYChen", target="_blank", title="twitter")
-							a.text-white-orange-hover.text-right.lsf-icon(href="https://www.linkedin.com/in/miketychen", target="_blank" , title="linkedin")
-				li
-					.ch-item.ch-img-5
-						.ch-info.text-right.bg-green-t8
-							h3 Tommy Yu
-							h4 Developer
-							a.text-white-orange-hover.text-right.lsf-icon(href="https://www.facebook.com/tommy.yu.92754" , title="linkedin")
+						| get feedback on what is most 
+						span.text-white.text-h2.text-normal effective
 	div#contact-page.page.padding-top-3p.bg-white.padding-bottom-5p
 		.container-95p.margin-center
 			.row
 				.col-md-12
-					h1.text-big-35x.text-center Contact us.
-		form.form-horizontal(action='/contact', method='post', role='form')
-			.form-group.margin-top-3p
-				.col-md-4.col-md-offset-4
-					input.text-h4.text-left.form-control.outline-gray.form-square(name='names', type='text', placeholder='Name', required)
-			.form-group
-				.col-md-4.col-md-offset-4
-					input.text-h4.text-left.form-control.outline-gray.form-square(name='email', type='text', placeholder='Email', required)
-			.form-group
-				.col-md-4.col-md-offset-4
-					textarea.text-h4.text-left.form-control.outline-gray(name='comments', rows='5', placeholder='Message', required)
-			.form-group
+					h1.text-big-35x.text-center Ready to meet the newest member of your meetings?
+			.row
 				.col-md-2.col-md-offset-5.margin-top-3p
-					button.btn.btn-primary.bg-pink-orange-hover.btn-lg.btn-block.border-round-5x(type='submit') Send Message
+					button.btn.btn-primary.bg-pink-orange-hover.btn-lg.btn-block.border-round-5x(onClick="window.location.href='http://www.getseam.co/signUp'", role="button") GET SEAM TODAY
 	div#footer-page.page.bg-drk-gray.padding-top-1p.padding-bottom-1p
 		.row
-			.col-md-12.margin-top-1p
-				img.margin-center.img-responsive.img-8p.center-box(src="images/logo-noWord.png" ,alt="SEAM")
-		.row
-			.col-md-12.text-center.margin-top-3p
-				a.text-white-orange-hover.text-50x.lsf-icon(href="http://twitter.com/" , title="twitter")
-				a.text-white-green-hover.text-50x.lsf-icon(href="http://twitter.com/" , title="facebook")
-				a.text-white-pink-hover.text-50x.lsf-icon(href="http://twitter.com/" , title="linkedin")
-		.row
-			.col-md-12.margin-top-1p
-				h4.text-white &copy; Powered by SEAM 2014.
+			.col-md-6
+				.row
+					.col-md-11.col-md-offset-1.text-left.margin-top-1p
+						span.text-left
+							a.text-white-orange-hover.text-h2.lsf-icon(href="https://twitter.com/seam_meetings", target="_blank", title="twitter")
+							a.text-white-pink-hover.text-h2.lsf-icon(href="https://www.linkedin.com/groups/Improving-Meeting-Efficiency-6671618", target="_blank", title="linkedin")
+				.row
+					.col-md-11.col-md-offset-1
+						h4.text-left.text-white &copy; Powered by SEAM 2014.
+			.col-md-6
+				.row
+					.col-md-offset-8.col-md-4.margin-top-1p
+						img.margin-center.img-responsive.img-18p(src="../../images/logo-noWord.png" ,alt="SEAM")

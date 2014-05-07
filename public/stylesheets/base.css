@@ -14,6 +14,8 @@ html, body {
 /*this is my css to remove bullets from the autocomplete*/
 ul.ui-autocomplete {
     list-style: none;
+	background-color: rgb(200,200,200);
+	width:50px;
 }
 
 /*this is my css to remove bullets from the autocomplete*/
@@ -81,6 +83,12 @@ i{
 a{
 	font-size:12px;
 }
+.text-open-sans{
+	font-family: 'Open Sans', 'sans-serif' !important;
+}
+.text-merriweather{
+	font-family: 'Merriweather', 'serif';
+}
 a:hover{
 	color:rgb(204,51,51);
 	text-decoration:none;
@@ -105,6 +113,7 @@ textarea{
   border:none !important;
   box-shadow:none !important;
 }
+
 .form-control{
 	margin:0 auto;
 	height:40px;
@@ -148,6 +157,18 @@ textarea{
 .line-height-60x{
 	line-height: 60px !important;
 }
+.mobile-hidden{
+	display:inline;
+}
+.mobile-margin-top-150x{
+	margin-top: 0px;
+}
+.mobile-margin-top-40x{
+	margin-top:  0px;
+}
+.desk-hidden{
+	display: none;
+}
 /* ========================================================
    1A.FONTS-DESKTOP
 =========================================================== */
@@ -156,7 +177,7 @@ textarea{
 	text-justify:inter-word;
 }
 .text-shadow{
-	text-shadow: 2px 2px rgb(100,100,100);
+	text-shadow: 1px 1px rgb(0,0,0);
 }
 .text-white{
 	color:rgb(255,255,255) !important;
@@ -221,6 +242,9 @@ textarea{
 }
 .text-blue{
 	color:rgb(0,114,188);
+}
+.text-blue-imp{
+	color:rgb(0,114,188) !important;
 }
 .text-blue-hoverorange{
 	color:rgb(0,114,188);
@@ -287,6 +311,12 @@ textarea{
 .text-50x{
 	font-size:50px;
 }
+.text-40x{
+	font-size:40px;
+}
+.text-35x{
+	font-size:35px;
+}
 .text-h2{
 	font-size:24px;
 }
@@ -330,18 +360,36 @@ textarea{
 	background-size: cover;
 }
 .bg-frontpg-2{
-	background: url(../images/bg-landing.jpg) no-repeat center center fixed;
+	background: url(../images/bg-video.jpg) no-repeat center center fixed;
 	-webkit-background-size: cover;
 	-moz-background-size: cover;
 	-o-background-size: cover;
 	background-size: cover;
 }
 .bg-frontpg-blur{
-	background: url(../images/bg-blur.jpg) no-repeat center center fixed;
+	background: url(../images/bg-video-trans.jpg) no-repeat center center fixed;
 	-webkit-background-size: cover;
 	-moz-background-size: cover;
 	-o-background-size: cover;
 	background-size: cover;
+}
+.bg-frontpg-blur2{
+	background: url(../images/bg-video-trans2.jpg) no-repeat center center fixed;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+}
+.bg-white-trans-abs{
+	position:absolute;
+	top:0;
+	height:100%;
+	width:100%;
+	z-index: 99;
+	background: -webkit-linear-gradient(right, rgba(255,255,255,0), rgba(50,50,50bg,1)); /* For Safari 5.1 to 6.0 */
+	background: -o-linear-gradient(left, rgba(255,255,255,0), rgba(50,50,50,1)); /* For Opera 11.1 to 12.0 */
+	background: -moz-linear-gradient(left, rgba(255,255,255,0), rgba(50,50,50,1)); /* For Firefox 3.6 to 15 */
+	background: linear-gradient(to left, rgba(255,255,255,0), rgba(50,50,50,1)); /* Standard syntax (must be last) */
 }
 .bg-jo{
 	background: url(../images/joLee.jpg) no-repeat;
@@ -356,7 +404,7 @@ textarea{
 	background-color: #FFF;
 }
 .bg-white-o5{
-	background-color: rgba(255,255,255,0.5);
+	background-color: rgba(250,250,250,0.8);
 }
 .bg-transparent{
 	background-color: transparent;
@@ -579,8 +627,14 @@ textarea{
 .margin-top-7p{
 	margin-top:7%;
 }
+.margin-top-8p{
+	margin-top:8%;
+}
 .margin-top-10p{
 	margin-top:10%;
+}
+.margin-top-12p{
+	margin-top:12%;
 }
 .margin-top-15p{
 	margin-top:15%;
@@ -617,6 +671,9 @@ textarea{
 }
 .margin-left-35p{
 	margin-left: 63.5%;
+}
+.margin-right-5x{
+	margin-right: 5px;
 }
 .margin-right-15x{
 	margin-right:15px;
@@ -688,6 +745,9 @@ textarea{
 .padding-top-7p{
 	padding-top: 7%;
 }
+.padding-top-15p{
+	padding-top: 10%;
+}
 .padding-bottom-20x{
 	padding-bottom:20px;
 }
@@ -703,11 +763,14 @@ textarea{
 .padding-bottom-5p{
 	padding-bottom: 5%;
 }
+.padding-bottom-8p{
+	padding-bottom: 5%;
+}
 .padding-bottom-10p{
 	padding-bottom: 10%;
 }
 .padding-bottom-15p{
-	padding-bottom: 15%;
+	padding-bottom: 10%;
 }
 .padding-right-1p{
 	padding-right:1%;
@@ -786,6 +849,9 @@ textarea{
 .height-100x{
 	height:100px;
 }
+.min-height-100p{
+	min-height: 100%;
+}
 .min-height-180x{
 	min-height: 170px;
 }
@@ -807,9 +873,22 @@ textarea{
 /* ========================================================
    1C.IMAGES-DESKTOP
 =========================================================== */
+.img-50x{
+	width:500px;
+	height:250px;
+}
+
+.img-5p{
+	width:5%;
+	height:5%;
+}
 .img-8p{
 	width:8%;
 	height:8%;
+}
+.img-18p{
+	width:50px;
+	height:50px;
 }
 .img-10p{
 	width:10%;
@@ -1088,6 +1167,8 @@ textarea{
 }
 .navbar{
 	z-index: 59;
+	background-color: none !important;
+	border:none;
 	box-shadow: 1px solid rgb(0,0,0) !important;
 }
 .navbar .nav > li > a {
