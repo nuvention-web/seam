@@ -2,8 +2,10 @@
 $(document).ready(function(){
 
 	$('body').on('keypress', '.noEnterSubmit', function(e){ 
-           if ( e.which == 13 ) {e.preventDefault();}
-    });
+		if ( e.which == 13 ) {
+			e.preventDefault();
+		}
+	});
 
 	// socket = io.connect("127.0.0.1:3000");
 	socket = io.connect("http://www.getseam.co");
@@ -71,17 +73,17 @@ $(document).ready(function(){
 
 	socket.on("userJoined", function(msg){
 		console.log(msg);
-        $.notify(msg.toUpperCase(),
-            {className: "info", autoHideDelay: 10000, globalPosition: 'top center'}
-        );
-    });
+		$.notify(msg.toUpperCase(),
+			{className: "info", autoHideDelay: 10000, globalPosition: 'top center'}
+		);
+	});
 
-    socket.on("userLeft", function(msg){
-    	console.log(msg);
-        $.notify(msg.toUpperCase(),
-            {className: "info", autoHideDelay: 10000, globalPosition: 'top center'}
-        );
-    });
+	socket.on("userLeft", function(msg){
+		console.log(msg);
+		$.notify(msg.toUpperCase(),
+			{className: "info", autoHideDelay: 10000, globalPosition: 'top center'}
+		);
+	});
 
 	socket.on("meetingRestarted", function(msg, Id){
 		console.log(msg);
@@ -171,48 +173,46 @@ $(document).ready(function(){
 	//autocomeplete function
 
 
-    $("input[name='taskAssignee']")
-      // don't navigate away from the field on tab when selecting an item
-      .bind( "keydown", function( event ) {
-        if ( event.keyCode === $.ui.keyCode.TAB &&
-            $( this ).data( "ui-autocomplete" ).menu.active ) {
-          event.preventDefault();
-        }
-      })
-      .autocomplete({
-        minLength: 0,
-        source: function( request, response ) {
-          // delegate back to autocomplete, but extract the last term
-          response( $.ui.autocomplete.filter(
-            attendeeTags, extractLast( request.term ) ) );
-        },
-        focus: function() {
-          // prevent value inserted on focus
-          return false;
-        },
-       	noResults: '',
-       	results: function() {},
-        select: function( event, ui ) {
-          var terms = split( this.value );
-          // remove the current input
-          terms.pop();
-          // add the selected item
-          terms.push( ui.item.value );
-          // add placeholder to get the comma-and-space at the end
-          terms.push( "" );
-          this.value = terms.join( ", " );
-          return false;
-        }
-      });
+	$("input[name='taskAssignee']")
+	// don't navigate away from the field on tab when selecting an item
+	.bind( "keydown", function( event ) {
+		if ( event.keyCode === $.ui.keyCode.TAB && $( this ).data( "ui-autocomplete" ).menu.active ) {
+			event.preventDefault();
+		}
+	}).autocomplete({
+		minLength: 0,
+		source: function( request, response ) {
+			// delegate back to autocomplete, but extract the last term
+			response( $.ui.autocomplete.filter(
+			attendeeTags, extractLast( request.term ) ) );
+		},
+		focus: function() {
+			// prevent value inserted on focus
+			return false;
+		},
+		noResults: '',
+		results: function() {},
+		select: function( event, ui ) {
+			var terms = split( this.value );
+			// remove the current input
+			terms.pop();
+			// add the selected item
+			terms.push( ui.item.value );
+			// add placeholder to get the comma-and-space at the end
+			terms.push( "" );
+			this.value = terms.join( ", " );
+			return false;
+		}
+	});
 
-      var defaultWeek = getWeekFromNow();
-    //for calender of datepicker
-    $("input[name='taskDueDate']").datetimepicker({
-    	pickTime: false,
-    	defaultDate: defaultWeek
-    });
+	var defaultWeek = getWeekFromNow();
+	//for calender of datepicker
+	$("input[name='taskDueDate']").datetimepicker({
+		pickTime: false,
+		defaultDate: defaultWeek
+	});
 
-    $('textarea[name="notes"]').keypress(function (event) {
+	$('textarea[name="notes"]').keypress(function (event) {
 		if (event.keyCode == 13 && event.shiftKey) {
 			var value = $(this).attr('value');
 			$("#TNForm" + value).submit();
@@ -276,6 +276,7 @@ $(document).ready(function(){
 		});
 	return false; 
 	});
+
 });
 				
 //FUNCTION: ADD NOTE TO MEETING INTERFACE
@@ -311,11 +312,11 @@ function getWeekFromNow(){
 	var yyyy = today.getFullYear();
 
 	if(dd < 10) {
-	    dd = '0' + dd;
+		dd = '0' + dd;
 	} 
 
 	if(mm < 10) {
-	    mm = '0' + mm;
+		mm = '0' + mm;
 	} 
 
 	today = mm + '/' + dd + '/' + yyyy;
@@ -334,202 +335,209 @@ function startTimer(){
 	elapsedTime = 0; //in seconds
 	// elapsedVals[0] = 0;
 	$('input[name="timeLeft"]').each(function( index ) {
-	    elapsedVals[index] = $(this).attr('value');
-	    elapsedTime = elapsedTime + (parseInt($(this).attr('value'))/1000);
+		elapsedVals[index] = $(this).attr('value');
+		elapsedTime = elapsedTime + (parseInt($(this).attr('value'))/1000);
 	});
 
 	// elapsedTimeArray = elapsedVals;
 
 	// console.log("This is elapsed time:" + elapsedTimeArray);
 
-    $.notify.defaults({ className: "success" ,globalPosition:"top center" });
-    var timer= $('#progressValues').val();
-    var strVals=timer.split(',');
-    
-    for(var i = 0; i < strVals.length; i++){
-        intVals[i] =parseInt(strVals[i]);
-        waitVals[i]=0;
-        intVals[i] *=60;
-         if(i>1){
-            intVals[i] =parseInt(strVals[i])*60;
-            waitVals[i]=intVals[i-1]+waitVals[i-1];
-         }
-    };
+	$.notify.defaults({ className: "success" ,globalPosition:"top center" });
+	var timer= $('#progressValues').val();
+	var strVals=timer.split(',');
+	
+	for(var i = 0; i < strVals.length; i++){
+		intVals[i] =parseInt(strVals[i]);
+		waitVals[i]=0;
+		intVals[i] *=60;
+		if(i>1){
+			intVals[i] =parseInt(strVals[i])*60;
+			waitVals[i]=intVals[i-1]+waitVals[i-1];
+		}
+	};
    waitVals[strVals.length]=intVals[0];
    //SET AGENDA ITEM TIMEOUTSattendeeMinimize
 
-     $('#attendeeMinimize').each(function() {
-                var tis = $(this);
-                var state = false;
-                var hiddenBox= tis.next('div');
-                if(i>1)
-                    hiddenBox.hide().css('height','auto').slideUp();
-            tis.click(function() {
-              state = !state;
-              toggleID=tis.next('.answer');
-              toggleID.slideToggle(state);
-              hiddenBox.slideToggle(state);
-              tis.toggleClass('active',state);
-            });
-          });
+	$('#attendeeMinimize').each(function() {
+		var tis = $(this);
+		var state = false;
+		var hiddenBox= tis.next('div');
+
+		if(i>1){
+		hiddenBox.hide().css('height','auto').slideUp();
+		}
+
+		tis.click(function() {
+			state = !state;
+			toggleID=tis.next('.answer');
+			toggleID.slideToggle(state);
+			hiddenBox.slideToggle(state);
+			tis.toggleClass('active',state);
+		});
+	});
 
 
 
-    for(var i=1; i<=strVals.length;i++){
-       $('#agendaItem'+i).each(function() {
-                var tis = $(this);
-                var state = false;
-                var hiddenBox= tis.next('div');
-                if(i>1)
-                    hiddenBox.hide().css('height','auto').slideUp();
-            tis.click(function() {
-              state = !state;
-              toggleID=tis.next('.answer');
-              toggleID.slideToggle(state);
-              hiddenBox.slideToggle(state);
-              tis.toggleClass('active',state);
-            });
-          });
-        setAgendaDelay(i, strVals.length);
-    };
-    //ENDING AGENDA ITEM
-    $('#countdownTimer').countdown({until: intVals[0]-elapsedTime,compact: true,format: 'MS'});
+	for(var i=1; i<=strVals.length;i++){
+		$('#agendaItem'+i).each(function() {
+			var tis = $(this);
+			var state = false;
+			var hiddenBox= tis.next('div');
+			
+			if(i>1){
+			hiddenBox.hide().css('height','auto').slideUp();
+			}	
+			
+			tis.click(function() {
+				state = !state;
+				toggleID=tis.next('.answer');
+				toggleID.slideToggle(state);
+				hiddenBox.slideToggle(state);
+				tis.toggleClass('active',state);
+			});
+		});
+		setAgendaDelay(i, strVals.length);
+	};
+	//ENDING AGENDA ITEM
+	$('#countdownTimer').countdown({until: intVals[0]-elapsedTime,compact: true,format: 'MS'});
 };
 
 
 function setAgendaDelay(i, total){
-    var prev=i-1;
-    var progID="#progressBar"+i;
-    var progCir="#progressCircle"+i; 
-    var agendaID="#agendaNote"+i;
-    var notesID="#notes"+prev;
-    var notesButtonID="#noteSubmit"+prev;
-    var taskButtonID="#taskSubmit"+prev;
-    var taskPersonID="#taskPersonInput"+prev;
-    var taskPersonAddID="#addTask"+prev;
-    var timeLimits=intVals[i];
-    var elapsed = 0;
-    if(elapsedVals[i-1] != undefined){
-        elapsed =  elapsedVals[i-1];
-    }
-    var value =  $(progID).attr('value');
-    setTimeout(function(){
-        // console.log("this is the elapsed time: " + parseInt(elapsed));
-        // var waitTime = waitVals[i] * 1000 - parseInt(elapsed);
-        // console.log("wait: " + waitTime);
-            if(prev>=1){
-                $.notify("AGENDA ITEM "+ prev+ " DONE", { className: "success" ,globalPosition:"top center" }); 
-                $('#agendaItem'+i).next('div').slideToggle(true);
-                document.getElementById('alertSound').play();
-            };
-            if(i==total){
-                $('#endCirc').addClass("bg-green"); 
-                document.getElementById('alertSound').play();
-            }else{ 
-            $(progCir).addClass("bg-green"); 
-            $(progID).progressBar({timeLimit: timeLimits,limit:intVals, elapsed: elapsed, value: value})
-        }
-    }, (waitVals[i]-elapsedTime) * 1000 );
+	var prev=i-1;
+	var progID="#progressBar"+i;
+	var progCir="#progressCircle"+i; 
+	var agendaID="#agendaNote"+i;
+	var notesID="#notes"+prev;
+	var notesButtonID="#noteSubmit"+prev;
+	var taskButtonID="#taskSubmit"+prev;
+	var taskPersonID="#taskPersonInput"+prev;
+	var taskPersonAddID="#addTask"+prev;
+	var timeLimits=intVals[i];
+	var elapsed = 0;
+	if(elapsedVals[i-1] != undefined){
+		elapsed =  elapsedVals[i-1];
+	}
+	var value =  $(progID).attr('value');
+	setTimeout(function(){
+		// console.log("this is the elapsed time: " + parseInt(elapsed));
+		// var waitTime = waitVals[i] * 1000 - parseInt(elapsed);
+		// console.log("wait: " + waitTime);
+		if(prev>=1){
+			$.notify("AGENDA ITEM "+ prev+ " DONE", { className: "success" ,globalPosition:"top center" }); 
+			$('#agendaItem'+i).next('div').slideToggle(true);
+			document.getElementById('alertSound').play();
+		};
+		if(i==total){
+			$('#endCirc').addClass("bg-green"); 
+			document.getElementById('alertSound').play();
+		}
+		else{
+			$(progCir).addClass("bg-green"); 
+			$(progID).progressBar({timeLimit: timeLimits,limit:intVals, elapsed: elapsed, value: value});
+		}
+	}, (waitVals[i]-elapsedTime) * 1000 );
 };
 
 (function ($) {
-    $.fn.progressBar = function (options) {
-        var settings = $.extend({}, $.fn.progressBar.defaults, options);
+	$.fn.progressBar = function (options) {
+		var settings = $.extend({}, $.fn.progressBar.defaults, options);
 
-        this.each(function (index) {
-            var url = location.protocol + "//" + location.host + '/dashboard/meetings/start/updateTime';
-            var data = new Array();
-            data.push({
-                "name" : "meetingId",
-                "value" : meetingId
-            });
-            data.push({
-                "name" : "value",
-                "value" : settings.value
-            });
-            //console.log("more elapsed: " + settings.elapsed);
-            $(this).empty();
-            var barContainer = $("<div>").addClass("progress progress-striped progress-vertical-line");
-            var bar = $("<div>").addClass("progress-bar").addClass(settings.baseStyle)
-                .attr("role", "progressbar")
-                .attr("aria-valuenow", "0")
-                .attr("aria-valuemin", "0")
-                .attr("aria-valuemax", settings.timeLimit)
-                .width("100%")
-                .height("0%");
+		this.each(function (index) {
+			// var url = location.protocol + "//" + location.host + '/dashboard/meetings/start/updateTime';
+			// var data = new Array();
+			// data.push({
+			// 	"name" : "meetingId",
+			// 	"value" : meetingId
+			// });
+			// data.push({
+			// 	"name" : "value",
+			// 	"value" : settings.value
+			// });
+			//console.log("more elapsed: " + settings.elapsed);
+			$(this).empty();
+			var barContainer = $("<div>").addClass("progress progress-striped progress-vertical-line");
+			var bar = $("<div>").addClass("progress-bar").addClass(settings.baseStyle)
+				.attr("role", "progressbar")
+				.attr("aria-valuenow", "0")
+				.attr("aria-valuemin", "0")
+				.attr("aria-valuemax", settings.timeLimit)
+				.width("100%")
+				.height("0%");
 
-            bar.appendTo(barContainer);
-            barContainer.appendTo($(this));
-            // console.log("the value: " + settings.value);
-            var start = new Date();
-            var limit = settings.timeLimit * 1000;
-            var elapsed = new Date() - start + parseInt(settings.elapsed);
-            bar.height(((elapsed / limit) * 100) + "%");
-            if(elapsed <= settings.limit[1]*1000){
-                bar.removeClass(settings.baseStyle)
-                .addClass(settings.baseStyle);
-            }else if(elapsed <= settings.limit[2]*1000){
-                bar.addClass(settings.style2);
-            }else if(elapsed <= settings.limit[3]*1000){
-                bar.removeClass(settings.baseStyle)
-                .addClass(settings.style3);
-            }
-            if (elapsed >= limit) {
-                    window.clearInterval(interval);
-                    bar.removeClass(settings.baseStyle)
-                       .removeClass(settings.warningStyle)
-                       .addClass(settings.completeStyle);
+			bar.appendTo(barContainer);
+			barContainer.appendTo($(this));
+			// console.log("the value: " + settings.value);
+			var start = new Date();
+			var limit = settings.timeLimit * 1000;
+			var elapsed = new Date() - start + parseInt(settings.elapsed);
+			bar.height(((elapsed / limit) * 100) + "%");
+			if(elapsed <= settings.limit[1]*1000){
+				bar.removeClass(settings.baseStyle)
+				   .addClass(settings.baseStyle);
+			}
+			else if(elapsed <= settings.limit[2]*1000){
+				bar.addClass(settings.style2);
+			}
+			else if(elapsed <= settings.limit[3]*1000){
+				bar.removeClass(settings.baseStyle)
+				   .addClass(settings.style3);
+			}
+			if (elapsed >= limit) {
+					window.clearInterval(interval);
+					bar.removeClass(settings.baseStyle)
+					   .removeClass(settings.warningStyle)
+					   .addClass(settings.completeStyle);
 
-                    settings.onFinish.call(this);
-            }
-            interval = window.setInterval(function () {
-            elapsed = new Date() - start + parseInt(settings.elapsed);
-            // console.log(elapsed);
-            data[2] = {
-                "name" : "timeExpired",
-                "value" : elapsed 
-            };
-            bar.height(((elapsed / limit) * 100) + "%");
-            if(elapsed <= settings.limit[1]*1000){
-                bar.removeClass(settings.baseStyle)
-                .addClass(settings.baseStyle);
-            }else if(elapsed <= settings.limit[2]*1000){
-                bar.addClass(settings.style2);
-            }else if(elapsed <= settings.limit[3]*1000){
-                bar.removeClass(settings.baseStyle)
-                .addClass(settings.style3);
-            }
-                if (elapsed >= limit) {
-                    window.clearInterval(interval);
-                    bar.removeClass(settings.baseStyle)
-                       .removeClass(settings.warningStyle)
-                       .addClass(settings.completeStyle);
+					settings.onFinish.call(this);
+			}
+			interval = window.setInterval(function () {
+				elapsed = new Date() - start + parseInt(settings.elapsed);
+				// console.log(elapsed);
+				data[2] = {
+					"name" : "timeExpired",
+					"value" : elapsed 
+				};
+				bar.height(((elapsed / limit) * 100) + "%");
+				if(elapsed <= settings.limit[1]*1000){
+					bar.removeClass(settings.baseStyle)
+					   .addClass(settings.baseStyle);
+				}
+				else if(elapsed <= settings.limit[2]*1000){
+					bar.addClass(settings.style2);
+				}
+				else if(elapsed <= settings.limit[3]*1000){
+					bar.removeClass(settings.baseStyle)
+					   .addClass(settings.style3);
+				}
+				if (elapsed >= limit) {
+					window.clearInterval(interval);
+					bar.removeClass(settings.baseStyle)
+					   .removeClass(settings.warningStyle)
+					   .addClass(settings.completeStyle);
 
-                    settings.onFinish.call(this);
-                }
-           
-            // elapsedTimeArray[parseInt(settings.value) + 1] = elapsed;
+					settings.onFinish.call(this);
+				}
+			}, 6000);
 
-            // console.log("Inside timeout function of elapsed: " + elapsedTimeArray);
-            }, 6000);
+		});
 
-        });
+		return this;
+	};
 
-        return this;
-    };
-
-    $.fn.progressBar.defaults = {
-        timeLimit: 60,  //total number of seconds
-        warningThreshold: 5,  //seconds remaining triggering switch to warning color
-        onFinish: function () {},  //invoked once the timer expires
-        baseStyle: 'bg-1',  //bootstrap progress bar style at the beginning of the timer
-        style2:'bg-2',
-        style3:'bg-1',
-        style4:'bg-1',
-        warningStyle: 'progress-bar-danger',  //bootstrap progress bar style in the warning phase
-        completeStyle: 'bg-1',//bootstrap progress bar style at completion of timer
-        limit:[30,10,5],
-        elapsed: 0,
-        value: 0,
-    };
+	$.fn.progressBar.defaults = {
+		timeLimit: 60,  //total number of seconds
+		warningThreshold: 5,  //seconds remaining triggering switch to warning color
+		onFinish: function () {},  //invoked once the timer expires
+		baseStyle: 'bg-1',  //bootstrap progress bar style at the beginning of the timer
+		style2:'bg-2',
+		style3:'bg-1',
+		style4:'bg-1',
+		warningStyle: 'progress-bar-danger',  //bootstrap progress bar style in the warning phase
+		completeStyle: 'bg-1',//bootstrap progress bar style at completion of timer
+		limit:[30,10,5],
+		elapsed: 0,
+		value: 0,
+	};
 }(jQuery));
