@@ -260,7 +260,8 @@ exports.postMeeting = function(req, res){
 			meeting: doc,
 			user : req.session.userId,
 			name : req.session.name,
-			past : 0
+			past : 0,
+			isAttendee : false
 		});
 	})
 };
@@ -317,7 +318,8 @@ exports.getMeeting = function(req, res){
 			meeting: doc,
 			user : req.session.userId,
 			name : req.session.name,
-			past : 0
+			past : 0,
+			isAttendee : false
 		});
 	})
 };
@@ -720,14 +722,15 @@ exports.postJoinMeeting = function(req, res){
 			console.log(meetingDate);
 		}
 
-		res.render('loggedIn/meetings/joinMeeting', { 
+		res.render('loggedIn/meetings/startMeeting', { 
 			title: 'SEAM',
 			name: req.session.name,
 			meetingDate: meetingDate,
 			meeting: doc,
 			user : req.session.userId,
 			name : req.session.name,
-			past : 0
+			past : 0,
+			isAttendee : true
 		});
 	})	
 }
@@ -778,14 +781,15 @@ exports.getJoinMeeting = function(req, res){
 			console.log(meetingDate);
 		}
 
-		res.render('loggedIn/meetings/joinMeeting', { 
+		res.render('loggedIn/meetings/startMeeting', { 
 			title: 'SEAM',
 			name: req.session.name,
 			meetingDate: meetingDate,
 			meeting: doc,
 			user : req.session.userId,
 			name : req.session.name,
-			past : 0
+			past : 0,
+			isAttendee : true
 		});
 	})	
 }
