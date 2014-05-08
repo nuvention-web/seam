@@ -187,7 +187,7 @@ module.exports = function(passport) {
 				 });
 				emailBody = {
 					 	from: "Josephine Lee <jo@getseam.co>",
-						to: newUser.local.email,
+						to: req.session.email,
 					 	subject: 'Welcome to SEAM',
 					 	text: 'Thank you for signing up for SEAM',
 					 	html:"<body>"+  	
