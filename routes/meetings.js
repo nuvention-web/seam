@@ -7,7 +7,13 @@ exports.makeMeeting = function(req, res){
 	res.render('loggedIn/meetings/makeMeeting', { 
 		title: 'SEAM',
 		name: req.session.name,
-		user : req.session.userId
+		email: req.session.email,
+		user : req.session.userId,
+		meeting: '',
+		meetingDate: '',
+		meetingDuration: '',
+		isEdit : false,
+		action: '/dashboard/meetings/makeMeeting/add'
 	});
 };
 
@@ -64,13 +70,16 @@ exports.editMeeting = function(req, res){
 			console.log(meetingDate);
 		}
 
-		res.render('loggedIn/meetings/editMeeting', { 
+		res.render('loggedIn/meetings/makeMeeting', { 
 			title: 'SEAM',
 			meeting: doc,
 			meetingDate: meetingDate,
 			meetingDuration: duration,
 			name: req.session.name,
-			user : req.user
+			email: req.session.email,
+			user : req.session.userId,
+			isEdit : true,
+			action : '/dashboard/meetings/edit/update'
 		});
 	})
 };
@@ -173,14 +182,6 @@ exports.updateMeeting = function(req, res){
 
 	Meeting.update(conditions, update, options, function(){res.redirect('dashboard');});
 }
-
-exports.makeNewMeeting = function(req, res){
-	res.render('loggedIn/meetings/makeMeeting', { 
-		title: 'SEAM',
-		name: req.session.name,
-		user : req.session.userId
-	});
-};
 
 exports.viewMeeting = function(req, res){
 	var meetingId = req.body.meetingId;
@@ -624,11 +625,6 @@ exports.addMeeting = function(req, res){
 			};
 		}
 	}
-
-	newMeeting.attendees.push({
-		attendeeName: creatorName,
-		attendeeEmail: creatorEmail.toLowerCase()
-	});
 
 	if(attendeeNames != undefined){	
 		if(typeof attendeeNames == 'string'){
