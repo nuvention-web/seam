@@ -909,7 +909,8 @@ function createMinutesBody(emailCreator,emailDate,meetingTitle,emailList,objecti
 	}
 	htmlEmail+="</table>";
 	htmlEmail+="<p style='text-align:left;'> Objectives: "+objective+"<br/></p>" +
-		        "<p style='text-align:left;'> Agenda: <br/>"+emailAgenda+"<br/></p></center> </body> </html>";
+		        "<p style='text-align:left;'> Agenda: <br/>"+emailAgenda+"<br/></p>"+
+		        "<p style='text-align:left;'> Please send us any feedback you have <a href='http://www.getseam.co/contact' target='_blank'>here</a>.</p> </center></body> </html>";
 	//construct the email sending module
 			mailBody = {
 			 	forceEmbeddedImages: true,
