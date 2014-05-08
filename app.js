@@ -284,7 +284,6 @@ app.get('/dashboard/contact', user.isLoggedIn, dashboard.contact);
 
 //Dashboard-Meetings
 app.get('/dashboard/meetings/makeMeeting', user.isLoggedIn, meetings.makeMeeting);
-app.get('/dashboard/meetings/makeMeeting/new', user.isLoggedIn, meetings.makeNewMeeting);
 app.post('/dashboard/meetings/makeMeeting/add', user.isLoggedIn, meetings.addMeeting);
 
 //update and edit meetings
