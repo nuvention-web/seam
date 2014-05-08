@@ -1,26 +1,7 @@
 var mongoose = require('mongoose');
 var Meeting = require('../models/meeting-model');
-var Project = require('../models/project-model');
 var nodemailer = require('nodemailer');
-// exports.dashboard = function(req, res){
-// 	res.render('loggedIn/dashboard/welcome', { 
-// 		title: 'SEAM',
-// 		name: req.session.name,
-// 		user : req.user});
-// };
 
-// exports.setWelcome = function(req, res){
-// 	console.log(projectId);
-// 	Project.findOne({'_id': projectId}, function(e, doc){
-// 		console.log(doc);
-// 		res.render('loggedIn/dashboard/welcome', { 
-// 			title: 'SEAM',
-// 			projectName: req.session.projectName,
-// 			project: doc,
-// 			user : req.user,
-// 		});
-// 	})
-// };
 exports.contact = function(req, res){
 	res.render('loggedIn/dashboard/contact', { title: 'SEAM',
 		name: req.session.name,
@@ -125,7 +106,6 @@ exports.dashboard = function(req, res){
 exports.tasks = function(req, res){
 	res.render('loggedIn/dashboard/sidebarTasks', { 
 		title: 'SEAM',
-		projectName: req.session.projectName, 
 		user : req.user});
 };
 

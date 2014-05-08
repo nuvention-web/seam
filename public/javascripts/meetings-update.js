@@ -1,4 +1,7 @@
 
+var interval;
+var updateTimerInterval;
+
 $(document).ready(function(){
 //FUNCTIONS FOR ASYNC UPDATE OF MEETINGS
 	
@@ -36,14 +39,14 @@ $(document).ready(function(){
 	socket.on("userJoined", function(msg){
 		console.log(msg);
 		$.notify(msg.toUpperCase(),
-			{className: "info", autoHideDelay: 10000, globalPosition: 'top center'}
+			{className: "info", autoHideDelay: 3000, globalPosition: 'top center'}
 		);
 	});
 
 	socket.on("userLeft", function(msg){
 		console.log(msg);
 		$.notify(msg.toUpperCase(),
-			{className: "info", autoHideDelay: 10000, globalPosition: 'top center'}
+			{className: "info", autoHideDelay: 3000, globalPosition: 'top center'}
 		);
 	});
 
@@ -274,9 +277,9 @@ function startTimer(){
 	waitVals=new Array();
 	elapsedVals = new Array(); //in milliseconds
 	elapsedTime = 0; //in seconds
-	// elapsedVals[0] = 0;
+	elapsedVals[0] = 0;
 	$('input[name="timeLeft"]').each(function( index ) {
-		elapsedVals[index] = $(this).attr('value');
+		elapsedVals[index + 1] = $(this).attr('value');
 		elapsedTime = elapsedTime + (parseInt($(this).attr('value'))/1000);
 	});
 
@@ -303,15 +306,15 @@ function startTimer(){
 	var strVals=timer.split(',');
 	
 	for(var i = 0; i < strVals.length; i++){
-		intVals[i] =parseInt(strVals[i]);
-		waitVals[i]=0;
-		intVals[i] *=60;
-		if(i>1){
+		if(i>=1){
 			intVals[i] =parseInt(strVals[i])*60;
-			waitVals[i]=intVals[i-1]+waitVals[i-1];
+			waitVals[i]=intVals[i]+waitVals[i-1]-(parseInt(elapsedVals[i])/1000);
+		}else{
+			intVals[i] =parseInt(strVals[i]);
+			waitVals[i]=0;
+			intVals[i] *=60;
 		}
 	};
-	waitVals[strVals.length]=intVals[0];
    //SET AGENDA ITEM TIMEOUTSattendeeMinimize
 
 	$('#attendeeMinimize').each(function() {
@@ -369,29 +372,30 @@ function setAgendaDelay(i, total){
 	var taskPersonID="#taskPersonInput"+prev;
 	var taskPersonAddID="#addTask"+prev;
 	var timeLimits=intVals[i];
-	var elapsed = 0;
-	if(elapsedVals[i-1] != undefined){
-		elapsed =  elapsedVals[i-1];
-	}
 	var value =  $(progID).attr('value');
+	var currentElapsed = 0;
+	if(elapsedVals[i] != undefined){
+		currentElapsed =  elapsedVals[i];
+	}
 	setTimeout(function(){
-		// console.log("this is the elapsed time: " + parseInt(elapsed));
-		// var waitTime = waitVals[i] * 1000 - parseInt(elapsed);
-		// console.log("wait: " + waitTime);
 		if(prev>=1){
 			$.notify("AGENDA ITEM "+ prev+ " DONE", { className: "success" ,globalPosition:"top center" }); 
 			$('#agendaItem'+i).next('div').slideToggle(true);
 			document.getElementById('alertSound').play();
+			clearInterval(interval);
+			clearInterval(updateTimerInterval);
 		};
+		
 		if(i==total){
 			$('#endCirc').addClass("bg-green"); 
 			document.getElementById('alertSound').play();
 		}
-		else{ 
+		else{
+			// console.log("this is the elapsed time: " + parseInt(currentElapsed));
 			$(progCir).addClass("bg-green"); 
-			$(progID).progressBar({timeLimit: timeLimits,limit:intVals, elapsed: elapsed, value: value});
+			$(progID).progressBar({timeLimit: timeLimits,limit:intVals, elapsed: currentElapsed, value: value});
 		}
-	}, (waitVals[i]-elapsedTime) * 1000 );
+	}, waitVals[i-1] * 1000 );
 };
 
 (function ($) {
@@ -425,55 +429,30 @@ function setAgendaDelay(i, total){
 			// console.log("the value: " + settings.value);
 			var start = new Date();
 			var limit = settings.timeLimit * 1000;
+			var value = settings.value + 1;
 			var elapsed = new Date() - start + parseInt(settings.elapsed);
-			bar.height(((elapsed / limit) * 100) + "%");
-			if(elapsed <= settings.limit[1]*1000){
-				bar.removeClass(settings.baseStyle)
-				   .addClass(settings.baseStyle);
-			}
-			else if(elapsed <= settings.limit[2]*1000){
-				bar.addClass(settings.style2);
-			}
-			else if(elapsed <= settings.limit[3]*1000){
-				bar.removeClass(settings.baseStyle)
-				   .addClass(settings.style3);
-			}
-			if (elapsed >= limit) {
-				window.clearInterval(interval);
-				bar.removeClass(settings.baseStyle)
-				   .removeClass(settings.warningStyle)
-				   .addClass(settings.completeStyle);
 
-				settings.onFinish.call(this);
-			}
-			interval = window.setInterval(function () {
+			interval = setInterval(function () {
 				elapsed = new Date() - start + parseInt(settings.elapsed);
-				// console.log(elapsed);
+				bar.height(((elapsed / limit) * 100) + "%");
+				if(elapsed <= limit){
+					bar.removeClass(settings.baseStyle)
+					   .addClass(settings.baseStyle);
+				}
+				else {
+					// console.log('im in here man ' + settings.value);
+					bar.removeClass(settings.baseStyle)
+					   .removeClass(settings.warningStyle)
+					   .addClass(settings.completeStyle);
+					settings.onFinish.call(this);
+				}
+			}, 250);
+
+			updateTimerInterval = setInterval(function () {
 				data[2] = {
 					"name" : "timeExpired",
 					"value" : elapsed 
 				};
-				bar.height(((elapsed / limit) * 100) + "%");
-				if(elapsed <= settings.limit[1]*1000){
-					bar.removeClass(settings.baseStyle)
-					   .addClass(settings.baseStyle);
-				}
-				else if(elapsed <= settings.limit[2]*1000){
-					bar.addClass(settings.style2);
-				}
-				else if(elapsed <= settings.limit[3]*1000){
-					bar.removeClass(settings.baseStyle)
-					   .addClass(settings.style3);
-				}
-				if (elapsed >= limit) {
-					window.clearInterval(interval);
-					bar.removeClass(settings.baseStyle)
-					   .removeClass(settings.warningStyle)
-					   .addClass(settings.completeStyle);
-
-					settings.onFinish.call(this);
-				}
-
 				$.ajax({
 					type: "POST",
 					url: url,
@@ -482,7 +461,8 @@ function setAgendaDelay(i, total){
 						// console.log("updated the time");
 					}
 				});
-			}, 6000);
+			}, 5850);
+
 		});
 
 		return this;

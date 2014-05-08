@@ -1,6 +1,5 @@
 var mongoose = require('mongoose');
 var Meeting = require('../models/meeting-model');
-var Project = require('../models/project-model');
 var nodemailer = require('nodemailer');
 
 exports.makeMeeting = function(req, res){
@@ -191,19 +190,16 @@ exports.viewMeeting = function(req, res){
 		req.session.meetingId = meetingId;
 	}
 	console.log(meetingId);
-	Meeting.find({'ProjectId': req.session.projectId, 'UserId' : req.user.local.email}, function(e, docs){
-		Meeting.findOne({'ProjectId': req.session.projectId, '_id': meetingId}, function(e, doc){
-			console.log(doc);
-			res.render('loggedIn/meetings/viewMeeting', { 
-				title: 'SEAM',
-				meeting: doc,
-				name: req.session.name,
-				projectName: req.session.projectName,
-				meetingList: docs,
-				user : req.user,
-				past : 0
-			});
-		})
+	Meeting.findOne({'_id': meetingId}, function(e, doc){
+		console.log(doc);
+		res.render('loggedIn/meetings/viewMeeting', { 
+			title: 'SEAM',
+			meeting: doc,
+			name: req.session.name,
+			meetingList: docs,
+			user : req.user,
+			past : 0
+		});
 	})
 };
 
@@ -339,63 +335,60 @@ exports.endMeeting = function(req, res){
 		if(e) console.log(e);
 		else console.log("Successfully finished meeting");
 	});
-	Meeting.find({'ProjectId': meetingId, 'UserId' : req.session.userId}, function(e, docs){
-		Meeting.findOne({'_id': meetingId}, function(e, doc){
-			agenda=doc.agenda;
-			meetingTitle=doc.meetingTitle;
-			objective=doc.objective;
-			meetingAttendees=doc.attendees;
-			meetingDate=doc.meetingDate;
-			var creatorEmail= req.session.userId;
 
-			console.log("EMAIL creator: "+creatorEmail);
-			emailList=creatorEmail+',';
-			var meetingYear = meetingDate.getFullYear(); 
-			var meetingMonth = meetingDate.getMonth()+1; 
-			var meetingDay = meetingDate.getDate(); 
-			emailDate= meetingMonth +"/"+meetingDay+"/"+meetingYear ;
-			emailTime=doc.meetingTime;
-			var taskLists= getTaskList(doc);
-			if(typeof agenda == 'string'){
-				emailAgenda+="<p style='text-align:left; text-transform:capitalize'> 1: "+agenda.topic+"<br/></p>";
-			}
-			else{
-				for(var i=0; i<agenda.length; i++){
-					if(agenda[i] != ''){
-						var number= i+1;
-						var notes= agenda[i].notes;
-						var tasks= agenda[i].tasks;
-						emailAgenda+=number+':  '+ agenda[i].topic+'<br/>';
-						var initialNoteCount= -1; //If there is initial note count =0
-						if(notes.length>0 && notes[0].notes!='' ){
-							emailAgenda+="<p style='margin-left:5em;'> a"+". "+notes[0].notes+"<br/></p>";
-							initialNoteCount=0;
-						}
-						if(tasks.length>0 && tasks[0].task!='' ){
-							emailTask+="<p style=''>"+tasks[0].assigneeName+": "+tasks[0].task+" (Due: "+tasks[0].taskDueDate+")<br/></p>";
-						}
-						for(var z=1; z<notes.length;z++){
-							emailAgenda+="<p style='margin-left:5em;'> " +String.fromCharCode(97 + z+ initialNoteCount)+". "+notes[z].notes+"<br/></p>";
-						}
-						for(var z=1; z<tasks.length;z++){
-							emailTask+="<p style=''>"+tasks[z].assigneeName+": "+tasks[z].task+" (Due: "+tasks[z].taskDueDate+")<br/></p>";
-						}
+	Meeting.findOne({'_id': meetingId}, function(e, doc){
+		agenda=doc.agenda;
+		meetingTitle=doc.meetingTitle;
+		objective=doc.objective;
+		meetingAttendees=doc.attendees;
+		meetingDate=doc.meetingDate;
+		var creatorEmail= req.session.userId;
+
+		console.log("EMAIL creator: "+creatorEmail);
+		emailList=creatorEmail+',';
+		var meetingYear = meetingDate.getFullYear(); 
+		var meetingMonth = meetingDate.getMonth()+1; 
+		var meetingDay = meetingDate.getDate(); 
+		emailDate= meetingMonth +"/"+meetingDay+"/"+meetingYear ;
+		emailTime=doc.meetingTime;
+		var taskLists= getTaskList(doc);
+		if(typeof agenda == 'string'){
+			emailAgenda+="<p style='text-align:left; text-transform:capitalize'> 1: "+agenda.topic+"<br/></p>";
+		}
+		else{
+			for(var i=0; i<agenda.length; i++){
+				if(agenda[i] != ''){
+					var number= i+1;
+					var notes= agenda[i].notes;
+					var tasks= agenda[i].tasks;
+					emailAgenda+=number+':  '+ agenda[i].topic+'<br/>';
+					var initialNoteCount= -1; //If there is initial note count =0
+					if(notes.length>0 && notes[0].notes!='' ){
+						emailAgenda+="<p style='margin-left:5em;'> a"+". "+notes[0].notes+"<br/></p>";
+						initialNoteCount=0;
 					}
-				};
-			}
-			console.log("EMAIL: "+ emailTask);
-			if(meetingAttendees!=''){
-				for(var i=0; i<meetingAttendees.length; i++){
-					emailList+=meetingAttendees[i].attendeeEmail+',';
+					if(tasks.length>0 && tasks[0].task!='' ){
+						emailTask+="<p style=''>"+tasks[0].assigneeName+": "+tasks[0].task+" (Due: "+tasks[0].taskDueDate+")<br/></p>";
+					}
+					for(var z=1; z<notes.length;z++){
+						emailAgenda+="<p style='margin-left:5em;'> " +String.fromCharCode(97 + z+ initialNoteCount)+". "+notes[z].notes+"<br/></p>";
+					}
+					for(var z=1; z<tasks.length;z++){
+						emailTask+="<p style=''>"+tasks[z].assigneeName+": "+tasks[z].task+" (Due: "+tasks[z].taskDueDate+")<br/></p>";
+					}
 				}
+			};
+		}
+		console.log("EMAIL: "+ emailTask);
+		if(meetingAttendees!=''){
+			for(var i=0; i<meetingAttendees.length; i++){
+				emailList+=meetingAttendees[i].attendeeEmail+',';
 			}
-			mailBody=createMinutesBody(creatorEmail,emailDate,meetingTitle,emailList,objective,emailAgenda,emailTask,emailTime,objective,emailAgenda,taskLists);
-			emailFunction(mailBody,res);
-
-		});
+		}
+		mailBody=createMinutesBody(creatorEmail,emailDate,meetingTitle,emailList,objective,emailAgenda,emailTask,emailTime,objective,emailAgenda,taskLists);
+		emailFunction(mailBody,res);
 	});
 
-	
 	res.redirect('dashboard');
 }
 
@@ -414,7 +407,6 @@ exports.viewPast = function(req, res){
 
 		res.render('loggedIn/meetings/viewMeeting', { 
 			title: 'SEAM',
-			projectName: req.session.projectName,
 			meeting: doc,
 			user : req.user,
 			past : 1
@@ -466,29 +458,6 @@ exports.pastMeeting = function(req, res){
 			user : req.user
 		});
 	})
-	/*
-	var meetingId = req.body.meetingId;
-	if(meetingId == undefined){
-		meetingId = req.session.meetingId;
-	}
-	else{
-		req.session.meetingId = meetingId;
-	}
-	console.log(meetingId);
-	Meeting.findOne({'ProjectId': req.session.projectId, '_id': meetingId}, function(e, doc){
-		console.log(doc);
-		Task.find({'ProjectId': req.session.projectId, 'MeetingId': meetingId}, function(e, task){
-			console.log(task);
-			res.render('loggedIn/meetings/pastMeeting', { 
-				title: 'SEAM',
-				taskList: task,
-				meeting: doc,
-				projectName: req.session.projectName,
-				user : req.user,
-				past : 1
-			});
-		})
-	})*/
 };
 
 exports.addNote = function(req, res){

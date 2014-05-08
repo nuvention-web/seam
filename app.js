@@ -8,7 +8,6 @@ var meetings = require('./routes/meetings');
 var user = require('./routes/user');
 var task = require('./routes/task');
 var index = require('./routes/index');
-var team = require('./routes/team');
 var meetingStruct = require('./routes/asyncMeetingStruct');
 var http = require('http');
 var path = require('path');
@@ -304,10 +303,6 @@ app.post('/dashboard/meetings/start/updateTime', user.isLoggedIn, meetings.updat
 // app.get('/dashboard/tasks', user.isLoggedIn, task.getTasks);
 // app.post('/dashboard/tasks/current', user.isLoggedIn, task.getTasksByMeeting);
 
-// team member stuff
-app.get('/dashboard/team', user.isLoggedIn, team.team);
-app.post('/addMember', user.isLoggedIn, team.addMember);
-
 //app.post('/dashboard/meetings/startMeeting', user.isLoggedIn, meetings.startMeeting);
 //app.get('/tasks', user.isLoggedIn, interfaces.tasks);
 
@@ -321,9 +316,6 @@ app.post('/addMember', user.isLoggedIn, team.addMember);
 //app.get('/finishMeeting', user.isLoggedIn, interfaces.finishMeeting);
 //app.get('/pastMeeting', user.isLoggedIn, interfaces.pastMeeting);
 //app.post('/viewPastMeeting', user.isLoggedIn, interfaces.viewPastMeeting);
-
-
-
 
 //product stuff
 // app.post('/finishTask', user.isLoggedIn, task.finishTask);
