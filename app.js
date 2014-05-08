@@ -120,8 +120,9 @@ socket.on("connection", function (client) {
 			for(var i = 0; i < members.length; i++){// people who stayed in the room after you left will still be in the meeting list
 				var clientId = members[i].clientId;
 				if(clientId != meeting.owner){
+					console.log('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@' + JSON.stringify(members) + '@@@@@@@@@@@@@@@@@@@@@@@@@@@@@');
 					clients[clientId].clientObject.join(client.room);
-					clients[clientId].clientObject.emit("meetingRestarted", "meeting has been restarted by " + user.name, meetingId)
+					clients[clientId].clientObject.emit("meetingRestarted", "meeting has been started by " + user.name, meetingId)
 				}
 			}
 			if(queue[meetingId] != undefined){
@@ -129,7 +130,7 @@ socket.on("connection", function (client) {
  				for(var i = 0; i < queueList.length; i++){
  					clients[queueList[i].clientId].clientObject.join(client.room);
  					meeting.addPerson(queueList[i].clientId, queueList[i].userId);
- 					clients[queueList[i].clientId].clientObject.emit("meetingStarted", "meeting has been restarted by " + user.name, meetingId)
+ 					clients[queueList[i].clientId].clientObject.emit("meetingStarted", "meeting has been started by " + user.name, meetingId)
  				}
  			}
 		}
@@ -183,10 +184,16 @@ socket.on("connection", function (client) {
 		client.broadcast.to(client.room).emit("newTask", taskAssignee, task, value, meetingId);
 	});
 
-	// client.on("updateTimer", function(elapsedTimeArray, meetingId){
-	// 	client.room = meetingId;
-	// 	client.broadcast.to(client.room).emit("newTime", elapsedTimeArray, "syncing time with creator time", meetingId);
-	// });
+	client.on("timeForUser", function(remainingTime, userId, meetingId){
+		var meeting = meetingsList[meetingId];
+		var attedeeId = meeting.returnClientId(userId);
+		clients[attedeeId].clientObject.emit("updateTime", remainingTime, userId, meetingId);
+	});
+
+	client.on("getTime", function(name, userId, meetingId){
+		var meeting = meetingsList[meetingId];
+		clients[meeting.owner].clientObject.emit("newUserNeedsTime", userId, meetingId);
+	});
 
 	client.on("leaveMeetingCreator", function(name, userId, meetingId){
 		var meeting = meetingsList[meetingId];

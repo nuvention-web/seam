@@ -1,5 +1,6 @@
-//FUNCTIONS FOR ASYNC UPDATE OF MEETINGS
-var interval;
+
+var interval; //global for the interval created in the timer function
+var timeout = new Array(); //global for the interval created in the timeout function
 
 $(document).ready(function(){
 
@@ -8,9 +9,9 @@ $(document).ready(function(){
 			e.preventDefault();
 		}
 	});
-
-	socket = io.connect("127.0.0.1:3000");
-	// socket = io.connect("http://www.getseam.co");
+	//FUNCTIONS FOR ASYNC UPDATE OF MEETINGS
+	// socket = io.connect("127.0.0.1:3000");
+	socket = io.connect("http://www.getseam.co");
 	name = $("input[name='name']").attr('value');
 	userId = $("input[name='userId']").attr('value');
 	meetingId = $("input[name='meetingId']").attr('value');
@@ -32,23 +33,23 @@ $(document).ready(function(){
 		console.log(msg);
 	});
 
-	// socket.on("newTime", function(newTimerArray, msg, Id){
-	// 	if(meetingId === Id){
-	// 		console.log("new time array: " + newTimerArray);
-	// 		console.log(msg);
-	// 		window.clearInterval(timerInterval);
-	// 		window.clearTimeout(timerTimeout);
-	// 		elapsedVals[0] = 0 
-	// 		for(var i = 0; 1 < newTimerArray.length; i++){
-	// 			elapsedVals[i+1] = newTimerArray[i];
-	// 		}
-	// 		elapsedTime = 0;
-	// 		for(var i = 1; i < elapsedVals.length; i++){
-	// 			elapsedTime = elapsedTime + elapsedVals[i];
-	// 		}
-	// 		startTimer();
-	// 	}
-	// });
+	socket.on("updateTime", function(remaining, user, Id){
+		if(meetingId === Id){
+			if(userId === user){
+				if(timeout[0] != undefined){
+					for(var i = 0; i < timeout.length; i++){
+						clearTimeout(timeout[i]);
+					}
+				}
+				console.log("this is the timout after clear" + timeout);
+				if(interval != undefined){
+					interval.stop();
+				}
+				console.log("In updateTime");
+				startTimer(remaining);
+			}
+		}
+	});
 
 	socket.on("joinFailure", function(msg){
 		console.log(msg);
@@ -66,10 +67,10 @@ $(document).ready(function(){
 			$.notify(msg.toUpperCase(),
 				{className: "success", autoHideDelay: 3000, globalPosition: 'top center'}
 			);
-			startTimer();
 			$('button[name="leave"]').hide();
 			$(":input").prop("disabled", false);
 			$("textarea").prop("disabled", false);
+			socket.emit("getTime", name, userId, meetingId);
 		}
 	});
 
@@ -94,15 +95,11 @@ $(document).ready(function(){
 			$.notify(msg.toUpperCase(),
 				{className: "success", autoHideDelay: 3000, globalPosition: 'top center'}
 			);
-			
-			// window.onbeforeunload = function(){
-			// 	return "Meeting creator restarted meeting. Must confirm and reload page to rejoin meeting.";
-			// };
-			// location.reload(true);
-			interval.play();
+			$('#countdownTimer').countdown('resume');
 			$('button[name="leave"]').hide();
 			$(":input").prop("disabled", false);
 			$("textarea").prop("disabled", false);
+			socket.emit("getTime", name, userId, meetingId);
 		}
 	});
 
@@ -113,7 +110,10 @@ $(document).ready(function(){
 				{className: "warning", autoHideDelay: 10000, globalPosition: 'top center'}
 			);
 			$('#countdownTimer').countdown('pause');
-			interval.pause();
+			for(var i = 0; i < timeout.length; i++){
+				clearTimeout(timeout[i]);
+			}
+			interval.stop();
 			$('button[name="leave"]').show();
 			$(":input").prop("disabled", true);
 			$("textarea").prop("disabled", true);
@@ -128,6 +128,9 @@ $(document).ready(function(){
 				{className: "success", autoHideDelay: 10000, globalPosition: 'top center'}
 			);
 			$('#countdownTimer').countdown('pause');
+			for(var i = 0; i < timeout.length; i++){
+				clearTimeout(timeout[i]);
+			}
 			interval.stop();
 			$('button[name="leave"]').show();
 			$(":input").prop("disabled", true);
@@ -173,9 +176,8 @@ $(document).ready(function(){
 		attendeeTags.push($(this).attr('value'));
 		// console.log(attendeeTags);
 	});
+	
 	//autocomeplete function
-
-
 	$("input[name='taskAssignee']")
 	// don't navigate away from the field on tab when selecting an item
 	.bind( "keydown", function( event ) {
@@ -331,43 +333,53 @@ function leaveMeeting(){
 	window.location = window.location.origin + "/dashboard"
 };
 
-function startTimer(){
+function timeLeftInSec(time){
+	var timeLeft = time.split(':');
+	var min = timeLeft[0];
+	var seconds = timeLeft[1];
+	var totalSeconds = parseInt(min) * 60 + parseInt(seconds);
+	return totalSeconds;
+}
+
+function startTimer(remaining){
 	intVals=new Array();
 	waitVals=new Array();
 	elapsedVals = new Array(); //in milliseconds
 	elapsedTime = 0; //in seconds
 	elapsedVals[0] = 0;
-	$('input[name="timeLeft"]').each(function( index ) {
-		elapsedVals[index + 1] = $(this).attr('value');
-		elapsedTime = elapsedTime + (parseInt($(this).attr('value'))/1000);
-	});
-
-	$.notify.defaults({ className: "success" ,globalPosition:"top center" });
-	$.notify.addStyle('happyblue', {
-		html: "<div>☺<span data-notify-text/>☺</div>",
-		classes: {
-			base: {
-				"white-space": "nowrap",
-				"background-color": "lightblue",
-				"padding": "5px",
-				"z-index":"99 !important"
-			},
-			superblue: {
-				"color": "white",
-				"background-color": "blue",
-				"z-index":"99",
-				"position":"absolute"
-			}
-		}
-	});
-	
 	var timer= $('#progressValues').val();
 	var strVals=timer.split(',');
+	var remainingTime = timeLeftInSec(remaining);
+	elapsedTime = parseInt(strVals[0]) * 60 - remainingTime;
+	var elapsedHolder = elapsedTime;
+
+	$('input[name="timeLeft"]').each(function( index ) {
+		if(elapsedHolder >= parseInt(strVals[index + 1]) * 60 ){
+			elapsedVals[index + 1] = parseInt(strVals[index + 1]) * 1000 * 60 - 1;
+			elapsedHolder = parseInt(elapsedHolder) - parseInt(strVals[index + 1])*60;
+		}
+		else if(elapsedHolder <= parseInt(strVals[index + 1]) * 60 ){
+			elapsedVals[index + 1] = parseInt(elapsedHolder) * 1000 - 1;
+			elapsedHolder = 0;
+		}
+		else{
+			elapsedVals[index + 1] = 0;
+		}
+	});
+
+	console.log("this is the remainingTime: " + remainingTime);
+	console.log("this is the elapsedVals: " + elapsedVals);
+	console.log("this is the elapsedTime: " + elapsedTime);
+
+	$.notify.defaults({ className: "success" ,globalPosition:"top center" });
 	
 	for(var i = 0; i < strVals.length; i++){
 		if(i>=1){
 			intVals[i] =parseInt(strVals[i])*60;
 			waitVals[i]=intVals[i]+waitVals[i-1]-(parseInt(elapsedVals[i])/1000);
+			if(waitVals[i] < 1){
+				waitVals[i] = 1;
+			}
 		}else{
 			intVals[i] =parseInt(strVals[i]);
 			waitVals[i]=0;
@@ -375,6 +387,8 @@ function startTimer(){
 		}
 	};
    //SET AGENDA ITEM TIMEOUTSattendeeMinimize
+
+	console.log("this is the waitVals: " + waitVals);
 
 	$('#attendeeMinimize').each(function() {
 		var tis = $(this);
@@ -399,7 +413,7 @@ function startTimer(){
 			var tis = $(this);
 			var state = false;
 			var hiddenBox= tis.next('div');
-			
+
 			if(i>1){
 				hiddenBox.hide().css('height','auto').slideUp();
 			}
@@ -436,7 +450,7 @@ function setAgendaDelay(i, total){
 	if(elapsedVals[i] != undefined){
 		currentElapsed =  elapsedVals[i];
 	}
-	setTimeout(function(){
+	timeout.push(setTimeout(function(){
 		if(prev>=1){
 			$.notify("AGENDA ITEM "+ prev+ " DONE", { className: "success" ,globalPosition:"top center" }); 
 			$('#agendaItem'+i).next('div').slideToggle(true);
@@ -453,7 +467,7 @@ function setAgendaDelay(i, total){
 			$(progCir).addClass("bg-green"); 
 			$(progID).progressBar({timeLimit: timeLimits,limit:intVals, elapsed: currentElapsed, value: value});
 		}
-	}, waitVals[i-1] * 1000 );
+	}, waitVals[i-1] * 1000 ));
 };
 
 (function ($) {
@@ -488,7 +502,7 @@ function setAgendaDelay(i, total){
 					   .addClass(settings.baseStyle);
 				}
 				else {
-					// console.log('im in here man ' + settings.value);
+					console.log('im in here man ' + settings.value);
 					bar.removeClass(settings.baseStyle)
 					   .removeClass(settings.warningStyle)
 					   .addClass(settings.completeStyle);

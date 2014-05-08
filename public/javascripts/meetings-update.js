@@ -1,9 +1,7 @@
 
 var interval;
-var updateTimerInterval;
 
 $(document).ready(function(){
-//FUNCTIONS FOR ASYNC UPDATE OF MEETINGS
 	
 	$('body').on('keypress', '.noEnterSubmit', function(e){ 
 		if ( e.which == 13 ) {
@@ -11,8 +9,9 @@ $(document).ready(function(){
 		}
 	});
 
-	socket = io.connect("127.0.0.1:3000");
-	// socket = io.connect("http://www.getseam.co");
+	//FUNCTIONS FOR ASYNC UPDATE OF MEETINGS
+	// socket = io.connect("127.0.0.1:3000");
+	socket = io.connect("http://www.getseam.co");
 	name = $("input[name='name']").attr('value');
 	userId = $("input[name='userId']").attr('value');
 	meetingId = $("input[name='meetingId']").attr('value');
@@ -50,6 +49,13 @@ $(document).ready(function(){
 		);
 	});
 
+	socket.on("newUserNeedsTime", function(userId, Id){
+		if(meetingId === Id){
+			var remainingTime = getRemainingTime();
+			socket.emit("timeForUser", remainingTime, userId, Id);
+		}
+	});
+
 	socket.emit("startMeeting", name, userId, meetingId);
 
 	socket.on("meetingRestarted", function(msg, Id, meetingId){
@@ -85,12 +91,6 @@ $(document).ready(function(){
 		}
 	});
 
-	// var updateTimerAsync = setInterval(function(){
-	// 	socket.emit("updateTimer", elapsedTimeArray, meetingId);
-	// }, 30000);
-
-	// console.log('name: ' + name + ' user: ' + userId + ' meetingId: ' + meetingId);
-
 	// array used for autocomplete
 	var attendeeTags = new Array();
 	// adding all out attendees to the autocompelete source
@@ -98,9 +98,8 @@ $(document).ready(function(){
 		attendeeTags.push($(this).attr('value'));
 		// console.log(attendeeTags);
 	});
+	
 	//autocomeplete function
-
-
 	$("input[name='taskAssignee']")
 	  // don't navigate away from the field on tab when selecting an item
 	.bind( "keydown", function( event ) {
@@ -223,6 +222,10 @@ function addTask(number){
 	return true;
 };
 
+function getRemainingTime(){
+	return $('span[class="countdown-row countdown-amount"]').html()
+}
+
 function split( val ) {
 	return val.split( /,\s*/ );
 };
@@ -284,23 +287,9 @@ function startTimer(){
 	});
 
 	$.notify.defaults({ className: "success" ,globalPosition:"top center" });
-	$.notify.addStyle('happyblue', {
-		html: "<div>☺<span data-notify-text/>☺</div>",
-		classes: {
-			base: {
-				"white-space": "nowrap",
-				"background-color": "lightblue",
-				"padding": "5px",
-				"z-index":"99 !important"
-			},
-			superblue: {
-				"color": "white",
-				"background-color": "blue",
-				"z-index":"99",
-				"position":"absolute"
-			}
-		}
-	});
+
+	console.log("this is the elapsedVals: " + elapsedVals);
+	console.log("this is the elapsedTime: " + elapsedTime);
 	
 	var timer= $('#progressValues').val();
 	var strVals=timer.split(',');
@@ -309,6 +298,9 @@ function startTimer(){
 		if(i>=1){
 			intVals[i] =parseInt(strVals[i])*60;
 			waitVals[i]=intVals[i]+waitVals[i-1]-(parseInt(elapsedVals[i])/1000);
+			if(waitVals[i] < 1){
+				waitVals[i] = 1;
+			}
 		}else{
 			intVals[i] =parseInt(strVals[i]);
 			waitVals[i]=0;
@@ -316,6 +308,8 @@ function startTimer(){
 		}
 	};
    //SET AGENDA ITEM TIMEOUTSattendeeMinimize
+
+    console.log("this is the waitVals: " + waitVals);
 
 	$('#attendeeMinimize').each(function() {
 		var tis = $(this);
@@ -383,7 +377,6 @@ function setAgendaDelay(i, total){
 			$('#agendaItem'+i).next('div').slideToggle(true);
 			document.getElementById('alertSound').play();
 			clearInterval(interval);
-			clearInterval(updateTimerInterval);
 		};
 		
 		if(i==total){
@@ -431,6 +424,7 @@ function setAgendaDelay(i, total){
 			var limit = settings.timeLimit * 1000;
 			var value = settings.value + 1;
 			var elapsed = new Date() - start + parseInt(settings.elapsed);
+			var count = 0
 
 			interval = setInterval(function () {
 				elapsed = new Date() - start + parseInt(settings.elapsed);
@@ -446,23 +440,25 @@ function setAgendaDelay(i, total){
 					   .addClass(settings.completeStyle);
 					settings.onFinish.call(this);
 				}
+				if(count == 22){
+					data[2] = {
+						"name" : "timeExpired",
+						"value" : elapsed 
+					};
+					$.ajax({
+						type: "POST",
+						url: url,
+						data: data,
+						success: function(data){
+							// console.log("updated the time");
+						}
+					});
+					count = 0;
+				}
+				else{
+					count++;
+				}
 			}, 250);
-
-			updateTimerInterval = setInterval(function () {
-				data[2] = {
-					"name" : "timeExpired",
-					"value" : elapsed 
-				};
-				$.ajax({
-					type: "POST",
-					url: url,
-					data: data,
-					success: function(data){
-						// console.log("updated the time");
-					}
-				});
-			}, 5850);
-
 		});
 
 		return this;

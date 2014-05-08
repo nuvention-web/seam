@@ -25,4 +25,12 @@ meetingStruct.prototype.removePerson = function(clientId, userId) {
   }
 };
 
+meetingStruct.prototype.returnClientId = function(userId){
+  for(var i = 0; i < this.people.length; i++){
+    if(this.people[i].userId === userId){
+      return this.people[i].clientId;
+    }
+  }
+}
+
 module.exports = meetingStruct;
