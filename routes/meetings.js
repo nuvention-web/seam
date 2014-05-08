@@ -810,9 +810,11 @@ function emailFunction(emailBody,res,icsFilePath){
 	else {
 		res.end("Email Successfully");
 		if(icsFilePath==''){
-			deleteFile(icsFilePath);
+			//deleteFile(icsFilePath);
 		}
 		else{
+			console.log('../'+icsFilePath);
+			deleteFile(icsFilePath);
 		}
  	}
 
@@ -936,11 +938,15 @@ function createiCal(userId,meetingTitle,icalDate,icalEmail,icalSTime,icalETime,o
 	return tempFileName;
 }
 function deleteFile(fileName){
+	console.log("Deleting File: "+fileName);
 	//Deletes File
 	var fs= require('fs');
 	fs.unlink(fileName, function (err) {
-	  	if (err) throw err;
+	  	if (err) {throw err;
 	  		console.log('successfully deleted file');
+	  	}else{
+	  		//console.log('not deleted'+err);
+	  	}
 	});
 }
 
