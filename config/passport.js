@@ -175,38 +175,6 @@ module.exports = function(passport) {
 			req.session.name = user.google.name; 
 			req.session.accessToken = accessToken;
 			req.session.refreshToken = refreshToken;
-				//email function
-				smtpConfig = nodemailer.createTransport('SMTP', {
-					host:'just131.justhost.com',
-					port:465,
-					secureConnection: true, // use SSL
-					auth: {
-						user: "jo@getseam.co",
-					 	pass: "meetingsarehard1"
-					}
-				 });
-				emailBody = {
-					 	from: "Josephine Lee <jo@getseam.co>",
-						to: req.session.email,
-					 	subject: 'Welcome to SEAM',
-					 	text: 'Thank you for signing up for SEAM',
-					 	html:"<body>"+  	
-				        "<p style='text-align:left; text-transform:capitalize'> Hello "+req.session.name+", </p>" +
-				        "<p style='text-align:left;'> My name is Josephine Lee. I'd like to personally thank you for signing up for SEAM. If you have any questions, please do not hesitate to reach out to me personally. </p>" +
-				        "</body>"
-				 };
-				//send Email
-				 smtpConfig.sendMail(emailBody, function (error, res) {
-				//Email not sent
-			 	if (error) {
-					//res.end("Email Failed");
-			 	}
-			 	//email send sucessfully
-				else {
-					//res.end("Email Successfully");
-			 	}
-
-			 	});
 			return done(err, user);
 		});
 	}));
