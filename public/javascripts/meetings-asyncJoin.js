@@ -41,11 +41,11 @@ $(document).ready(function(){
 						clearTimeout(timeout[i]);
 					}
 				}
-				console.log("this is the timout after clear" + timeout);
 				if(interval != undefined){
 					interval.stop();
 				}
 				console.log("In updateTime");
+				$('#countdownTimer').countdown('destroy');
 				startTimer(remaining);
 			}
 		}
@@ -95,7 +95,6 @@ $(document).ready(function(){
 			$.notify(msg.toUpperCase(),
 				{className: "success", autoHideDelay: 3000, globalPosition: 'top center'}
 			);
-			$('#countdownTimer').countdown('resume');
 			$('button[name="leave"]').hide();
 			$(":input").prop("disabled", false);
 			$("textarea").prop("disabled", false);
