@@ -174,14 +174,14 @@ socket.on("connection", function (client) {
 		}
 	});
  
-	client.on("sendNote", function(note, value, meetingId) {
+	client.on("sendNote", function(note, value, meetingId, noteId) {
 		client.room = meetingId;
-		client.broadcast.to(client.room).emit("newNote", note, value, meetingId);
+		client.broadcast.to(client.room).emit("newNote", note, value, meetingId, noteId);
 	});
 
-	client.on("sendTask", function(taskAssignee, task, value, meetingId) {
+	client.on("sendTask", function(taskAssignee, task, value, meetingId, taskId) {
 		client.room = meetingId;
-		client.broadcast.to(client.room).emit("newTask", taskAssignee, task, value, meetingId);
+		client.broadcast.to(client.room).emit("newTask", taskAssignee, task, value, meetingId, taskId);
 	});
 
 	client.on("timeForUser", function(remainingTime, userId, meetingId){
@@ -301,6 +301,7 @@ app.get('/dashboard/meetings/start', user.isLoggedIn, meetings.getMeeting);
 app.post('/dashboard/meetings/join', user.isLoggedIn, meetings.postJoinMeeting);
 app.get('/dashboard/meetings/join', user.isLoggedIn, meetings.getJoinMeeting);
 app.post('/dashboard/meetings/start/addNote', user.isLoggedIn, meetings.addNote);
+app.post('/dashboard/meetings/start/editNote', user.isLoggedIn, meetings.editNote);
 app.post('/dashboard/meetings/start/addTask', user.isLoggedIn, meetings.addTask);
 app.post('/dashboard/meetings/end', user.isLoggedIn, meetings.endMeeting);
 

@@ -2,6 +2,8 @@
 var interval;
 
 $(document).ready(function(){
+
+	var locationUrl = location.protocol + "//" + location.host;
 	
 	$('body').on('keypress', '.noEnterSubmit', function(e){ 
 		if ( e.which == 13 ) {
@@ -18,7 +20,17 @@ $(document).ready(function(){
 
 	startTimer();
 
-	// elapsedTimeArray;
+	$(".oneNote").editInPlace({
+	    url: locationUrl + '/dashboard/meetings/start/editNote',
+	    callback: function(unused, enteredText) { return enteredText; }
+	});
+
+	$('#allNotes').bind("DOMSubtreeModified", function(){
+		$(".oneNote").editInPlace({
+		    url: locationUrl + '/dashboard/meetings/start/editNote',
+		    callback: function(unused, enteredText) { return enteredText; }
+		});	
+	});
 
 	window.onbeforeunload = function(){
 		return "You are about to leave an unfinished meeting. Attendees still in meeting will not be able to edit the agenda.";
@@ -63,29 +75,29 @@ $(document).ready(function(){
 		// socket.emit("updateTimer", elapsedTimeArray, meetingId);
 	});
 
-	socket.on("newNote", function(note, value, Id){
+	socket.on("newNote", function(note, value, Id, noteId){
 		if(meetingId === Id){
 			console.log(note);
 			if(notesList[value] == undefined){
-				allNotes.innerHTML += '<h5 class="text-left margin-right-2p ">' + note + '</h5>';
+				allNotes.innerHTML += '<div class="oneNote"><input type="hidden" name="noteId" value="' + noteId +'"><h5 class="text-left margin-right-2p" name="noteData">' + notes + '</h5></div>';
 				notesList.scrollTop = notesList.scrollHeight;
 			}
 			else{
-				allNotes[value].innerHTML += '<h5 class="text-left margin-right-2p">' + note + '</h5>';
+				allNotes[value].innerHTML += '<div class="oneNote"><input type="hidden" name="noteId" value="' + noteId +'"><h5 class="text-left margin-right-2p" name="noteData">' + notes + '</h5></div>';
 				notesList[value].scrollTop = notesList[value].scrollHeight;
 			}
 		}
 	});
 
-	socket.on("newTask", function(taskAssignee, task, value, Id){
+	socket.on("newTask", function(taskAssignee, task, value, Id, taskId){
 		if(meetingId === Id){
 			console.log(taskAssignee + task);
 			if(notesList[value] == undefined){
-				allTasks.innerHTML += '<h5 class="text-left text-blue margin-right-2p"> <span class="text-h5 text-normal text-blue">@ ' + taskAssignee + '</span> ----- '+task + ' </h5>';
+				allTasks.innerHTML += '<div class="oneTask"><input type="hidden" name="noteId" value="' + taskId +'"><h5 class="text-left text-blue margin-right-2p"> <span class="text-h5 text-normal text-blue">@ ' + taskAssignee + '</span> ----- '+task + ' </h5></div>';;
 				notesList.scrollTop = notesList.scrollHeight;
 			}
 			else{
-				allTasks[value].innerHTML += '<h5 class="text-left text-blue margin-right-2p"> <span class="text-h5 text-normal text-blue">@ ' + taskAssignee + '</span> ----- '+task + ' </h5>';
+				allTasks[value].innerHTML += '<div class="oneTask"><input type="hidden" name="noteId" value="' + taskId +'"><h5 class="text-left text-blue margin-right-2p"> <span class="text-h5 text-normal text-blue">@ ' + taskAssignee + '</span> ----- '+task + ' </h5></div>';
 				notesList[value].scrollTop = notesList[value].scrollHeight;
 			}
 		}
@@ -171,33 +183,33 @@ $(document).ready(function(){
 			success: function(data){
 				if(flag == 0){
 					if(notesList[value] == undefined){
-						allNotes.innerHTML += '<h5 class="text-left margin-right-2p ">' + notes + '</h5>';
+						allNotes.innerHTML += '<div class="oneNote"><input type="hidden" name="noteId" value="' + data +'"><h5 class="text-left margin-right-2p" name="noteData">' + notes + '</h5></div>';
 						notesList.scrollTop = notesList.scrollHeight;
 						$('#notes' + value)[0].value = '';
 					}
 					else{
-						allNotes[value].innerHTML += '<h5 class="text-left margin-right-2p">' + notes + '</h5>';
+						allNotes[value].innerHTML += '<div class="oneNote"><input type="hidden" name="noteId" value="' + data +'"><h5 class="text-left margin-right-2p" name="noteData">' + notes + '</h5></div>';
 						notesList[value].scrollTop = notesList[value].scrollHeight;
 						$('#notes' + value)[0].value = '';
 					}
-					socket.emit("sendNote", notes, value, meetingId);
+					socket.emit("sendNote", notes, value, meetingId, data);
 				}
 				else{
 					if(notesList[value] == undefined){
-						allTasks.innerHTML += '<h5 class="text-left text-blue margin-right-2p"> <span class="text-h5 text-normal text-blue">@ ' + taskAssignee + '</span> ----- '+task + ' </h5>';
+						allTasks.innerHTML += '<div class="oneTask"><input type="hidden" name="noteId" value="' + data +'"><h5 class="text-left text-blue margin-right-2p"> <span class="text-h5 text-normal text-blue">@ ' + taskAssignee + '</span> ----- '+task + ' </h5></div>';
 						notesList.scrollTop = notesList.scrollHeight;
 						$('#taskAssignee' + value)[0].value = '';
 						$('#taskName' + value)[0].value = '';
 						$('#notes' + value)[0].focus();
 					}
 					else{
-						allTasks[value].innerHTML += '<h5 class="text-left text-blue margin-right-2p"> <span class="text-h5 text-normal text-blue">@ ' + taskAssignee + '</span> ----- '+task + ' </h5>';
+						allTasks[value].innerHTML += '<div class="oneTask"><input type="hidden" name="noteId" value="' + data +'"><h5 class="text-left text-blue margin-right-2p"> <span class="text-h5 text-normal text-blue">@ ' + taskAssignee + '</span> ----- '+task + ' </h5></div>';
 						notesList[value].scrollTop = notesList[value].scrollHeight;
 						$('#taskAssignee' + value)[0].value = '';
 						$('#taskName' + value)[0].value = '';
 						$('#notes' + value)[0].focus();
 					}
-					socket.emit("sendTask", taskAssignee, task, value, meetingId);
+					socket.emit("sendTask", taskAssignee, task, value, meetingId, data);
 				}                
 			}
 		});

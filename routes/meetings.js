@@ -486,6 +486,18 @@ exports.addNote = function(req, res){
 	});
 };
 
+exports.editNote = function(req, res){
+	console.log('this is the req: ' + req);
+	var noteId = req.body.noteId;
+	var newNote = req.body.noteData;
+	var conditions = { _id: noteId};
+	var noteData = {notes: newNote};
+	var update = { $set: noteData };
+	var options = { upsert: true };	
+
+	Meeting.update(conditions, update, options, function(){res.send('update successful');});
+}
+
 exports.addTask = function(req, res){
 
 	var taskOrder = req.body.noteOrder;
