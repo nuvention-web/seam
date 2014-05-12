@@ -119,7 +119,7 @@ function addAttendee(){
 	var i = $('#attendeeList div').size();
 	var attendeeName = document.getElementById('nameHolder').value;
 	var attendeeEmail = document.getElementById('emailHolder').value;
-	var string = '<div class="row" id="attendee'+i+'"><input type="hidden" name="attendeeName" value="' + attendeeName + '"><input type="hidden" name="attendeeEmail" value="' + attendeeEmail + '"><div class="col-md-3 margin-top-5p"><img src="../../../images/member.png" class="width-50x height-50x border-50p float-right"></div><div class="col-md-8"><h4 class="text-black text-left margin-top-5p">' + attendeeName +'</h4></div><div class="col-md-1"><a class="text-h2 text-normal text-gray-hover" href="#" onclick="deleteAttendee(attendee'+ i + ');return false;"><i class="fa fa-times fa-md"></i> </a></div></div>';
+	var string = '<div class="row" id="attendee'+i+'"><input type="hidden" name="attendeeName" value="' + attendeeName + '"><input type="hidden" name="attendeeEmail" value="' + attendeeEmail + '"><div class="col-md-3 margin-top-5p"><img src="../../../images/member.png" class="width-50x height-50x border-50p float-right"></div><div class="col-md-6"><h4 class="text-black text-left margin-top-5p">' + attendeeName +'</h4></div><div class="col-md-1"><a class="text-h2 text-normal text-gray-hover" href="#" onclick="deleteAttendee(attendee'+ i + ');return false;"><i class="fa fa-times fa-md"></i> </a></div></div>';
 
 	document.getElementById('attendeeList').innerHTML += string;
 	document.getElementById('nameHolder').value = '';
