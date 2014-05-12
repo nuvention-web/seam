@@ -82,7 +82,12 @@ module.exports = function(passport) {
 					 	text: 'Thank you for signing up for SEAM',
 					 	html:"<body>"+  	
 				        "<p style='text-align:left; text-transform:capitalize'> Hello "+req.body.firstName+", </p>" +
-				        "<p style='text-align:left;'> My name is Josephine Lee. I'd like to personally thank you for signing up for SEAM. If you have any questions, please do not hesitate to reach out to me personally. </p>" +
+				        "<p style='text-align:left;'> I really appreciate your interest in using <a href='http://www.getseam.co/login?utm_source=email&utm_medium=email&utm_campaign=welcome' target='_blank'>SEAM</a>. Our team's goal is to help everyone in a meeting walk away feeling more productive. </p>"+
+				        "<p style='text-align:left;'> If you wouldn't mind, I'd love it if you'd answer one question: Why did you sign up for SEAM?</p>"+
+				        "<p style='text-align:left;'>I ask because knowing why you signed up is really helpful in making sure our team is delivering what users want. Just hit 'reply' and let me know.</p>"+
+				         "<p style='text-align:left;'>Over the next few weeks, you'll get a few updates from our team. In the meantime, simply create an agenda for your next meeting using SEAM <a href='http://www.getseam.co/login?utm_source=email&utm_medium=email&utm_campaign=welcome' target='_blank'>here</a>. You won't regret it! </p>"+
+				         "<p style='text-align:left;'>Thanks,</p>"+
+				         "<p style='text-align:left;'>Jo</p>"+
 				        "</body>"
 				 };
 				//send Email
