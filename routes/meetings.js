@@ -619,7 +619,7 @@ exports.addMeeting = function(req, res){
 			};
 		}
 	}
-
+	var meetingID='';
 	newMeeting.save(function(err, doc){
 		if(err){
 			console.log('Problem adding information to database')
@@ -628,15 +628,16 @@ exports.addMeeting = function(req, res){
 			res.redirect('error', {user : req.user});
 		}
 		else{
+			meetingID=doc._id;
+			//Create ical File
+			var icsFilePath=createiCal(creatorEmail,meetingTitle,icalDate,icalEmail,meetingDate,meetingEndTime,objective,location,meetingID);
+			mailBody=createAgendaBody(creatorEmail,emailList,emailDate,meetingTitle,objective,emailAgenda,location,meetingTime,icsFilePath);
+			emailFunction(mailBody,res,icsFilePath);
 			console.log('Added new meeting successfully');
 			// Meeting.find({}, function(e, docs){console.log(docs);});
 		}
 	});
-
-	//Create ical File
-	var icsFilePath=createiCal(creatorEmail,meetingTitle,icalDate,icalEmail,meetingDate,meetingEndTime,objective,location);
-	mailBody=createAgendaBody(creatorEmail,emailList,emailDate,meetingTitle,objective,emailAgenda,location,meetingTime,icsFilePath);
-	emailFunction(mailBody,res,icsFilePath);
+	
 
 	res.redirect('/dashboard');
 };
@@ -907,10 +908,10 @@ function emailHTMLCSS(){
 	return head;
 }
 //Creates ics File and returns File Name
-function createiCal(userId,meetingTitle,icalDate,icalEmail,icalSTime,icalETime,objective,location){
+function createiCal(userId,meetingTitle,icalDate,icalEmail,icalSTime,icalETime,objective,location,meetingID){
 	//ical Module
 	var iCalEvent = require('icalevent');
-	var tempFileName='icsFiles/'+userId+meetingTitle+icalDate+'.ics';
+	var tempFileName='icsFiles/'+meetingID+'.ics';
 	var fs= require('fs');
 	console.log(userId+","+meetingTitle+","+icalDate+","+icalEmail+","+icalSTime+","+icalETime+","+objective+","+location);
 	//Create Event
