@@ -10,8 +10,8 @@ $(document).ready(function(){
 		}
 	});
 	//FUNCTIONS FOR ASYNC UPDATE OF MEETINGS
-	// socket = io.connect("127.0.0.1:3000");
-	socket = io.connect("http://www.getseam.co");
+	socket = io.connect("127.0.0.1:3000");
+	// socket = io.connect("http://www.getseam.co");
 	name = $("input[name='name']").attr('value');
 	userId = $("input[name='userId']").attr('value');
 	meetingId = $("input[name='meetingId']").attr('value');
@@ -354,11 +354,11 @@ function startTimer(remaining){
 
 	$('input[name="timeLeft"]').each(function( index ) {
 		if(elapsedHolder >= parseInt(strVals[index + 1]) * 60 ){
-			elapsedVals[index + 1] = parseInt(strVals[index + 1]) * 1000 * 60 - 1;
+			elapsedVals[index + 1] = parseInt(strVals[index + 1]) * 1000 * 60;
 			elapsedHolder = parseInt(elapsedHolder) - parseInt(strVals[index + 1])*60;
 		}
 		else if(elapsedHolder <= parseInt(strVals[index + 1]) * 60 ){
-			elapsedVals[index + 1] = parseInt(elapsedHolder) * 1000 - 1;
+			elapsedVals[index + 1] = parseInt(elapsedHolder) * 1000;
 			elapsedHolder = 0;
 		}
 		else{
@@ -374,15 +374,14 @@ function startTimer(remaining){
 	
 	for(var i = 0; i < strVals.length; i++){
 		if(i>=1){
-			intVals[i] =parseInt(strVals[i])*60;
-			waitVals[i]=intVals[i]+waitVals[i-1]-(parseInt(elapsedVals[i])/1000);
+			intVals[i] = parseInt(strVals[i]) * 60;
+			waitVals[i] = intVals[i] + waitVals[i-1] - (parseInt(elapsedVals[i])/1000);
 			if(waitVals[i] < 1){
 				waitVals[i] = 1;
 			}
 		}else{
-			intVals[i] =parseInt(strVals[i]);
-			waitVals[i]=0;
-			intVals[i] *=60;
+			intVals[0] = parseInt(strVals[0]) * 60;
+			waitVals[0] = 0;
 		}
 	};
    //SET AGENDA ITEM TIMEOUTSattendeeMinimize
