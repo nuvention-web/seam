@@ -871,12 +871,10 @@ function createMinutesBody(emailCreator,emailDate,meetingTitle,emailList,objecti
 	for (var taskAssignee in taskLists) {
 		if (taskLists.hasOwnProperty(taskAssignee)) {
 
-			htmlEmail+="<tr> <td>"+taskAssignee+"</td>";
 			tasks = taskLists[taskAssignee];
 			for (var i = 0; i < tasks.length; i++){
-				htmlEmail+="<td>"+tasks[i].task+"("+tasks[i].dueDate+")</td>";   
+				htmlEmail+="<tr>"+taskAssignee+" <td>"+tasks[i].task+"("+tasks[i].dueDate+")</td></tr>";   
 			}
-			htmlEmail+="</tr>";
 		}
 	}
 	htmlEmail+="</table>";

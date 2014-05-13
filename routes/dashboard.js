@@ -91,8 +91,6 @@ exports.dashboard = function(req, res){
 					var timeString = startHour + ":" + startMinutes +" " +startAMPM+ " - " + endHour + ":" + endMinutes+" "+ endAMPM; 
 					meetingDate[i] = dateString;
 					meetingTime[i] = timeString;
-					console.log(meetingDate[i]);
-					console.log(meetingTime[i]);
 				}
 			}
 
