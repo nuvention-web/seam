@@ -36,9 +36,9 @@ block content
 												.progress.progress-striped.progress-vertical-circle-bigger.progress-striped.active.progress-success.margin-top-n1x.margin-bottom-0p
 													.bar(style="width:40px")
 										.col-md-7.margin-0.padding-0
-											input.noEnterSubmit.text-h3.height-30x.form-control.border-square.border-none.text-left.text-blue.bg-transparent.cursor-pointer(id='makeMeeting1', type='text', name='agendaTopic', placeholder= 'ADD AGENDA ITEM', autocomplete='on', value='#{agenda.topic}', required)
+											input.noEnterSubmit.text-h3.height-30x.form-control.border-square.border-none.text-left.text-blue.bg-transparent.cursor-pointer(id='makeMeeting1', type='text', name='agendaTopic', placeholder= 'Add agenda item', autocomplete='on', value='#{agenda.topic}', required)
 										.col-md-3
-											input.noEnterSubmit.text-h3.height-30x.form-control.border-square.border-none.text-right.bg-transparent.cursor-pointer(id='makeMeeting1', type='number', name='duration', placeholder= 'MINUTES', autocomplete='on', value='#{agenda.duration}', required)
+											input.noEnterSubmit.text-h3.height-30x.form-control.border-square.border-none.text-right.bg-transparent.cursor-pointer(id='makeMeeting1', type='number', name='duration', placeholder= 'Minutes', autocomplete='on', value='#{agenda.duration}', required)
 									.row
 										.col-md-1.margin-top-1p.padding-bottom-2p.margin-0.padding-0
 											div.height-100p.width-100p
@@ -46,7 +46,7 @@ block content
 													.bar(style="width:40px")
 										.col-md-9.margin-0.padding-0
 											div.width-95p.margin-top-1p.overflow-scroll-y-auto.max-height-150x
-												textarea.text-h4.height-30x.form-control.border-square.border-none.text-left.bg-transparent.cursor-pointer(rows='6', id='makeMeeting1', type='text', name='notes', placeholder= 'INSERT NOTES HERE', value='#{agenda.notes[0].notes}', autocomplete='on') #{agenda.notes[0].notes}
+												textarea.text-h4.height-30x.form-control.border-square.border-none.text-left.bg-transparent.cursor-pointer(rows='6', id='makeMeeting1', type='text', name='notes', placeholder= 'Insert notes here', value='#{agenda.notes[0].notes}', autocomplete='on') #{agenda.notes[0].notes}
 							else
 								.row
 									.col-md-1.margin-top-1p.padding-bottom-2p.margin-0.padding-0
@@ -54,9 +54,9 @@ block content
 											.progress.progress-striped.progress-vertical-circle-bigger.progress-striped.active.progress-success.margin-top-n1x.margin-bottom-0p
 												.bar(style="width:40px")
 									.col-md-7.margin-0.padding-0
-										input.noEnterSubmit.text-h3.height-30x.form-control.border-square.border-none.text-left.text-blue.bg-transparent.cursor-pointer(id='makeMeeting1', type='text', name='agendaTopic', placeholder= 'ADD AGENDA ITEM', autocomplete='on', required)
+										input.noEnterSubmit.text-h3.height-30x.form-control.border-square.border-none.text-left.text-blue.bg-transparent.cursor-pointer(id='makeMeeting1', type='text', name='agendaTopic', placeholder= 'Add agenda item', autocomplete='on', required)
 									.col-md-3
-										input.noEnterSubmit.text-h3.height-30x.form-control.border-square.border-none.text-right.bg-transparent.cursor-pointer(id='makeMeeting1', type='number', name='duration', placeholder= 'MINUTES', autocomplete='on', required)
+										input.noEnterSubmit.text-h3.height-30x.form-control.border-square.border-none.text-right.bg-transparent.cursor-pointer(id='makeMeeting1', type='number', name='duration', placeholder= 'Minutes', autocomplete='on', required)
 								.row
 									.col-md-1.margin-top-1p.padding-bottom-2p.margin-0.padding-0
 										div.height-100p.width-100p
@@ -64,7 +64,7 @@ block content
 												.bar(style="width:40px")
 									.col-md-9.margin-0.padding-0
 										div.width-95p.margin-top-1p.overflow-scroll-y-auto.max-height-150x
-											textarea.text-h4.height-30x.form-control.border-square.border-none.text-left.bg-transparent.cursor-pointer(rows='6', id='makeMeeting1', type='text', name='notes', placeholder= 'INSERT NOTES HERE', autocomplete='on')
+											textarea.text-h4.height-30x.form-control.border-square.border-none.text-left.bg-transparent.cursor-pointer(rows='6', id='makeMeeting1', type='text', name='notes', placeholder= 'Insert notes here', autocomplete='on')
 						.row
 							.col-md-1.margin-top-1p.padding-bottom-2p.margin-0.padding-0
 									div.height-100p.width-100p
@@ -72,7 +72,7 @@ block content
 											.bar(style="width:40px")
 							.col-md-11.margin-0.padding-0
 								div.width-95p.margin-top-1p.margin-left-1p
-									a#addAgendaItem.text-gray-hover.text-h3.margin-0(href="#" onclick="addAgendaItem()") ADD MORE AGENDA ITEMS
+									a#addAgendaItem.text-blue.text-h3.margin-0(href="#" onclick="addAgendaItem()") Add more agenda items
 			.col-md-3
 				.row.height-auto.bg-white.border-gray.border-shadow-1x.margin-left-1p.overflow-scroll-y-auto.overflow-x-hidden.padding-bottom-10p.border-round
 					.col-md-12.margin-top-1p.margin-left-3p
