@@ -1097,7 +1097,7 @@ textarea{
 	background-color: rgb(255,255,255);
 	border:2px solid rgb(0,114,188) !important;
 	border-radius: 3px !important;
-	transition:all 0.5s ease-in-out;
+	transition:all 0.2s ease-in-out;
 }
 .btn-blue-hover:hover{
 	color:rgb(255,255,255);
