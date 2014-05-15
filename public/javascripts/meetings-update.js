@@ -9,14 +9,14 @@ $(document).ready(function(){
 		}
 	});
 
+	startTimer();
+
 	//FUNCTIONS FOR ASYNC UPDATE OF MEETINGS
 	// socket = io.connect("127.0.0.1:3000");
 	socket = io.connect("http://www.getseam.co");
 	name = $("input[name='name']").attr('value');
 	userId = $("input[name='userId']").attr('value');
 	meetingId = $("input[name='meetingId']").attr('value');
-
-	startTimer();
 
 	// elapsedTimeArray;
 
@@ -30,6 +30,10 @@ $(document).ready(function(){
 	};
 
 	socket.emit("join", name, userId, meetingId);
+
+	setTimeout(function(){
+		socket.emit("startMeeting", name, userId, meetingId);
+	}, 0);
 
 	socket.on("update", function(msg){
 		console.log(msg);
@@ -50,17 +54,15 @@ $(document).ready(function(){
 	});
 
 	socket.on("newUserNeedsTime", function(userId, Id){
+		console.log(userId + ' needs time for this meeting (' + Id + ')');
 		if(meetingId === Id){
 			var remainingTime = getRemainingTime();
 			socket.emit("timeForUser", remainingTime, userId, Id);
 		}
 	});
 
-	socket.emit("startMeeting", name, userId, meetingId);
-
 	socket.on("meetingRestarted", function(msg, Id, meetingId){
 		console.log(msg);
-		// socket.emit("updateTimer", elapsedTimeArray, meetingId);
 	});
 
 	socket.on("newNote", function(note, value, Id){
@@ -295,16 +297,16 @@ function startTimer(){
 	var strVals=timer.split(',');
 	
 	for(var i = 0; i < strVals.length; i++){
-		if(i>=1){
-			intVals[i] =parseInt(strVals[i])*60;
-			waitVals[i]=intVals[i]+waitVals[i-1]-(parseInt(elapsedVals[i])/1000);
-			if(waitVals[i] < 1){
-				waitVals[i] = 1;
+		if(i === 0){
+			intVals[i] = parseInt(strVals[i]) * 60;
+			waitVals[i] = 2;
+		}
+		else{
+			intVals[i] = parseInt(strVals[i]) * 60;
+			waitVals[i] = intVals[i] + waitVals[i-1] - (parseInt(elapsedVals[i])/1000) + i;
+			if(waitVals[i] < 2){
+				waitVals[i] = 3 + i;
 			}
-		}else{
-			intVals[i] =parseInt(strVals[i]);
-			waitVals[i]=0;
-			intVals[i] *=60;
 		}
 	};
    //SET AGENDA ITEM TIMEOUTSattendeeMinimize
@@ -380,7 +382,7 @@ function setAgendaDelay(i, total){
 		};
 		
 		if(i==total){
-			$('#endCirc').addClass("bg-green"); 
+			$('#endCirc').addClass("bg-green");
 			document.getElementById('alertSound').play();
 		}
 		else{
@@ -434,7 +436,6 @@ function setAgendaDelay(i, total){
 					   .addClass(settings.baseStyle);
 				}
 				else {
-					// console.log('im in here man ' + settings.value);
 					bar.removeClass(settings.baseStyle)
 					   .removeClass(settings.warningStyle)
 					   .addClass(settings.completeStyle);
@@ -445,15 +446,17 @@ function setAgendaDelay(i, total){
 						"name" : "timeExpired",
 						"value" : elapsed 
 					};
-					$.ajax({
-						type: "POST",
-						url: url,
-						data: data,
-						success: function(data){
-							// console.log("updated the time");
-						}
-					});
-					count = 0;
+					if(getRemainingTime() != "00:00"){
+						$.ajax({
+							type: "POST",
+							url: url,
+							data: data,
+							success: function(data){
+								// console.log("updated the time");
+							}
+						});
+						count = 0;
+					}
 				}
 				else{
 					count++;
