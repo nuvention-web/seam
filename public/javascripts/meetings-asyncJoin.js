@@ -31,8 +31,6 @@ $(document).ready(function(){
 		socket.emit("joinMeeting", name, userId, meetingId);
 	}, 0);
 
-	console.log("hello");
-
 	socket.on("update", function(msg){
 		console.log(msg);
 	});
