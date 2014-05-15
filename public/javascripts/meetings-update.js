@@ -31,6 +31,8 @@ $(document).ready(function(){
 
 	socket.emit("join", name, userId, meetingId);
 
+	socket.emit("startMeeting", name, userId, meetingId);
+
 	socket.on("update", function(msg){
 		console.log(msg);
 	});
@@ -56,8 +58,6 @@ $(document).ready(function(){
 			socket.emit("timeForUser", remainingTime, userId, Id);
 		}
 	});
-
-	socket.emit("startMeeting", name, userId, meetingId);
 
 	socket.on("meetingRestarted", function(msg, Id, meetingId){
 		console.log(msg);
