@@ -27,7 +27,11 @@ $(document).ready(function(){
 
 	socket.emit("join", name, userId, meetingId);
 
-	socket.emit("joinMeeting", name, userId, meetingId);
+	setTimeout(function(){
+		socket.emit("joinMeeting", name, userId, meetingId);
+	}, 0);
+
+	console.log("hello");
 
 	socket.on("update", function(msg){
 		console.log(msg);
@@ -376,16 +380,16 @@ function startTimer(remaining){
 	$.notify.defaults({ className: "success" ,globalPosition:"top center" });
 	
 	for(var i = 0; i < strVals.length; i++){
-		if(i>=1){
-			intVals[i] =parseInt(strVals[i])*60;
-			waitVals[i]=intVals[i]+waitVals[i-1]-(parseInt(elapsedVals[i])/1000);
-			if(waitVals[i] < 1){
-				waitVals[i] = 1;
+		if(i === 0){
+			intVals[i] = parseInt(strVals[i]) * 60;
+			waitVals[i] = 2;
+		}
+		else{
+			intVals[i] = parseInt(strVals[i]) * 60;
+			waitVals[i] = intVals[i] + waitVals[i-1] - (parseInt(elapsedVals[i])/1000) + i;
+			if(waitVals[i] < 2){
+				waitVals[i] = 3 + i;
 			}
-		}else{
-			intVals[i] =parseInt(strVals[i]);
-			waitVals[i]=0;
-			intVals[i] *=60;
 		}
 	};
    //SET AGENDA ITEM TIMEOUTSattendeeMinimize
@@ -457,7 +461,7 @@ function setAgendaDelay(i, total){
 			$.notify("AGENDA ITEM "+ prev+ " DONE", { className: "success" ,globalPosition:"top center" }); 
 			$('#agendaItem'+i).next('div').slideToggle(true);
 			document.getElementById('alertSound').play();
-			interval.stop();
+			clearInterval(interval);
 		};
 		
 		if(i==total){
@@ -504,7 +508,6 @@ function setAgendaDelay(i, total){
 					   .addClass(settings.baseStyle);
 				}
 				else {
-					console.log('im in here man ' + settings.value);
 					bar.removeClass(settings.baseStyle)
 					   .removeClass(settings.warningStyle)
 					   .addClass(settings.completeStyle);
