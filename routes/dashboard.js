@@ -7,6 +7,11 @@ exports.contact = function(req, res){
 		name: req.session.name,
 		user : req.session.userId});
 };
+exports.help = function(req, res){
+	res.render('loggedIn/dashboard/help', { title: 'SEAM',
+		name: req.session.name,
+		user : req.session.userId});
+};
 exports.feedbackForm = function(req, res){
 	console.log("hi");
 	var names = req.body.names;
