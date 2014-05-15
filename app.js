@@ -278,6 +278,7 @@ app.post('/feedbackForm', dashboard.feedbackForm);
 //Dashboard
 app.get('/dashboard', user.isLoggedIn, dashboard.dashboard);
 app.get('/dashboard/contact', user.isLoggedIn, dashboard.contact);
+app.get('/dashboard/help', user.isLoggedIn, dashboard.help);
 // app.post('/dashboard', user.isLoggedIn, dashboard.setWelcome);
 // app.get('/dashboard/meetings', user.isLoggedIn, dashboard.meetings);
 
