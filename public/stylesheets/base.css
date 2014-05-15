@@ -1097,7 +1097,7 @@ textarea{
 	background-color: rgb(255,255,255);
 	border:2px solid rgb(0,114,188) !important;
 	border-radius: 3px !important;
-	transition:all 0.5s ease-in-out;
+	transition:all 0.2s ease-in-out;
 }
 .btn-blue-hover:hover{
 	color:rgb(255,255,255);
@@ -1263,7 +1263,7 @@ border-color:  rgb(225,225,225);
 .progress-vertical-line {
 position: relative;
 width: 2px;
-height:240px;
+height:320px;
 margin:0px auto;
 border-radius: 0;
 }

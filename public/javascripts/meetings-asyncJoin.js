@@ -34,6 +34,7 @@ $(document).ready(function(){
 	});
 
 	socket.on("updateTime", function(remaining, user, Id){
+		console.log('time recieved for ' + user + ' for this meeting (' + Id + ')')
 		if(meetingId === Id){
 			if(userId === user){
 				if(timeout[0] != undefined){
@@ -71,6 +72,7 @@ $(document).ready(function(){
 			$(":input").prop("disabled", false);
 			$("textarea").prop("disabled", false);
 			socket.emit("getTime", name, userId, meetingId);
+			console.log('just sent get time request for ' + userId + 'for this meeting (' + Id + ')');
 		}
 	});
 
@@ -99,6 +101,7 @@ $(document).ready(function(){
 			$(":input").prop("disabled", false);
 			$("textarea").prop("disabled", false);
 			socket.emit("getTime", name, userId, meetingId);
+			console.log('just sent get time request for ' + userId + 'for this meeting (' + Id + ')');
 		}
 	});
 

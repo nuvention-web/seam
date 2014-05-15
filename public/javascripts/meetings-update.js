@@ -9,14 +9,14 @@ $(document).ready(function(){
 		}
 	});
 
+	startTimer();
+
 	//FUNCTIONS FOR ASYNC UPDATE OF MEETINGS
 	// socket = io.connect("127.0.0.1:3000");
 	socket = io.connect("http://www.getseam.co");
 	name = $("input[name='name']").attr('value');
 	userId = $("input[name='userId']").attr('value');
 	meetingId = $("input[name='meetingId']").attr('value');
-
-	startTimer();
 
 	// elapsedTimeArray;
 
@@ -30,6 +30,8 @@ $(document).ready(function(){
 	};
 
 	socket.emit("join", name, userId, meetingId);
+
+	socket.emit("startMeeting", name, userId, meetingId);
 
 	socket.on("update", function(msg){
 		console.log(msg);
@@ -50,17 +52,15 @@ $(document).ready(function(){
 	});
 
 	socket.on("newUserNeedsTime", function(userId, Id){
+		console.log(userId + ' needs time for this meeting (' + Id + ')');
 		if(meetingId === Id){
 			var remainingTime = getRemainingTime();
 			socket.emit("timeForUser", remainingTime, userId, Id);
 		}
 	});
 
-	socket.emit("startMeeting", name, userId, meetingId);
-
 	socket.on("meetingRestarted", function(msg, Id, meetingId){
 		console.log(msg);
-		// socket.emit("updateTimer", elapsedTimeArray, meetingId);
 	});
 
 	socket.on("newNote", function(note, value, Id){
