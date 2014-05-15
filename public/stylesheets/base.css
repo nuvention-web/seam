@@ -145,6 +145,9 @@ textarea{
 .cursor-pointer{
 	cursor: pointer;
 }
+.line-height-6x{
+	line-height: 18px;
+}
 .line-height-12x{
 	line-height: 12px;
 }
@@ -418,6 +421,13 @@ textarea{
 .bg-green{
 	background-color: rgb(141,199,63);
 }
+.bg-green-blue-hover{
+	background-color: rgb(141,199,63);
+}
+.bg-green-blue-hover:hover{
+	background-color: rgb(0,114,188);
+	transition:all 0.5s ease-in-out;
+}
 .bg-gray-t8{
 	background-color: rgba(140,140,140,0.8);
 }
@@ -439,12 +449,26 @@ textarea{
 .bg-pink-orange-hover{
 	background-color: rgb(242,108,79);
 }
-.bg-pink-orange-hover:hover{
+.bg-pink-orange-hover{
 	background-color: rgb(248,148,29);
+	transition:all 0.5s ease-in-out;
+}
+.bg-pink-blue-hover{
+	background-color: rgb(242,108,79);
+}
+.bg-pink-blue-hover:hover{
+	background-color: rgb(0,114,188);
 	transition:all 0.5s ease-in-out;
 }
 .bg-orange{
 	background-color: rgb(248,148,29);
+}
+.bg-orange-blue-hover{
+	background-color: rgb(248,148,29);
+}
+.bg-orange-blue-hover:hover{
+	background-color: rgb(0,114,188);
+	transition:all 0.5s ease-in-out;
 }
 .bg-1{
 	background-color: rgb(141,199,63);
@@ -482,7 +506,7 @@ textarea{
 	border-color:rgb(37,37,37) !important;
 }
 .bg-drk-gray{
-	background-color: rgb(51,54,63);
+	background-color: rgb(37,37,37);
 }
 .bg-gray{
 	background-color: rgb(236,236,236);
@@ -736,6 +760,9 @@ textarea{
 .padding-left-5p{
 	padding-left: 4.5%;
 }
+.padding-left-7p{
+	padding-left: 7%;
+}
 .padding-top-20x{
 	padding-top: 20px;
 }
@@ -786,6 +813,9 @@ textarea{
 }
 .padding-right-3p{
 	padding-right:3%;
+}
+.padding-right-7p{
+	padding-right:7%;
 }
 .padding-btn{
 	padding:3% 15%;
@@ -864,6 +894,9 @@ textarea{
 .min-height-100p{
 	min-height: 100%;
 }
+.min-height-100x{
+	height: 100px;
+}
 .min-height-180x{
 	min-height: 170px;
 }
@@ -878,6 +911,9 @@ textarea{
 }
 .height-50x{
 	height:50px;
+}
+.height-300x{
+	height:350px;
 }
 .width-50x{
 	width: 50px;
@@ -1316,4 +1352,35 @@ background-color: rgb(225,225,225);
 .answer.active	{ background: url(../images/close.png); width: 20px; height: 20px;}
 #faqs div { height:0; overflow:hidden; position:relative; }
 #faqs div h1	{ padding:0; margin-bottom:10px; }
-
+/* =======================================================
+   1.VIDEO-BOX(DESKTOP)
+========================================================== */
+.video-container{
+	width:910px;
+	height:700px;
+	margin: auto;
+	display: inline;
+	/*background-color:#3df;*/
+}
+.big-video-container{
+	width:900px;
+	height:400px;
+	margin-bottom: 0;
+	margin:0 auto;
+	/*background-color:rgb(123,23,44);*/
+}
+.big-video{
+	width:790px;
+	height:400px;
+}
+.small-video-container{
+	width:910px;
+	height:200px;
+	margin-top:0;
+	margin:0 auto;
+	/*background-color:#FFFF00;*/
+}
+.video-strip{
+	width:263px;
+	height:200px;
+}
