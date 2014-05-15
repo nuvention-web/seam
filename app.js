@@ -98,7 +98,7 @@ socket.on("connection", function (client) {
 			meeting.addPerson(client.id, userId); //also add the person to the room object
  			socket.emit("update", "you have started the meeting")
  			if(queue[meetingId] != undefined){
- 				queueList = queue[meetingId];
+ 				var queueList = queue[meetingId];
  				for(var i = 0; i < queueList.length; i++){
  					clients[queueList[i].clientId].clientObject.join(client.room);
  					meeting.addPerson(queueList[i].clientId, queueList[i].userId);
@@ -120,7 +120,6 @@ socket.on("connection", function (client) {
 			for(var i = 0; i < members.length; i++){// people who stayed in the room after you left will still be in the meeting list
 				var clientId = members[i].clientId;
 				if(clientId != meeting.owner){
-					console.log('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@' + JSON.stringify(members) + '@@@@@@@@@@@@@@@@@@@@@@@@@@@@@');
 					clients[clientId].clientObject.join(client.room);
 					clients[clientId].clientObject.emit("meetingRestarted", "meeting has been started by " + user.name, meetingId)
 				}

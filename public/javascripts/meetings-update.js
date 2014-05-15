@@ -50,6 +50,7 @@ $(document).ready(function(){
 	});
 
 	socket.on("newUserNeedsTime", function(userId, Id){
+		console.log(userId + ' needs time for this meeting (' + Id + ')');
 		if(meetingId === Id){
 			var remainingTime = getRemainingTime();
 			socket.emit("timeForUser", remainingTime, userId, Id);
@@ -60,7 +61,6 @@ $(document).ready(function(){
 
 	socket.on("meetingRestarted", function(msg, Id, meetingId){
 		console.log(msg);
-		// socket.emit("updateTimer", elapsedTimeArray, meetingId);
 	});
 
 	socket.on("newNote", function(note, value, Id){
