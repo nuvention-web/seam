@@ -331,7 +331,7 @@ app.post('/dashboard/meetings/start/updateTime', user.isLoggedIn, meetings.updat
 app.get('/signup', user.signup);
 app.get('/logout', user.logout);
 app.post('/signup', passport.authenticate('local-signup', {// process the signup form
-	successRedirect: '/dashboard', // redirect to the secure profile section
+	successRedirect: '/dashboard/help', // redirect to the secure profile section
 	failureRedirect: '/signup', // redirect back to the signup page if there is an error
 	failureFlash: true // allow flash messages
 }));
@@ -340,6 +340,13 @@ app.post('/login', passport.authenticate('local-login', {
 	failureRedirect: '/home', // redirect back to the signup page if there is an error
 	failureFlash: true // allow flash messages
 }));
+app.get('/google/new-login', passport.authenticate('new-google-login'));
+app.get('/auth/google/new-callback',  passport.authenticate('google-login', {
+	successRedirect: '/dashboard/help', // redirect to the secure profile section
+	failureRedirect: '/', // redirect back to the signup page if there is an error
+	failureFlash: true // allow flash messages
+}))
+
 app.get('/google/login', passport.authenticate('google-login'));
 app.get('/auth/google/callback',  passport.authenticate('google-login', {
 	successRedirect: '/dashboard', // redirect to the secure profile section
