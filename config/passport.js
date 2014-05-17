@@ -157,6 +157,32 @@ module.exports = function(passport) {
 			return done(null, user);
 		});
 	}));
+	
+	passport.use('new-google-login', new GoogleStrategy({
+		clientID: '693576074665-oo32lv3ek5fjb19s1omv7otneh193sl5.apps.googleusercontent.com',
+		clientSecret: 'keos66Ez_LwYzTV9CvXvNoFe', 
+		callbackURL: 'http://www.getseam.co/auth/google/new-callback/',
+		// clientID: '693576074665-5metufhdq7f2r5vogsiro86rf1uvtumj.apps.googleusercontent.com', // local testing
+		// clientSecret: 'tlvVeRLtCgk6_eEDCGPSNrlt', // local testing
+		// callbackURL: 'http://localhost:3000/auth/google/callback/', // local testing
+		scope: 'profile email https://www.googleapis.com/auth/drive.file https://www.googleapis.com/auth/drive.readonly https://www.googleapis.com/auth/calendar',
+		passReqToCallback : true // allows us to pass back the entire request to the callback 
+	 },
+	function(req, accessToken, refreshToken, profile, done) {
+		console.log(profile);
+		User.findOrCreate({ 
+			'google.id': profile.id, 
+			'google.email': profile.emails[0].value.toLowerCase(),
+			'google.name': profile.displayName
+		}, function (err, user) {
+			req.session.userId = user.google.id;
+			req.session.email = user.google.email.toLowerCase();
+			req.session.name = user.google.name; 
+			req.session.accessToken = accessToken;
+			req.session.refreshToken = refreshToken;
+			return done(err, user);
+		});
+	}));
 
 	passport.use('google-login', new GoogleStrategy({
 		clientID: '693576074665-oo32lv3ek5fjb19s1omv7otneh193sl5.apps.googleusercontent.com',
