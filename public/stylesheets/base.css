@@ -870,6 +870,9 @@ textarea{
 .container-100p{
 	width:100%;
 }
+.width-50x{
+	width:50px;
+}
 .width-100x{
 	width:100px;
 }
@@ -879,12 +882,16 @@ textarea{
 .width-250x{
 	width:300px;
 }
+.width-85p{
+	width: 85%;
+}
 .width-95p{
 	width: 95%;
 }
 .width-100p{
 	width: 100%;
 }
+
 .height-auto{
 	height: auto;
 }
