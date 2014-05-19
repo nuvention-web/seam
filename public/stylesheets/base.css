@@ -12,13 +12,6 @@ html, body {
 }
 
 /*this is my css to remove bullets from the autocomplete*/
-ul.ui-autocomplete {
-    list-style: none;
-	background-color: rgb(200,200,200);
-	width:50px;
-}
-
-/*this is my css to remove bullets from the autocomplete*/
 
 .ui-helper-hidden-accessible { 
 	display:none; 
