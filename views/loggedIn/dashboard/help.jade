@@ -1,0 +1,38 @@
+extends baseLayout
+
+block content		
+	div#home-page.page.min-height-100p
+		.container-100p.padding-bottom-3p
+				.row.mobile-margin-top-150x
+					.col-md-12
+						h1.text-black.text-normal Welcome to 
+							b SEAM
+						h3.text-italic.text-black.text-normal.line-height-12x.margin-top-2p  Need help getting started? No fear. We've put
+						h3.text-italic.text-black.text-normal.line-height-12x together a guide to help you improve your meetings.
+				.row.margin-top-3p
+					.col-md-6.margin-top-3p
+						h2.text-blue.text-bold.text-left 1.Before your meeting
+						h3.text-black.text-normal.text-left Create an agenda by clicking "Create" on the left. Jot down agenda items for the meeting, allocate time for each item and add attendees to the meeting. When you click "Send Agenda," your attendees will automatically receive the agenda you've created. You can edit this agenda before the meeting begins.
+					.col-md-6.text-center
+						img(src="../../../images/step1.png", class="img-responsive")
+				.row.margin-top-3p
+					.col-md-6.text-center
+						img(src="../../../images/step2.png" , class="img-responsive")
+					.col-md-6.margin-top-3p
+						h2.text-orange.text-bold.text-left 2. Beginning your meeting 
+						h3.text-black.text-normal.text-left When it's time for your meeting, simply go to the dashboard and click the "Start" or "Join" button. The agenda you created earlier will appear on the screen of everyone who joins the meeting. 
+				.row.margin-top-3p
+					.col-md-6.margin-top-3p
+						h2.text-pink.text-bold.text-left 3. During your meeting
+						h3.text-black.text-normal.text-left On the left of every agenda item is a timer that will move based on your time allocation. With a quick glance at the agenda or by turning on your sound, you can tell (or hear a little chime) when it's time to move on to the next item. You or anyone else invited to the meeting can take notes or assign tasks in the boxes under each agenda item.
+					.col-md-6.text-center
+						img(src="../../../images/step3.png", class="img-responsive") 
+				.row.margin-top-3p
+					.col-md-6.text-center
+						img(src="../../../images/step4.png", class="img-responsive")
+					.col-md-6.margin-top-3p
+						h2.text-green.text-bold.text-left 4.Wrapping up your meeting
+						h3.text-black.text-normal.text-left When your meeting is finished, click "End Meeting." If you're an attendee, you'll see a "Leave Meeting" button appear when the organizer ends the meeting. Everyone attending the meeting will automatically receive an email with all the notes and tasks assigned during the meeting. 
+				.row.margin-top-3p
+					.col-md-2.col-md-offset-5
+						button.btn.btn-primary.bg-pink-orange-hover.btn-lg.btn-block.border-round-5x(onClick="window.location.href='/dashboard'", role="button") Get Started Now
