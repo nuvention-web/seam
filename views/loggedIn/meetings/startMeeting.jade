@@ -1,6 +1,32 @@
 extends ../dashboard/baseLayout
 
 block content
+	if(isAttendee == true)
+		#postMeetingQuestions
+			form(name='postMeetingQ', action='/dashboard/meetings/start/survey', method='POST')
+				div(style='text-align: center;')
+					h3 Question 1
+					.form-inline
+						input(type='radio', name='q1answer', value='yes')
+						| Yes       
+						input(type='radio', name='q1answer', value='no')
+						| No
+					br
+					h3 Question 2
+					.form-inline
+						input(type='radio', name='q2answer', value='yes')
+						| Yes       
+						input(type='radio', name='q2answer', value='no')
+						| No
+					br
+					h3 Question 3
+					.form-inline
+						input(type='radio', name='q3answer', value='yes')
+						| Yes        
+						input(type='radio', name='q3answer', value='no')
+						| No
+					br
+					button.border-square.btn-blue-hover.text-h3.padding-btn(id='postMeetingButton', type='submit') SUBMIT
 	.row
 		.col-md-9
 			.row.bg-white.border-gray.border-shadow-1x.margin-right-1p.margin-left.height-auto.padding-bottom-3p.border-round(style='min-height:150px; height:auto')

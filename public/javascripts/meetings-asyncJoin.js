@@ -16,6 +16,13 @@ $(document).ready(function(){
 	userId = $("input[name='userId']").attr('value');
 	meetingId = $("input[name='meetingId']").attr('value');
 
+	$("#postMeetingQuestions").dialog({
+		// autoOpen: false,
+		height: 400,
+		width: 600,
+		modal: true,
+	});
+
 	window.onbeforeunload = function(){
 		return "Navigating away from meeting";
 	};
@@ -285,6 +292,10 @@ $(document).ready(function(){
 		});
 	return false; 
 	});
+	
+	$('#postMeetingButton').click(function(){
+		window.onbeforeunload = function(){};
+	});
 
 });
 				
@@ -336,6 +347,8 @@ function leaveMeeting(){
 	window.onbeforeunload = function(){};
 	window.location = window.location.origin + "/dashboard"
 };
+
+
 
 function timeLeftInSec(time){
 	var timeLeft = time.split(':');

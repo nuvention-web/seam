@@ -2,6 +2,11 @@ var mongoose = require('mongoose');
 var Meeting = require('../models/meeting-model');
 var nodemailer = require('nodemailer');
 
+exports.addSurvey = function(req, res){
+	console.log(req.body);
+	res.redirect('/dashboard');
+}
+
 exports.makeMeeting = function(req, res){
 	res.render('loggedIn/meetings/makeMeeting', { 
 		title: 'SEAM',
