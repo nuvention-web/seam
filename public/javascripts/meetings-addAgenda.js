@@ -72,7 +72,7 @@ function addAgendaItem(){
         			'<div style="width:40px" class="bar"></div>'+
       					'</div></div></div>'+
 		'<div class="col-md-7 margin-0 padding-0">'+
-    		'<input id="makeMeeting'+i+'" type="text" name="agendaTopic" placeholder="Add agenda item" autocomplete="off" class="text-h3 noEnterSubmit height-30x form-control border-square border-none text-left text-blue bg-transparent cursor-pointer"/>'+
+    		'<input id="makeMeeting'+i+'" type="text" name="agendaTopic' + i +  '" placeholder="Add agenda item" autocomplete="off" class="text-h3 noEnterSubmit height-30x form-control border-square border-none text-left text-blue bg-transparent cursor-pointer"/>'+
   				'</div>'+
   		'<div class="col-md-3">'+
   				'<input id="duration'+i+'" type="number" name="duration" class=" text-h3 noEnterSubmit height-30x form-control border-square border-none text-right bg-transparent cursor-pointer" placeholder= "Minutes" autocomplete="off" value="0" required/>'+
@@ -90,6 +90,10 @@ function addAgendaItem(){
     		'<div class="width-95p margin-top-1p overflow-scroll-y-auto max-height-150x">'+
      			'<textarea id="makeMeeting'+i+'" type="text" name="notes" rows="6" placeholder="Insert notes here" autocomplete="off" class="text-h4 height-30x form-control border-square border-none text-left bg-transparent cursor-pointer"/>'+
      			'</div></div></div></div>').appendTo(agendaBox);
+
+    $('input[name="agendaTopic' + i +'"]').focus();
+    $('html, body').animate({scrollTop: $(document).height()}, 'slow');
+    
 	i++;
 };
 
