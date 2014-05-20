@@ -1,4 +1,5 @@
 // config/passport.js
+var nodemailer = require('nodemailer');
 
 // load all the things we need
 var LocalStrategy = require('passport-local').Strategy;
@@ -64,6 +65,44 @@ module.exports = function(passport) {
 				newUser.local.email = email.toLowerCase();
 				newUser.local.password = newUser.generateHash(password);
 
+				//email function
+				smtpConfig = nodemailer.createTransport('SMTP', {
+					host:'just131.justhost.com',
+					port:465,
+					secureConnection: true, // use SSL
+					auth: {
+						user: "jo@getseam.co",
+					 	pass: "meetingsarehard1"
+					}
+				 });
+				emailBody = {
+					 	from: "Josephine Lee <jo@getseam.co>",
+						to: newUser.local.email,
+					 	subject: 'Welcome to SEAM',
+					 	text: 'Thank you for signing up for SEAM',
+					 	html:"<body>"+  	
+				        "<p style='text-align:left; text-transform:capitalize'> Hello "+req.body.firstName+", </p>" +
+				        "<p style='text-align:left;'> I really appreciate your interest in using <a href='http://www.getseam.co/login?utm_source=email&utm_medium=email&utm_campaign=welcome' target='_blank'>SEAM</a>. Our team's goal is to help everyone in a meeting walk away feeling more productive. </p>"+
+				        "<p style='text-align:left;'> If you wouldn't mind, I'd love it if you'd answer one question: Why did you sign up for SEAM?</p>"+
+				        "<p style='text-align:left;'>I ask because knowing why you signed up is really helpful in making sure our team is delivering what users want. Just hit 'reply' and let me know.</p>"+
+				         "<p style='text-align:left;'>Over the next few weeks, you'll get a few updates from our team. In the meantime, simply create an agenda for your next meeting using SEAM <a href='http://www.getseam.co/login?utm_source=email&utm_medium=email&utm_campaign=welcome' target='_blank'>here</a>. You won't regret it! </p>"+
+				         "<p style='text-align:left;'>Thanks,</p>"+
+				         "<p style='text-align:left;'>Jo</p>"+
+				        "</body>"
+				 };
+				//send Email
+				 smtpConfig.sendMail(emailBody, function (error, res) {
+				//Email not sent
+			 	if (error) {
+					//res.end("Email Failed");
+			 	}
+			 	//email send sucessfully
+				else {
+					//res.end("Email Successfully");
+			 	}
+
+			 	});
+
 				// save the user
 				newUser.save(function(err) {
 					if (err)
@@ -116,6 +155,32 @@ module.exports = function(passport) {
 			// all is well, return successful user
 			console.log('THIS IS USER STUFF: ' + user);
 			return done(null, user);
+		});
+	}));
+	
+	passport.use('new-google-login', new GoogleStrategy({
+		clientID: '693576074665-oo32lv3ek5fjb19s1omv7otneh193sl5.apps.googleusercontent.com',
+		clientSecret: 'keos66Ez_LwYzTV9CvXvNoFe', 
+		callbackURL: 'http://www.getseam.co/auth/google/new-callback/',
+		// clientID: '693576074665-5metufhdq7f2r5vogsiro86rf1uvtumj.apps.googleusercontent.com', // local testing
+		// clientSecret: 'tlvVeRLtCgk6_eEDCGPSNrlt', // local testing
+		// callbackURL: 'http://localhost:3000/auth/google/callback/', // local testing
+		scope: 'profile email https://www.googleapis.com/auth/drive.file https://www.googleapis.com/auth/drive.readonly https://www.googleapis.com/auth/calendar',
+		passReqToCallback : true // allows us to pass back the entire request to the callback 
+	 },
+	function(req, accessToken, refreshToken, profile, done) {
+		console.log(profile);
+		User.findOrCreate({ 
+			'google.id': profile.id, 
+			'google.email': profile.emails[0].value.toLowerCase(),
+			'google.name': profile.displayName
+		}, function (err, user) {
+			req.session.userId = user.google.id;
+			req.session.email = user.google.email.toLowerCase();
+			req.session.name = user.google.name; 
+			req.session.accessToken = accessToken;
+			req.session.refreshToken = refreshToken;
+			return done(err, user);
 		});
 	}));
 

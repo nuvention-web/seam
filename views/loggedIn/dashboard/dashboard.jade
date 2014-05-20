@@ -1,7 +1,7 @@
 extends baseLayout
 
 block content		
-	.row.margin-top-2p
+	.row
 		.col-md-4
 			.row.bg-white.border-gray.border-shadow-1x.margin-right-1p.border-round-top(style='height:185px;')
 				.col-md-12.margin-top-1p.margin-left-1p
@@ -42,22 +42,22 @@ block content
 									.row.border-gray
 										input(type='hidden', name='meetingId', value='#{meeting._id}')
 										.col-md-4.border-gray-right
-											h4.text-black.text-left.text-bold #{meetingDate[i]}
+											h4.text-black.text-left.text-normal #{meetingDate[i]}
+											h4.text-black.text-left #{meetingTime[i]}
 										.col-md-4
-											h4.text-black.text-left #{meeting.meetingTitle}
-											h4.text-orange.text-left #{meeting.objective}
-										.col-md-2.text-right.margin-top-2p
+											h4.text-black.text-left.margin-top-20x.text-normal #{meeting.meetingTitle}
+										.col-md-2.text-right.margin-top-20x
 											button.padding-btn.border-square.btn-blue-hover(type='button', href="javascript:{}", onclick="editAgenda('future#{i}')") EDIT
-										.col-md-2.text-left.margin-top-2p
+										.col-md-2.text-left.margin-top-20x
 											button.padding-btn.border-square.btn-blue-hover(type='button', href="javascript:{}" onclick="startAgenda('future#{i}')") START
 							else
 								form(role='form', method='POST', action='/dashboard/meetings/join', id='future'+i)
 									.row.border-gray
 										input(type='hidden', name='meetingId', value='#{meeting._id}')
 										.col-md-4.border-gray-right
-											h4.text-black.text-left.text-bold #{meetingDate[i]}
+											h4.text-black.text-left.text-normal #{meetingDate[i]}
 										.col-md-4
-											h4.text-black.text-left #{meeting.meetingTitle}
+											h4.text-black.text-left.text-normal #{meeting.meetingTitle}
 											h4.text-orange.text-left #{meeting.objective}
 										.col-md-2.text-right.margin-top-2p
 											button.padding-btn.border-square.btn-blue-hover(type='button', href="javascript:{}" onclick="joinAgenda('future#{i}')") JOIN

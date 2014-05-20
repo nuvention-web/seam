@@ -8,7 +8,6 @@ var meetings = require('./routes/meetings');
 var user = require('./routes/user');
 var task = require('./routes/task');
 var index = require('./routes/index');
-var team = require('./routes/team');
 var meetingStruct = require('./routes/asyncMeetingStruct');
 var http = require('http');
 var path = require('path');
@@ -99,7 +98,7 @@ socket.on("connection", function (client) {
 			meeting.addPerson(client.id, userId); //also add the person to the room object
  			socket.emit("update", "you have started the meeting")
  			if(queue[meetingId] != undefined){
- 				queueList = queue[meetingId];
+ 				var queueList = queue[meetingId];
  				for(var i = 0; i < queueList.length; i++){
  					clients[queueList[i].clientId].clientObject.join(client.room);
  					meeting.addPerson(queueList[i].clientId, queueList[i].userId);
@@ -122,7 +121,7 @@ socket.on("connection", function (client) {
 				var clientId = members[i].clientId;
 				if(clientId != meeting.owner){
 					clients[clientId].clientObject.join(client.room);
-					clients[clientId].clientObject.emit("meetingRestarted", "meeting has been restarted by " + user.name, meetingId)
+					clients[clientId].clientObject.emit("meetingRestarted", "meeting has been started by " + user.name, meetingId)
 				}
 			}
 			if(queue[meetingId] != undefined){
@@ -130,7 +129,7 @@ socket.on("connection", function (client) {
  				for(var i = 0; i < queueList.length; i++){
  					clients[queueList[i].clientId].clientObject.join(client.room);
  					meeting.addPerson(queueList[i].clientId, queueList[i].userId);
- 					clients[queueList[i].clientId].clientObject.emit("meetingStarted", "meeting has been restarted by " + user.name, meetingId)
+ 					clients[queueList[i].clientId].clientObject.emit("meetingStarted", "meeting has been started by " + user.name, meetingId)
  				}
  			}
 		}
@@ -184,10 +183,16 @@ socket.on("connection", function (client) {
 		client.broadcast.to(client.room).emit("newTask", taskAssignee, task, value, meetingId);
 	});
 
-	// client.on("updateTimer", function(elapsedTimeArray, meetingId){
-	// 	client.room = meetingId;
-	// 	client.broadcast.to(client.room).emit("newTime", elapsedTimeArray, "syncing time with creator time", meetingId);
-	// });
+	client.on("timeForUser", function(remainingTime, userId, meetingId){
+		var meeting = meetingsList[meetingId];
+		var attedeeId = meeting.returnClientId(userId);
+		clients[attedeeId].clientObject.emit("updateTime", remainingTime, userId, meetingId);
+	});
+
+	client.on("getTime", function(name, userId, meetingId){
+		var meeting = meetingsList[meetingId];
+		clients[meeting.owner].clientObject.emit("newUserNeedsTime", userId, meetingId);
+	});
 
 	client.on("leaveMeetingCreator", function(name, userId, meetingId){
 		var meeting = meetingsList[meetingId];
@@ -273,12 +278,12 @@ app.post('/feedbackForm', dashboard.feedbackForm);
 //Dashboard
 app.get('/dashboard', user.isLoggedIn, dashboard.dashboard);
 app.get('/dashboard/contact', user.isLoggedIn, dashboard.contact);
+app.get('/dashboard/help', user.isLoggedIn, dashboard.help);
 // app.post('/dashboard', user.isLoggedIn, dashboard.setWelcome);
 // app.get('/dashboard/meetings', user.isLoggedIn, dashboard.meetings);
 
 //Dashboard-Meetings
 app.get('/dashboard/meetings/makeMeeting', user.isLoggedIn, meetings.makeMeeting);
-app.get('/dashboard/meetings/makeMeeting/new', user.isLoggedIn, meetings.makeNewMeeting);
 app.post('/dashboard/meetings/makeMeeting/add', user.isLoggedIn, meetings.addMeeting);
 
 //update and edit meetings
@@ -304,10 +309,6 @@ app.post('/dashboard/meetings/start/updateTime', user.isLoggedIn, meetings.updat
 // app.get('/dashboard/tasks', user.isLoggedIn, task.getTasks);
 // app.post('/dashboard/tasks/current', user.isLoggedIn, task.getTasksByMeeting);
 
-// team member stuff
-app.get('/dashboard/team', user.isLoggedIn, team.team);
-app.post('/addMember', user.isLoggedIn, team.addMember);
-
 //app.post('/dashboard/meetings/startMeeting', user.isLoggedIn, meetings.startMeeting);
 //app.get('/tasks', user.isLoggedIn, interfaces.tasks);
 
@@ -322,9 +323,6 @@ app.post('/addMember', user.isLoggedIn, team.addMember);
 //app.get('/pastMeeting', user.isLoggedIn, interfaces.pastMeeting);
 //app.post('/viewPastMeeting', user.isLoggedIn, interfaces.viewPastMeeting);
 
-
-
-
 //product stuff
 // app.post('/finishTask', user.isLoggedIn, task.finishTask);
 // app.post('/deletetask', user.isLoggedIn, task.deleteTask);
@@ -333,7 +331,7 @@ app.post('/addMember', user.isLoggedIn, team.addMember);
 app.get('/signup', user.signup);
 app.get('/logout', user.logout);
 app.post('/signup', passport.authenticate('local-signup', {// process the signup form
-	successRedirect: '/dashboard', // redirect to the secure profile section
+	successRedirect: '/dashboard/help', // redirect to the secure profile section
 	failureRedirect: '/signup', // redirect back to the signup page if there is an error
 	failureFlash: true // allow flash messages
 }));
@@ -342,6 +340,13 @@ app.post('/login', passport.authenticate('local-login', {
 	failureRedirect: '/home', // redirect back to the signup page if there is an error
 	failureFlash: true // allow flash messages
 }));
+app.get('/google/new-login', passport.authenticate('new-google-login'));
+app.get('/auth/google/new-callback',  passport.authenticate('google-login', {
+	successRedirect: '/dashboard/help', // redirect to the secure profile section
+	failureRedirect: '/', // redirect back to the signup page if there is an error
+	failureFlash: true // allow flash messages
+}))
+
 app.get('/google/login', passport.authenticate('google-login'));
 app.get('/auth/google/callback',  passport.authenticate('google-login', {
 	successRedirect: '/dashboard', // redirect to the secure profile section

@@ -1,28 +1,14 @@
 var mongoose = require('mongoose');
 var Meeting = require('../models/meeting-model');
-var Project = require('../models/project-model');
 var nodemailer = require('nodemailer');
-// exports.dashboard = function(req, res){
-// 	res.render('loggedIn/dashboard/welcome', { 
-// 		title: 'SEAM',
-// 		name: req.session.name,
-// 		user : req.user});
-// };
 
-// exports.setWelcome = function(req, res){
-// 	console.log(projectId);
-// 	Project.findOne({'_id': projectId}, function(e, doc){
-// 		console.log(doc);
-// 		res.render('loggedIn/dashboard/welcome', { 
-// 			title: 'SEAM',
-// 			projectName: req.session.projectName,
-// 			project: doc,
-// 			user : req.user,
-// 		});
-// 	})
-// };
 exports.contact = function(req, res){
 	res.render('loggedIn/dashboard/contact', { title: 'SEAM',
+		name: req.session.name,
+		user : req.session.userId});
+};
+exports.help = function(req, res){
+	res.render('loggedIn/dashboard/help', { title: 'SEAM',
 		name: req.session.name,
 		user : req.session.userId});
 };
@@ -77,7 +63,7 @@ exports.dashboard = function(req, res){
 	Meeting.find({ $or: [{'UserId' : userId, 'isComplete' : 0}, {'attendees.attendeeEmail' : userMail, 'isComplete' : 0}]}).sort({meetingDate: 1}).exec(function(e, meetingList){
 		Meeting.find({ $or: [{'UserId' : userId, 'isComplete' : 1}, {'attendees.attendeeEmail' : userMail, 'isComplete' : 1}]}).sort({meetingDate: -1}).exec(function(e, finMeetingList){
 			var meetingDate = new Array();
-
+			var meetingTime = new Array();
 			for(var i = 0; i < meetingList.length; i++){
 				if(meetingList[i].meetingDate != undefined){
 					var date = meetingList[i].meetingDate;
@@ -87,8 +73,11 @@ exports.dashboard = function(req, res){
 					var day = date.getDate();
 					var startHour = date.getHours();
 					var startMinutes = date.getMinutes();
+					var startAMPM="AM";
+					var endAMPM="AM";
 					if(startHour > 12){
 						startHour = startHour%12;
+						startAMPM="PM";
 					}
 					if(startMinutes < 10){
 						startMinutes = "0" + startMinutes;
@@ -98,13 +87,15 @@ exports.dashboard = function(req, res){
 					var endMinutes = endDate.getMinutes();
 					if(endHour > 12){
 						endHour = endHour%12;
+						endAMPM="PM";
 					}
 					if(endMinutes < 10){
 						endMinutes = "0" + endMinutes;
 					}				
-					var timeString = month + "/" + day + "/" + year + " " + startHour + ":" + startMinutes + " - " + endHour + ":" + endMinutes; 
-					meetingDate[i] = timeString;
-					console.log(meetingDate[i]);
+					var dateString = month + "/" + day + "/" + year;
+					var timeString = startHour + ":" + startMinutes +" " +startAMPM+ " - " + endHour + ":" + endMinutes+" "+ endAMPM; 
+					meetingDate[i] = dateString;
+					meetingTime[i] = timeString;
 				}
 			}
 
@@ -114,6 +105,7 @@ exports.dashboard = function(req, res){
 				previousMeeting: finMeetingList[0],
 				meetingList: meetingList,
 				meetingDate: meetingDate,
+				meetingTime: meetingTime,
 				pastMeetingList: finMeetingList,
 				name: req.session.name,
 				user : userId
@@ -125,7 +117,6 @@ exports.dashboard = function(req, res){
 exports.tasks = function(req, res){
 	res.render('loggedIn/dashboard/sidebarTasks', { 
 		title: 'SEAM',
-		projectName: req.session.projectName, 
 		user : req.user});
 };
 

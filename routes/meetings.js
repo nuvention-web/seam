@@ -1,13 +1,18 @@
 var mongoose = require('mongoose');
 var Meeting = require('../models/meeting-model');
-var Project = require('../models/project-model');
 var nodemailer = require('nodemailer');
 
 exports.makeMeeting = function(req, res){
 	res.render('loggedIn/meetings/makeMeeting', { 
 		title: 'SEAM',
 		name: req.session.name,
-		user : req.session.userId
+		email: req.session.email,
+		user : req.session.userId,
+		meeting: '',
+		meetingDate: '',
+		meetingDuration: '',
+		isEdit : false,
+		action: '/dashboard/meetings/makeMeeting/add'
 	});
 };
 
@@ -64,13 +69,16 @@ exports.editMeeting = function(req, res){
 			console.log(meetingDate);
 		}
 
-		res.render('loggedIn/meetings/editMeeting', { 
+		res.render('loggedIn/meetings/makeMeeting', { 
 			title: 'SEAM',
 			meeting: doc,
 			meetingDate: meetingDate,
 			meetingDuration: duration,
 			name: req.session.name,
-			user : req.user
+			email: req.session.email,
+			user : req.session.userId,
+			isEdit : true,
+			action : '/dashboard/meetings/edit/update'
 		});
 	})
 };
@@ -174,14 +182,6 @@ exports.updateMeeting = function(req, res){
 	Meeting.update(conditions, update, options, function(){res.redirect('dashboard');});
 }
 
-exports.makeNewMeeting = function(req, res){
-	res.render('loggedIn/meetings/makeMeeting', { 
-		title: 'SEAM',
-		name: req.session.name,
-		user : req.session.userId
-	});
-};
-
 exports.viewMeeting = function(req, res){
 	var meetingId = req.body.meetingId;
 	if(meetingId == undefined){
@@ -191,19 +191,16 @@ exports.viewMeeting = function(req, res){
 		req.session.meetingId = meetingId;
 	}
 	console.log(meetingId);
-	Meeting.find({'ProjectId': req.session.projectId, 'UserId' : req.user.local.email}, function(e, docs){
-		Meeting.findOne({'ProjectId': req.session.projectId, '_id': meetingId}, function(e, doc){
-			console.log(doc);
-			res.render('loggedIn/meetings/viewMeeting', { 
-				title: 'SEAM',
-				meeting: doc,
-				name: req.session.name,
-				projectName: req.session.projectName,
-				meetingList: docs,
-				user : req.user,
-				past : 0
-			});
-		})
+	Meeting.findOne({'_id': meetingId}, function(e, doc){
+		console.log(doc);
+		res.render('loggedIn/meetings/viewMeeting', { 
+			title: 'SEAM',
+			meeting: doc,
+			name: req.session.name,
+			meetingList: docs,
+			user : req.user,
+			past : 0
+		});
 	})
 };
 
@@ -260,7 +257,8 @@ exports.postMeeting = function(req, res){
 			meeting: doc,
 			user : req.session.userId,
 			name : req.session.name,
-			past : 0
+			past : 0,
+			isAttendee : false
 		});
 	})
 };
@@ -317,7 +315,8 @@ exports.getMeeting = function(req, res){
 			meeting: doc,
 			user : req.session.userId,
 			name : req.session.name,
-			past : 0
+			past : 0,
+			isAttendee : false
 		});
 	})
 };
@@ -337,63 +336,60 @@ exports.endMeeting = function(req, res){
 		if(e) console.log(e);
 		else console.log("Successfully finished meeting");
 	});
-	Meeting.find({'ProjectId': meetingId, 'UserId' : req.session.userId}, function(e, docs){
-		Meeting.findOne({'_id': meetingId}, function(e, doc){
-			agenda=doc.agenda;
-			meetingTitle=doc.meetingTitle;
-			objective=doc.objective;
-			meetingAttendees=doc.attendees;
-			meetingDate=doc.meetingDate;
-			var creatorEmail= req.session.userId;
 
-			console.log("EMAIL creator: "+creatorEmail);
-			emailList=creatorEmail+',';
-			var meetingYear = meetingDate.getFullYear(); 
-			var meetingMonth = meetingDate.getMonth()+1; 
-			var meetingDay = meetingDate.getDate(); 
-			emailDate= meetingMonth +"/"+meetingDay+"/"+meetingYear ;
-			emailTime=doc.meetingTime;
-			var taskLists= getTaskList(doc);
-			if(typeof agenda == 'string'){
-				emailAgenda+="<p style='text-align:left; text-transform:capitalize'> 1: "+agenda.topic+"<br/></p>";
-			}
-			else{
-				for(var i=0; i<agenda.length; i++){
-					if(agenda[i] != ''){
-						var number= i+1;
-						var notes= agenda[i].notes;
-						var tasks= agenda[i].tasks;
-						emailAgenda+=number+':  '+ agenda[i].topic+'<br/>';
-						var initialNoteCount= -1; //If there is initial note count =0
-						if(notes.length>0 && notes[0].notes!='' ){
-							emailAgenda+="<p style='margin-left:5em;'> a"+". "+notes[0].notes+"<br/></p>";
-							initialNoteCount=0;
-						}
-						if(tasks.length>0 && tasks[0].task!='' ){
-							emailTask+="<p style=''>"+tasks[0].assigneeName+": "+tasks[0].task+" (Due: "+tasks[0].taskDueDate+")<br/></p>";
-						}
-						for(var z=1; z<notes.length;z++){
-							emailAgenda+="<p style='margin-left:5em;'> " +String.fromCharCode(97 + z+ initialNoteCount)+". "+notes[z].notes+"<br/></p>";
-						}
-						for(var z=1; z<tasks.length;z++){
-							emailTask+="<p style=''>"+tasks[z].assigneeName+": "+tasks[z].task+" (Due: "+tasks[z].taskDueDate+")<br/></p>";
-						}
+	Meeting.findOne({'_id': meetingId}, function(e, doc){
+		agenda=doc.agenda;
+		meetingTitle=doc.meetingTitle;
+		objective=doc.objective;
+		meetingAttendees=doc.attendees;
+		meetingDate=doc.meetingDate;
+		var creatorEmail= req.session.userId;
+
+		console.log("EMAIL creator: "+creatorEmail);
+		emailList=creatorEmail+',';
+		var meetingYear = meetingDate.getFullYear(); 
+		var meetingMonth = meetingDate.getMonth()+1; 
+		var meetingDay = meetingDate.getDate(); 
+		emailDate= meetingMonth +"/"+meetingDay+"/"+meetingYear ;
+		emailTime=doc.meetingTime;
+		var taskLists= getTaskList(doc);
+		if(typeof agenda == 'string'){
+			emailAgenda+="<p style='text-align:left; text-transform:capitalize'> 1: "+agenda.topic+"<br/></p>";
+		}
+		else{
+			for(var i=0; i<agenda.length; i++){
+				if(agenda[i] != ''){
+					var number= i+1;
+					var notes= agenda[i].notes;
+					var tasks= agenda[i].tasks;
+					emailAgenda+=number+':  '+ agenda[i].topic+'<br/>';
+					var initialNoteCount= -1; //If there is initial note count =0
+					if(notes.length>0 && notes[0].notes!='' ){
+						emailAgenda+="<p style='margin-left:5em;'> a"+". "+notes[0].notes+"<br/></p>";
+						initialNoteCount=0;
 					}
-				};
-			}
-			console.log("EMAIL: "+ emailTask);
-			if(meetingAttendees!=''){
-				for(var i=0; i<meetingAttendees.length; i++){
-					emailList+=meetingAttendees[i].attendeeEmail+',';
+					if(tasks.length>0 && tasks[0].task!='' ){
+						emailTask+="<p style=''>"+tasks[0].assigneeName+": "+tasks[0].task+" (Due: "+tasks[0].taskDueDate+")<br/></p>";
+					}
+					for(var z=1; z<notes.length;z++){
+						emailAgenda+="<p style='margin-left:5em;'> " +String.fromCharCode(97 + z+ initialNoteCount)+". "+notes[z].notes+"<br/></p>";
+					}
+					for(var z=1; z<tasks.length;z++){
+						emailTask+="<p style=''>"+tasks[z].assigneeName+": "+tasks[z].task+" (Due: "+tasks[z].taskDueDate+")<br/></p>";
+					}
 				}
+			};
+		}
+		console.log("EMAIL: "+ emailTask);
+		if(meetingAttendees!=''){
+			for(var i=0; i<meetingAttendees.length; i++){
+				emailList+=meetingAttendees[i].attendeeEmail+',';
 			}
-			mailBody=createMinutesBody(creatorEmail,emailDate,meetingTitle,emailList,objective,emailAgenda,emailTask,emailTime,objective,emailAgenda,taskLists);
-			emailFunction(mailBody,res);
-
-		});
+		}
+		mailBody=createMinutesBody(creatorEmail,emailDate,meetingTitle,emailList,objective,emailAgenda,emailTask,emailTime,objective,emailAgenda,taskLists);
+		emailFunction(mailBody,res);
 	});
 
-	
 	res.redirect('dashboard');
 }
 
@@ -412,7 +408,6 @@ exports.viewPast = function(req, res){
 
 		res.render('loggedIn/meetings/viewMeeting', { 
 			title: 'SEAM',
-			projectName: req.session.projectName,
 			meeting: doc,
 			user : req.user,
 			past : 1
@@ -464,29 +459,6 @@ exports.pastMeeting = function(req, res){
 			user : req.user
 		});
 	})
-	/*
-	var meetingId = req.body.meetingId;
-	if(meetingId == undefined){
-		meetingId = req.session.meetingId;
-	}
-	else{
-		req.session.meetingId = meetingId;
-	}
-	console.log(meetingId);
-	Meeting.findOne({'ProjectId': req.session.projectId, '_id': meetingId}, function(e, doc){
-		console.log(doc);
-		Task.find({'ProjectId': req.session.projectId, 'MeetingId': meetingId}, function(e, task){
-			console.log(task);
-			res.render('loggedIn/meetings/pastMeeting', { 
-				title: 'SEAM',
-				taskList: task,
-				meeting: doc,
-				projectName: req.session.projectName,
-				user : req.user,
-				past : 1
-			});
-		})
-	})*/
 };
 
 exports.addNote = function(req, res){
@@ -625,11 +597,6 @@ exports.addMeeting = function(req, res){
 		}
 	}
 
-	newMeeting.attendees.push({
-		attendeeName: creatorName,
-		attendeeEmail: creatorEmail.toLowerCase()
-	});
-
 	if(attendeeNames != undefined){	
 		if(typeof attendeeNames == 'string'){
 			emailList+=attendeeEmails;
@@ -652,7 +619,7 @@ exports.addMeeting = function(req, res){
 			};
 		}
 	}
-
+	var meetingID='';
 	newMeeting.save(function(err, doc){
 		if(err){
 			console.log('Problem adding information to database')
@@ -661,15 +628,16 @@ exports.addMeeting = function(req, res){
 			res.redirect('error', {user : req.user});
 		}
 		else{
+			meetingID=doc._id;
+			//Create ical File
+			var icsFilePath=createiCal(creatorEmail,meetingTitle,icalDate,icalEmail,meetingDate,meetingEndTime,objective,location,meetingID);
+			mailBody=createAgendaBody(creatorEmail,emailList,emailDate,meetingTitle,objective,emailAgenda,location,meetingTime,icsFilePath);
+			emailFunction(mailBody,res,icsFilePath);
 			console.log('Added new meeting successfully');
 			// Meeting.find({}, function(e, docs){console.log(docs);});
 		}
 	});
-
-	//Create ical File
-	var icsFilePath=createiCal(creatorEmail,meetingTitle,icalDate,icalEmail,meetingDate,meetingEndTime,objective,location);
-	mailBody=createAgendaBody(creatorEmail,emailList,emailDate,meetingTitle,objective,emailAgenda,location,meetingTime,icsFilePath);
-	emailFunction(mailBody,res,icsFilePath);
+	
 
 	res.redirect('/dashboard');
 };
@@ -720,14 +688,15 @@ exports.postJoinMeeting = function(req, res){
 			console.log(meetingDate);
 		}
 
-		res.render('loggedIn/meetings/joinMeeting', { 
+		res.render('loggedIn/meetings/startMeeting', { 
 			title: 'SEAM',
 			name: req.session.name,
 			meetingDate: meetingDate,
 			meeting: doc,
 			user : req.session.userId,
 			name : req.session.name,
-			past : 0
+			past : 0,
+			isAttendee : true
 		});
 	})	
 }
@@ -778,14 +747,15 @@ exports.getJoinMeeting = function(req, res){
 			console.log(meetingDate);
 		}
 
-		res.render('loggedIn/meetings/joinMeeting', { 
+		res.render('loggedIn/meetings/startMeeting', { 
 			title: 'SEAM',
 			name: req.session.name,
 			meetingDate: meetingDate,
 			meeting: doc,
 			user : req.session.userId,
 			name : req.session.name,
-			past : 0
+			past : 0,
+			isAttendee : true
 		});
 	})	
 }
@@ -840,10 +810,12 @@ function emailFunction(emailBody,res,icsFilePath){
  	//email send sucessfully
 	else {
 		res.end("Email Successfully");
-		if(icsFilePath==''){
-			deleteFile(icsFilePath);
+		if(icsFilePath=='' || icsFilePath==undefined){
+			//deleteFile(icsFilePath);
 		}
 		else{
+			console.log('../'+icsFilePath);
+			deleteFile(icsFilePath);
 		}
  	}
 
@@ -893,23 +865,23 @@ function createAgendaBody(emailCreator,emailList,emailDate,meetingTitle,objectiv
 function createMinutesBody(emailCreator,emailDate,meetingTitle,emailList,objective,emailAgenda,emailTask,emailTime,objective,emailAgenda,taskLists){
 	var mailBody;
 	var htmlEmail=emailHTMLCSS();
-	htmlEmail+="<body leftmargin='0' marginwidth='0' topmargin='0' marginheight='0' offset='0'> <center> <table border='0' cellpadding='0' cellspacing='0' height='100%' width='100%' id='backgroundTable'> <tr> <td align='center' valign='top'> <!-- // Begin Template Preheader \\ --> <table border='0' cellpadding='10' cellspacing='0' width='600' id='templatePreheader'> <tr> <td valign='top' class='preheaderContent'> <!-- // Begin Module: Standard Preheader \ --> <table border='0' cellpadding='10' cellspacing='0' width='100%'> <tr> <td valign='top'> <div mc:edit='std_preheader_content'> SEAM - Tackling Meeting Inefficiency </div> </td> </tr> </table> <!-- // End Module: Standard Preheader \ --> </td> </tr> </table> <!-- // End Template Preheader \\ --> <table border='0' cellpadding='0' cellspacing='0' width='600' id='templateContainer'> <tr> <td align='center' valign='top'> <!-- // Begin Template Header \\ --> <table border='0' cellpadding='0' cellspacing='0' width='600' id='templateHeader'> <tr> <td class='headerContent'> <!-- // Begin Module: Standard Header Image \\ --> <img src='http://www.miketychen.com/images/SEAMBANNER.jpg' style='max-width:600px;' id='headerImage campaign-icon' mc:label='header_image' mc:edit='header_image' mc:allowdesigner mc:allowtext /> <!-- // End Module: Standard Header Image \\ --> </td> </tr> </table> <!-- // End Template Header \\ --> </td> </tr> <tr> <td align='center' valign='top'> <!-- // Begin Template Body \\ --> <table border='0' cellpadding='0' cellspacing='0' width='600' id='templateBody'> <tr> <td valign='top' class='bodyContent'> <!-- // Begin Module: Standard Content \\ --> <table border='0' cellpadding='20' cellspacing='0' width='100%'> <tr> <td valign='top'> <div mc:edit='std_content00'> <div class='mtg-title-box'> <h1 class='h1 text-center'>"+meetingTitle+" Minutes</h1> </div>";
-
+	htmlEmail+="<body leftmargin='0' marginwidth='0' topmargin='0' marginheight='0' offset='0'> <center> <table border='0' cellpadding='0' cellspacing='0' height='100%' width='100%' id='backgroundTable'> <tr> <td align='center' valign='top'> <!-- // Begin Template Preheader \\ --> <!-- // End Template Preheader \\ --> <table border='0' cellpadding='0' cellspacing='0' width='600' id='templateContainer'> <tr> <td align='center' valign='top'> <!-- // Begin Template Header \\ -->  <!-- // End Template Header \\ --> </td> </tr> <tr> <td align='center' valign='top'> <!-- // Begin Template Body \\ --> <table border='0' cellpadding='0' cellspacing='0' width='600' id='templateBody'> <tr> <td valign='top' class='bodyContent'> <!-- // Begin Module: Standard Content \\ --> <table border='0' cellpadding='20' cellspacing='0' width='100%'> <tr> <td valign='top'> <div mc:edit='std_content00'> <div class='mtg-title-box'> <h1 class='h1 text-center'>"+meetingTitle+" Minutes</h1> </div>";
+	htmlEmail+="<h3 style='text-align:left;'> Objectives: "+objective+"</h3>" ;
 	htmlEmail+="<h3 class='h3'>Tasks</h3><table>";
 	for (var taskAssignee in taskLists) {
 		if (taskLists.hasOwnProperty(taskAssignee)) {
 
-			htmlEmail+="<tr> <td>"+taskAssignee+"</td>";
 			tasks = taskLists[taskAssignee];
 			for (var i = 0; i < tasks.length; i++){
-				htmlEmail+="<td>"+tasks[i].task+"("+tasks[i].dueDate+")</td>";   
+				htmlEmail+="<tr>"+taskAssignee+" <td>"+tasks[i].task+"("+tasks[i].dueDate+")</td></tr>";   
 			}
-			htmlEmail+="</tr>";
 		}
 	}
 	htmlEmail+="</table>";
-	htmlEmail+="<p style='text-align:left;'> Objectives: "+objective+"<br/></p>" +
-		        "<p style='text-align:left;'> Agenda: <br/>"+emailAgenda+"<br/></p></center> </body> </html>";
+	htmlEmail+="<h3 class='h3' style='text-align:left;'> Agenda: </h3>"+
+		        "<p style='text-align:left;'>"+emailAgenda+"<br/></p>"+
+		        "<p style='text-align:left;'> Please send us any feedback you have <a href='http://www.getseam.co/contact' target='_blank'>here</a>.</p>"+
+		        "<a href='http://www.getseam.co/login' target='_blank'><img src='http://www.miketychen.com/images/SEAMBANNER.jpg' style='max-width:100px; text-align:right; float:right' id='headerImage campaign-icon' mc:label='header_image' mc:edit='header_image' mc:allowdesigner mc:allowtext /></a> </center></body> </html>";
 	//construct the email sending module
 			mailBody = {
 			 	forceEmbeddedImages: true,
@@ -934,10 +906,10 @@ function emailHTMLCSS(){
 	return head;
 }
 //Creates ics File and returns File Name
-function createiCal(userId,meetingTitle,icalDate,icalEmail,icalSTime,icalETime,objective,location){
+function createiCal(userId,meetingTitle,icalDate,icalEmail,icalSTime,icalETime,objective,location,meetingID){
 	//ical Module
 	var iCalEvent = require('icalevent');
-	var tempFileName='icsFiles/'+userId+meetingTitle+icalDate+'.ics';
+	var tempFileName='icsFiles/'+meetingID+'.ics';
 	var fs= require('fs');
 	console.log(userId+","+meetingTitle+","+icalDate+","+icalEmail+","+icalSTime+","+icalETime+","+objective+","+location);
 	//Create Event
@@ -966,11 +938,16 @@ function createiCal(userId,meetingTitle,icalDate,icalEmail,icalSTime,icalETime,o
 	return tempFileName;
 }
 function deleteFile(fileName){
+	fileName+="";
+	console.log("Deleting File: "+fileName);
 	//Deletes File
 	var fs= require('fs');
 	fs.unlink(fileName, function (err) {
-	  	if (err) throw err;
+	  	if (err) {throw err;
 	  		console.log('successfully deleted file');
+	  	}else{
+	  		//console.log('not deleted'+err);
+	  	}
 	});
 }
 

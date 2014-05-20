@@ -145,6 +145,9 @@ textarea{
 .cursor-pointer{
 	cursor: pointer;
 }
+.line-height-6x{
+	line-height: 18px;
+}
 .line-height-12x{
 	line-height: 12px;
 }
@@ -418,6 +421,13 @@ textarea{
 .bg-green{
 	background-color: rgb(141,199,63);
 }
+.bg-green-blue-hover{
+	background-color: rgb(141,199,63);
+}
+.bg-green-blue-hover:hover{
+	background-color: rgb(0,114,188);
+	transition:all 0.5s ease-in-out;
+}
 .bg-gray-t8{
 	background-color: rgba(140,140,140,0.8);
 }
@@ -443,8 +453,22 @@ textarea{
 	background-color: rgb(248,148,29);
 	transition:all 0.5s ease-in-out;
 }
+.bg-pink-blue-hover{
+	background-color: rgb(242,108,79);
+}
+.bg-pink-blue-hover:hover{
+	background-color: rgb(0,114,188);
+	transition:all 0.5s ease-in-out;
+}
 .bg-orange{
 	background-color: rgb(248,148,29);
+}
+.bg-orange-blue-hover{
+	background-color: rgb(248,148,29);
+}
+.bg-orange-blue-hover:hover{
+	background-color: rgb(0,114,188);
+	transition:all 0.5s ease-in-out;
 }
 .bg-1{
 	background-color: rgb(141,199,63);
@@ -482,10 +506,10 @@ textarea{
 	border-color:rgb(37,37,37) !important;
 }
 .bg-drk-gray{
-	background-color: rgb(51,54,63);
+	background-color: rgb(37,37,37);
 }
 .bg-gray{
-	background-color: rgb(244,244,244);
+	background-color: rgb(236,236,236);
 }
 .bg-gray-nohover{
 	background-color: rgb(37,37,37);
@@ -630,6 +654,9 @@ textarea{
 .margin-top-8p{
 	margin-top:8%;
 }
+.margin-top-9p{
+	margin-top:9%;
+}
 .margin-top-10p{
 	margin-top:10%;
 }
@@ -663,6 +690,9 @@ textarea{
 .margin-left-2p{
 	margin-left: 2%;
 }
+.margin-left-4p{
+	margin-left: 4%;
+}
 .margin-left-5p{
 	margin-left: 5%;
 }
@@ -686,6 +716,9 @@ textarea{
 }
 .margin-bottom-0x{	
 	margin-bottom:0px;
+}
+.margin-bottom-1p{
+	margin-bottom: 1%;
 }
 .margin-bottom-3p{
 	margin-bottom: 3%;
@@ -726,6 +759,9 @@ textarea{
 }
 .padding-left-5p{
 	padding-left: 4.5%;
+}
+.padding-left-7p{
+	padding-left: 7%;
 }
 .padding-top-20x{
 	padding-top: 20px;
@@ -778,8 +814,14 @@ textarea{
 .padding-right-3p{
 	padding-right:3%;
 }
+.padding-right-7p{
+	padding-right:7%;
+}
 .padding-btn{
 	padding:3% 15%;
+}
+.padding-btn-lg{
+	padding:6% 20%;
 }
 .padding-btn-small{
 	padding:1.5% 3.5%;
@@ -828,6 +870,9 @@ textarea{
 .container-100p{
 	width:100%;
 }
+.width-50x{
+	width:50px;
+}
 .width-100x{
 	width:100px;
 }
@@ -837,12 +882,16 @@ textarea{
 .width-250x{
 	width:300px;
 }
+.width-85p{
+	width: 85%;
+}
 .width-95p{
 	width: 95%;
 }
 .width-100p{
 	width: 100%;
 }
+
 .height-auto{
 	height: auto;
 }
@@ -851,6 +900,9 @@ textarea{
 }
 .min-height-100p{
 	min-height: 100%;
+}
+.min-height-100x{
+	height: 100px;
 }
 .min-height-180x{
 	min-height: 170px;
@@ -866,6 +918,9 @@ textarea{
 }
 .height-50x{
 	height:50px;
+}
+.height-300x{
+	height:400px;
 }
 .width-50x{
 	width: 50px;
@@ -1085,7 +1140,7 @@ textarea{
 	background-color: rgb(255,255,255);
 	border:2px solid rgb(0,114,188) !important;
 	border-radius: 3px !important;
-	transition:all 0.5s ease-in-out;
+	transition:all 0.2s ease-in-out;
 }
 .btn-blue-hover:hover{
 	color:rgb(255,255,255);
@@ -1132,7 +1187,7 @@ textarea{
 	padding-left: 225px;
   }
 #page-wrapper {
-	padding: 3% 3% 0% 3%;
+	padding: 2% 4% 0% 4%;
 }
 .side-nav {
 	margin-left: -225px;
@@ -1251,7 +1306,7 @@ border-color:  rgb(225,225,225);
 .progress-vertical-line {
 position: relative;
 width: 2px;
-height:240px;
+height:320px;
 margin:0px auto;
 border-radius: 0;
 }
@@ -1304,4 +1359,35 @@ background-color: rgb(225,225,225);
 .answer.active	{ background: url(../images/close.png); width: 20px; height: 20px;}
 #faqs div { height:0; overflow:hidden; position:relative; }
 #faqs div h1	{ padding:0; margin-bottom:10px; }
-
+/* =======================================================
+   1.VIDEO-BOX(DESKTOP)
+========================================================== */
+.video-container{
+	width:910px;
+	height:700px;
+	margin: auto;
+	display: inline;
+	/*background-color:#3df;*/
+}
+.big-video-container{
+	width:900px;
+	height:400px;
+	margin-bottom: 0;
+	margin:0 auto;
+	/*background-color:rgb(123,23,44);*/
+}
+.big-video{
+	width:790px;
+	height:400px;
+}
+.small-video-container{
+	width:910px;
+	height:200px;
+	margin-top:0;
+	margin:0 auto;
+	/*background-color:#FFFF00;*/
+}
+.video-strip{
+	width:263px;
+	height:200px;
+}
