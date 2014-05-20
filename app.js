@@ -305,6 +305,7 @@ app.post('/dashboard/meetings/start/addTask', user.isLoggedIn, meetings.addTask)
 app.post('/dashboard/meetings/end', user.isLoggedIn, meetings.endMeeting);
 
 app.post('/dashboard/meetings/start/updateTime', user.isLoggedIn, meetings.updateTimer);
+app.post('/dashboard/meetings/start/survey', user.isLoggedIn, meetings.addSurvey);
 //Tasks
 // app.get('/dashboard/tasks', user.isLoggedIn, task.getTasks);
 // app.post('/dashboard/tasks/current', user.isLoggedIn, task.getTasksByMeeting);
