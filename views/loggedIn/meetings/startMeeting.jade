@@ -3,30 +3,10 @@ extends ../dashboard/baseLayout
 block content
 	if(isAttendee == true)
 		#postMeetingQuestions
-			form(name='postMeetingQ', action='/dashboard/meetings/start/survey', method='POST')
-				div(style='text-align: center;')
-					h3 Question 1
-					.form-inline
-						input(type='radio', name='q1answer', value='yes')
-						| Yes       
-						input(type='radio', name='q1answer', value='no')
-						| No
-					br
-					h3 Question 2
-					.form-inline
-						input(type='radio', name='q2answer', value='yes')
-						| Yes       
-						input(type='radio', name='q2answer', value='no')
-						| No
-					br
-					h3 Question 3
-					.form-inline
-						input(type='radio', name='q3answer', value='yes')
-						| Yes        
-						input(type='radio', name='q3answer', value='no')
-						| No
-					br
-					button.border-square.btn-blue-hover.text-h3.padding-btn(id='postMeetingButton', type='submit') SUBMIT
+			div(style='text-align: center;')
+				h2 Did this meeting feel productive?
+				div#starRating
+				h4#starHint
 	.row
 		.col-md-9
 			.row.bg-white.border-gray.border-shadow-1x.margin-right-1p.margin-left.height-auto.padding-bottom-3p.border-round(style='min-height:150px; height:auto')
@@ -152,6 +132,8 @@ block content
 													input.text-h5.margin-left-2p.form-control.border-square.border-orange-no-top.border-orange-bot.border-orange-right.border-orange-left.text-left.bg-white.margin-0.margin-right-1p(rows="1",id='taskName#{i}', type='text', name='taskName', placeholder= 'Type Task...', tabindex='#{i+1}', autocomplete='off')
 												.col-md-3.padding-0-left
 													input.text-h5.margin-left-2p.form-control.border-square.border-orange-no-top.border-orange-bot.border-orange-right.border-orange-left.text-left.bg-white.margin-0.margin-right-1p(rows="1",id='taskDueDate#{i}', type='text', name='taskDueDate', placeholder= 'Due Date', tabindex='#{i+1}', autocomplete='off')
+												.col-md-1
+													button.bg-white.text-blue-hoverorange.text-left.margin-0.padding-0(id='noteSubmit#{i+1}' type='submit', value='#{i}')<i class="fa fa-check fa-md"></i> 
 					.row
 						.col-md-1.margin-top-1p.padding-bottom-2p.margin-0.padding-0
 							div.height-100p.width-100p
@@ -165,6 +147,7 @@ block content
 	script(src='../../../javascripts/meetings-attendance.js')
 	if(isAttendee == true)
 		script(type="text/javascript" src="../../../javascripts/jquery.timer.js")
+		script(type="text/javascript" src="../../../javascripts/jquery.raty.js")
 		script(src='../../../javascripts/meetings-asyncJoin.js')
 	else
 		script(src='../../../javascripts/meetings-update.js')

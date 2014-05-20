@@ -152,7 +152,7 @@ $(document).ready(function(){
 	$('form[name="TNForm"]').submit(function(event){
 		var value = $(this).attr('value');
 		var formData = $("#TNForm" + value).serializeArray();
-		// console.log(formData);
+		console.log(formData);
 		var notes = formData[1].value;
 		var taskAssignee = formData[2].value;
 		var task = formData[3].value;

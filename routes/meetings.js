@@ -1,10 +1,54 @@
 var mongoose = require('mongoose');
 var Meeting = require('../models/meeting-model');
+var Rating = require('../models/rating-model');
 var nodemailer = require('nodemailer');
 
 exports.addSurvey = function(req, res){
 	console.log(req.body);
-	res.redirect('/dashboard');
+	var meetingId = req.body.meetingId;
+	var userId = req.body.userId;
+	var name = req.body.name;
+	var rating = req.body.rating;
+	var ratings = {
+		userId: userId,
+		name: name,
+		rating: rating
+	}
+	Rating.findOne({'meetingId': meetingId}, function(e, doc){
+		console.log('this is the doc: ' + doc);
+		res.send('success');
+		if(doc){
+			doc.ratings.push(ratings);
+			doc.save(function(err, doc){
+				if(err){
+					console.log('Problem adding rating to database')
+					console.log(err);
+					res.send('failed to save note');
+				}
+				else{
+					console.log('Added rating successfully');
+					res.send('success');
+				}
+			});	
+		}
+		else{
+			var newRating = new Rating({
+				meetingId: meetingId,
+				ratings: [ratings]
+			});
+
+			newRating.save(function(err, doc){
+				if(err){
+					console.log('Problem adding rating')
+					res.send('fail');
+				}
+				else{
+					console.log('Added new rating successfully');
+					res.send('success');
+				}
+			});
+		}
+	});
 }
 
 exports.makeMeeting = function(req, res){
@@ -575,7 +619,7 @@ exports.addMeeting = function(req, res){
 		meetingDate: meetingStartTime,
 		duration: duration,
 		meetingTime: meetingTime,
-		timerInfo: timerInfo
+		timerInfo: timerInfo,
 	});
 
 	if(agenda != undefined){	

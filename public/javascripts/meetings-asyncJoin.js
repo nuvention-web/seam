@@ -17,10 +17,34 @@ $(document).ready(function(){
 	meetingId = $("input[name='meetingId']").attr('value');
 
 	$("#postMeetingQuestions").dialog({
-		// autoOpen: false,
-		height: 400,
+		autoOpen: false,
+		height: 200,
 		width: 600,
 		modal: true,
+	});
+
+	$("#starRating").raty({
+		number : 4,
+		width: false,
+		hints: ['Nothing Accomplished', 'Unproductive', 'Productive', 'Very Productive'],
+		target: '#starHint',
+		click: function(score, evt) {
+			var formData = [];
+			var url = location.protocol + "//" + location.host + '/dashboard/meetings/start/survey'
+			formData.push({'name': 'meetingId', 'value': meetingId});
+			formData.push({'name': 'userId', 'value': userId});
+			formData.push({'name': 'name', 'value': name});
+			formData.push({'name': 'rating', 'value': score});
+			$.ajax({
+				type: "POST",
+				url: url,
+				data: formData, // serializes the form's elements.
+				success: function(data){
+					window.onbeforeunload = function(){};
+					window.location = window.location.origin + "/dashboard"
+				}
+			});
+  		}
 	});
 
 	window.onbeforeunload = function(){
@@ -147,6 +171,7 @@ $(document).ready(function(){
 			$(":input").prop("disabled", true);
 			$("textarea").prop("disabled", true);
 			$('button[name="leave"]').prop("disabled", false);
+			$("#postMeetingQuestions").dialog('open');
 		}
 	});
 
@@ -239,7 +264,7 @@ $(document).ready(function(){
 	$('form[name="TNForm"]').submit(function(event){
 		var value = $(this).attr('value');
 		var formData = $("#TNForm" + value).serializeArray();
-		// console.log(formData);
+		console.log(formData);
 		var notes = formData[1].value;
 		var taskAssignee = formData[2].value;
 		var task = formData[3].value;
