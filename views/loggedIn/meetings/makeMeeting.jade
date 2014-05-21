@@ -113,11 +113,11 @@ block content
 												.row
 													input(type='hidden', name='attendeeName', value='#{attendee.attendeeName}')
 													input(type='hidden', name='attendeeEmail', value='#{attendee.attendeeEmail}')
-													div.col-md-3.margin-top-5p
+													//div.col-md-3.margin-top-5p
 														img.width-50x.height-50x.border-50p.float-right(src='../../../images/member.png')
-													div.col-md-6.margin-top-7p
+													//div.col-md-6.margin-top-7p
 														h4.text-black.text-left You
-													div.col-md-1.margin-top-9p
+													//div.col-md-1.margin-top-9p
 														a.text-h2.text-normal.text-gray-hover
 											else
 												.row(id='attendee#{i}')
@@ -134,10 +134,19 @@ block content
 										.row
 											input(type='hidden', name='attendeeName', value='#{name}')
 											input(type='hidden', name='attendeeEmail', value='#{email}')
-											div.col-md-3.margin-top-5p
+											//div.col-md-3.margin-top-5p
 												img.width-50x.height-50x.border-50p.float-right(src='../../../images/member.png')
-											div.col-md-6.margin-top-7p
+											//div.col-md-6.margin-top-7p
 												h4.text-black.text-left.margin-top-5p You
+								.row.max-height-150x.overflow-scroll-y-auto.overflow-x-hidden
+									if(contact!=null)
+										each member, i in contact.contacts
+											.row
+												.col-md-1
+													input(type="checkbox", name="attendeeEmail", value='#{member.memberEmail}')
+													input(type="hidden", name="attendeeName", value='#{member.memberName}')
+												.col-md-11
+													h6.text-left #{member.memberEmail}
 								.row.margin-top-5p#addNewAttendee
 									.col-md-8
 										input.noEnterSubmit.form-control.border-square.text-left.border-none.cursor-pointer(type='text', name='nameHolder', value='', id='nameHolder', placeholder= 'NAME', tabindex='1')
