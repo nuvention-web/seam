@@ -670,6 +670,7 @@ exports.addMeeting = function(req, res){
 			};
 		}
 	}
+	//Contact Person Array -- Array of contacts added to the meeting
 	var contactPerson=[];
 
 	if(attendeeNames != undefined){	
@@ -680,22 +681,17 @@ exports.addMeeting = function(req, res){
 				attendeeName: attendeeNames,
 				attendeeEmail: attendeeEmails.toLowerCase()
 			});
-			console.log("testing same email sdsd");
-					console.log(attendeeEmails);
-					console.log(req.session.email);
-			if(attendeeEmails!=req.session.email){
+			//Add to array if the email is not the creator
+			if(attendeeEmails.toLowerCase()!=req.session.email){
 				contactPerson.push({
-							memberName: attendeeNames,
-							memberEmail: attendeeEmails.toLowerCase()
+					memberName: attendeeNames,
+					memberEmail: attendeeEmails.toLowerCase()
 				});
 			}
 		}
 		else{
-		console.log("THESE ARE CONTACTS before");
-		console.log(contactPerson);
 			for(var i=0; i<attendeeNames.length; i++){
-				console.log('emails:::');
-				console.log(attendeeEmails[i]);
+
 				if(attendeeNames[i] != '' && attendeeEmails[i] != undefined){
 					emailList+=attendeeEmails[i]+',';
 					icalEmail.push({name:attendeeNames[i], email:attendeeEmails[i]});
@@ -704,17 +700,12 @@ exports.addMeeting = function(req, res){
 						attendeeEmail: attendeeEmails[i].toLowerCase()
 					});
 					//Add to temp array. Ignore email if it is creator
-					console.log("testing same email");
-					console.log(attendeeEmails);
-					console.log(req.session.email);
-					if(attendeeEmails[i]!=req.session.email){
+					if(attendeeEmails[i].toLowerCase()!=req.session.email){
 						contactPerson.push({
 							memberName: attendeeNames[i],
 							memberEmail: attendeeEmails[i].toLowerCase()
 						});
 					}
-			console.log("THESE ARE CONTACTSasdasd");
-			console.log(contactPerson);
 				}
 			};
 		}
@@ -722,16 +713,15 @@ exports.addMeeting = function(req, res){
 
 	//Add to contact
 	Contact.findOne({'UserId': req.session.email}, function(e, doc){
-		console.log('this is the contacts: ' + doc);
 		res.send('success');
 		if(doc){
 			for(var i=0; i<contactPerson.length; i++){
+				//Look for existing email in group-- don't add if exist
 				var z=0;
 				var foundExisting=true;
 				while(foundExisting && z<doc.contacts.length){
-					console.log("finding from "+ doc.contacts[z].memberEmail + "for "+ contactPerson[i].memberEmail);
 					 if(doc.contacts[z].memberEmail == contactPerson[i].memberEmail) {
-				     console.log("FOUND!");
+				     console.log("FOUND EXISTING EMAIL!");
 				     foundExisting=false;
 				   }
 				   z++;
@@ -757,6 +747,7 @@ exports.addMeeting = function(req, res){
 
 		}
 		else{
+			//First Time Use
 			var newContact = new Contact({
 				UserId: req.session.email,
 				contacts: contactPerson
