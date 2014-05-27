@@ -91,8 +91,8 @@ function addAgendaItem(){
      			'<textarea id="makeMeeting'+i+'" type="text" name="notes" rows="6" placeholder="Insert notes here" autocomplete="off" class="text-h4 height-30x form-control border-square border-none text-left bg-transparent cursor-pointer"/>'+
      			'</div></div></div></div>').appendTo(agendaBox);
 
-    // $('input[name="agendaTopic' + i +'"]').focus();
-    // $('html, body').animate({scrollTop: $(document).height()}, 'slow');
+    $('input[id="makeMeeting' + i +'"]').focus();
+    $('html, body').animate({scrollTop: $(document).height()}, 'slow');
     
 	i++;
 };
