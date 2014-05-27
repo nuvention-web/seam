@@ -603,6 +603,9 @@ textarea{
 .padding-0-left{
 	padding-left:0 !important;
 }
+.margin-top-n5x{
+	margin-top:-10px;
+}
 .margin-top-n12p{
 	margin-top: -12%;
 }
@@ -875,7 +878,7 @@ textarea{
 	width:150px;
 }
 .width-250x{
-	width:300px;
+	width:3000px;
 }
 .width-85p{
 	width: 85%;
