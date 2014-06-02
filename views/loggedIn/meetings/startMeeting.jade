@@ -90,13 +90,17 @@ block content
 										each note, j in agenda.notes
 											if(j==0)
 												h5.text-black.text-left.text-italic.margin-bottom-1p #{note.notes}
-											else	
-												h5.text-black.text-left #{note.notes}
+											else
+												div.oneNote
+													input(type='hidden', name='noteId', value='#{note._id}')
+													h5.text-black.text-left #{note.notes}
 									div#allTasks
 										each task, i in agenda.tasks
-											h5.text-left.text-blue.margin-right-2p
-												span.text-h5.text-normal.text-blue @#{task.assigneeName}
-												| ----- #{task.task}
+											div.oneTask
+													input(type='hidden', name='taskId', value='#{task._id}')
+													h5.text-left.text-blue.margin-right-2p
+														span.text-h5.text-normal.text-blue @#{task.assigneeName}
+														| ----- #{task.task}
 								form(role='form', method='POST', name='TNForm', action='/dashboard/meetings/start/addNote', value='#{i}', id='TNForm#{i}')
 									input(type='hidden', name='noteOrder', value='#{i}')
 									div.container-95p.margin-top-2p
@@ -144,6 +148,7 @@ block content
 	link(rel='stylesheet', href='../../../stylesheets/faq.css')
 	script(src='/socket.io/socket.io.js')
 	script(type="text/javascript" src="../../../javascripts/jquery.plugin.js")
+	script(type="text/javascript" src="../../../javascripts/jquery.editinplace.js")
 	script(src='../../../javascripts/meetings-attendance.js')
 	if(isAttendee == true)
 		script(type="text/javascript" src="../../../javascripts/jquery.timer.js")

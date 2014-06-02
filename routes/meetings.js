@@ -550,13 +550,27 @@ exports.addNote = function(req, res){
 				res.send('failed to save note');
 			}
 			else{
+				var notesLength = doc.agenda[noteOrder].notes.length - 1;
+				var noteId = doc.agenda[noteOrder].notes[notesLength]._id;
 				console.log('Added notes successfully');
-				res.send('success');
+				res.send(noteId);
 				// Meeting.find({}, function(e, docs){console.log(docs);});
 			}
 		});	
 	});
 };
+
+exports.editNote = function(req, res){
+	console.log('this is the req: ' + req);
+	var noteId = req.body.noteId;
+	var newNote = req.body.noteData;
+	var conditions = { _id: noteId};
+	var noteData = {notes: newNote};
+	var update = { $set: noteData };
+	var options = { upsert: true };	
+
+	Meeting.update(conditions, update, options, function(){res.send('update successful');});
+}
 
 exports.addTask = function(req, res){
 
@@ -576,8 +590,10 @@ exports.addTask = function(req, res){
 				res.send('failed to save task');
 			}
 			else{
+				var tasksLength = doc.agenda[taskOrder].tasks.length - 1;
+				var taskId = doc.agenda[taskOrder].tasks[tasksLength]._id;
 				console.log('Added task successfully');
-				res.send('success');
+				res.send(taskId);
 				// Meeting.find({}, function(e, docs){console.log(docs);});
 			}
 		});
