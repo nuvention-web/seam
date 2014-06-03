@@ -36,7 +36,7 @@ block content
 								.col-md-7
 									h4.text-right.text-black.text-normal Time Remaining:
 								.col-md-5
-									h5#countdownTimer.text-left.text-black.text-normal
+									h5.countdownTimer.text-left.text-black.text-normal
 				.row.height-auto.bg-white.border-gray.border-shadow-1x.margin-left-1p.overflow-scroll-y-auto.overflow-x-hidden.margin-top-10p.padding-bottom-10p.border-round
 					.col-md-12.margin-top-1p
 						.row#attendeeMinimize
@@ -76,9 +76,10 @@ block content
 										.bar
 
 							.col-md-10.margin-0.padding-0
-									h3.text-black.text-left.text-capital.margin-0.text-normal #{agenda.topic}
+									span
+										h3.text-black.text-left.text-capital.margin-0.text-normal #{agenda.topic}
 							.col-md-1
-								.answer 
+								.text-left.text-black.text-normal.answer 
 						.row
 							.col-md-1.margin-top-1p.padding-bottom-2p.margin-0.padding-0
 								div.height-100p.width-100p
