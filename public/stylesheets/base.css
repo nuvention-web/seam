@@ -1134,16 +1134,17 @@ textarea{
 	box-shadow: 2px 2px 2px 2px rgb(230,230,230);
 }
 .btn-blue-hover{
-	color:rgb(0,114,188);
-	background-color: rgb(255,255,255);
-	border:2px solid rgb(0,114,188) !important;
+	color:rgb(255,255,255);
+	background-color: rgb(133,188,210);
+	border:2px solid rgb(133,188,210) !important;
 	border-radius: 3px !important;
 	transition:all 0.2s ease-in-out;
 }
 .btn-blue-hover:hover{
 	color:rgb(255,255,255);
 	background-color: rgb(0,114,188);
-	border:2px solid rgb(0,114,188);
+	border:2px solid rgb(0,114,188)!important;
+
 }
 .btn-orange-hover{
 	color:rgb(248,148,29);

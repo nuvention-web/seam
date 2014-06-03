@@ -79,7 +79,7 @@ $(document).ready(function(){
 					interval.stop();
 				}
 				console.log("In updateTime");
-				$('#countdownTimer').countdown('destroy');
+				$('.countdownTimer').countdown('destroy');
 				startTimer(remaining);
 			}
 		}
@@ -144,7 +144,7 @@ $(document).ready(function(){
 			$.notify(msg.toUpperCase(),
 				{className: "warning", autoHideDelay: 10000, globalPosition: 'top center'}
 			);
-			$('#countdownTimer').countdown('pause');
+			$('.countdownTimer').countdown('pause');
 			for(var i = 0; i < timeout.length; i++){
 				clearTimeout(timeout[i]);
 			}
@@ -162,7 +162,7 @@ $(document).ready(function(){
 			$.notify("MEETING FINISHED",
 				{className: "success", autoHideDelay: 10000, globalPosition: 'top center'}
 			);
-			$('#countdownTimer').countdown('pause');
+			$('.countdownTimer').countdown('pause');
 			for(var i = 0; i < timeout.length; i++){
 				clearTimeout(timeout[i]);
 			}
@@ -472,7 +472,7 @@ function startTimer(remaining){
 		setAgendaDelay(i, strVals.length);
 	};
 	//ENDING AGENDA ITEM
-	$('#countdownTimer').countdown({until: intVals[0]-elapsedTime,compact: true,format: 'MS'});
+	$('.countdownTimer').countdown({until: intVals[0]-elapsedTime,compact: true,format: 'MS'});
 };
 
 

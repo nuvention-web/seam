@@ -353,7 +353,7 @@ function startTimer(){
 		setAgendaDelay(i, strVals.length);
 	};
 	//ENDING AGENDA ITEM
-	$('#countdownTimer').countdown({until: intVals[0]-elapsedTime,compact: true,format: 'MS'});
+	$('.countdownTimer').countdown({until: intVals[0]-elapsedTime,compact: true,format: 'MS'});
 };
 
 

@@ -598,6 +598,10 @@ exports.addMeeting = function(req, res){
 	var meetingTime = req.body.meetingTime;  
 	var attendeeNames = req.body.attendeeName;
 	var attendeeEmails = req.body.attendeeEmail;
+	console.log("trial by combat");
+	console.log(req.body.nameHolder);
+	console.log(req.body.emailHolder);
+	console.log(req.body.emailHolder== 'string');
 	var notes = req.body.notes;
 	var emailAgenda='';
 	var emailDate='';
