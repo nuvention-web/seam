@@ -598,10 +598,6 @@ exports.addMeeting = function(req, res){
 	var meetingTime = req.body.meetingTime;  
 	var attendeeNames = req.body.attendeeName;
 	var attendeeEmails = req.body.attendeeEmail;
-	console.log("trial by combat");
-	console.log(req.body.nameHolder);
-	console.log(req.body.emailHolder);
-	console.log(req.body.emailHolder== 'string');
 	var notes = req.body.notes;
 	var emailAgenda='';
 	var emailDate='';
@@ -676,6 +672,26 @@ exports.addMeeting = function(req, res){
 	}
 	//Contact Person Array -- Array of contacts added to the meeting
 	var contactPerson=[];
+
+
+	//check if input has text in it-- user did not click 'add'
+	inputNameText=req.body.nameHolder;
+	inputEmailText=req.body.emailHolder;
+	if(inputEmailText!='' && inputEmailText!=' '){
+		emailList+=inputEmailText+',';
+		icalEmail.push({name:inputNameText, email:inputEmailText});
+			newMeeting.attendees.push({
+				attendeeName: inputNameText,
+				attendeeEmail: inputEmailText.toLowerCase()
+		});
+		//Add to array if the email is not the creator
+		if(inputEmailText.toLowerCase()!=req.session.email){
+				contactPerson.push({
+					memberName: inputNameText,
+					memberEmail: inputEmailText.toLowerCase()
+				});
+		}
+	}
 
 	if(attendeeNames != undefined){	
 		if(typeof attendeeNames == 'string'){
