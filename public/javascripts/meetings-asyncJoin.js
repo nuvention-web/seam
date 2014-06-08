@@ -214,7 +214,7 @@ $(document).ready(function(){
 	});
 	
 	//autocomeplete function
-	$("input[name='taskAssignee']")
+	$("textarea[name='taskAssignee']")
 	// don't navigate away from the field on tab when selecting an item
 	.bind( "keydown", function( event ) {
 		if ( event.keyCode === $.ui.keyCode.TAB && $( this ).data( "ui-autocomplete" ).menu.active ) {
@@ -247,6 +247,11 @@ $(document).ready(function(){
 	});
 
 	var defaultWeek = getWeekFromNow();
+
+	// $("input[name='taskDueDate']").each(function( index ) {
+	// 	var height = $("textarea[name='notes']").height() + 'px';
+	// 	$(this).css('height': height);
+	// });
 	//for calender of datepicker
 	$("input[name='taskDueDate']").datetimepicker({
 		pickTime: false,
@@ -254,6 +259,20 @@ $(document).ready(function(){
 	});
 
 	$('textarea[name="notes"]').keypress(function (event) {
+		if (event.keyCode == 13 && event.shiftKey) {
+			var value = $(this).attr('value');
+			$("#TNForm" + value).submit();
+		}
+	});
+
+	$('textarea[name="taskName"]').keypress(function (event) {
+		if (event.keyCode == 13 && event.shiftKey) {
+			var value = $(this).attr('value');
+			$("#TNForm" + value).submit();
+		}
+	});
+
+	$('textarea[name="taskDueDate"]').keypress(function (event) {
 		if (event.keyCode == 13 && event.shiftKey) {
 			var value = $(this).attr('value');
 			$("#TNForm" + value).submit();
@@ -312,7 +331,8 @@ $(document).ready(function(){
 						$('#notes' + value)[0].focus();
 					}
 					socket.emit("sendTask", taskAssignee, task, value, meetingId);
-				}                
+				}
+				$('.switch_disable').click();                 
 			}
 		});
 	return false; 
