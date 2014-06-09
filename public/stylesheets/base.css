@@ -218,6 +218,9 @@ textarea{
 	transition:all 0.5s ease-in-out;
 	color:rgb(0,114,188);
 }
+.text-gray-lt{
+	color:rgb(200,200,200);
+}
 .text-gray{
 	color:rgb(137,137,137);
 }
@@ -609,6 +612,9 @@ textarea{
 }
 .margin-top-n5x{
 	margin-top:-10px;
+}
+.margin-top-n3x{
+	margin-top:0px;
 }
 .margin-top-n12p{
 	margin-top: -12%;
