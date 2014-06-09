@@ -22,6 +22,10 @@ block content
 								h4.text-left.text-normal.text-gray #{meetingDate[0]}
 								input(type='hidden', name='meetingId', value='#{upcomingMeeting._id}')
 								button.padding-btn-small.text-right.margin-right-3p.border-square.btn-blue-hover(type='button', href="javascript:{}" onclick="joinAgenda('upcomingMeeting')") JOIN
+				else
+					.row
+						.col-md-12.text-center.margin-top-5p
+							h3.text-center Find your most upcoming meeting here. 
 			.row.bg-white.border-gray.border-shadow-1x.margin-right-1p.margin-bottom-3p.border-round-bottom(style='height:185px;')
 				.col-md-12.margin-top-1p.margin-left-1p
 					h4.text-left.text-normal.text-gray PREVIOUS MEETING
@@ -31,11 +35,19 @@ block content
 							h4.text-left.text-normal.text-gray #{meetingDate[0]}
 							input(type='hidden', name='meetingId', value='#{previousMeeting._id}')
 							button.padding-btn-small.text-right.margin-right-3p.border-square.btn-blue-hover(type='button', href="javascript:{}", onclick="viewMinutes('previousMeeting')") VIEW MINUTES
+					else
+						.row
+							.col-md-12.text-center.margin-top-5p
+								h3.text-center Find your recently completed meeting here. 
 		.col-md-8
 			.row.bg-white.border-gray.border-shadow-1x.margin-left-1p.overflow-scroll-y-auto.padding-bottom-2p.border-round(style='height:370px;')
 				.col-md-12.margin-top-1p
 					h4.text-left.text-normal.text-gray.margin-left-1p ALL UPCOMING MEETINGS
 					.container-95p.margin-center.margin-top-3p
+						if(meetingList == '')
+							.row
+								.col-md-12.text-center.margin-top-9p
+									a.text-h2.text-underline(href="/dashboard/meetings/makeMeeting") No upcoming meetings yet. Create one here. 
 						each meeting, i in meetingList
 							if(meeting.UserId == user)
 								form(role='form', method='POST', action='/dashboard/meetings/start', id='future'+i)
