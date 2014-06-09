@@ -396,6 +396,9 @@ textarea{
 	background: -moz-linear-gradient(left, rgba(255,255,255,0), rgba(50,50,50,1)); /* For Firefox 3.6 to 15 */
 	background: linear-gradient(to left, rgba(255,255,255,0), rgba(50,50,50,1)); /* Standard syntax (must be last) */
 }
+.bg-tip{
+	background: url(../images/dashboardbox.jpg);
+}
 .bg-jo{
 	background: url(../images/joLee.jpg) no-repeat;
 }
