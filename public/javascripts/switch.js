@@ -29,6 +29,7 @@ $(document).ready(function() {
 				$("textarea[id='taskName" + index + "']").val(info);
 				$("textarea[id='notes" + index + "']").val('');
 				$('#taskEntry' + index).show();
+				$("textarea[id='taskAssignee" + index + "']").focus();
 				$('#noteEntry' + index).hide();
 			}
 			else{
@@ -37,6 +38,7 @@ $(document).ready(function() {
 				$("textarea[id='taskName" + index + "']").val('');
 				$('#noteEntry' + index).hide();
 				$('#taskEntry' + index).show();
+				$("textarea[id='notes" + index + "']").focus();
 			}
 		});
 
@@ -52,12 +54,14 @@ $(document).ready(function() {
 				$("textarea[id='taskName" + index + "']").val('');
 				$('#taskEntry' + index).hide();
 				$('#noteEntry' + index).show();
+				$("textarea[id='notes" + index + "']").focus();
 			}
 			else{
 				var info = $("textarea[id='notes" + index + "']").val();
 				$("textarea[id='taskName" + index + "']").val(info);
 				$("textarea[id='notes" + index + "']").val('');
 				$('#noteEntry' + index).show();
+				$("textarea[id='taskAssignee" + index + "']").focus();
 				$('#taskEntry' + index).hide();
 			}
 		});
