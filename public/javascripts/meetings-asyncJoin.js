@@ -305,13 +305,15 @@ $(document).ready(function(){
 				if(flag == 0){
 					if(notesList[value] == undefined){
 						allNotes.innerHTML += '<h5 class="text-left margin-right-2p ">' + notes + '</h5>';
-						notesList.scrollTop = notesList.scrollHeight;
+						notesList.scrollTop = notesList.scrollHeight- 36;
 						$('#notes' + value)[0].value = '';
+						$('#notes' + value)[0].focus();
 					}
 					else{
 						allNotes[value].innerHTML += '<h5 class="text-left margin-right-2p">' + notes + '</h5>';
-						notesList[value].scrollTop = notesList[value].scrollHeight;
+						notesList[value].scrollTop = allNotes[value].scrollHeight - 36;
 						$('#notes' + value)[0].value = '';
+						$('#notes' + value)[0].focus();
 					}
 					socket.emit("sendNote",  notes, value, meetingId);
 				}
