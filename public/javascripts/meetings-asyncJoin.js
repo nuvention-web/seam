@@ -16,6 +16,37 @@ $(document).ready(function(){
 	userId = $("input[name='userId']").attr('value');
 	meetingId = $("input[name='meetingId']").attr('value');
 
+	$("#postMeetingQuestions").dialog({
+		autoOpen: false,
+		height: 200,
+		width: 600,
+		modal: true,
+	});
+
+	$("#starRating").raty({
+		number : 4,
+		width: false,
+		hints: ['Nothing Accomplished', 'Unproductive', 'Productive', 'Very Productive'],
+		target: '#starHint',
+		click: function(score, evt) {
+			var formData = [];
+			var url = location.protocol + "//" + location.host + '/dashboard/meetings/start/survey'
+			formData.push({'name': 'meetingId', 'value': meetingId});
+			formData.push({'name': 'userId', 'value': userId});
+			formData.push({'name': 'name', 'value': name});
+			formData.push({'name': 'rating', 'value': score});
+			$.ajax({
+				type: "POST",
+				url: url,
+				data: formData, // serializes the form's elements.
+				success: function(data){
+					window.onbeforeunload = function(){};
+					window.location = window.location.origin + "/dashboard"
+				}
+			});
+  		}
+	});
+
 	window.onbeforeunload = function(){
 		return "Navigating away from meeting";
 	};
@@ -48,7 +79,7 @@ $(document).ready(function(){
 					interval.stop();
 				}
 				console.log("In updateTime");
-				$('#countdownTimer').countdown('destroy');
+				$('.countdownTimer').countdown('destroy');
 				startTimer(remaining);
 			}
 		}
@@ -113,7 +144,7 @@ $(document).ready(function(){
 			$.notify(msg.toUpperCase(),
 				{className: "warning", autoHideDelay: 10000, globalPosition: 'top center'}
 			);
-			$('#countdownTimer').countdown('pause');
+			$('.countdownTimer').countdown('pause');
 			for(var i = 0; i < timeout.length; i++){
 				clearTimeout(timeout[i]);
 			}
@@ -131,7 +162,7 @@ $(document).ready(function(){
 			$.notify("MEETING FINISHED",
 				{className: "success", autoHideDelay: 10000, globalPosition: 'top center'}
 			);
-			$('#countdownTimer').countdown('pause');
+			$('.countdownTimer').countdown('pause');
 			for(var i = 0; i < timeout.length; i++){
 				clearTimeout(timeout[i]);
 			}
@@ -140,6 +171,7 @@ $(document).ready(function(){
 			$(":input").prop("disabled", true);
 			$("textarea").prop("disabled", true);
 			$('button[name="leave"]').prop("disabled", false);
+			$("#postMeetingQuestions").dialog('open');
 		}
 	});
 
@@ -182,7 +214,7 @@ $(document).ready(function(){
 	});
 	
 	//autocomeplete function
-	$("input[name='taskAssignee']")
+	$("textarea[name='taskAssignee']")
 	// don't navigate away from the field on tab when selecting an item
 	.bind( "keydown", function( event ) {
 		if ( event.keyCode === $.ui.keyCode.TAB && $( this ).data( "ui-autocomplete" ).menu.active ) {
@@ -215,6 +247,12 @@ $(document).ready(function(){
 	});
 
 	var defaultWeek = getWeekFromNow();
+
+	$("textarea[name='taskDueDate']").each(function( index ) {
+	// 	var height = $("div[id='noteEntry" + index + "']").height() + 'px';
+	// 	console.log(height);
+		$(this).val(defaultWeek);
+	});
 	//for calender of datepicker
 	$("input[name='taskDueDate']").datetimepicker({
 		pickTime: false,
@@ -228,11 +266,25 @@ $(document).ready(function(){
 		}
 	});
 
+	$('textarea[name="taskName"]').keypress(function (event) {
+		if (event.keyCode == 13 && event.shiftKey) {
+			var value = $(this).attr('value');
+			$("#TNForm" + value).submit();
+		}
+	});
+
+	$('textarea[name="taskDueDate"]').keypress(function (event) {
+		if (event.keyCode == 13 && event.shiftKey) {
+			var value = $(this).attr('value');
+			$("#TNForm" + value).submit();
+		}
+	});
+
 	//FUNCTION: ASYNC UPDATE OF NOTES
 	$('form[name="TNForm"]').submit(function(event){
 		var value = $(this).attr('value');
 		var formData = $("#TNForm" + value).serializeArray();
-		// console.log(formData);
+		console.log(formData);
 		var notes = formData[1].value;
 		var taskAssignee = formData[2].value;
 		var task = formData[3].value;
@@ -254,13 +306,15 @@ $(document).ready(function(){
 				if(flag == 0){
 					if(notesList[value] == undefined){
 						allNotes.innerHTML += '<h5 class="text-left margin-right-2p ">' + notes + '</h5>';
-						notesList.scrollTop = notesList.scrollHeight;
+						notesList.scrollTop = notesList.scrollHeight- 36;
 						$('#notes' + value)[0].value = '';
+						$('#notes' + value)[0].focus();
 					}
 					else{
 						allNotes[value].innerHTML += '<h5 class="text-left margin-right-2p">' + notes + '</h5>';
-						notesList[value].scrollTop = notesList[value].scrollHeight;
+						notesList[value].scrollTop = allNotes[value].scrollHeight - 36;
 						$('#notes' + value)[0].value = '';
+						$('#notes' + value)[0].focus();
 					}
 					socket.emit("sendNote",  notes, value, meetingId);
 				}
@@ -280,10 +334,15 @@ $(document).ready(function(){
 						$('#notes' + value)[0].focus();
 					}
 					socket.emit("sendTask", taskAssignee, task, value, meetingId);
-				}                
+				}
+				$('#noteSwitch' + value).click();                
 			}
 		});
 	return false; 
+	});
+	
+	$('#postMeetingButton').click(function(){
+		window.onbeforeunload = function(){};
 	});
 
 });
@@ -336,6 +395,8 @@ function leaveMeeting(){
 	window.onbeforeunload = function(){};
 	window.location = window.location.origin + "/dashboard"
 };
+
+
 
 function timeLeftInSec(time){
 	var timeLeft = time.split(':');
@@ -434,7 +495,7 @@ function startTimer(remaining){
 		setAgendaDelay(i, strVals.length);
 	};
 	//ENDING AGENDA ITEM
-	$('#countdownTimer').countdown({until: intVals[0]-elapsedTime,compact: true,format: 'MS'});
+	$('.countdownTimer').countdown({until: intVals[0]-elapsedTime,compact: true,format: 'MS'});
 };
 
 

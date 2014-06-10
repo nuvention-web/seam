@@ -102,7 +102,7 @@ $(document).ready(function(){
 	});
 	
 	//autocomeplete function
-	$("input[name='taskAssignee']")
+	$("textarea[name='taskAssignee']")
 	  // don't navigate away from the field on tab when selecting an item
 	.bind( "keydown", function( event ) {
 		if ( event.keyCode === $.ui.keyCode.TAB && $( this ).data( "ui-autocomplete" ).menu.active ) {
@@ -135,6 +135,12 @@ $(document).ready(function(){
 	});
 
 	var defaultWeek = getWeekFromNow();
+
+	$("textarea[name='taskDueDate']").each(function( index ) {
+	// 	var height = $("div[id='noteEntry" + index + "']").height() + 'px';
+	// 	console.log(height);
+		$(this).val(defaultWeek);
+	});
 	//for calender of datepicker
 	$("input[name='taskDueDate']").datetimepicker({
 		pickTime: false,
@@ -148,11 +154,25 @@ $(document).ready(function(){
 		}
 	});
 
+	$('textarea[name="taskName"]').keypress(function (event) {
+		if (event.keyCode == 13 && event.shiftKey) {
+			var value = $(this).attr('value');
+			$("#TNForm" + value).submit();
+		}
+	});
+
+	$('textarea[name="taskDueDate"]').keypress(function (event) {
+		if (event.keyCode == 13 && event.shiftKey) {
+			var value = $(this).attr('value');
+			$("#TNForm" + value).submit();
+		}
+	});
+
 	//FUNCTION: ASYNC UPDATE OF NOTES
 	$('form[name="TNForm"]').submit(function(event){
 		var value = $(this).attr('value');
 		var formData = $("#TNForm" + value).serializeArray();
-		// console.log(formData);
+		console.log(formData);
 		var notes = formData[1].value;
 		var taskAssignee = formData[2].value;
 		var task = formData[3].value;
@@ -174,13 +194,15 @@ $(document).ready(function(){
 				if(flag == 0){
 					if(notesList[value] == undefined){
 						allNotes.innerHTML += '<h5 class="text-left margin-right-2p ">' + notes + '</h5>';
-						notesList.scrollTop = notesList.scrollHeight;
+						notesList.scrollTop = notesList.scrollHeight- 36;
 						$('#notes' + value)[0].value = '';
+						$('#notes' + value)[0].focus();
 					}
 					else{
 						allNotes[value].innerHTML += '<h5 class="text-left margin-right-2p">' + notes + '</h5>';
-						notesList[value].scrollTop = notesList[value].scrollHeight;
+						notesList[value].scrollTop = allNotes[value].scrollHeight - 36;
 						$('#notes' + value)[0].value = '';
+						$('#notes' + value)[0].focus();
 					}
 					socket.emit("sendNote", notes, value, meetingId);
 				}
@@ -200,7 +222,8 @@ $(document).ready(function(){
 						$('#notes' + value)[0].focus();
 					}
 					socket.emit("sendTask", taskAssignee, task, value, meetingId);
-				}                
+				}
+				$('#noteSwitch' + value).click();               
 			}
 		});
 	return false; 
@@ -353,7 +376,7 @@ function startTimer(){
 		setAgendaDelay(i, strVals.length);
 	};
 	//ENDING AGENDA ITEM
-	$('#countdownTimer').countdown({until: intVals[0]-elapsedTime,compact: true,format: 'MS'});
+	$('.countdownTimer').countdown({until: intVals[0]-elapsedTime,compact: true,format: 'MS'});
 };
 
 
