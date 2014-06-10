@@ -332,7 +332,7 @@ $(document).ready(function(){
 					}
 					socket.emit("sendTask", taskAssignee, task, value, meetingId);
 				}
-				$('.switch_disable').click();                 
+				$('#noteSwitch' + value).click();                
 			}
 		});
 	return false; 

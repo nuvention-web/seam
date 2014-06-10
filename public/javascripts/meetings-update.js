@@ -195,11 +195,13 @@ $(document).ready(function(){
 						allNotes.innerHTML += '<h5 class="text-left margin-right-2p ">' + notes + '</h5>';
 						notesList.scrollTop = notesList.scrollHeight;
 						$('#notes' + value)[0].value = '';
+						$('#notes' + value)[0].focus();
 					}
 					else{
 						allNotes[value].innerHTML += '<h5 class="text-left margin-right-2p">' + notes + '</h5>';
 						notesList[value].scrollTop = notesList[value].scrollHeight;
 						$('#notes' + value)[0].value = '';
+						$('#notes' + value)[0].focus();
 					}
 					socket.emit("sendNote", notes, value, meetingId);
 				}
@@ -220,7 +222,7 @@ $(document).ready(function(){
 					}
 					socket.emit("sendTask", taskAssignee, task, value, meetingId);
 				}
-				$('.switch_disable').click();               
+				$('#noteSwitch' + value).click();               
 			}
 		});
 	return false; 
