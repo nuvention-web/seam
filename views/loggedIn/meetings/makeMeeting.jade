@@ -38,7 +38,7 @@ block content
 										.col-md-7.margin-0.padding-0
 											input.noEnterSubmit.text-h3.height-30x.form-control.border-square.border-none.text-left.text-blue.bg-transparent.cursor-pointer(id='makeMeeting1', type='text', name='agendaTopic', placeholder= 'Enter agenda item', autocomplete='on', value='#{agenda.topic}', required)
 										.col-md-2
-											input.noEnterSubmit.text-h3.height-30x.form-control.border-square.border-none.text-right.bg-transparent.cursor-pointer(id='makeMeeting1', type='number', name='duration', placeholder= '0', autocomplete='on', required)
+											input.noEnterSubmit.text-h3.height-30x.form-control.border-square.border-none.text-right.bg-transparent.cursor-pointer(id='makeMeeting1', type='number', name='duration', placeholder= '0', autocomplete='on', value='#{agenda.duration}', required)
 										.col-md-1
 											h3.text-left.margin-top-10x.text-gray-lt Minutes
 									.row
@@ -122,7 +122,8 @@ block content
 												.col-md-10.margin-top-n5x
 													h5.text-left #{member.memberEmail}
 									else
-										h5.text-gray.text-italic None yet - add your first attendee below.
+										if(isEdit != true)
+											h5.text-gray.text-italic None yet - add your first attendee below.
 								div#attendeeList
 									if(isEdit == true)
 										each attendee, i in meeting.attendees
