@@ -22,6 +22,10 @@ block content
 								h4.text-left.text-normal.text-gray #{meetingDate[0]}
 								input(type='hidden', name='meetingId', value='#{upcomingMeeting._id}')
 								button.padding-btn-small.text-right.margin-right-3p.border-square.btn-blue-hover(type='button', href="javascript:{}" onclick="joinAgenda('upcomingMeeting')") JOIN
+				else
+					.row
+						.col-md-12.text-center.margin-top-5p
+							h3.text-center Find your most upcoming meeting here. 
 			.row.bg-white.border-gray.border-shadow-1x.margin-right-1p.margin-bottom-3p.border-round-bottom(style='height:185px;')
 				.col-md-12.margin-top-1p.margin-left-1p
 					h4.text-left.text-normal.text-gray PREVIOUS MEETING
@@ -31,11 +35,19 @@ block content
 							h4.text-left.text-normal.text-gray #{meetingDate[0]}
 							input(type='hidden', name='meetingId', value='#{previousMeeting._id}')
 							button.padding-btn-small.text-right.margin-right-3p.border-square.btn-blue-hover(type='button', href="javascript:{}", onclick="viewMinutes('previousMeeting')") VIEW MINUTES
+					else
+						.row
+							.col-md-12.text-center.margin-top-5p
+								h3.text-center Find your recently completed meeting here. 
 		.col-md-8
 			.row.bg-white.border-gray.border-shadow-1x.margin-left-1p.overflow-scroll-y-auto.padding-bottom-2p.border-round(style='height:370px;')
 				.col-md-12.margin-top-1p
 					h4.text-left.text-normal.text-gray.margin-left-1p ALL UPCOMING MEETINGS
 					.container-95p.margin-center.margin-top-3p
+						if(meetingList == '')
+							.row
+								.col-md-12.text-center.margin-top-9p
+									a.text-h2.text-underline(href="/dashboard/meetings/makeMeeting") No upcoming meetings yet. Create one here. 
 						each meeting, i in meetingList
 							if(meeting.UserId == user)
 								form(role='form', method='POST', action='/dashboard/meetings/start', id='future'+i)
@@ -44,10 +56,10 @@ block content
 										.col-md-4.border-gray-right
 											h4.text-black.text-left.text-normal #{meetingDate[i]}
 											h4.text-black.text-left #{meetingTime[i]}
-										.col-md-4
+										.col-md-1.margin-top-20x
+											.glyph-icon.flaticon-pencil54.cursor-pointer(type='button', href="javascript:{}", onclick="editAgenda('future#{i}')")
+										.col-md-5
 											h4.text-black.text-left.margin-top-20x.text-normal #{meeting.meetingTitle}
-										.col-md-2.text-right.margin-top-20x
-											button.padding-btn.border-square.btn-blue-hover(type='button', href="javascript:{}", onclick="editAgenda('future#{i}')") EDIT
 										.col-md-2.text-left.margin-top-20x
 											button.padding-btn.border-square.btn-blue-hover(type='button', href="javascript:{}" onclick="startAgenda('future#{i}')") START
 							else
@@ -56,28 +68,26 @@ block content
 										input(type='hidden', name='meetingId', value='#{meeting._id}')
 										.col-md-4.border-gray-right
 											h4.text-black.text-left.text-normal #{meetingDate[i]}
-										.col-md-4
+										.col-md-1.margin-top-20x
+											.glyph-icon.flaticon-pencil54.cursor-pointer(type='button', href="javascript:{}", onclick="editAgenda('future#{i}')")
+										.col-md-5
 											h4.text-black.text-left.text-normal #{meeting.meetingTitle}
-											h4.text-orange.text-left #{meeting.objective}
-										.col-md-2.text-right.margin-top-2p
+										.col-md-2.text-left.margin-top-20x
 											button.padding-btn.border-square.btn-blue-hover(type='button', href="javascript:{}" onclick="joinAgenda('future#{i}')") JOIN
-	//.row.margin-top-2p
-		.col-md-12.bg-white.border-gray.border-shadow-1x.border-round(style='height:150px;')
-			.row
-				.col-md-4
-					h2.text-biggest.text-orange 76
-				.col-md-4
-					h2.text-biggest.text-blue-gray 150
-				.col-md-4
-					h2.text-biggest.text-lt-blue 95%
-			.row
-				.col-md-4
-					h3.text-black AGENDA ITEMS
-					h3.text-black.text-height-4x COMPLETED
-				.col-md-4
-					h3.text-black MINUTES
-					h3.text-black.text-height-4x SAVED
-				.col-md-4
-					h3.text-black MEETINGS FINISHED
-					h3.text-black.text-height-4x ON TIME
+	.row.margin-top-2p.padding-bottom-3p
+		.col-md-12.bg-tip.border-gray.border-shadow-1x.border-round(style='min-height:150px;')
+			.width-95p.margin-center.padding-bottom-1p
+				.row
+					.col-md-12
+						h3.text-left.text-normal We believe that with the right tools, 
+							span.text-blue.text-left.text-bold.text-h3 anyone 
+							span.text-black.text-left.text-normal.text-h3 can run a great meeting. With help from SEAM you can engage your colleagues, impress your boss and 
+							span.text-blue.text-left.text-bold.text-h3 feel confident leading your meetings.
+				.row
+					.col-md-7
+						h3.text-left.text-bold Here's a pro tip to make your next meeting more productive:
+						h3.text-left.text-normal Assign a notetaker right before the meeting begins. Everyone in the meeting can see take notes and assign tasks on the SEAM agenda, but it helps to designate someone to make sure that nothing gets missed in discussion.
+					.col-md-5.text-center
+						h3.text-center.text-bold KEEP THIS IN YOUR MIND.
+						button.padding-btn.border-square.btn-blue-hover.text-center.margin-top-5p(type='button', href="javascript:{}" onclick="window.location.href='/dashboard/meetings/makeMeeting'") MAKE YOUR AGENDA NOW
 	script(src='../../../javascripts/meetings-editAgenda.js')

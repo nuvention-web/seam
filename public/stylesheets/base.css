@@ -77,6 +77,7 @@ i{
 }
 a{
 	font-size:12px;
+
 }
 .text-open-sans{
 	font-family: 'Open Sans', 'sans-serif' !important;
@@ -217,6 +218,9 @@ textarea{
 	transition:all 0.5s ease-in-out;
 	color:rgb(0,114,188);
 }
+.text-gray-lt{
+	color:rgb(200,200,200);
+}
 .text-gray{
 	color:rgb(137,137,137);
 }
@@ -279,6 +283,9 @@ textarea{
 }
 .text-right{
 	text-align: right;
+}
+.text-underline{
+	border-bottom: 1px solid black;
 }
 .text-center{
 	text-align: center;
@@ -388,6 +395,9 @@ textarea{
 	background: -o-linear-gradient(left, rgba(255,255,255,0), rgba(50,50,50,1)); /* For Opera 11.1 to 12.0 */
 	background: -moz-linear-gradient(left, rgba(255,255,255,0), rgba(50,50,50,1)); /* For Firefox 3.6 to 15 */
 	background: linear-gradient(to left, rgba(255,255,255,0), rgba(50,50,50,1)); /* Standard syntax (must be last) */
+}
+.bg-tip{
+	background: url(../images/dashboardbox.jpg);
 }
 .bg-jo{
 	background: url(../images/joLee.jpg) no-repeat;
@@ -605,6 +615,9 @@ textarea{
 }
 .margin-top-n5x{
 	margin-top:-10px;
+}
+.margin-top-n3x{
+	margin-top:0px;
 }
 .margin-top-n12p{
 	margin-top: -12%;
@@ -1134,16 +1147,17 @@ textarea{
 	box-shadow: 2px 2px 2px 2px rgb(230,230,230);
 }
 .btn-blue-hover{
-	color:rgb(0,114,188);
-	background-color: rgb(255,255,255);
-	border:2px solid rgb(0,114,188) !important;
+	color:rgb(255,255,255);
+	background-color: rgb(133,188,210);
+	border:2px solid rgb(133,188,210) !important;
 	border-radius: 3px !important;
 	transition:all 0.2s ease-in-out;
 }
 .btn-blue-hover:hover{
 	color:rgb(255,255,255);
 	background-color: rgb(0,114,188);
-	border:2px solid rgb(0,114,188);
+	border:2px solid rgb(0,114,188)!important;
+
 }
 .btn-orange-hover{
 	color:rgb(248,148,29);

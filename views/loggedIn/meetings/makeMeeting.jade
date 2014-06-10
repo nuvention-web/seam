@@ -9,17 +9,17 @@ block content
 				if(isEdit == true)
 					.row
 						.col-md-10.col-sm-10.col-xs-10.margin-top-1p
-							input.noEnterSubmit.text-h3.height-30x.form-control.border-square.border-none.text-left.bg-transparent.cursor-pointer(id='makeMeeting', type='text', name='meetingTitle', placeholder= 'MEETING TITLE', autofocus='autofocus', autocomplete='on', value='#{meeting.meetingTitle}', required)
+							input.noEnterSubmit.text-h3.height-30x.form-control.border-square.border-none.text-left.bg-transparent.cursor-pointer(id='makeMeeting', type='text', name='meetingTitle', placeholder= 'Enter meeting title', autofocus='autofocus', autocomplete='on', value='#{meeting.meetingTitle}', required)
 					.row
 						.col-md-10.col-sm-10.col-xs-10.margin-top-1p
-							input.noEnterSubmit.text-h4.height-30x.text-orange.form-control.border-square.border-none.text-left.bg-transparent.cursor-pointer(id='makeMeeting', type='text', name='objective', placeholder= 'OBJECTIVE', autocomplete='on', value='#{meeting.objective}', required)
+							input.noEnterSubmit.text-h4.height-30x.text-orange.form-control.border-square.border-none.text-left.bg-transparent.cursor-pointer(id='makeMeeting', type='text', name='objective', placeholder= 'Enter meeting objective', autocomplete='on', value='#{meeting.objective}', required)
 				else
 					.row
 						.col-md-10.col-sm-10.col-xs-10.margin-top-1p
-							input.noEnterSubmit.text-h3.height-30x.form-control.border-square.border-none.text-left.bg-transparent.cursor-pointer(id='makeMeeting', type='text', name='meetingTitle', placeholder= 'MEETING TITLE', autofocus='autofocus', autocomplete='on', required)
+							input.noEnterSubmit.text-h3.height-30x.form-control.border-square.border-none.text-left.bg-transparent.cursor-pointer(id='makeMeeting', type='text', name='meetingTitle', placeholder= 'Enter meeting title', autofocus='autofocus', autocomplete='on', required)
 					.row
 						.col-md-10.col-sm-10.col-xs-10.margin-top-1p
-							input.noEnterSubmit.text-h4.height-30x.text-orange.form-control.border-square.border-none.text-left.bg-transparent.cursor-pointer(id='makeMeeting', type='text', name='objective', placeholder= 'OBJECTIVE', autocomplete='on', required)
+							input.noEnterSubmit.text-h4.height-30x.text-orange.form-control.border-square.border-none.text-left.bg-transparent.cursor-pointer(id='makeMeeting', type='text', name='objective', placeholder= 'Enter meeting objective', autocomplete='on', required)
 		.row.margin-top-2p.margin-bottom-3p
 			.col-md-9
 				.row.bg-white.border-gray.border-shadow-1x.margin-right-1p.margin-left.height-auto.padding-bottom-3p.border-round
@@ -36,9 +36,11 @@ block content
 												.progress.progress-striped.progress-vertical-circle-bigger.progress-striped.active.progress-success.margin-top-n1x.margin-bottom-0p
 													.bar(style="width:40px")
 										.col-md-7.margin-0.padding-0
-											input.noEnterSubmit.text-h3.height-30x.form-control.border-square.border-none.text-left.text-blue.bg-transparent.cursor-pointer(id='makeMeeting1', type='text', name='agendaTopic', placeholder= 'Add agenda item', autocomplete='on', value='#{agenda.topic}', required)
-										.col-md-3
-											input.noEnterSubmit.text-h3.height-30x.form-control.border-square.border-none.text-right.bg-transparent.cursor-pointer(id='makeMeeting1', type='number', name='duration', placeholder= 'Minutes', autocomplete='on', value='#{agenda.duration}', required)
+											input.noEnterSubmit.text-h3.height-30x.form-control.border-square.border-none.text-left.text-blue.bg-transparent.cursor-pointer(id='makeMeeting1', type='text', name='agendaTopic', placeholder= 'Enter agenda item', autocomplete='on', value='#{agenda.topic}', required)
+										.col-md-2
+											input.noEnterSubmit.text-h3.height-30x.form-control.border-square.border-none.text-right.bg-transparent.cursor-pointer(id='makeMeeting1', type='number', name='duration', placeholder= '0', autocomplete='on', required)
+										.col-md-1
+											h3.text-left.margin-top-10x.text-gray-lt Minutes
 									.row
 										.col-md-1.margin-top-1p.padding-bottom-2p.margin-0.padding-0
 											div.height-100p.width-100p
@@ -46,7 +48,7 @@ block content
 													.bar(style="width:40px")
 										.col-md-9.margin-0.padding-0
 											div.width-95p.margin-top-1p.overflow-scroll-y-auto.max-height-150x
-												textarea.text-h4.height-30x.form-control.border-square.border-none.text-left.bg-transparent.cursor-pointer(rows='6', id='makeMeeting1', type='text', name='notes', placeholder= 'Insert notes here', value='#{agenda.notes[0].notes}', autocomplete='on') #{agenda.notes[0].notes}
+												textarea.text-h4.height-30x.form-control.border-square.border-none.text-left.bg-transparent.cursor-pointer(rows='6', id='makeMeeting1', type='text', name='notes', placeholder= 'Add a description for this agenda item', value='#{agenda.notes[0].notes}', autocomplete='on') #{agenda.notes[0].notes}
 							else
 								.row
 									.col-md-1.margin-top-1p.padding-bottom-2p.margin-0.padding-0
@@ -54,9 +56,11 @@ block content
 											.progress.progress-striped.progress-vertical-circle-bigger.progress-striped.active.progress-success.margin-top-n1x.margin-bottom-0p
 												.bar(style="width:40px")
 									.col-md-7.margin-0.padding-0
-										input.noEnterSubmit.text-h3.height-30x.form-control.border-square.border-none.text-left.text-blue.bg-transparent.cursor-pointer(id='makeMeeting1', type='text', name='agendaTopic', placeholder= 'Add agenda item', autocomplete='on', required)
-									.col-md-3
-										input.noEnterSubmit.text-h3.height-30x.form-control.border-square.border-none.text-right.bg-transparent.cursor-pointer(id='makeMeeting1', type='number', name='duration', placeholder= 'Minutes', autocomplete='on', required)
+										input.noEnterSubmit.text-h3.height-30x.form-control.border-square.border-none.text-left.text-blue.bg-transparent.cursor-pointer(id='makeMeeting1', type='text', name='agendaTopic', placeholder= 'Enter agenda item', autocomplete='on', required)
+									.col-md-2
+										input.noEnterSubmit.text-h3.height-30x.form-control.border-square.border-none.text-right.bg-transparent.cursor-pointer.text-black(id='makeMeeting1', type='number', name='duration', placeholder= '0', autocomplete='on', required)
+									.col-md-1
+										h3.text-left.margin-top-10x.text-gray-lt Minutes
 								.row
 									.col-md-1.margin-top-1p.padding-bottom-2p.margin-0.padding-0
 										div.height-100p.width-100p
@@ -64,7 +68,7 @@ block content
 												.bar(style="width:40px")
 									.col-md-9.margin-0.padding-0
 										div.width-95p.margin-top-1p.overflow-scroll-y-auto.max-height-150x
-											textarea.text-h4.height-30x.form-control.border-square.border-none.text-left.bg-transparent.cursor-pointer(rows='6', id='makeMeeting1', type='text', name='notes', placeholder= 'Insert notes here', autocomplete='on')
+											textarea.text-h4.height-30x.form-control.border-square.border-none.text-left.bg-transparent.cursor-pointer(rows='6', id='makeMeeting1', type='text', name='notes', placeholder= 'Add a description for this agenda item', autocomplete='on')
 						.row
 							.col-md-1.margin-top-1p.padding-bottom-2p.margin-0.padding-0
 									div.height-100p.width-100p
@@ -81,27 +85,27 @@ block content
 						if(isEdit == true)
 								.row
 									.col-md-12
-										input.noEnterSubmit.text-h4.height-30x.text-orange.form-control.border-square.border-none.text-left.bg-transparent.cursor-pointer(id='makeMeeting', type='text', name='location', placeholder= 'LOCATION', autocomplete='on', value='#{meeting.location}', required)
+										input.noEnterSubmit.text-h4.height-30x.text-orange.form-control.border-square.border-none.text-left.bg-transparent.cursor-pointer(id='makeMeeting', type='text', name='location', placeholder= 'Location', autocomplete='on', value='#{meeting.location}', required)
 								.row 
 									.col-md-12
 										input.noEnterSubmit.text-h4.height-30x.text-black.form-control.border-square.border-none.text-left.bg-transparent.cursor-pointer(id='makeMeeting', type='text', name='meetingDate', placeholder= 'MM/DD/YYYY HH:MM', autocomplete='on', value='#{meetingDate}', required)
 								.row 
 									.col-md-6
-										h4.text-left.text-gray.margin-left-10x DURATION
+										h4.text-left.text-gray.margin-left-10x.text-gray-lt Duration
 									.col-md-6
-										input.margin-top-5x.text-h3.text-gray.text-left.noEnterSubmit(id='makeMeeting', type='text', name='meetingTime', placeholder="DURATION" autocomplete='off', value='#{meetingDuration}', readonly)
+										input.margin-top-5x.text-h3.text-gray.text-left.noEnterSubmit.text-gray-lt(id='makeMeeting', type='text', name='meetingTime', placeholder="DURATION" autocomplete='off', value='#{meetingDuration}', readonly)
 							else
 								.row
 									.col-md-12
-										input.noEnterSubmit.text-h4.height-30x.text-orange.form-control.border-square.border-none.text-left.bg-transparent.cursor-pointer(id='makeMeeting', type='text', name='location', placeholder= 'LOCATION', autocomplete='on', required)
+										input.noEnterSubmit.text-h4.height-30x.text-orange.form-control.border-square.border-none.text-left.bg-transparent.cursor-pointer(id='makeMeeting', type='text', name='location', placeholder= 'Location', autocomplete='on', required)
 								.row 
 									.col-md-12
 										input.noEnterSubmit.text-h4.height-30x.text-black.form-control.border-square.border-none.text-left.bg-transparent.cursor-pointer(id='makeMeeting', type='text', name='meetingDate', placeholder= 'MM/DD/YYYY HH:MM', autocomplete='on', required)
 								.row 
 									.col-md-6
-										h4.text-left.text-gray.margin-left-10x DURATION
+										h4.text-left.margin-left-10x.text-gray-lt Duration
 									.col-md-6
-										input.margin-top-5x.text-h3.text-gray.text-left.noEnterSubmit(id='makeMeeting', type='text', name='meetingTime', placeholder="DURATION" autocomplete='off', value='0', readonly)
+										input.margin-top-5x.text-h3.text-left.noEnterSubmit.text-gray-lt(id='makeMeeting', type='text', name='meetingTime', placeholder="DURATION" autocomplete='off', value='0', readonly)
 				.row.height-auto.bg-white.border-gray.border-shadow-1x.margin-left-1p.overflow-scroll-y-auto.overflow-x-hidden.margin-top-10p.padding-bottom-5p.border-round
 					.col-md-12.margin-top-1p.margin-left-3p
 						h4.text-left.text-normal.text-gray.margin-left-4p ATTENDEES
@@ -117,6 +121,8 @@ block content
 													input(type="hidden", name="attendeeName", value='#{member.memberName}')
 												.col-md-10.margin-top-n5x
 													h5.text-left #{member.memberEmail}
+									else
+										h5.text-gray.text-italic None yet - add your first attendee below.
 								div#attendeeList
 									if(isEdit == true)
 										each attendee, i in meeting.attendees
@@ -151,10 +157,10 @@ block content
 												h4.text-black.text-left.margin-top-5p You
 								.row.margin-top-5p#addNewAttendee
 									.col-md-8
-										input.noEnterSubmit.form-control.border-square.text-left.border-none.cursor-pointer(type='text', name='nameHolder', value='', id='nameHolder', placeholder= 'NAME', tabindex='1')
+										input.noEnterSubmit.form-control.border-square.text-left.border-none.cursor-pointer(type='text', name='nameHolder', value='', id='nameHolder', placeholder= 'Enter name', tabindex='1')
 								.row
 									.col-md-12
-										input.noEnterSubmit.form-control.border-square.text-left.border-none.cursor-pointer(type='text', name='emailHolder', value='', id='emailHolder', placeholder= 'EMAIL', tabindex='2')
+										input.noEnterSubmit.form-control.border-square.text-left.border-none.cursor-pointer(type='text', name='emailHolder', value='', id='emailHolder', placeholder= 'Enter email', tabindex='2')
 								.row
 									.col-md-4.col-md-offset-4.margin-top-3p 
 										button.border-square.btn-blue-hover.padding-btn-lg.margin-left-5p(type='button' onclick='addAttendee()', tabindex='3') ADD

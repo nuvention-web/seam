@@ -673,8 +673,30 @@ exports.addMeeting = function(req, res){
 	//Contact Person Array -- Array of contacts added to the meeting
 	var contactPerson=[];
 
+
+	//check if input has text in it-- user did not click 'add'
+	inputNameText=req.body.nameHolder;
+	inputEmailText=req.body.emailHolder;
+	if(inputEmailText!='' && inputEmailText!=' '){
+		emailList+=inputEmailText+',';
+		icalEmail.push({name:inputNameText, email:inputEmailText});
+			newMeeting.attendees.push({
+				attendeeName: inputNameText,
+				attendeeEmail: inputEmailText.toLowerCase()
+		});
+		//Add to array if the email is not the creator
+		if(inputEmailText.toLowerCase()!=req.session.email){
+				contactPerson.push({
+					memberName: inputNameText,
+					memberEmail: inputEmailText.toLowerCase()
+				});
+		}
+	}
+
 	if(attendeeNames != undefined){	
-		if(typeof attendeeNames == 'string'){
+		console.log(attendeeEmails);
+		if(typeof attendeeEmails == 'string'){
+			console.log('damn right');
 			emailList+=attendeeEmails;
 			icalEmail.push({name:attendeeNames, email:attendeeEmails});
 			newMeeting.attendees.push({
@@ -690,9 +712,10 @@ exports.addMeeting = function(req, res){
 			}
 		}
 		else{
-			for(var i=0; i<attendeeNames.length; i++){
-
-				if(attendeeNames[i] != '' && attendeeEmails[i] != undefined){
+			for(var i=0; i<attendeeEmails.length; i++){
+				console.log("adding to contact array");
+				console.log(attendeeEmails[i]);
+				if(attendeeNames[i] != '' && attendeeEmails[i] != undefined ){
 					emailList+=attendeeEmails[i]+',';
 					icalEmail.push({name:attendeeNames[i], email:attendeeEmails[i]});
 					newMeeting.attendees.push({
@@ -715,6 +738,8 @@ exports.addMeeting = function(req, res){
 	Contact.findOne({'UserId': req.session.email}, function(e, doc){
 		res.send('success');
 		if(doc){
+			console.log("these are contacts");
+			console.log(contactPerson);
 			for(var i=0; i<contactPerson.length; i++){
 				//Look for existing email in group-- don't add if exist
 				var z=0;
