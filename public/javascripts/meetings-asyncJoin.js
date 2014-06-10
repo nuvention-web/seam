@@ -248,10 +248,11 @@ $(document).ready(function(){
 
 	var defaultWeek = getWeekFromNow();
 
-	// $("input[name='taskDueDate']").each(function( index ) {
-	// 	var height = $("textarea[name='notes']").height() + 'px';
-	// 	$(this).css('height': height);
-	// });
+	$("textarea[name='taskDueDate']").each(function( index ) {
+	// 	var height = $("div[id='noteEntry" + index + "']").height() + 'px';
+	// 	console.log(height);
+		$(this).val(defaultWeek);
+	});
 	//for calender of datepicker
 	$("input[name='taskDueDate']").datetimepicker({
 		pickTime: false,

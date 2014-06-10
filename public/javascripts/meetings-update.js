@@ -135,11 +135,12 @@ $(document).ready(function(){
 	});
 
 	var defaultWeek = getWeekFromNow();
-	// $("input[name='taskDueDate']").each(function( index ) {
+
+	$("textarea[name='taskDueDate']").each(function( index ) {
 	// 	var height = $("div[id='noteEntry" + index + "']").height() + 'px';
 	// 	console.log(height);
-	// 	$(this).css('height', height);
-	// });
+		$(this).val(defaultWeek);
+	});
 	//for calender of datepicker
 	$("input[name='taskDueDate']").datetimepicker({
 		pickTime: false,
