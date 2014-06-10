@@ -201,7 +201,6 @@ $(document).ready(function(){
 						allNotes[value].innerHTML += '<h5 class="text-left margin-right-2p">' + notes + '</h5>';
 						notesList[value].scrollTop = notesList[value].scrollHeight;
 						$('#notes' + value)[0].value = '';
-						console.log('before');
 						$('#notes' + value)[0].focus();
 					}
 					socket.emit("sendNote", notes, value, meetingId);
