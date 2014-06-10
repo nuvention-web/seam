@@ -123,8 +123,8 @@ block content
 											.row
 												.col-md-3
 													.switch_options
-														span.switch_disable Note
-														span.switch_enable Task
+														span.switch_disable(id='noteSwitch#{i}') Note
+														span.switch_enable(id='taskSwitch#{i}') Task
 														input.switch_val(type='hidden', value='0')
 										else
 											div(id='noteEntry#{i}', style='display: inline;', value='#{i}')
@@ -148,8 +148,8 @@ block content
 											.row
 												.col-md-3
 													.switch_options
-														span.switch_disable Note
-														span.switch_enable Task
+														span.switch_disable(id='noteSwitch#{i}') Note
+														span.switch_enable(id='taskSwitch#{i}') Task
 														input.switch_val(type='hidden', value='0')
 					.row
 						.col-md-1.margin-top-1p.padding-bottom-2p.margin-0.padding-0
