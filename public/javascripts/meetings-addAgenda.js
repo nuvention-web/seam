@@ -72,12 +72,15 @@ function addAgendaItem(){
         			'<div style="width:40px" class="bar"></div>'+
       					'</div></div></div>'+
 		'<div class="col-md-7 margin-0 padding-0">'+
-    		'<input id="makeMeeting'+i+'" type="text" name="agendaTopic" placeholder="Add agenda item" autocomplete="off" class="text-h3 noEnterSubmit height-30x form-control border-square border-none text-left text-blue bg-transparent cursor-pointer"/>'+
+    		'<input id="makeMeeting'+i+'" type="text" name="agendaTopic" placeholder="Enter agenda item" autocomplete="off" class="text-h3 noEnterSubmit height-30x form-control border-square border-none text-left text-blue bg-transparent cursor-pointer"/>'+
   				'</div>'+
-  		'<div class="col-md-3">'+
-  				'<input id="duration'+i+'" type="number" name="duration" class=" text-h3 noEnterSubmit height-30x form-control border-square border-none text-right bg-transparent cursor-pointer" placeholder= "Minutes" autocomplete="off" value="0" required/>'+
+  		'<div class="col-md-2">'+
+  				'<input id="duration'+i+'" type="number" name="duration" class=" text-h3 noEnterSubmit height-30x form-control border-square border-none text-right bg-transparent cursor-pointer" placeholder= "0" autocomplete="off" value="0" required/>'+
   				'</div>'+
-  		'<div class="col-md-1 padding-0 text-center" style="margin-top:0.5%;">'+
+  		'<div class="col-md-1">'+
+  				'<h3 class="text-left text-gray margin-top-10x">Minutes</h3>'+
+  		'</div>'+
+  		'<div class="col-md-1 padding-0 text-center" style="margin-top:1.1%;">'+
   			'<a class="text-h2 text-normal text-gray-hover" href="#" onclick="removeAgenda(agendaItem'+ i + ');return false;"><i class="fa fa-times fa-md"></i> </a>'+
   			'</div></div>'+
 	'<div class="row">'+
@@ -88,8 +91,12 @@ function addAgendaItem(){
        				'</div></div></div></div>'+
   		'<div class="col-md-9 margin-0 padding-0">'+
     		'<div class="width-95p margin-top-1p overflow-scroll-y-auto max-height-150x">'+
-     			'<textarea id="makeMeeting'+i+'" type="text" name="notes" rows="6" placeholder="Insert notes here" autocomplete="off" class="text-h4 height-30x form-control border-square border-none text-left bg-transparent cursor-pointer"/>'+
+     			'<textarea id="makeMeeting'+i+'" type="text" name="notes" rows="6" placeholder="Add a description for this agenda item" autocomplete="off" class="text-h4 height-30x form-control border-square border-none text-left bg-transparent cursor-pointer"/>'+
      			'</div></div></div></div>').appendTo(agendaBox);
+
+    $('input[id="makeMeeting' + i +'"]').focus();
+    $('html, body').animate({scrollTop: $(document).height()}, 'slow');
+    
 	i++;
 };
 

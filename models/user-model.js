@@ -28,7 +28,9 @@ var userSchema = Schema({
         token        : String,
         email        : String,
         name         : String
-    }
+    },
+
+    dateCreated: { type: Date, default: Date.now }
 
 });
 

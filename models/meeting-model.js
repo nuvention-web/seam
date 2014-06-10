@@ -26,6 +26,7 @@ var topicSchema = new Schema({
 });
 
 var meetingSchema = new Schema({
+	dateCreated: { type: Date, default: Date.now },
 	UserId: { type: String, required : true},
 	meetingTitle: { type: String },
 	location: { type: String },

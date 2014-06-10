@@ -1,19 +1,93 @@
 var mongoose = require('mongoose');
 var Meeting = require('../models/meeting-model');
+var Rating = require('../models/rating-model');
+var Contact = require('../models/contact-model');
 var nodemailer = require('nodemailer');
 
-exports.makeMeeting = function(req, res){
-	res.render('loggedIn/meetings/makeMeeting', { 
-		title: 'SEAM',
-		name: req.session.name,
-		email: req.session.email,
-		user : req.session.userId,
-		meeting: '',
-		meetingDate: '',
-		meetingDuration: '',
-		isEdit : false,
-		action: '/dashboard/meetings/makeMeeting/add'
+exports.addSurvey = function(req, res){
+	console.log(req.body);
+	var meetingId = req.body.meetingId;
+	var userId = req.body.userId;
+	var name = req.body.name;
+	var rating = req.body.rating;
+	var ratings = {
+		userId: userId,
+		name: name,
+		rating: rating
+	}
+	Rating.findOne({'meetingId': meetingId}, function(e, doc){
+		console.log('this is the doc: ' + doc);
+		res.send('success');
+		if(doc){
+			doc.ratings.push(ratings);
+			doc.save(function(err, doc){
+				if(err){
+					console.log('Problem adding rating to database')
+					console.log(err);
+					res.send('failed to save note');
+				}
+				else{
+					console.log('Added rating successfully');
+					res.send('success');
+				}
+			});	
+		}
+		else{
+			var newRating = new Rating({
+				meetingId: meetingId,
+				ratings: [ratings]
+			});
+
+			newRating.save(function(err, doc){
+				if(err){
+					console.log('Problem adding rating')
+					res.send('fail');
+				}
+				else{
+					console.log('Added new rating successfully');
+					res.send('success');
+				}
+			});
+		}
 	});
+}
+
+exports.makeMeeting = function(req, res){
+	Contact.findOne({'UserId':req.session.email}, function(e, doc){
+		if(doc){
+			console.log('worked');
+			console.log(doc);
+			res.render('loggedIn/meetings/makeMeeting', { 
+				title: 'SEAM',
+				name: req.session.name,
+				contact: doc,
+				email: req.session.email,
+				user : req.session.userId,
+				meeting: '',
+				meetingDate: '',
+				meetingDuration: '',
+				isEdit : false,
+				action: '/dashboard/meetings/makeMeeting/add'
+			});
+		}
+		else{
+			console.log("tried");
+			res.render('loggedIn/meetings/makeMeeting', { 
+				title: 'SEAM',
+				name: req.session.name,
+				contact:doc,
+				email: req.session.email,
+				user : req.session.userId,
+				meeting: '',
+				meetingDate: '',
+				meetingDuration: '',
+				isEdit : false,
+				action: '/dashboard/meetings/makeMeeting/add'
+			});
+		}
+
+	})
+	
 };
 
 exports.editMeeting = function(req, res){
@@ -570,7 +644,7 @@ exports.addMeeting = function(req, res){
 		meetingDate: meetingStartTime,
 		duration: duration,
 		meetingTime: meetingTime,
-		timerInfo: timerInfo
+		timerInfo: timerInfo,
 	});
 
 	if(agenda != undefined){	
@@ -596,30 +670,131 @@ exports.addMeeting = function(req, res){
 			};
 		}
 	}
+	//Contact Person Array -- Array of contacts added to the meeting
+	var contactPerson=[];
+
+
+	//check if input has text in it-- user did not click 'add'
+	inputNameText=req.body.nameHolder;
+	inputEmailText=req.body.emailHolder;
+	if(inputEmailText!='' && inputEmailText!=' '){
+		emailList+=inputEmailText+',';
+		icalEmail.push({name:inputNameText, email:inputEmailText});
+			newMeeting.attendees.push({
+				attendeeName: inputNameText,
+				attendeeEmail: inputEmailText.toLowerCase()
+		});
+		//Add to array if the email is not the creator
+		if(inputEmailText.toLowerCase()!=req.session.email){
+				contactPerson.push({
+					memberName: inputNameText,
+					memberEmail: inputEmailText.toLowerCase()
+				});
+		}
+	}
 
 	if(attendeeNames != undefined){	
-		if(typeof attendeeNames == 'string'){
+		console.log(attendeeEmails);
+		if(typeof attendeeEmails == 'string'){
+			console.log('damn right');
 			emailList+=attendeeEmails;
 			icalEmail.push({name:attendeeNames, email:attendeeEmails});
 			newMeeting.attendees.push({
 				attendeeName: attendeeNames,
 				attendeeEmail: attendeeEmails.toLowerCase()
 			});
+			//Add to array if the email is not the creator
+			if(attendeeEmails.toLowerCase()!=req.session.email){
+				contactPerson.push({
+					memberName: attendeeNames,
+					memberEmail: attendeeEmails.toLowerCase()
+				});
+			}
 		}
 		else{
-			for(var i=0; i<attendeeNames.length; i++){
-				if(attendeeNames[i] != ''){
+			for(var i=0; i<attendeeEmails.length; i++){
+				console.log("adding to contact array");
+				console.log(attendeeEmails[i]);
+				if(attendeeNames[i] != '' && attendeeEmails[i] != undefined ){
 					emailList+=attendeeEmails[i]+',';
 					icalEmail.push({name:attendeeNames[i], email:attendeeEmails[i]});
 					newMeeting.attendees.push({
 						attendeeName: attendeeNames[i],
 						attendeeEmail: attendeeEmails[i].toLowerCase()
 					});
+					//Add to temp array. Ignore email if it is creator
+					if(attendeeEmails[i].toLowerCase()!=req.session.email){
+						contactPerson.push({
+							memberName: attendeeNames[i],
+							memberEmail: attendeeEmails[i].toLowerCase()
+						});
+					}
 				}
 			};
 		}
 	}
-	var meetingID='';
+
+	//Add to contact
+	Contact.findOne({'UserId': req.session.email}, function(e, doc){
+		res.send('success');
+		if(doc){
+			console.log("these are contacts");
+			console.log(contactPerson);
+			for(var i=0; i<contactPerson.length; i++){
+				//Look for existing email in group-- don't add if exist
+				var z=0;
+				var foundExisting=true;
+				while(foundExisting && z<doc.contacts.length){
+					 if(doc.contacts[z].memberEmail == contactPerson[i].memberEmail) {
+				     console.log("FOUND EXISTING EMAIL!");
+				     foundExisting=false;
+				   }
+				   z++;
+				}
+				//Push to contact if new email
+				if(foundExisting){
+					doc.contacts.push(contactPerson[i]);
+					console.log("Pushed new email");
+				}
+			}
+			doc.save(function(err, doc){
+				if(err){
+					console.log('Problem adding contact to database')
+					console.log(err);
+					res.send('failed to save contact');
+				}
+				else{
+					console.log('Added contact successfully');
+					res.send('success');
+				}
+			});	
+			
+
+		}
+		else{
+			//First Time Use
+			var newContact = new Contact({
+				UserId: req.session.email,
+				contacts: contactPerson
+			});
+			newContact.save(function(err, doc){
+				if(err){
+					console.log('Problem adding contact')
+					res.send('fail');
+					console.log(doc);
+				}
+				else{
+					console.log('Added new contact successfully');
+					res.send('success');
+					console.log(doc);
+				}
+			});
+		}
+	});
+
+
+
+
 	newMeeting.save(function(err, doc){
 		if(err){
 			console.log('Problem adding information to database')
@@ -628,7 +803,7 @@ exports.addMeeting = function(req, res){
 			res.redirect('error', {user : req.user});
 		}
 		else{
-			meetingID=doc._id;
+			var meetingID=doc._id;
 			//Create ical File
 			var icsFilePath=createiCal(creatorEmail,meetingTitle,icalDate,icalEmail,meetingDate,meetingEndTime,objective,location,meetingID);
 			mailBody=createAgendaBody(creatorEmail,emailList,emailDate,meetingTitle,objective,emailAgenda,location,meetingTime,icsFilePath);
